@@ -1,13 +1,14 @@
-package org.andreschnabel.jprojectinspector;
+
+package org.andreschnabel.jprojectinspector.prototypes;
 
 import java.io.IOException;
 
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
-public class GitHubTesting {
+public class GitHub {
 
-	public GitHubTesting() {
+	public GitHub() {
 	}
 
 	public void runTests() {
