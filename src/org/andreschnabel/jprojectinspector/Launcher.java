@@ -1,8 +1,6 @@
 
 package org.andreschnabel.jprojectinspector;
 
-import java.io.IOException;
-
 import com.google.gson.Gson;
 import org.andreschnabel.jprojectinspector.metrics.CodeMetrics;
 import org.andreschnabel.jprojectinspector.metrics.GitHubMetrics;
@@ -41,24 +39,27 @@ public class Launcher {
 	}
 
 	private static class Summary {
-		GitHubMetrics.GitHubSummary ghs;
-		GitMetrics.GitSummary gs;
-		CodeMetrics.CodeSummary cs;
+		GitHubMetrics.GitHubSummary gitHubSummary;
+		GitMetrics.GitSummary gitSummary;
+		CodeMetrics.CodeSummary codeSummary;
 	}
 
-	private static void writeSummary(String owner, String repoName, String outFilename) throws IOException {
+	private static void writeSummary(String owner, String repoName, String outFilename) throws Exception {
 		String destinationPath = "";
+
 		GitHubMetrics ghm = new GitHubMetrics(owner, repoName);
 		GitMetrics gm = new GitMetrics(owner, repoName, destinationPath);
 		CodeMetrics cm = new CodeMetrics(destinationPath);
 
 		Summary summary = new Summary();
-		summary.ghs = ghm.getSummary();
-		summary.gs = gm.getSummary();
-		summary.cs = cm.getSummary();
+		summary.gitHubSummary = ghm.getSummary();
+		summary.gitSummary = gm.getSummary();
+		summary.codeSummary = cm.getSummary();
 
 		Gson gson = new Gson();
 		Helpers.writeStrToFile(gson.toJson(summary), outFilename);
+
+		gm.close();
 	}
 
 }

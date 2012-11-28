@@ -125,9 +125,14 @@ public class CodeMetrics {
 	}
 
 	public class CodeSummary {
+		public int sumLoc;
+		public int maxMcCabe;
 	}
 
-	public CodeSummary getSummary() {
-		return null;
+	public CodeSummary getSummary() throws Exception {
+		CodeSummary summary = new CodeSummary();
+		summary.sumLoc = 0;//sumLinesOfCodeForDir(".");
+		summary.maxMcCabe = 0;//maxMcCabeForDir(".");
+		return summary;
 	}
 }

@@ -86,4 +86,16 @@ public class Helpers {
 		bw.close();
 		fw.close();
 	}
+
+	public static void deleteDir(File root) throws Exception {
+		if(!root.isDirectory())
+			throw new Exception("Path must point to dir!");
+		for(File f : root.listFiles()) {
+			if(f.isDirectory()) {
+				deleteDir(f);
+			} else
+				f.delete();
+		}
+		root.delete();
+	}
 }

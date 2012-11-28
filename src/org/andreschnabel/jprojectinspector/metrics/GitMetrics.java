@@ -3,6 +3,8 @@ package org.andreschnabel.jprojectinspector.metrics;
 
 import org.andreschnabel.jprojectinspector.Helpers;
 
+import java.io.File;
+
 public class GitMetrics implements AutoCloseable {
 	
 	private final static String BASE_URL = "https://github.com/";
@@ -21,13 +23,20 @@ public class GitMetrics implements AutoCloseable {
 	
 	@Override
 	public void close() throws Exception {
-		Helpers.system("rm -rf " + destPath + projName);
+		Helpers.deleteDir(new File(destPath + projName));
 	}
 
 	public GitSummary getSummary() {
-		return null;
+		GitSummary summary = new GitSummary();
+		summary.numCommits = getNumCommits();
+		return summary;
+	}
+
+	private int getNumCommits() {
+		return 0;
 	}
 
 	public class GitSummary {
+		int numCommits;
 	}
 }
