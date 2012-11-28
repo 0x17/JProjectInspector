@@ -23,7 +23,7 @@ public class Helpers {
 	public static String loadUrlIntoStr(String urlStr) throws Exception {
 		URL url = new URL(urlStr);
 		BufferedReader br = new BufferedReader( new InputStreamReader(url.openStream()));
-		String content = new String();
+		String content = "";
 		while(br.ready()) {
 			content += br.readLine() + '\n';
 		}

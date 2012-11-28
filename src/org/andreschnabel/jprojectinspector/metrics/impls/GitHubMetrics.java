@@ -70,11 +70,9 @@ public class GitHubMetrics implements IGitHubMetrics {
 			}
 		}
 		
-		int numTestContribs = testingUsers.size();		
-		
-		int result = numTestContribs / numContribs;
-		
-		return result;
+		int numTestContribs = testingUsers.size();
+
+		return numTestContribs / numContribs;
 	}
 
 	@Override
