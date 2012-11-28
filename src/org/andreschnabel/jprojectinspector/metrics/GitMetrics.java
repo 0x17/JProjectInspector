@@ -1,5 +1,5 @@
 
-package org.andreschnabel.jprojectinspector.metrics.impls;
+package org.andreschnabel.jprojectinspector.metrics;
 
 import org.andreschnabel.jprojectinspector.Helpers;
 
@@ -22,6 +22,10 @@ public class GitMetrics implements AutoCloseable {
 	@Override
 	public void close() throws Exception {
 		Helpers.system("rm -rf " + destPath + projName);
+	}
+
+	public GitSummary getSummary() {
+		return null;
 	}
 
 	public class GitSummary {

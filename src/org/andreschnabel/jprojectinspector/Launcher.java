@@ -4,12 +4,9 @@ package org.andreschnabel.jprojectinspector;
 import java.io.IOException;
 
 import com.google.gson.Gson;
-import org.andreschnabel.jprojectinspector.metrics.ICodeMetrics;
-import org.andreschnabel.jprojectinspector.metrics.IGitHubMetrics;
-import org.andreschnabel.jprojectinspector.metrics.IGitMetrics;
-import org.andreschnabel.jprojectinspector.metrics.impls.CodeMetrics;
-import org.andreschnabel.jprojectinspector.metrics.impls.GitHubMetrics;
-import org.andreschnabel.jprojectinspector.metrics.impls.GitMetrics;
+import org.andreschnabel.jprojectinspector.metrics.CodeMetrics;
+import org.andreschnabel.jprojectinspector.metrics.GitHubMetrics;
+import org.andreschnabel.jprojectinspector.metrics.GitMetrics;
 
 public class Launcher {
 	private static void printUsage() {
@@ -50,16 +47,15 @@ public class Launcher {
 	}
 
 	private static void writeSummary(String owner, String repoName, String outFilename) throws IOException {
-		String destPath = "";
-		IGitHubMetrics ghm = new GitHubMetrics(owner, repoName);
-		//GitMetrics gm = new GitMetrics(owner, repoName, destPath);
-		ICodeMetrics cm = new CodeMetrics(destPath);
-
+		String destinationPath = "";
+		GitHubMetrics ghm = new GitHubMetrics(owner, repoName);
+		GitMetrics gm = new GitMetrics(owner, repoName, destinationPath);
+		CodeMetrics cm = new CodeMetrics(destinationPath);
 
 		Summary summary = new Summary();
-		summary.ghs = ((GitHubMetrics)ghm).getSummary();
-		//summary.gs = ((GitMetrics)gm).getSummary();
-		//summary.cs = ((CodeMetrics)cm).getSummary();
+		summary.ghs = ghm.getSummary();
+		summary.gs = gm.getSummary();
+		summary.cs = cm.getSummary();
 
 		Gson gson = new Gson();
 		Helpers.writeStrToFile(gson.toJson(summary), outFilename);

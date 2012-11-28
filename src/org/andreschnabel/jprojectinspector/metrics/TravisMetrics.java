@@ -1,5 +1,5 @@
 
-package org.andreschnabel.jprojectinspector.metrics.impls;
+package org.andreschnabel.jprojectinspector.metrics;
 
 import org.andreschnabel.jprojectinspector.Helpers;
 

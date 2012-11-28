@@ -4,14 +4,13 @@ package org.andreschnabel.jprojectinspector.metrics.tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.andreschnabel.jprojectinspector.metrics.IGitHubMetrics;
-import org.andreschnabel.jprojectinspector.metrics.impls.GitHubMetrics;
+import org.andreschnabel.jprojectinspector.metrics.GitHubMetrics;
 import org.junit.Before;
 import org.junit.Test;
 
 public class GitHubMetricsTest {
 
-	private IGitHubMetrics ghm;
+	private GitHubMetrics ghm;
 
 	@Before
 	public void setUp() throws Exception {

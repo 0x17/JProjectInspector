@@ -1,21 +1,21 @@
 
-package org.andreschnabel.jprojectinspector.metrics.impls;
+package org.andreschnabel.jprojectinspector.metrics;
 
 import org.andreschnabel.jprojectinspector.Helpers;
-import org.andreschnabel.jprojectinspector.metrics.ICodeMetrics;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class CodeMetrics implements ICodeMetrics {
+public class CodeMetrics {
 	private String basePath;
 
 	public void setLocSettings(LocSettings locSettings) {
 		this.locSettings = locSettings;
 	}
 	private LocSettings locSettings;
+
 	class LocSettings {
 		boolean ignoreEmptyLines;
 		boolean ignoreComments;
@@ -32,7 +32,6 @@ public class CodeMetrics implements ICodeMetrics {
 		return basePath + relPath;
 	}
 
-	@Override
 	public int sumLinesOfCodeForDir(String relPath) throws Exception {
 		File root = new File(combinedPath(relPath));
 		if(!root.isDirectory())
@@ -50,7 +49,6 @@ public class CodeMetrics implements ICodeMetrics {
 		return sum;
 	}
 
-	@Override
 	public int maxMcCabeForDir(String relPath) throws Exception {
 		File root = new File(combinedPath(relPath));
 		if(!root.isDirectory())
@@ -73,7 +71,6 @@ public class CodeMetrics implements ICodeMetrics {
 		return curMax;
 	}
 
-	@Override
 	public int countLinesOfCodeForFile(String relPath) throws IOException {
 		FileReader fr = new FileReader(combinedPath(relPath));
 		BufferedReader br = new BufferedReader(fr);
@@ -106,7 +103,6 @@ public class CodeMetrics implements ICodeMetrics {
 		return 0;
 	}
 
-	@Override
 	public int mcCabeForFile(String relPath) throws IOException {
 		FileReader fr = new FileReader(combinedPath(relPath));
 		BufferedReader br = new BufferedReader(fr);
@@ -129,5 +125,9 @@ public class CodeMetrics implements ICodeMetrics {
 	}
 
 	public class CodeSummary {
+	}
+
+	public CodeSummary getSummary() {
+		return null;
 	}
 }

@@ -1,5 +1,5 @@
 
-package org.andreschnabel.jprojectinspector.metrics.impls;
+package org.andreschnabel.jprojectinspector.metrics;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.andreschnabel.jprojectinspector.metrics.IGitHubMetrics;
 import org.eclipse.egit.github.core.CommitFile;
 import org.eclipse.egit.github.core.Contributor;
 import org.eclipse.egit.github.core.Issue;
@@ -23,7 +22,7 @@ import org.eclipse.egit.github.core.service.RepositoryService;
 
 import com.google.gson.Gson;
 
-public class GitHubMetrics implements IGitHubMetrics {
+public class GitHubMetrics {
 	private Repository repo;
 
 	private RepositoryService repoService;
@@ -40,12 +39,10 @@ public class GitHubMetrics implements IGitHubMetrics {
 		repo = repoService.getRepository(owner, repoName);
 	}
 
-	@Override
 	public int getNumberOfContributors() throws IOException {
 		return repoService.getContributors(repo, true).size();
 	}
 
-	@Override
 	public int getTestPopularity() throws IOException {
 		List<Contributor> contribs = repoService.getContributors(repo, true);
 		int numContribs = contribs.size();
@@ -75,13 +72,11 @@ public class GitHubMetrics implements IGitHubMetrics {
 		return numTestContribs / numContribs;
 	}
 
-	@Override
 	public int getNumberOfIssues() throws IOException {
 		List<Issue> issues = issueService.getIssues(repo, null);
 		return issues.size();
 	}
 
-	@Override
 	public int getSelectivity() throws IOException {
 		List<PullRequest> pullRequests = pullReqService.getPullRequests(repo, "closed");
 
@@ -96,7 +91,6 @@ public class GitHubMetrics implements IGitHubMetrics {
 		return numMerged / numClosed;
 	}
 
-	@Override
 	public int getCodeFrequency() throws IOException {
 		List<RepositoryCommit> commits = commitService.getCommits(repo);
 
@@ -113,7 +107,6 @@ public class GitHubMetrics implements IGitHubMetrics {
 		return added - removed;
 	}
 
-	@Override
 	public long getRepositoryAge() throws IOException {
 		Date creatDate = repo.getCreatedAt();
 		long delta = (new Date().getTime() - creatDate.getTime());
@@ -138,7 +131,6 @@ public class GitHubMetrics implements IGitHubMetrics {
 		return s;
 	}
 
-	@Override
 	public String toJson() throws IOException {
 		Gson gson = new Gson();
 		return gson.toJson(getSummary());
