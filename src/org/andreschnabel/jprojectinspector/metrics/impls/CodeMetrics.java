@@ -2,13 +2,14 @@
 package org.andreschnabel.jprojectinspector.metrics.impls;
 
 import org.andreschnabel.jprojectinspector.Helpers;
+import org.andreschnabel.jprojectinspector.metrics.ICodeMetrics;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class CodeMetrics {
+public class CodeMetrics implements ICodeMetrics {
 	private String basePath;
 
 	public void setLocSettings(LocSettings locSettings) {
@@ -31,6 +32,7 @@ public class CodeMetrics {
 		return basePath + relPath;
 	}
 
+	@Override
 	public int sumLinesOfCodeForDir(String relPath) throws Exception {
 		File root = new File(combinedPath(relPath));
 		if(!root.isDirectory())
@@ -48,6 +50,7 @@ public class CodeMetrics {
 		return sum;
 	}
 
+	@Override
 	public int maxMcCabeForDir(String relPath) throws Exception {
 		File root = new File(combinedPath(relPath));
 		if(!root.isDirectory())
@@ -70,6 +73,7 @@ public class CodeMetrics {
 		return curMax;
 	}
 
+	@Override
 	public int countLinesOfCodeForFile(String relPath) throws IOException {
 		FileReader fr = new FileReader(combinedPath(relPath));
 		BufferedReader br = new BufferedReader(fr);
@@ -102,6 +106,7 @@ public class CodeMetrics {
 		return 0;
 	}
 
+	@Override
 	public int mcCabeForFile(String relPath) throws IOException {
 		FileReader fr = new FileReader(combinedPath(relPath));
 		BufferedReader br = new BufferedReader(fr);
