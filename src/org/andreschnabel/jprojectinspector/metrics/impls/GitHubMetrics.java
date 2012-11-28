@@ -120,7 +120,7 @@ public class GitHubMetrics implements IGitHubMetrics {
 		return delta;
 	}
 
-	public class Summary {
+	public class GitHubSummary {
 		public int numContribs;
 		public int testPopularity;
 		public int numIssues;
@@ -129,14 +129,18 @@ public class GitHubMetrics implements IGitHubMetrics {
 		public long repoAge;
 	}
 
-	@Override
-	public String toJson() throws IOException {
-		Summary s = new Summary();
+	public GitHubSummary getSummary() throws IOException {
+		GitHubSummary s = new GitHubSummary();
 		s.numContribs = getNumberOfContributors();
 		//s.testPopularity = getTestPopularity();
 		s.numIssues = getNumberOfIssues();
 		s.repoAge = getRepositoryAge();
+		return s;
+	}
+
+	@Override
+	public String toJson() throws IOException {
 		Gson gson = new Gson();
-		return gson.toJson(s);
+		return gson.toJson(getSummary());
 	}
 }

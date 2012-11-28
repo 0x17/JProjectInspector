@@ -24,4 +24,6 @@ public class GitMetrics implements AutoCloseable {
 		Helpers.system("rm -rf " + destPath + projName);
 	}
 
+	public class GitSummary {
+	}
 }

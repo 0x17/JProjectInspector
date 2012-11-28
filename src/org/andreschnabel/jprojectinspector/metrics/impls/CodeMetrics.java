@@ -128,4 +128,6 @@ public class CodeMetrics implements ICodeMetrics {
 		return Helpers.strContainsOneOf(line, new String[] {"if", "else", "do", "while", "switch"});
 	}
 
+	public class CodeSummary {
+	}
 }
