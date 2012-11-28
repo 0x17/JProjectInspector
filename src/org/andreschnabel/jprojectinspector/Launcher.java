@@ -40,7 +40,7 @@ public class Launcher {
 
 	private static class Summary {
 		GitHubMetrics.GitHubSummary gitHubSummary;
-		GitMetrics.GitSummary gitSummary;
+		//GitMetrics.GitSummary gitSummary;
 		CodeMetrics.CodeSummary codeSummary;
 	}
 
@@ -48,18 +48,18 @@ public class Launcher {
 		String destinationPath = "";
 
 		GitHubMetrics ghm = new GitHubMetrics(owner, repoName);
-		GitMetrics gm = new GitMetrics(owner, repoName, destinationPath);
+		//GitMetrics gm = new GitMetrics(owner, repoName, destinationPath);
 		CodeMetrics cm = new CodeMetrics(destinationPath);
 
 		Summary summary = new Summary();
 		summary.gitHubSummary = ghm.getSummary();
-		summary.gitSummary = gm.getSummary();
+		//summary.gitSummary = gm.getSummary();
 		summary.codeSummary = cm.getSummary();
 
 		Gson gson = new Gson();
 		Helpers.writeStrToFile(gson.toJson(summary), outFilename);
 
-		gm.close();
+		//gm.close();
 	}
 
 }

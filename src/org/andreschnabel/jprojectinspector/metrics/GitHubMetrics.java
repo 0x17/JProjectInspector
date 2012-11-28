@@ -30,6 +30,9 @@ public class GitHubMetrics {
 	private PullRequestService pullReqService;
 	private CommitService commitService;
 
+	private static final int MAX_COMMIT_PAGES = 1;
+	private static final int MAX_PULL_REQ_PAGES = 1;
+
 	public GitHubMetrics(String owner, String repoName) throws IOException {
 		repoService = new RepositoryService();
 		issueService = new IssueService();
@@ -44,18 +47,20 @@ public class GitHubMetrics {
 	}
 
 	public int getTestPopularity() throws IOException {
-		List<Contributor> contribs = repoService.getContributors(repo, true);
-		int numContribs = contribs.size();
+		List<Contributor> contributors = repoService.getContributors(repo, true);
+		int numContributors = contributors.size();
 		
 		List<User> testingUsers = new LinkedList<User>();
 		PageIterator<RepositoryCommit> commitIterator = commitService.pageCommits(repo, 100);
 		
-		for(int i=0; i<10 && commitIterator.hasNext(); i++) {
+		for(int i=0; i<MAX_COMMIT_PAGES && commitIterator.hasNext(); i++) {
 			Collection<RepositoryCommit> commits = commitIterator.next();
 			
 			for(RepositoryCommit commit : commits) {
+				RepositoryCommit actualCommit = commitService.getCommit(repo, commit.getSha());
+
 				boolean containsTest = false;
-				for(CommitFile cf : commit.getFiles()) {
+				for(CommitFile cf : actualCommit.getFiles()) {
 					String filename = cf.getFilename();
 					containsTest |= (filename.endsWith("test") || filename.startsWith("test"));
 				}
@@ -66,10 +71,8 @@ public class GitHubMetrics {
 				}
 			}
 		}
-		
-		int numTestContribs = testingUsers.size();
 
-		return numTestContribs / numContribs;
+		return testingUsers.size() / numContributors;
 	}
 
 	public int getNumberOfIssues() throws IOException {
@@ -78,29 +81,36 @@ public class GitHubMetrics {
 	}
 
 	public int getSelectivity() throws IOException {
-		List<PullRequest> pullRequests = pullReqService.getPullRequests(repo, "closed");
+		PageIterator<PullRequest> pullRequestIterator = pullReqService.pagePullRequests(repo, "closed");
 
 		int numMerged = 0;
+		int numClosed = 0;
 
-		for (PullRequest pr : pullRequests) {
-			if (pr.isMerged()) numMerged++;
+		for(int i=0; i<MAX_PULL_REQ_PAGES && pullRequestIterator.hasNext(); i++) {
+			Collection<PullRequest> pullRequests = pullRequestIterator.next();
+			for (PullRequest pr : pullRequests) {
+				if (pr.isMerged()) numMerged++;
+				numClosed++;
+			}
 		}
-
-		int numClosed = pullRequests.size();
 
 		return numMerged / numClosed;
 	}
 
 	public int getCodeFrequency() throws IOException {
-		List<RepositoryCommit> commits = commitService.getCommits(repo);
+		PageIterator<RepositoryCommit> commitIterator = commitService.pageCommits(repo);
 
 		int added, removed;
 		added = removed = 0;
 
-		for (RepositoryCommit commit : commits) {
-			for (CommitFile cf : commit.getFiles()) {
-				added += cf.getAdditions();
-				removed += cf.getDeletions();
+		for(int i=0; i<MAX_COMMIT_PAGES && commitIterator.hasNext(); i++) {
+			Collection<RepositoryCommit> commits = commitIterator.next();
+
+			for (RepositoryCommit commit : commits) {
+				for (CommitFile cf : commit.getFiles()) {
+					added += cf.getAdditions();
+					removed += cf.getDeletions();
+				}
 			}
 		}
 
@@ -108,13 +118,13 @@ public class GitHubMetrics {
 	}
 
 	public long getRepositoryAge() throws IOException {
-		Date creatDate = repo.getCreatedAt();
-		long delta = (new Date().getTime() - creatDate.getTime());
+		Date creationDate = repo.getCreatedAt();
+		long delta = (new Date().getTime() - creationDate.getTime());
 		return delta;
 	}
 
 	public class GitHubSummary {
-		public int numContribs;
+		public int numContributors;
 		public int testPopularity;
 		public int numIssues;
 		public int selectivity;
@@ -124,15 +134,14 @@ public class GitHubMetrics {
 
 	public GitHubSummary getSummary() throws IOException {
 		GitHubSummary s = new GitHubSummary();
-		s.numContribs = getNumberOfContributors();
-		//s.testPopularity = getTestPopularity();
+		s.numContributors = getNumberOfContributors();
 		s.numIssues = getNumberOfIssues();
 		s.repoAge = getRepositoryAge();
-		return s;
-	}
 
-	public String toJson() throws IOException {
-		Gson gson = new Gson();
-		return gson.toJson(getSummary());
+		s.testPopularity = getTestPopularity();
+		s.selectivity = getSelectivity();
+		s.codeFrequency = getCodeFrequency();
+
+		return s;
 	}
 }
