@@ -50,4 +50,35 @@ public class Helpers {
 		}
 	}
 
+	public static boolean strContainsOneOf(String str, String[] candidates) {
+		for(String candidate : candidates)
+			if(str.contains(candidate)) return true;
+		return false;
+	}
+
+	public static int countOccurencesOfWords(String str, String[] words) {
+		int sum = 0;
+		for(String word : words) {
+			sum += countOccurencesOfWord(str, word);
+		}
+		return sum;
+	}
+
+	private static int countOccurencesOfWord(String str, String word) {
+		int ctr = 0;
+		int j = 0;
+		for(int i=0; i<str.length(); i++) {
+			if(str.charAt(i) == word.charAt(j)) {
+				if(j == word.length() - 1)  {
+					ctr++;
+					j = 0;
+				}
+				else
+					j++;
+			} else {
+				j = 0;
+			}
+		}
+		return ctr;
+	}
 }
