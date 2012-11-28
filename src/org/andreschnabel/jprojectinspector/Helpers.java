@@ -2,9 +2,12 @@
 package org.andreschnabel.jprojectinspector;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Helpers {
 	
@@ -26,6 +29,25 @@ public class Helpers {
 		}
 		br.close();
 		return content;
+	}
+	
+	public static List<String> listSourceFiles(String path) {
+		File dir = new File(path);
+		List<String> srcFilenames = new LinkedList<String>();
+		recursiveCollectSrcFiles(srcFilenames, dir);		
+		return srcFilenames;
+	}
+	
+	private static void recursiveCollectSrcFiles(List<String> srcFilenames, File dir) {
+		for(File f : dir.listFiles()) {
+			if(f.isDirectory()) {
+				recursiveCollectSrcFiles(srcFilenames, f);
+			} else {
+				String name = f.getName();
+				if(name.endsWith(".java"))
+					srcFilenames.add(name);
+			}
+		}
 	}
 
 }

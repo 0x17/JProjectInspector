@@ -2,6 +2,7 @@
 package org.andreschnabel.jprojectinspector.metrics.impls;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.eclipse.egit.github.core.PullRequest;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryCommit;
 import org.eclipse.egit.github.core.User;
+import org.eclipse.egit.github.core.client.PageIterator;
 import org.eclipse.egit.github.core.service.CommitService;
 import org.eclipse.egit.github.core.service.IssueService;
 import org.eclipse.egit.github.core.service.PullRequestService;
@@ -49,16 +51,22 @@ public class GitHubMetrics implements IGitHubMetrics {
 		int numContribs = contribs.size();
 		
 		List<User> testingUsers = new LinkedList<User>();
-		List<RepositoryCommit> commits = commitService.getCommits(repo);
-		for(RepositoryCommit commit : commits) {
-			boolean containsTest = false;
-			for(CommitFile cf : commit.getFiles()) {
-				String filename = cf.getFilename();
-				containsTest |= (filename.endsWith("test") || filename.startsWith("test"));
-			}
-			User author = commit.getAuthor();
-			if(containsTest && !testingUsers.contains(author)) {
-				testingUsers.add(author);
+		PageIterator<RepositoryCommit> commitIterator = commitService.pageCommits(repo, 100);
+		
+		for(int i=0; i<10 && commitIterator.hasNext(); i++) {
+			Collection<RepositoryCommit> commits = commitIterator.next();
+			
+			for(RepositoryCommit commit : commits) {
+				boolean containsTest = false;
+				for(CommitFile cf : commit.getFiles()) {
+					String filename = cf.getFilename();
+					containsTest |= (filename.endsWith("test") || filename.startsWith("test"));
+				}
+				
+				User author = commit.getAuthor();
+				if(containsTest && !testingUsers.contains(author)) {
+					testingUsers.add(author);
+				}
 			}
 		}
 		
@@ -127,7 +135,7 @@ public class GitHubMetrics implements IGitHubMetrics {
 	public String toJson() throws IOException {
 		Summary s = new Summary();
 		s.numContribs = getNumberOfContributors();
-		s.testPopularity = getTestPopularity();
+		//s.testPopularity = getTestPopularity();
 		s.numIssues = getNumberOfIssues();
 		s.repoAge = getRepositoryAge();
 		Gson gson = new Gson();
