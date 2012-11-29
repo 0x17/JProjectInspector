@@ -94,7 +94,7 @@ public class GitHubMetrics {
 			}
 		}
 
-		return numMerged / numClosed;
+		return numClosed == 0 ? 0 : numMerged / numClosed;
 	}
 
 	public int getCodeFrequency() throws IOException {
@@ -106,8 +106,9 @@ public class GitHubMetrics {
 		for(int i=0; i<MAX_COMMIT_PAGES && commitIterator.hasNext(); i++) {
 			Collection<RepositoryCommit> commits = commitIterator.next();
 
-			for (RepositoryCommit commit : commits) {
-				for (CommitFile cf : commit.getFiles()) {
+			for(RepositoryCommit commit : commits) {
+				RepositoryCommit actualCommit = commitService.getCommit(repo, commit.getSha());
+				for(CommitFile cf : actualCommit.getFiles()) {
 					added += cf.getAdditions();
 					removed += cf.getDeletions();
 				}
