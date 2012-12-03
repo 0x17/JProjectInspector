@@ -5,23 +5,23 @@ import org.andreschnabel.jprojectinspector.Helpers;
 
 import java.io.File;
 
-public class GitMetrics implements AutoCloseable {
+public class GitMetrics {// implements AutoCloseable {
 	
 	private final static String BASE_URL = "https://github.com/";
 	private String projName;
 	private String destPath;
 	
-	public GitMetrics(String owner, String repoName) {
+	public GitMetrics(String owner, String repoName) throws Exception {
 		this(owner, repoName, "/tmp/");
 	}
 	
-	public GitMetrics(String owner, String repoName, String destPath) {
+	public GitMetrics(String owner, String repoName, String destPath) throws Exception {
 		Helpers.system("git clone " + BASE_URL + owner + "/" + repoName + " " + destPath);
 		projName = repoName;
 		this.destPath = destPath;
 	}
 	
-	@Override
+	//@Override
 	public void close() throws Exception {
 		Helpers.deleteDir(new File(destPath + projName));
 	}

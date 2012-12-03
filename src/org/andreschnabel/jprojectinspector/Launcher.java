@@ -2,6 +2,7 @@
 package org.andreschnabel.jprojectinspector;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.andreschnabel.jprojectinspector.metrics.CodeMetrics;
 import org.andreschnabel.jprojectinspector.metrics.GitHubMetrics;
 import org.andreschnabel.jprojectinspector.metrics.GitMetrics;
@@ -56,7 +57,8 @@ public class Launcher {
 		//summary.gitSummary = gm.getSummary();
 		summary.codeSummary = cm.getSummary();
 
-		Gson gson = new Gson();
+		//Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		Helpers.writeStrToFile(gson.toJson(summary), outFilename);
 
 		//gm.close();

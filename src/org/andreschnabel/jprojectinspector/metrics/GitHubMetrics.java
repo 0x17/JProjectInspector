@@ -62,7 +62,7 @@ public class GitHubMetrics {
 				boolean containsTest = false;
 				for(CommitFile cf : actualCommit.getFiles()) {
 					String filename = cf.getFilename();
-					containsTest |= (filename.endsWith("test") || filename.startsWith("test"));
+					containsTest |= (filename.contains("test"));
 				}
 				
 				User author = commit.getAuthor();

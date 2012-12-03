@@ -1,31 +1,39 @@
 
 package org.andreschnabel.jprojectinspector;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Helpers {
 	
-	public static void system(String cmd) {
+	public static void system(String cmd) throws Exception {
+		System.out.println("Running: " + cmd);
 		try {
-			Runtime.getRuntime().exec(cmd);
+			Process p = Runtime.getRuntime().exec(cmd);
+			p.waitFor();
 		} catch (IOException e) {
 			System.out.println("Error executing: " + cmd);
 			e.printStackTrace();
 		}
 	}
 	
-	public static String loadUrlIntoStr(String urlStr) throws Exception {
+	public static String loadUrlIntoStr(String urlStr) throws Exception {		
 		URL url = new URL(urlStr);
 		BufferedReader br = new BufferedReader( new InputStreamReader(url.openStream()));
-		String content = "";
+		StringBuilder builder = new StringBuilder();
 		while(br.ready()) {
-			content += br.readLine() + '\n';
+			builder.append(br.readLine() + "\n");
 		}
 		br.close();
-		return content;
+		return builder.toString();
 	}
 	
 	public static List<String> listSourceFiles(String path) {
@@ -47,7 +55,7 @@ public class Helpers {
 		}
 	}
 
-	public static boolean strContainsOneOf(String str, String[] candidates) {
+	public static boolean strContainsOneOf(String str, String... candidates) {
 		for(String candidate : candidates)
 			if(str.contains(candidate)) return true;
 		return false;
@@ -97,5 +105,25 @@ public class Helpers {
 				f.delete();
 		}
 		root.delete();
+	}
+	
+	public static String readEntireFile(File file) throws Exception {
+		FileReader fr = new FileReader(file);
+		BufferedReader br = new BufferedReader(fr);
+		StringBuilder builder = new StringBuilder();
+		while(br.ready()) {
+			builder.append(br.readLine() + "\n");
+		}
+		br.close();
+		fr.close();
+		return builder.toString();
+	}
+
+	public static String prompt(String string) throws Exception {
+		System.out.print(string + ": ");
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		String input = br.readLine();
+		return input;
 	}
 }
