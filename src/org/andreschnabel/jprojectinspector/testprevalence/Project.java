@@ -11,7 +11,7 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return "Project [owner=" + owner + ", repoName=" + repoName + "]";
+		return toId();
 	}
 
 	public String toId() {

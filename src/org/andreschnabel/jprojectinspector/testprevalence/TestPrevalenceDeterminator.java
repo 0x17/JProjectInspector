@@ -40,6 +40,7 @@ public class TestPrevalenceDeterminator {
 		summary.numProjectsTotal = numProjs;
 		summary.testPrevalence = testPrev;
 		summary.projectTestMap = ptm;
+		summary.keyword = keyword;
 		return summary;
 	}
 

@@ -135,4 +135,10 @@ public class Helpers {
 		String input = br.readLine();
 		return input;
 	}
+
+	public static String capitalize(String str) {
+		char[] chars = str.toCharArray();
+		chars[0] = Character.toUpperCase(chars[0]);
+		return new String(chars);
+	}
 }

@@ -14,7 +14,7 @@ import com.google.gson.GsonBuilder;
  */
 public class Runner {	
 	public static void main(String[] args) throws Exception {
-		String keyword = "tux";
+		String keyword = "scientific";
 		int numPages = 1;
 		
 		for(String arg : args) {
@@ -33,6 +33,6 @@ public class Runner {
 		
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();		
 		String summaryStr = gson.toJson(summary);		
-		Helpers.writeStrToFile(summaryStr, "tpSummary.json");
+		Helpers.writeStrToFile(summaryStr, Helpers.capitalize(keyword) + "TestPrevalence.json");
 	}
 }
