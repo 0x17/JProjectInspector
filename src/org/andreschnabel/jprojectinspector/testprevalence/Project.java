@@ -41,9 +41,5 @@ public class Project {
 		} else if (!repoName.equals(other.repoName)) return false;
 		return true;
 	}
-	
-	
-	
-	
-	
+
 }

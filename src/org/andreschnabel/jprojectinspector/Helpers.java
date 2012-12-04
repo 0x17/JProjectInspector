@@ -141,4 +141,18 @@ public class Helpers {
 		chars[0] = Character.toUpperCase(chars[0]);
 		return new String(chars);
 	}
+
+	public static boolean strEndsWithOneOf(String str, String... suffixes) {
+		for(String suffix : suffixes)
+			if(str.endsWith(suffix)) return true;
+		
+		return false;
+	}
+
+	public static boolean equalsOneOf(String str, String... candidates) {
+		for(String candidate : candidates)
+			if(str.equals(candidate)) return true;
+		
+		return false;
+	}
 }

@@ -3,15 +3,21 @@ package org.andreschnabel.jprojectinspector.testprevalence;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
-public class JUnitTestDetectorTest {
+public class UnitTestDetectorTest {
+	
+	private UnitTestDetector td;
+
+	@Before
+	public void setup() {
+		td = new UnitTestDetector();
+	}
 
 	@Test
-	public void testContainsTest() throws Exception {
-		JUnitTestDetector td = new JUnitTestDetector();
+	public void testContainsTest() throws Exception {		
 		assertTrue(td.containsTest(new Project("skeeto","sample-java-project")));
 		assertFalse(td.containsTest(new Project("0x17", "ProjectInspector")));
 	}
-
 }

@@ -1,10 +1,15 @@
 package org.andreschnabel.jprojectinspector.testprevalence;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 import org.andreschnabel.jprojectinspector.Helpers;
-import org.andreschnabel.jprojectinspector.testprevalence.JavaProjectCollector.ProjectList;
+import org.andreschnabel.jprojectinspector.testprevalence.ProjectCollector.ProjectList;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,6 +27,8 @@ public class Runner {
 		public int numPages = 1;
 		public String listFilename = null;
 		public String collectFilename = null;
+		public String dictionaryFilename = null;
+		public int numProjects = 1;
 	}
 	
 	public static void main(String[] args) throws Exception {
@@ -38,10 +45,15 @@ public class Runner {
 
 	private static Options parseOptions(String[] args) throws Exception {
 		Options result = new Options();
+		
 		for(String arg : args) {
 			if(arg.contains("=")) {
 				String[] parts = arg.split("=");
-				if(parts[0].equals("keyword"))
+				if(parts[0].equals("dict"))
+					result.dictionaryFilename = parts[1];
+				else if(parts[0].equals("numProjects"))
+					result.numProjects = Integer.valueOf(parts[1]);
+				else if(parts[0].equals("keyword"))
 					result.keyword = parts[1];
 				else if(parts[0].equals("pages"))
 					result.numPages = Integer.valueOf(parts[1]);
@@ -88,7 +100,7 @@ public class Runner {
 	}
 
 	private static void collectProjectNames(Options options) throws Exception, IOException {
-		JavaProjectCollector jpc = new JavaProjectCollector();
+		ProjectCollector jpc = new ProjectCollector();
 		ProjectList pl = jpc.collectProjects(options.keyword, options.numPages);
 		String plJson = gson.toJson(pl);
 		Helpers.writeStrToFile(plJson, options.collectFilename);
@@ -105,10 +117,40 @@ public class Runner {
 			options.keyword = projList.keyword;
 			summary = tpd.determineTestPrevalence(projList);
 		} else {
-			summary = tpd.determineTestPrevalence(options.keyword, options.numPages);
+			if(options.dictionaryFilename == null)
+				summary = tpd.determineTestPrevalence(options.keyword, options.numPages);
+			else {
+				ProjectCollector jpc = new ProjectCollector();				
+				
+				String[] dictionary = loadDict(options.dictionaryFilename);
+				Random r = new Random();
+				
+				String[] keywords = new String[options.numProjects];
+				for(int i=0; i<keywords.length; i++)
+					keywords[i] = dictionary[r.nextInt(dictionary.length)];
+				
+				ProjectList projList = jpc.collectProjects(keywords, options.numPages);				
+				summary = tpd.determineTestPrevalence(projList);
+			}
 		}		 
 		
 		String summaryStr = gson.toJson(summary);		
 		Helpers.writeStrToFile(summaryStr, Helpers.capitalize(options.keyword) + "TestPrevalence.json");
+	}
+
+	private static String[] loadDict(String dictionaryFilename) throws Exception {
+		List<String> dict = new LinkedList<String>();
+		FileReader fr = new FileReader(dictionaryFilename);
+		BufferedReader br = new BufferedReader(fr);
+		
+		while(br.ready()) {
+			String line = br.readLine().trim();
+			if(line.length() > 0)
+				dict.add(line);
+		}
+		
+		br.close();
+		fr.close();
+		return (String[])dict.toArray();
 	}
 }
