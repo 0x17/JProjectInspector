@@ -10,7 +10,7 @@ public class JUnitTestDetector {
 	
 	public boolean containsTest(Project p) throws Exception {
 		String destPath = DEST_BASE + p.repoName;
-		Helpers.system("git clone " + BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
+		Helpers.system("git clone -v " + BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
 		boolean foundTest = traverseForTest(new File(destPath));
 		Helpers.deleteDir(new File(destPath));
 		return foundTest;

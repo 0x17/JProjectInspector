@@ -13,6 +13,10 @@ public class Project {
 	public String toString() {
 		return "Project [owner=" + owner + ", repoName=" + repoName + "]";
 	}
+
+	public String toId() {
+		return owner + "/" + repoName;
+	}
 	
 	
 	
