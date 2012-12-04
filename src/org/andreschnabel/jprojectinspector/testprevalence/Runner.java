@@ -1,6 +1,9 @@
 package org.andreschnabel.jprojectinspector.testprevalence;
 
-import java.util.List;
+import org.andreschnabel.jprojectinspector.Helpers;
+
+import com.google.gson.Gson;
+
 
 /**
  * Task:
@@ -9,31 +12,27 @@ import java.util.List;
  * 	2.1. Determine if project contains JUnit tests (JUnitTestDetector)
  * 	2.2. If so: increment test project counter
  */
-public class Runner {
-	public static void main(String[] args) throws Exception {		
-		JavaProjectCollector jpc = new JavaProjectCollector();
-		JUnitTestDetector jtd = new JUnitTestDetector();
+public class Runner {	
+	public static void main(String[] args) throws Exception {
+		String keyword = "tux";
+		int numPages = 1;		
 		
-		List<Project> projects = jpc.collectProjects("tux", 10);
-		
-		//List<Project> projects = new LinkedList<Project>();
-		//projects.add(new Project("skeeto", "sample-java-project"));
-		
-		int numTestProjs = 0;
-		int numProjs = projects.size();
-		System.out.println("Gathering test prevalence in " + numProjs + " projects...");
-		
-		for(int i=0; i<numProjs; i++) {
-			Project p = projects.get(i);
-			System.out.println("Checking project " + p.toId() + " " + (i+1) + "/" + numProjs);
-			if(jtd.containsTest(p)) {
-				System.out.println("Found test!");
-				numTestProjs++;
+		for(String arg : args) {
+			if(arg.contains("=")) {
+				String[] parts = arg.split("=");
+				if(parts[0].equals("keyword"))
+					keyword = parts[1];
+				else if(parts[1].equals("pages")) {
+					numPages = Integer.valueOf(parts[1]);
+				}
 			}
 		}
 		
-		System.out.println("Number of projects containing tests: " + numTestProjs);
-		System.out.println("Number of projects total: " + numProjs);
-		System.out.println("Test prevalence: " + (((float)numTestProjs / numProjs) * 100.0f) + "%");
+		TestPrevalenceDeterminator tpd = new TestPrevalenceDeterminator();
+		TestPrevalenceSummary summary = tpd.determineTestPrevalence(keyword, numPages);
+		
+		Gson gson = new Gson();
+		String summaryStr = gson.toJson(summary);		
+		Helpers.writeStrToFile(summaryStr, "tpSummary.json");
 	}
 }
