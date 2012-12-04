@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.andreschnabel.jprojectinspector.testprevalence.JavaProjectCollector.ProjectList;
+
 public class TestPrevalenceDeterminator {
 	
-	public TestPrevalenceSummary determineTestPrevalence(String keyword, int numPages) throws Exception {
-		JavaProjectCollector jpc = new JavaProjectCollector();
+	public TestPrevalenceSummary determineTestPrevalence(ProjectList lst) throws Exception {
 		JUnitTestDetector jtd = new JUnitTestDetector();
 		
-		List<Project> projects = jpc.collectProjects(keyword, numPages);
-		
+		List<Project> projects = lst.projects;	
 		int numTestProjs = 0;
 		int numProjs = projects.size();
 		System.out.println("Gathering test prevalence in " + numProjs + " projects...");
@@ -40,8 +40,13 @@ public class TestPrevalenceDeterminator {
 		summary.numProjectsTotal = numProjs;
 		summary.testPrevalence = testPrev;
 		summary.projectTestMap = ptm;
-		summary.keyword = keyword;
+		summary.keyword = lst.keyword;
 		return summary;
+	}
+	
+	public TestPrevalenceSummary determineTestPrevalence(String keyword, int numPages) throws Exception {
+		JavaProjectCollector jpc = new JavaProjectCollector();
+		return determineTestPrevalence(jpc.collectProjects(keyword, numPages));		
 	}
 
 }

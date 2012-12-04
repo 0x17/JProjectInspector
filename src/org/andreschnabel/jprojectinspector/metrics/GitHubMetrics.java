@@ -20,8 +20,6 @@ import org.eclipse.egit.github.core.service.IssueService;
 import org.eclipse.egit.github.core.service.PullRequestService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
-import com.google.gson.Gson;
-
 public class GitHubMetrics {
 	private Repository repo;
 

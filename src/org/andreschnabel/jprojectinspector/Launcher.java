@@ -1,11 +1,11 @@
 
 package org.andreschnabel.jprojectinspector;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.andreschnabel.jprojectinspector.metrics.CodeMetrics;
 import org.andreschnabel.jprojectinspector.metrics.GitHubMetrics;
-import org.andreschnabel.jprojectinspector.metrics.GitMetrics;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Launcher {
 	private static void printUsage() {
@@ -39,7 +39,8 @@ public class Launcher {
 		writeSummary(owner, repoName, outFilename);
 	}
 
-	private static class Summary {
+	@SuppressWarnings("unused")
+	private static class Summary {		
 		GitHubMetrics.GitHubSummary gitHubSummary;
 		//GitMetrics.GitSummary gitSummary;
 		CodeMetrics.CodeSummary codeSummary;

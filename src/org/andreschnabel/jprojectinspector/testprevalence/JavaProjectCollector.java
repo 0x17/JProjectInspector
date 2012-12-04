@@ -8,18 +8,8 @@ import org.andreschnabel.jprojectinspector.Helpers;
 import com.google.gson.Gson;
 
 public class JavaProjectCollector {
-	
-	//private RepositoryService repoService;
-
-	public JavaProjectCollector() throws Exception {
-		//GitHubClient client = new GitHubClient();
-		//String n = Helpers.prompt("Name");
-		//String p = Helpers.prompt("Password");
-		//client.setCredentials(n, p);
-		//repoService = new RepositoryService(client);
-	}
-	
-	private class Repository {
+	@SuppressWarnings("unused")
+	private class Repository {		
 		public String type, owner, username, created, created_at, description, pushed, name, language;
 		public int followers, forks, size, watchers;
 		public boolean fork;
@@ -29,15 +19,25 @@ public class JavaProjectCollector {
 		public List<Repository> repositories;
 	}
 	
-	public List<Project> collectProjects(String keyword, int numPages) throws Exception {
+	public class ProjectList {
+		public String keyword;
+		public List<Project> projects;
+		public ProjectList(String keyword, List<Project> projects) {
+			this.keyword = keyword;
+			this.projects = projects;
+		}
+	}
+	
+	public ProjectList collectProjects(String keyword, int numPages) throws Exception {
 		List<Project> result = new LinkedList<Project>();
 		Gson gson = new Gson();
 		
+		System.out.println("Collecting non-forked java projects for keyword " + keyword);
+		
 		for(int curPage=1; curPage<=numPages; curPage++) {
+			System.out.println("Page " + curPage);
 			String repoSearchUri = "https://api.github.com/legacy/repos/search/" + keyword + "?start_page=" + curPage;
 			String reposStr = Helpers.loadUrlIntoStr(repoSearchUri);
-			
-			//String reposStr = Helpers.readEntireFile(new File("test.json"));
 			
 			RepoSearch search = gson.fromJson(reposStr, RepoSearch.class);			
 			if(search.repositories.size() == 0) break;
@@ -45,20 +45,16 @@ public class JavaProjectCollector {
 			for(Repository r : search.repositories) {
 				if(r.language != null && r.language.equals("Java") && r.fork == false) {
 					Project np = new Project(r.owner, r.name);
-					if(!result.contains(np)) // no duplicates
+					if(!result.contains(np)) {// no duplicates
 						result.add(np);
+						System.out.println("Added " + np.toId());
+					}
 				}
 			}
 		}
 		
-		return result;
+		return new ProjectList(keyword, result);
 	}
-	
-	/*private boolean isJavaProject(Project p) throws Exception {
-		org.eclipse.egit.github.core.Repository repo = repoService.getRepository(p.owner, p.repoName);
-		Map<String, Long> langs = repoService.getLanguages(repo);
-		return langs.containsKey("Java") && langs.get("Java") > 0;
-	}*/
 	
 }
 
