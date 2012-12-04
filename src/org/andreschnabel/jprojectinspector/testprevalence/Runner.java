@@ -1,18 +1,16 @@
 package org.andreschnabel.jprojectinspector.testprevalence;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.andreschnabel.jprojectinspector.Helpers;
 import org.andreschnabel.jprojectinspector.testprevalence.ProjectCollector.ProjectList;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 public class Runner {
 	
@@ -23,7 +21,7 @@ public class Runner {
 	}
 	
 	static class Options {
-		public String keyword = "scientific";
+		public String keyword = "unknown";
 		public int numPages = 1;
 		public String listFilename = null;
 		public String collectFilename = null;
@@ -99,9 +97,15 @@ public class Runner {
 		System.out.println("Test prevalence = " + testPrev);
 	}
 
-	private static void collectProjectNames(Options options) throws Exception, IOException {
+	private static void collectProjectNames(Options options) throws Exception {
 		ProjectCollector jpc = new ProjectCollector();
-		ProjectList pl = jpc.collectProjects(options.keyword, options.numPages);
+		ProjectList pl;
+		if(options.dictionaryFilename != null) {
+			String[] keywords = randomlyChoseKeywords(options);
+			pl = jpc.collectProjects(keywords, options.numPages);
+		} else {
+			pl = jpc.collectProjects(options.keyword, options.numPages);
+		}
 		String plJson = gson.toJson(pl);
 		Helpers.writeStrToFile(plJson, options.collectFilename);
 	}
@@ -121,23 +125,7 @@ public class Runner {
 				summary = tpd.determineTestPrevalence(options.keyword, options.numPages);
 			else {
 				ProjectCollector jpc = new ProjectCollector();				
-				
-				String[] dictionary = loadDictionary(options.dictionaryFilename);
-				Random r = new Random();
-
-				List<String> usedKeywords = new LinkedList<String>();
-				String[] keywords = new String[options.numProjects];
-				int randomIndex;
-				for(int i=0; i<keywords.length; i++) {
-					// don't use keyword twice!
-					do {
-						randomIndex = r.nextInt(dictionary.length);
-					} while(usedKeywords.contains(dictionary[randomIndex]));
-
-					keywords[i] = dictionary[randomIndex];
-					usedKeywords.add(keywords[i]);
-				}
-				
+				String[] keywords = randomlyChoseKeywords(options);
 				ProjectList projectList = jpc.collectProjects(keywords, options.numPages);
 				summary = tpd.determineTestPrevalence(projectList);
 			}
@@ -145,6 +133,26 @@ public class Runner {
 		
 		String summaryStr = gson.toJson(summary);		
 		Helpers.writeStrToFile(summaryStr, Helpers.capitalize(options.keyword) + "TestPrevalence.json");
+	}
+
+	private static String[] randomlyChoseKeywords(Options options) throws Exception {
+		String[] dictionary = loadDictionary(options.dictionaryFilename);
+		Random r = new Random();
+
+		List<String> usedKeywords = new LinkedList<String>();
+		String[] keywords = new String[options.numProjects];
+		int randomIndex;
+		for(int i=0; i<keywords.length; i++) {
+			// don't use keyword twice!
+			do {
+				randomIndex = r.nextInt(dictionary.length);
+			} while(usedKeywords.contains(dictionary[randomIndex]));
+
+			keywords[i] = dictionary[randomIndex];
+			usedKeywords.add(keywords[i]);
+		}
+
+		return keywords;
 	}
 
 	private static String[] loadDictionary(String dictionaryFilename) throws Exception {

@@ -43,7 +43,7 @@ public class ProjectCollector {
 			if(search.repositories.size() == 0) break;
 			
 			for(Repository r : search.repositories) {
-				if(r.language != null && isLanguageSupported(r.language) && r.fork == false) {
+				if(r.language != null && isLanguageSupported(r.language) && !r.fork) {
 					Project np = new Project(r.owner, r.name);
 					if(!result.contains(np)) {// no duplicates
 						result.add(np);
@@ -63,7 +63,7 @@ public class ProjectCollector {
 	public ProjectList collectProjects(String[] keywords, int numPages) throws Exception {
 		StringBuilder keywordStr = new StringBuilder();
 		for(int i=0; i<keywords.length; i++)
-			keywordStr.append((i == 0 ? "" : ",") + keywords[i]);
+			keywordStr.append(i == 0 ? "" : ",").append(keywords[i]);
 		
 		List<Project> flatLst = new LinkedList<Project>();
 		for(int i=0; i<keywords.length; i++) {
