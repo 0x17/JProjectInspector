@@ -23,7 +23,7 @@ public class Runner {
 		int numProjs = projects.size();
 		System.out.println("Gathering test prevalence in " + numProjs + " projects...");
 		
-		for(int i=0; i<numProjs; i++) {			
+		for(int i=0; i<numProjs; i++) {
 			Project p = projects.get(i);
 			System.out.println("Checking project " + p.toId() + " " + (i+1) + "/" + numProjs);
 			if(jtd.containsTest(p)) {
