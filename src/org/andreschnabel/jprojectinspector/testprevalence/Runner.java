@@ -3,7 +3,7 @@ package org.andreschnabel.jprojectinspector.testprevalence;
 import org.andreschnabel.jprojectinspector.Helpers;
 
 import com.google.gson.Gson;
-
+import com.google.gson.GsonBuilder;
 
 /**
  * Task:
@@ -15,14 +15,14 @@ import com.google.gson.Gson;
 public class Runner {	
 	public static void main(String[] args) throws Exception {
 		String keyword = "tux";
-		int numPages = 1;		
+		int numPages = 1;
 		
 		for(String arg : args) {
 			if(arg.contains("=")) {
 				String[] parts = arg.split("=");
 				if(parts[0].equals("keyword"))
 					keyword = parts[1];
-				else if(parts[1].equals("pages")) {
+				else if(parts[0].equals("pages")) {
 					numPages = Integer.valueOf(parts[1]);
 				}
 			}
@@ -31,7 +31,7 @@ public class Runner {
 		TestPrevalenceDeterminator tpd = new TestPrevalenceDeterminator();
 		TestPrevalenceSummary summary = tpd.determineTestPrevalence(keyword, numPages);
 		
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();		
 		String summaryStr = gson.toJson(summary);		
 		Helpers.writeStrToFile(summaryStr, "tpSummary.json");
 	}
