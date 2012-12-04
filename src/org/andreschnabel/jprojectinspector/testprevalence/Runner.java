@@ -112,25 +112,34 @@ public class Runner {
 		
 		// Load project list from previously generated file if given
 		if(options.listFilename != null) {
-			String projListJson = Helpers.readEntireFile(new File(options.listFilename));
-			ProjectList projList = gson.fromJson(projListJson, ProjectList.class);
-			options.keyword = projList.keyword;
-			summary = tpd.determineTestPrevalence(projList);
+			String projectListJson = Helpers.readEntireFile(new File(options.listFilename));
+			ProjectList projectList = gson.fromJson(projectListJson, ProjectList.class);
+			options.keyword = projectList.keyword;
+			summary = tpd.determineTestPrevalence(projectList);
 		} else {
 			if(options.dictionaryFilename == null)
 				summary = tpd.determineTestPrevalence(options.keyword, options.numPages);
 			else {
 				ProjectCollector jpc = new ProjectCollector();				
 				
-				String[] dictionary = loadDict(options.dictionaryFilename);
+				String[] dictionary = loadDictionary(options.dictionaryFilename);
 				Random r = new Random();
-				
+
+				List<String> usedKeywords = new LinkedList<String>();
 				String[] keywords = new String[options.numProjects];
-				for(int i=0; i<keywords.length; i++)
-					keywords[i] = dictionary[r.nextInt(dictionary.length)];
+				int randomIndex;
+				for(int i=0; i<keywords.length; i++) {
+					// don't use keyword twice!
+					do {
+						randomIndex = r.nextInt(dictionary.length);
+					} while(usedKeywords.contains(dictionary[randomIndex]));
+
+					keywords[i] = dictionary[randomIndex];
+					usedKeywords.add(keywords[i]);
+				}
 				
-				ProjectList projList = jpc.collectProjects(keywords, options.numPages);				
-				summary = tpd.determineTestPrevalence(projList);
+				ProjectList projectList = jpc.collectProjects(keywords, options.numPages);
+				summary = tpd.determineTestPrevalence(projectList);
 			}
 		}		 
 		
@@ -138,7 +147,7 @@ public class Runner {
 		Helpers.writeStrToFile(summaryStr, Helpers.capitalize(options.keyword) + "TestPrevalence.json");
 	}
 
-	private static String[] loadDict(String dictionaryFilename) throws Exception {
+	private static String[] loadDictionary(String dictionaryFilename) throws Exception {
 		List<String> dict = new LinkedList<String>();
 		FileReader fr = new FileReader(dictionaryFilename);
 		BufferedReader br = new BufferedReader(fr);
