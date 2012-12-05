@@ -38,6 +38,9 @@ public class ProjectCollector {
 			System.out.println("Page " + curPage);
 			String repoSearchUri = "https://api.github.com/legacy/repos/search/" + keyword + "?start_page=" + curPage;
 			String reposStr = Helpers.loadUrlIntoStr(repoSearchUri);
+			if(RateLimitChecker.apiCall()) {
+				System.out.println("WARNING: Reaching rate limit!");
+			}
 			
 			RepoSearch search = gson.fromJson(reposStr, RepoSearch.class);			
 			if(search.repositories.size() == 0) break;
