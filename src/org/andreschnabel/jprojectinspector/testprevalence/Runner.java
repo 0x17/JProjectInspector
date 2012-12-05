@@ -117,6 +117,7 @@ public class Runner {
 		}
 		String plJson = gson.toJson(pl);
 		Helpers.writeStrToFile(plJson, options.collectFilename);
+		System.out.println("Finished collecting project list into: " + options.collectFilename + "!");
 	}
 
 	private static void detTestPrevForProjects(Options options) throws Exception {

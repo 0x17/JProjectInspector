@@ -1,7 +1,8 @@
 package org.andreschnabel.jprojectinspector.testprevalence;
 
-import com.google.gson.Gson;
 import org.andreschnabel.jprojectinspector.Helpers;
+
+import com.google.gson.Gson;
 
 public class RateLimitChecker {
 
