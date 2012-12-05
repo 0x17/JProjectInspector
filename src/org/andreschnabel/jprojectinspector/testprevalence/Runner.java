@@ -168,6 +168,6 @@ public class Runner {
 		
 		br.close();
 		fr.close();
-		return (String[])dict.toArray();
+		return dict.toArray(new String[]{});
 	}
 }
