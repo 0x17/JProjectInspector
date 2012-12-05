@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.andreschnabel.jprojectinspector.Helpers;
 import org.andreschnabel.jprojectinspector.testprevalence.ProjectCollector.ProjectList;
+import org.eclipse.egit.github.core.client.GitHubClient;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,7 +16,8 @@ import java.util.Random;
 public class Runner {
 	
 	private static Gson gson;
-	
+	private static GitHubClient ghc;
+
 	static {
 		gson = new GsonBuilder().setPrettyPrinting().create();
 	}
@@ -31,6 +33,13 @@ public class Runner {
 	
 	public static void main(String[] args) throws Exception {
 		Options options = parseOptions(args);
+
+		if(ProjectCollector.USE_EGIT) {
+			ghc = new GitHubClient();
+			String user = Helpers.prompt("Username");
+			String pw = Helpers.prompt("Password");
+			ghc.setCredentials(user, pw);
+		}
 		
 		// Only collect non-forked java project filenames to given file
 		if(options.collectFilename != null) {
@@ -98,7 +107,7 @@ public class Runner {
 	}
 
 	private static void collectProjectNames(Options options) throws Exception {
-		ProjectCollector jpc = new ProjectCollector();
+		ProjectCollector jpc = new ProjectCollector(ghc);
 		ProjectList pl;
 		if(options.dictionaryFilename != null) {
 			String[] keywords = randomlyChoseKeywords(options);
@@ -122,9 +131,9 @@ public class Runner {
 			summary = tpd.determineTestPrevalence(projectList);
 		} else {
 			if(options.dictionaryFilename == null)
-				summary = tpd.determineTestPrevalence(options.keyword, options.numPages);
+				summary = tpd.determineTestPrevalence(options.keyword, options.numPages, ghc);
 			else {
-				ProjectCollector jpc = new ProjectCollector();				
+				ProjectCollector jpc = new ProjectCollector(ghc);
 				String[] keywords = randomlyChoseKeywords(options);
 				ProjectList projectList = jpc.collectProjects(keywords, options.numPages);
 				summary = tpd.determineTestPrevalence(projectList);

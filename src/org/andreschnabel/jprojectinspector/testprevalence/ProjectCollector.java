@@ -6,8 +6,14 @@ import java.util.List;
 import org.andreschnabel.jprojectinspector.Helpers;
 
 import com.google.gson.Gson;
+import org.eclipse.egit.github.core.SearchRepository;
+import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.RepositoryService;
 
 public class ProjectCollector {
+	private GitHubClient ghc;
+	public static final boolean USE_EGIT = true;
+
 	@SuppressWarnings("unused")
 	private class Repository {		
 		public String type, owner, username, created, created_at, description, pushed, name, language;
@@ -27,8 +33,16 @@ public class ProjectCollector {
 			this.projects = projects;
 		}
 	}
+
+	public ProjectCollector(GitHubClient ghc) {
+		this.ghc = ghc;
+	}
 	
 	public ProjectList collectProjects(String keyword, int numPages) throws Exception {
+		RepositoryService repoService;
+		if(USE_EGIT)
+			repoService = new RepositoryService(ghc);
+
 		List<Project> result = new LinkedList<Project>();
 		Gson gson = new Gson();
 		
@@ -36,21 +50,38 @@ public class ProjectCollector {
 		
 		for(int curPage=1; curPage<=numPages; curPage++) {
 			System.out.println("Page " + curPage);
-			String repoSearchUri = "https://api.github.com/legacy/repos/search/" + keyword + "?start_page=" + curPage;
-			String reposStr = Helpers.loadUrlIntoStr(repoSearchUri);
-			if(RateLimitChecker.apiCall()) {
-				System.out.println("WARNING: Reaching rate limit!");
+
+			if(USE_EGIT) {
+				List<SearchRepository> repoResult = repoService.searchRepositories(keyword, curPage);
+				for(SearchRepository r : repoResult) {
+					String lang = r.getLanguage();
+					if(lang != null && isLanguageSupported(lang) && !r.isFork()) {
+						Project np = new Project(r.getOwner(), r.getName());
+						if(!result.contains(np)) { // no duplicates
+							result.add(np);
+							System.out.println("Added " + np.toId());
+						}
+					}
+				}
 			}
-			
-			RepoSearch search = gson.fromJson(reposStr, RepoSearch.class);			
-			if(search.repositories.size() == 0) break;
-			
-			for(Repository r : search.repositories) {
-				if(r.language != null && isLanguageSupported(r.language) && !r.fork) {
-					Project np = new Project(r.owner, r.name);
-					if(!result.contains(np)) {// no duplicates
-						result.add(np);
-						System.out.println("Added " + np.toId());
+			else {
+				String repoSearchUri = "https://api.github.com/legacy/repos/search/" + keyword + "?start_page=" + curPage;
+				String reposStr = Helpers.loadUrlIntoStr(repoSearchUri);
+
+				if(RateLimitChecker.apiCall()) {
+					System.out.println("WARNING: Reaching rate limit!");
+				}
+
+				RepoSearch search = gson.fromJson(reposStr, RepoSearch.class);
+				if(search.repositories.size() == 0) break;
+
+				for(Repository r : search.repositories) {
+					if(r.language != null && isLanguageSupported(r.language) && !r.fork) {
+						Project np = new Project(r.owner, r.name);
+						if(!result.contains(np)) {// no duplicates
+							result.add(np);
+							System.out.println("Added " + np.toId());
+						}
 					}
 				}
 			}

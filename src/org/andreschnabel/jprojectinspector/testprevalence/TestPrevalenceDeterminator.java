@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.andreschnabel.jprojectinspector.testprevalence.ProjectCollector.ProjectList;
+import org.eclipse.egit.github.core.client.GitHubClient;
 
 public class TestPrevalenceDeterminator {
 	
@@ -44,8 +45,8 @@ public class TestPrevalenceDeterminator {
 		return summary;
 	}
 	
-	public TestPrevalenceSummary determineTestPrevalence(String keyword, int numPages) throws Exception {
-		ProjectCollector jpc = new ProjectCollector();
+	public TestPrevalenceSummary determineTestPrevalence(String keyword, int numPages, GitHubClient ghc) throws Exception {
+		ProjectCollector jpc = new ProjectCollector(ghc);
 		return determineTestPrevalence(jpc.collectProjects(keyword, numPages));		
 	}
 
