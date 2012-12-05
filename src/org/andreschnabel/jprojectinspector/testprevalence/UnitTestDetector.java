@@ -18,7 +18,8 @@ public class UnitTestDetector {
 		String destPath = DEST_BASE + p.repoName;
 		Helpers.system("git clone -v " + BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
 		boolean foundTest = traverseForTest(new File(destPath));
-		Helpers.deleteDir(new File(destPath));
+		//Helpers.deleteDir(new File(destPath));
+		Helpers.rmDir(destPath);
 		return foundTest;
 	}
 
@@ -33,7 +34,11 @@ public class UnitTestDetector {
 		} else {
 			String filename = root.getName();
 			if(Helpers.strEndsWithOneOf(filename, ".java", ".rb", ".py", ".js", ".cpp", ".cs")) {
-				String srcStr = Helpers.readEntireFile(root);
+				String srcStr = null;
+				try {
+					srcStr = Helpers.readEntireFile(root);
+				} catch(Exception e) { return false; }
+				
 			 	if(filename.endsWith(".java")) return isJavaSrcTest(srcStr, filename);
 			 	else if(filename.endsWith(".rb")) return isRubySrcTest(srcStr, filename);
 			 	else if(filename.endsWith(".py")) return isPythonSrcTest(srcStr, filename);

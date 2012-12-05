@@ -34,7 +34,7 @@ public class Runner {
 	public static void main(String[] args) throws Exception {
 		Options options = parseOptions(args);
 
-		if(ProjectCollector.USE_EGIT) {
+		if(ProjectCollector.USE_EGIT && options.listFilename == null) {
 			ghc = new GitHubClient();
 			String user = Helpers.prompt("Username");
 			String pw = Helpers.prompt("Password");
@@ -48,6 +48,9 @@ public class Runner {
 		}
 		
 		detTestPrevForProjects(options);
+		
+		//UnitTestDetector utd = new UnitTestDetector();
+		//utd.containsTest(new Project("isaaccp","fun-todo"));
 	}
 
 	private static Options parseOptions(String[] args) throws Exception {

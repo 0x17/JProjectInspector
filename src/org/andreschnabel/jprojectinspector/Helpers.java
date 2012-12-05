@@ -107,6 +107,7 @@ public class Helpers {
 	public static void deleteDir(File root) throws Exception {
 		if(!root.isDirectory())
 			throw new Exception("Path must point to dir!");
+		
 		for(File f : root.listFiles()) {
 			if(f.isDirectory()) {
 				deleteDir(f);
@@ -154,5 +155,11 @@ public class Helpers {
 			if(str.equals(candidate)) return true;
 		
 		return false;
+	}
+
+	public static void rmDir(String destPath) throws Exception {
+		if(destPath.startsWith("/tmp/"))
+			system("rm -rf " + destPath);
+		else throw new Exception("Never leave /tmp/ with rm -rf!");
 	}
 }
