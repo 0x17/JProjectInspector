@@ -25,15 +25,6 @@ public class ProjectCollector {
 		public List<Repository> repositories;
 	}
 	
-	public class ProjectList {
-		public String keyword;
-		public List<Project> projects;
-		public ProjectList(String keyword, List<Project> projects) {
-			this.keyword = keyword;
-			this.projects = projects;
-		}
-	}
-
 	public ProjectCollector(GitHubClient ghc) {
 		this.ghc = ghc;
 	}

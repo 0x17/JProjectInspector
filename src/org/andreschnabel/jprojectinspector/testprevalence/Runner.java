@@ -1,17 +1,17 @@
 package org.andreschnabel.jprojectinspector.testprevalence;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.andreschnabel.jprojectinspector.Helpers;
-import org.andreschnabel.jprojectinspector.testprevalence.ProjectCollector.ProjectList;
-import org.eclipse.egit.github.core.client.GitHubClient;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
+import org.andreschnabel.jprojectinspector.Helpers;
+import org.eclipse.egit.github.core.client.GitHubClient;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Runner {
 	
@@ -73,6 +73,10 @@ public class Runner {
 					result.collectFilename = parts[1];
 				else if(parts[0].equals("summaryFolder")) {
 					printMergedSummaries(parts[1]);
+					System.exit(0);
+				} else if(parts[0].equals("minimize")) {
+					int destSize = Integer.valueOf(Helpers.prompt("Dest size"));
+					randomlyMinimizeProjectListFile(parts[1], "minimized" + parts[1], destSize);
 					System.exit(0);
 				}
 			}
@@ -182,5 +186,29 @@ public class Runner {
 		br.close();
 		fr.close();
 		return dict.toArray(new String[]{});
+	}
+	
+	private static void randomlyMinimizeProjectListFile(String srcFilename, String destFilename, int destSize) throws Exception {
+		String projectListJson = Helpers.readEntireFile(new File(srcFilename));
+		ProjectList projectList = gson.fromJson(projectListJson, ProjectList.class);
+		
+		randomlyMinimizeProjectList(projectList, destSize);		
+		String outJson = gson.toJson(projectList);
+		Helpers.writeStrToFile(outJson, destFilename);
+	}
+	
+	private static void randomlyMinimizeProjectList(ProjectList src, int destSize) throws Exception {
+		List<Project> srcProjs = src.projects;
+		int initialSize = srcProjs.size();		
+		Random r = new Random();
+		
+		if(initialSize <= destSize) {
+			throw new Exception("Dest size must be smaller than orig size for minimize!");
+		}
+		
+		for(int i=0; i<initialSize - destSize; i++) {
+			int rval = r.nextInt(srcProjs.size());
+			srcProjs.remove(rval);
+		}
 	}
 }
