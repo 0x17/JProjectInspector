@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.testprevalence;
+package org.andreschnabel.jprojectinspector.testprevalence.scrapers;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Helpers {
 	
@@ -161,5 +163,37 @@ public class Helpers {
 		if(destPath.startsWith("/tmp/"))
 			system("rm -rf " + destPath);
 		else throw new Exception("Never leave /tmp/ with rm -rf!");
+	}
+	
+	public static List<String> batchMatchOneGroup(String regex, String input) {
+		List<String> result = new LinkedList<String>();
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(input);
+		while(m.find()) {
+			if(m.groupCount() == 1) {
+				result.add(m.group(1));
+			}
+		}
+		return result;
+	}
+	
+	public static List<StringPair> batchMatchTwoGroups(String regex, String input) {
+		List<StringPair> result = new LinkedList<StringPair>();
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(input);
+		while(m.find()) {
+			if(m.groupCount() == 2) {
+				result.add(new StringPair(m.group(1), m.group(2)));
+			}
+		}
+		return result;
+	}
+
+	public static String removeAllWhitespace(String s) {
+		return s.replaceAll("\\s", "");
+	}
+	
+	public static String removeWhitespace(String s) {
+		return s.replaceAll("[\n\t]*", "");
 	}
 }
