@@ -1,0 +1,17 @@
+dict.txt
+projectListLong.json
+projectListShort.json
+projectListShortResults.json
+results/java/lists/BiologyList.json
+results/java/lists/BookProjects.json
+results/java/lists/DoomList.json
+results/java/lists/DownloadProjects.json
+results/java/lists/FunProjects.json
+results/java/lists/MathProjects.json
+results/java/lists/PhysicsList.json
+results/java/summaries/DownloadTestPrevalence.json
+results/java/summaries/MacTestPrevalence.json
+results/java/summaries/MathTestPrevalence.json
+results/java/summaries/PhysicsTestPrevalence.json
+results/java/summaries/ScientificTestPrevalence.json
+results/java/summaries/TuxTestPrevalence.json
