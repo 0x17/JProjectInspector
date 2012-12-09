@@ -1,6 +1,8 @@
-package org.andreschnabel.jprojectinspector.testprevalence;
+package org.andreschnabel.jprojectinspector.testprevalence.metrics;
 
 import org.andreschnabel.jprojectinspector.Helpers;
+import org.andreschnabel.jprojectinspector.testprevalence.Globals;
+import org.andreschnabel.jprojectinspector.testprevalence.model.Project;
 
 import java.io.File;
 

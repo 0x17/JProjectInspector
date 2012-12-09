@@ -6,6 +6,9 @@ import java.util.List;
 import org.andreschnabel.jprojectinspector.Helpers;
 
 import com.google.gson.Gson;
+import org.andreschnabel.jprojectinspector.testprevalence.metrics.UnitTestDetector;
+import org.andreschnabel.jprojectinspector.testprevalence.model.Project;
+import org.andreschnabel.jprojectinspector.testprevalence.model.ProjectList;
 import org.eclipse.egit.github.core.SearchRepository;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.RepositoryService;

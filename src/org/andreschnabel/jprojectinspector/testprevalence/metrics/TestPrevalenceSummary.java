@@ -1,4 +1,6 @@
-package org.andreschnabel.jprojectinspector.testprevalence;
+package org.andreschnabel.jprojectinspector.testprevalence.metrics;
+
+import org.andreschnabel.jprojectinspector.testprevalence.model.Project;
 
 import java.util.Map;
 

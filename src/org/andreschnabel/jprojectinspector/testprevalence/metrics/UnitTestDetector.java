@@ -1,10 +1,12 @@
-package org.andreschnabel.jprojectinspector.testprevalence;
+package org.andreschnabel.jprojectinspector.testprevalence.metrics;
 
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.andreschnabel.jprojectinspector.Helpers;
+import org.andreschnabel.jprojectinspector.testprevalence.Globals;
+import org.andreschnabel.jprojectinspector.testprevalence.model.Project;
 
 public class UnitTestDetector {
 	

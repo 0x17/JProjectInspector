@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Random;
 
 import org.andreschnabel.jprojectinspector.Helpers;
+import org.andreschnabel.jprojectinspector.testprevalence.metrics.TestPrevalenceDeterminator;
+import org.andreschnabel.jprojectinspector.testprevalence.metrics.TestPrevalenceSummary;
+import org.andreschnabel.jprojectinspector.testprevalence.model.Project;
+import org.andreschnabel.jprojectinspector.testprevalence.model.ProjectList;
 import org.eclipse.egit.github.core.client.GitHubClient;
 
 import com.google.gson.Gson;
@@ -128,7 +132,7 @@ public class Runner {
 	}
 
 	private static void detTestPrevForProjects(Options options) throws Exception {
-		TestPrevalenceDeterminator tpd = new TestPrevalenceDeterminator();		
+		TestPrevalenceDeterminator tpd = new TestPrevalenceDeterminator();
 		TestPrevalenceSummary summary;
 		
 		// Load project list from previously generated file if given

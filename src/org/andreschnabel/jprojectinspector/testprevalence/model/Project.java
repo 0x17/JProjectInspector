@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.testprevalence;
+package org.andreschnabel.jprojectinspector.testprevalence.model;
 
 public class Project {
 	public String owner;

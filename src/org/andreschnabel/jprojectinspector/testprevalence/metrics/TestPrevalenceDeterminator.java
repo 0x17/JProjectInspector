@@ -1,9 +1,12 @@
-package org.andreschnabel.jprojectinspector.testprevalence;
+package org.andreschnabel.jprojectinspector.testprevalence.metrics;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.andreschnabel.jprojectinspector.testprevalence.ProjectCollector;
+import org.andreschnabel.jprojectinspector.testprevalence.model.Project;
+import org.andreschnabel.jprojectinspector.testprevalence.model.ProjectList;
 import org.eclipse.egit.github.core.client.GitHubClient;
 
 public class TestPrevalenceDeterminator {
@@ -11,7 +14,7 @@ public class TestPrevalenceDeterminator {
 	public TestPrevalenceSummary determineTestPrevalence(ProjectList lst) throws Exception {
 		UnitTestDetector jtd = new UnitTestDetector();
 		
-		List<Project> projects = lst.projects;	
+		List<Project> projects = lst.projects;
 		int numTestProjs = 0;
 		int numProjs = projects.size();
 		System.out.println("Gathering test prevalence in " + numProjs + " projects...");
