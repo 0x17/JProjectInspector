@@ -10,13 +10,10 @@ public class UnitTestDetector {
 	
 	private final static String[] supportedLangs = new String[] { "Java", "Ruby", "C++", "C#", "JavaScript", "Python" };
 	public static String[] getSupportedLangs() { return supportedLangs; }
-	
-	private final static String BASE_URL = "https://github.com/";
-	private final static String DEST_BASE = "/tmp/";
-	
+
 	public boolean containsTest(Project p) throws Exception {
-		String destPath = DEST_BASE + p.repoName;
-		Helpers.system("git clone -v " + BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
+		String destPath = Globals.DEST_BASE + p.repoName;
+		Helpers.system("git clone -v " + Globals.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
 		boolean foundTest = traverseForTest(new File(destPath));
 		//Helpers.deleteDir(new File(destPath));
 		Helpers.rmDir(destPath);
