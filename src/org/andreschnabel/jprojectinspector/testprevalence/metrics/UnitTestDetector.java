@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import org.andreschnabel.jprojectinspector.Helpers;
 import org.andreschnabel.jprojectinspector.testprevalence.Globals;
+import org.andreschnabel.jprojectinspector.testprevalence.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.testprevalence.model.Project;
 
 public class UnitTestDetector {
@@ -14,11 +15,10 @@ public class UnitTestDetector {
 	public static String[] getSupportedLangs() { return supportedLangs; }
 
 	public boolean containsTest(Project p) throws Exception {
-		String destPath = Globals.DEST_BASE + p.repoName;
-		Helpers.system("git clone -v " + Globals.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
-		boolean foundTest = traverseForTest(new File(destPath));
-		//Helpers.deleteDir(new File(destPath));
-		Helpers.rmDir(destPath);
+		ProjectDownloader pd = new ProjectDownloader();
+		File pf = pd.loadProject(p);
+		boolean foundTest = traverseForTest(pf);
+		pd.deleteProject(p);
 		return foundTest;
 	}
 
