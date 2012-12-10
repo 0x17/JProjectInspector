@@ -5,7 +5,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.andreschnabel.jprojectinspector.Helpers;
-import org.andreschnabel.jprojectinspector.testprevalence.Globals;
 import org.andreschnabel.jprojectinspector.testprevalence.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.testprevalence.model.Project;
 
