@@ -17,7 +17,7 @@ import org.eclipse.egit.github.core.client.GitHubClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class Runner {
+public class PrevalenceRunner {
 	
 	private static Gson gson;
 	private static GitHubClient ghc;

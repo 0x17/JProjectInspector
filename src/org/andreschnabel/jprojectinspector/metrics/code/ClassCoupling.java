@@ -5,6 +5,11 @@ import java.util.List;
 
 public class ClassCoupling {
 
+	public float getAverageCoupling() {
+		// TODO: Implement!
+		return 0.0f;
+	}
+
 	public List<String> listClassNamesInProject(File rootDir) {
 	// TODO: Implement!
 		return null;
