@@ -33,7 +33,7 @@ public class ProjectStatsRunner {
 		stats.containsTest = utd.containsTest(project);
 
 		ClassCoupling ccoupling = new ClassCoupling();
-		stats.coupling = ccoupling.getAverageCoupling();
+		stats.coupling = ccoupling.getAverageCoupling(projectRoot);
 
 		McCabe mcCabe = new McCabe();
 		stats.mcCabe = mcCabe.determineMcCabeForDir(projectRoot);
