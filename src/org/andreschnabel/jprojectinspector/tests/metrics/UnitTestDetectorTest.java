@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.tests;
+package org.andreschnabel.jprojectinspector.tests.metrics;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
