@@ -165,7 +165,10 @@ public class Helpers {
 		else throw new Exception("Never leave /tmp/ with rm -rf!");
 	}
 	
-	public static List<String> batchMatchOneGroup(String regex, String input) {
+	public static List<String> batchMatchOneGroup(String regex, String input) throws Exception {
+		if(!regex.contains("(") || !regex.contains(")"))
+			throw new Exception("Regex must contain at least one group: " + regex);
+		
 		List<String> result = new LinkedList<String>();
 		Pattern p = Pattern.compile(regex);
 		Matcher m = p.matcher(input);

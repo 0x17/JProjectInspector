@@ -32,25 +32,25 @@ public class UserScraper {
 		return ud;
 	}
 	
-	private static List<String> scrapeNames(String htmlStr) {
+	private static List<String> scrapeNames(String htmlStr) throws Exception {
 		String regex = "<a href=\"/([a-zA-Z0-9]*)\">[a-zA-Z0-9]*</a>";
 		List<String> usernames = Helpers.batchMatchOneGroup(regex, htmlStr);
 		return usernames;
 	}
 	
-	private List<String> scrapeFollowing(String htmlStr, String name) {
+	private List<String> scrapeFollowing(String htmlStr, String name) throws Exception {
 		List<String> names = scrapeNames(htmlStr);
 		names.remove(name);
 		return names;
 	}
 
-	private List<String> scrapeFollowers(String htmlStr, String name) {
+	private List<String> scrapeFollowers(String htmlStr, String name) throws Exception {
 		List<String> names = scrapeNames(htmlStr);
 		names.remove(name);
 		return names;
 	}
 
-	private int scrapeNumStarredProjects(String htmlStr) {
+	private int scrapeNumStarredProjects(String htmlStr) throws Exception {
 		htmlStr = Helpers.removeAllWhitespace(htmlStr);
 		String regex = "<li><strong>([0-9]*)</strong><span>starred</span>";
 		String resStr = Helpers.batchMatchOneGroup(regex, htmlStr).get(0);
@@ -72,7 +72,7 @@ public class UserScraper {
 		return projects;
 	}
 
-	private String scrapeJoinDate(String htmlStr) {
+	private String scrapeJoinDate(String htmlStr) throws Exception {
 		htmlStr = Helpers.removeWhitespace(htmlStr);
 		String regex = "<span class=\"join-date\">([A-Za-z0-9, ]*)</span>";
 		return Helpers.batchMatchOneGroup(regex, htmlStr).get(0);
