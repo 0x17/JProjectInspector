@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.andreschnabel.jprojectinspector.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.model.Project;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.LogCommand;
 import org.eclipse.jgit.lib.IndexDiff;
@@ -85,15 +83,6 @@ public class Contributors {
 		repo.close();
 
 		return authors.size();
-	}
-
-	public static void main(String[] args) throws Exception {
-		ProjectDownloader pd = new ProjectDownloader();
-		Project p = new Project("0x17", "JProjectInspector");
-		File root = pd.loadProject(p);
-		Contributors cc = new Contributors();
-		System.out.println("Number of contributors: " + cc.countNumContributors(root));
-		pd.deleteProject(p);
 	}
 
 }

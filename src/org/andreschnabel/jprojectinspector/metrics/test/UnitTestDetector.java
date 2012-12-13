@@ -78,31 +78,31 @@ public class UnitTestDetector {
 		}
 	}
 
-	private boolean isCsharpSrcTest(String srcStr, String filename) {
+	public static boolean isCsharpSrcTest(String srcStr, String filename) {
 		return Helpers.strContainsOneOf(srcStr, "[TestFixture]", "[Test]", "[TearDown]", "[Setup]", "using csUnit");
 	}
 
-	private boolean isCppSrcTest(String srcStr, String filename) {
+	public static boolean isCppSrcTest(String srcStr, String filename) {
 		return Helpers.strContainsOneOf(srcStr, "CPPUNIT_TEST", "#include <cppunit", "#include<cppunit", "ASSERT_THAT", "EXPECT_THAT");
 	}
 
-	private boolean isJavaScriptSrcTest(String srcStr, String filename) {
+	public static boolean isJavaScriptSrcTest(String srcStr, String filename) {
 		Pattern p = Pattern.compile("expect(.+).toBe(.+);");
 		Matcher m = p.matcher(srcStr);
 		if(m.matches()) return true;
 		return Helpers.strContainsOneOf(srcStr, "assertEqual", "registerTestSuite", "strictEqual", "deepEqual", "qunit.js", "expectEq", "expectCall", "buster.js", "buster.");
 	}
 
-	private boolean isPythonSrcTest(String srcStr, String filename) {
+	public static boolean isPythonSrcTest(String srcStr, String filename) {
 		return Helpers.strContainsOneOf(srcStr, "import doctest", "import unittest", "from unittest", "TestCase", "assertEqual");
 	}
 
-	private boolean isRubySrcTest(String srcStr, String filename) {
+	public static boolean isRubySrcTest(String srcStr, String filename) {
 		if(filename.endsWith("_spec.rb")) return true;
 		return Helpers.strContainsOneOf(srcStr, "cucumber", "assertEqual", "require 'test/unit'", "require \"test/unit\"", "Test::Unit", "require \"shoulda\"", "require 'shoulda'", "describe");
 	}
 
-	private boolean isJavaSrcTest(String srcStr, String filename) {
+	public static boolean isJavaSrcTest(String srcStr, String filename) {
 		return Helpers.strContainsOneOf(srcStr, "cucumber", "@Test", "org.junit", "assertEqual");
 	}
 

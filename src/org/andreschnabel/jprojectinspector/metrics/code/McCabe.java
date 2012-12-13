@@ -7,7 +7,7 @@ import java.io.File;
 public class McCabe {
 
 	public int determineMcCabeForSrcStr(String srcStr) {
-		return Helpers.countOccurencesOfWords(srcStr, new String[]{"switch", "if", "else", "case"});
+		return Helpers.countOccurencesOfWords(srcStr, new String[]{"if", "for", "while", "case", "catch", "&&", "||", "?"});
 	}
 
 	public float determineMcCabeForSrcFile(File srcFile) throws Exception {

@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.metrics.test;
 
 import org.andreschnabel.jprojectinspector.metrics.code.LinesOfCode;
+import org.andreschnabel.jprojectinspector.utilities.Helpers;
 
 import java.io.File;
 
@@ -17,11 +18,7 @@ public class TestLinesOfCode {
 			return sum;
 		}
 		else {
-			if(!root.getName().toLowerCase().contains("test")) {
-				return 0;
-			} else {
-				return loc.countLocOfSrcFile(root);
-			}
+			return root.getName().endsWith(".java") && UnitTestDetector.isJavaSrcTest(Helpers.readEntireFile(root), root.getName()) ? loc.countLocOfSrcFile(root) : 0;
 		}
 	}
 

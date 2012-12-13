@@ -28,11 +28,13 @@ public class LinesOfCodeTest {
 	}
 	
 	@Test
-	public void testCountLocOfSrcFile() {
+	public void testCountLocOfSrcFile() throws Exception {
+		assertEquals(43, loc.countLocOfSrcFile(new File(TestCommon.TEST_SRC_FILENAME)));
 	}
 	
 	@Test
-	public void testCountLocOfDir() {
+	public void testCountLocOfDir() throws Exception {
+		assertEquals(43, loc.countLocOfDir(new File(TestCommon.TEST_SRC_DIRECTORY)));
 	}
 
 	@Test
