@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.tests.metrics;
+package org.andreschnabel.jprojectinspector.tests.metrics.code;
 
 import static org.junit.Assert.assertEquals;
 

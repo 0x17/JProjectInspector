@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.metrics.test;
+package org.andreschnabel.jprojectinspector.metrics.test.prevalence;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 

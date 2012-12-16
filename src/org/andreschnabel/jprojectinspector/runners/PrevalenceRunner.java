@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector;
+package org.andreschnabel.jprojectinspector.runners;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,11 +7,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import org.andreschnabel.jprojectinspector.metrics.test.TestPrevalence;
-import org.andreschnabel.jprojectinspector.metrics.test.TestPrevalenceSummary;
+import org.andreschnabel.jprojectinspector.metrics.test.prevalence.TestPrevalence;
+import org.andreschnabel.jprojectinspector.metrics.test.prevalence.TestPrevalenceSummary;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.ProjectCollector;
 import org.eclipse.egit.github.core.client.GitHubClient;
 
 import com.google.gson.Gson;

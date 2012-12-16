@@ -2,14 +2,14 @@ package org.andreschnabel.jprojectinspector.metrics.code;
 
 import java.io.File;
 
-import org.andreschnabel.jprojectinspector.Globals;
+import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.Helpers;
 
 public class LinesOfCode {
 
 	public int countLocForProj(Project project) throws Exception {
-		File root = new File(Globals.DEST_BASE+project.repoName);
+		File root = new File(Config.DEST_BASE+project.repoName);
 		return countLocOfDir(root);
 	}
 

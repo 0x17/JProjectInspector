@@ -1,32 +1,27 @@
-package org.andreschnabel.jprojectinspector;
+package org.andreschnabel.jprojectinspector.runners;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import org.andreschnabel.jprojectinspector.metrics.code.ClassCoupling;
 import org.andreschnabel.jprojectinspector.metrics.code.LinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.code.McCabe;
 import org.andreschnabel.jprojectinspector.metrics.project.*;
-import org.andreschnabel.jprojectinspector.metrics.test.TestCoverage;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
-import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
+import org.andreschnabel.jprojectinspector.metrics.test.coverage.TestCoverage;
+import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectStats;
 import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 
 import java.io.File;
 import java.io.IOException;
 
 public class ProjectStatsRunner {
 
-	private final Project project;
-	private final File projectRoot;
-
-	public ProjectStatsRunner(Project project, File projectRoot) {
-		this.project = project;
-		this.projectRoot = projectRoot;
-	}
-
-	private ProjectStats collectStats() throws Exception {
+	private ProjectStats collectStats(Project project, File projectRoot) throws Exception {
+		// For now only determine 7 properties.		
 		ProjectStats stats = new ProjectStats();
 
 		UnitTestDetector utd = new UnitTestDetector();
@@ -45,8 +40,8 @@ public class ProjectStatsRunner {
 		stats.codeFrequency = cf.countCodeFrequencyForProj(project);
 
 		Contributors contribs = new Contributors();
-		stats.numContributors = contribs.countNumContributors(projectRoot);
-		stats.numTestContributors = contribs.countNumTestContributors(projectRoot);
+		stats.numContributors = contribs.countNumContributors(project);
+		//stats.numTestContributors = contribs.countNumTestContributors(projectRoot);
 
 		Issues issues = new Issues();
 		stats.numIssues = issues.getNumberOfIssues(project);
@@ -58,7 +53,7 @@ public class ProjectStatsRunner {
 		stats.selectivity = selectivity.getSelectivity(project);
 
 		TestCoverage tc = new TestCoverage();
-		stats.testCoverage = tc.determineClassCoverage(projectRoot);
+		stats.testCoverage = tc.determineMethodCoverage(projectRoot);
 
 		TestLinesOfCode tloc = new TestLinesOfCode();
 		stats.testLinesOfCode = tloc.countTestLocOfDir(projectRoot);
@@ -83,8 +78,8 @@ public class ProjectStatsRunner {
 		ProjectDownloader pd = new ProjectDownloader();
 		File projectRoot = pd.loadProject(p);
 
-		ProjectStatsRunner psr = new ProjectStatsRunner(p, projectRoot);
-		ProjectStats stats = psr.collectStats();
+		ProjectStatsRunner psr = new ProjectStatsRunner();
+		ProjectStats stats = psr.collectStats(p, projectRoot);
 		psr.writeStatsToFile(stats, p.repoName + "Stats.json");
 
 		pd.deleteProject(p);

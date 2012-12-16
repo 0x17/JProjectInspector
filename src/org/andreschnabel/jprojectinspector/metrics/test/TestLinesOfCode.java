@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.metrics.test;
 
 import org.andreschnabel.jprojectinspector.metrics.code.LinesOfCode;
+import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.utilities.Helpers;
 
 import java.io.File;

@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.metrics.test;
+package org.andreschnabel.jprojectinspector.metrics.test.prevalence;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.andreschnabel.jprojectinspector.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 
 public class UnitTestDetector {
 	

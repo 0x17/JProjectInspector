@@ -10,31 +10,18 @@ import org.andreschnabel.jprojectinspector.utilities.Helpers;
 
 public class ClassCoupling {
 
-	private Map<String, File> classInFile = new HashMap<String, File>();
-
-	public Map<String, File> getClassInFile() {
-		return classInFile;
-	}
-
-	public void setClassInFile(Map<String, File> classInFile) {
-		this.classInFile = classInFile;
-	}
-
-	public void reset() {
-		classInFile.clear();;
-	}
-
 	public float getAverageCoupling(File root) throws Exception {
-		List<String> classNames = listClassNamesInProject(root);
+		Map<String, File> classInFile = new HashMap<String, File>();
+		List<String> classNames = listClassNamesInProject(root, classInFile);
 		int classCount = classNames.size();
 		int couplingCount = 0;
 		for(String className : classNames) {
-			couplingCount += referencedClasses(className).size();
+			couplingCount += referencedClasses(className, classInFile).size();
 		}
 		return (float)couplingCount/classCount;
 	}
 
-	public List<String> listClassNamesInFile(File f) throws Exception {
+	public List<String> listClassNamesInFile(File f, Map<String, File> classInFile) throws Exception {
 		String srcStr = Helpers.readEntireFile(f);
 		List<String> clsNames = Helpers.batchMatchOneGroup("class ([A-Za-z0-9]+)", srcStr);
 
@@ -46,21 +33,21 @@ public class ClassCoupling {
 		return clsNames;
 	}
 
-	public List<String> listClassNamesInProject(File rootDir) throws Exception {
+	public List<String> listClassNamesInProject(File rootDir, Map<String, File> classInFile) throws Exception {
 		List<String> clsNames = new LinkedList<String>();
 		if(rootDir.isDirectory()) {
 			for(File f : rootDir.listFiles()) {
-				clsNames.addAll(listClassNamesInProject(f));
+				clsNames.addAll(listClassNamesInProject(f, classInFile));
 			}
 			return clsNames;
 		}
 		else {
-			return listClassNamesInFile(rootDir);
+			return listClassNamesInFile(rootDir, classInFile);
 		}
 	}
 	
-	public List<String> referencedClasses(String className) throws Exception {
-		String classCode = getCodeOfClass(className);
+	public List<String> referencedClasses(String className, Map<String, File> classInFile) throws Exception {
+		String classCode = getCodeOfClass(className, classInFile);
 		List<String> refCls = new LinkedList<String>();
 
 		for(String knownClassName : classInFile.keySet()) {			
@@ -104,7 +91,7 @@ public class ClassCoupling {
 		return getCodeOfClassInSrcStr(className, sourceStr);
 	}
 
-	public String getCodeOfClass(String className) throws Exception {
+	public String getCodeOfClass(String className, Map<String, File> classInFile) throws Exception {
 		if(!classInFile.containsKey(className))
 			return "";
 

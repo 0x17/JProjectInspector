@@ -11,7 +11,7 @@ public class ProjectStats {
 	// Test properties
 	public float testCoverage;
 	public int testLinesOfCode;
-	public int numTestContributors;
+	//public int numTestContributors;
 
 	// Project properties
 	public int numContributors;

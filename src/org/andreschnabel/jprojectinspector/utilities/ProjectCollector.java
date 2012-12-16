@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector;
+package org.andreschnabel.jprojectinspector.utilities;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,10 +6,9 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
+import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
 import org.eclipse.egit.github.core.SearchRepository;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.RepositoryService;

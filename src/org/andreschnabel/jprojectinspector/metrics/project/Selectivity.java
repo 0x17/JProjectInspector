@@ -3,21 +3,33 @@ package org.andreschnabel.jprojectinspector.metrics.project;
 import java.util.Collection;
 
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.Helpers;
 import org.eclipse.egit.github.core.PullRequest;
 import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.client.PageIterator;
 import org.eclipse.egit.github.core.service.PullRequestService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 public class Selectivity {
 	
-	private static final int MAX_PULL_REQ_PAGES = 1;
+	private static final int MAX_PULL_REQ_PAGES = 5;
 	private PullRequestService pullReqService;
 	private RepositoryService repoService;
 	
-	public Selectivity() {
-		repoService = new RepositoryService();
-		pullReqService = new PullRequestService();
+	public Selectivity() throws Exception {
+		// Authenticate to raise rate limit.
+		GitHubClient ghc = authenticate();
+		repoService = new RepositoryService(ghc);
+		pullReqService = new PullRequestService(ghc);		
+	}
+	
+	private GitHubClient authenticate() throws Exception {		
+		GitHubClient ghc = new GitHubClient();
+		String user = Helpers.prompt("Username");
+		String pw = Helpers.prompt("Password");
+		ghc.setCredentials(user, pw);
+		return ghc;
 	}
 	
 	public int getSelectivity(Project p) throws Exception {

@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.Assert;
+
 public class Helpers {
 	
 	public static void system(String cmd) throws Exception {
@@ -80,7 +82,7 @@ public class Helpers {
 		return sum;
 	}
 
-	private static int countOccurencesOfWord(String str, String word) {
+	public static int countOccurencesOfWord(String str, String word) {
 		int ctr = 0;
 		int j = 0;
 		for(int i=0; i<str.length(); i++) {
@@ -198,5 +200,12 @@ public class Helpers {
 	
 	public static String removeWhitespace(String s) {
 		return s.replaceAll("[\n\t]*", "");
+	}
+
+	public static <T> void assertListEquals(T[] expectedValues, List<T> actualValues) {
+		Assert.assertEquals(expectedValues.length, actualValues.size());
+		for(int i=0; i<expectedValues.length; i++) {
+			Assert.assertEquals(expectedValues[i], actualValues.get(i));
+		}
 	}
 }

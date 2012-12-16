@@ -1,9 +1,9 @@
-package org.andreschnabel.jprojectinspector.tests.metrics;
+package org.andreschnabel.jprojectinspector.tests.metrics.test.prevalence;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
+import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.junit.Before;
 import org.junit.Test;

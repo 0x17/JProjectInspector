@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.Helpers;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.LogCommand;
 import org.eclipse.jgit.lib.IndexDiff;
@@ -13,35 +15,9 @@ import org.eclipse.jgit.treewalk.FileTreeIterator;
 
 public class Contributors {
 
-	public int countNumContributors(File root) throws Exception {
-		if(!root.exists())
-			throw new Exception("Check out first!");
-
-		FileRepository repo = new FileRepository(root.getAbsolutePath() + "/.git");
-		
-		Git git = new Git(repo);
-		LogCommand logCmd = git.log();
-		Iterable<RevCommit> revWalk = logCmd.call();
-		
-		/*PlotWalk revWalk = new PlotWalk(repo);
-		ObjectId rootId = repo.resolve(Constants.HEAD);
-		RevCommit rootCommit = revWalk.parseCommit(rootId);
-		revWalk.markStart(rootCommit);
-		PlotCommitList<PlotLane> plotCommitList = new PlotCommitList<PlotLane>();
-		plotCommitList.source(revWalk);
-		plotCommitList.fillTo(Integer.MAX_VALUE);*/
-
-		List<String> authors = new LinkedList<String>();
-
-		for(RevCommit commit : revWalk) {
-			String authorName = commit.getAuthorIdent().getName();
-			if(!authors.contains(authorName))
-				authors.add(authorName);
-		}
-
-		repo.close();
-
-		return authors.size();
+	public int countNumContributors(Project project) throws Exception {
+		String contribsData = Helpers.loadUrlIntoStr("https://github.com/"+project.owner+"/"+project.repoName+"/graphs/contributors-data");
+		return Helpers.countOccurencesOfWord(contribsData, "\"author\"");
 	}
 	
 	public int countNumTestContributors(File root) throws Exception {

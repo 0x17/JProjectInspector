@@ -1,19 +1,18 @@
-package org.andreschnabel.jprojectinspector.tests.metrics;
+package org.andreschnabel.jprojectinspector.tests.metrics.code;
+
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.andreschnabel.jprojectinspector.Globals;
 import org.andreschnabel.jprojectinspector.metrics.code.ClassCoupling;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.utilities.Helpers;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class ClassCouplingTest {
 	
@@ -22,14 +21,6 @@ public class ClassCouplingTest {
 	@Before
 	public void setUp() throws Exception {
 		this.cc = new ClassCoupling();
-	}
-
-	@Test
-	public void testReset() {
-		Map<String, File> classInFile = cc.getClassInFile();
-		classInFile.put("SomeClassName", new File(""));
-		cc.reset();
-		assertEquals(0, classInFile.size()); 
 	}
 	
 	@Test
@@ -42,24 +33,21 @@ public class ClassCouplingTest {
 	
 	@Test
 	public void testListClassNamesInFile() throws Exception {
-		List<String> actualClassLst = cc.listClassNamesInFile(new File(TestCommon.TEST_SRC_FILENAME));
-		List<String> expectedClassLst = new LinkedList<String>();
-		Collections.addAll(expectedClassLst, new String[] {"Point2D", "Point3D", "Position2D", "Position3D"});
-		assertEquals(expectedClassLst, actualClassLst);
+		List<String> actualClassLst = cc.listClassNamesInFile(new File(TestCommon.TEST_SRC_FILENAME), new HashMap<String, File>());
+		Helpers.assertListEquals(new String[] {"Point2D", "Point3D", "Position2D", "Position3D"}, actualClassLst);
 	}
 	
 	@Test
 	public void testListClassNamesInProject() throws Exception {
-		List<String> actualClassLst = cc.listClassNamesInProject(new File(TestCommon.TEST_SRC_DIRECTORY));
-		List<String> expectedClassLst = new LinkedList<String>();
-		Collections.addAll(expectedClassLst, new String[] {"Point2D", "Point3D", "Position2D", "Position3D"});
-		assertEquals(expectedClassLst, actualClassLst);
+		List<String> actualClassLst = cc.listClassNamesInProject(new File(TestCommon.TEST_SRC_DIRECTORY), new HashMap<String, File>());
+		Helpers.assertListEquals(new String[] {"Point2D", "Point3D", "Position2D", "Position3D"}, actualClassLst);
 	}
 	
 	@Test
 	public void testReferencedClasses() throws Exception {
-		cc.listClassNamesInProject(new File(TestCommon.TEST_SRC_DIRECTORY));
-		List<String> actualRefClsLst = cc.referencedClasses("Position2D");
+		Map<String, File> classInFile = new HashMap<String, File>();
+		cc.listClassNamesInProject(new File(TestCommon.TEST_SRC_DIRECTORY), classInFile);
+		List<String> actualRefClsLst = cc.referencedClasses("Position2D", classInFile);
 		List<String> expectedRefClsLst = new LinkedList<String>();
 		expectedRefClsLst.add("Point2D");
 		assertEquals(expectedRefClsLst, actualRefClsLst);
@@ -69,6 +57,6 @@ public class ClassCouplingTest {
 	public void testGetAverageCoupling() throws Exception {
 		float actualAvgCoupling = cc.getAverageCoupling(new File(TestCommon.TEST_SRC_DIRECTORY));
 		float expectedAvgCoupling = 2.0f/4.0f;
-		assertEquals(expectedAvgCoupling, actualAvgCoupling, Globals.DELTA);
+		assertEquals(expectedAvgCoupling, actualAvgCoupling, TestCommon.DELTA);
 	}
 }

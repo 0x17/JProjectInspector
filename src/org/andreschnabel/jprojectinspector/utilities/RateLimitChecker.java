@@ -1,6 +1,5 @@
-package org.andreschnabel.jprojectinspector;
+package org.andreschnabel.jprojectinspector.utilities;
 
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
 
 import com.google.gson.Gson;
 

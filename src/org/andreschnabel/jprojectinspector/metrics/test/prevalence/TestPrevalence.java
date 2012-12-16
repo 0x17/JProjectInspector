@@ -1,12 +1,12 @@
-package org.andreschnabel.jprojectinspector.metrics.test;
+package org.andreschnabel.jprojectinspector.metrics.test.prevalence;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.andreschnabel.jprojectinspector.ProjectCollector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
+import org.andreschnabel.jprojectinspector.utilities.ProjectCollector;
 import org.eclipse.egit.github.core.client.GitHubClient;
 
 public class TestPrevalence {

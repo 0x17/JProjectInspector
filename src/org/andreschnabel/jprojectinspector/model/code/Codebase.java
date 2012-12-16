@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.model.code;
 
 public class Codebase {
 	
-	public Class[] classes;
-	public Class[] testClasses;
+	public Clazz[] classes;
+	public Clazz[] testClasses;
 
 }
