@@ -4,8 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.StringPair;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 public class UserScraper {
 	
@@ -34,7 +36,7 @@ public class UserScraper {
 	
 	private static List<String> scrapeNames(String htmlStr) throws Exception {
 		String regex = "<a href=\"/([a-zA-Z0-9]*)\">[a-zA-Z0-9]*</a>";
-		List<String> usernames = Helpers.batchMatchOneGroup(regex, htmlStr);
+		List<String> usernames = RegexHelpers.batchMatchOneGroup(regex, htmlStr);
 		return usernames;
 	}
 	
@@ -51,19 +53,19 @@ public class UserScraper {
 	}
 
 	private int scrapeNumStarredProjects(String htmlStr) throws Exception {
-		htmlStr = Helpers.removeAllWhitespace(htmlStr);
+		htmlStr = StringHelpers.removeAllWhitespace(htmlStr);
 		String regex = "<li><strong>([0-9]*)</strong><span>starred</span>";
-		String resStr = Helpers.batchMatchOneGroup(regex, htmlStr).get(0);
+		String resStr = RegexHelpers.batchMatchOneGroup(regex, htmlStr).get(0);
 		return Integer.valueOf(resStr);
 	}
 
 	private List<Project> scrapeProjects(String htmlStr) {
-		htmlStr = Helpers.removeAllWhitespace(htmlStr);
+		htmlStr = StringHelpers.removeAllWhitespace(htmlStr);
 		List<Project> projects = new LinkedList<Project>();
 		
 		String regex = "<spanclass=\"mega-iconmega-icon-repo-forked\"></span>"
 							+"<ahref=\"/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)\">[a-zA-Z0-9]*</a>";
-		List<StringPair> projNames = Helpers.batchMatchTwoGroups(regex, htmlStr);
+		List<StringPair> projNames = RegexHelpers.batchMatchTwoGroups(regex, htmlStr);
 		
 		for(StringPair projName : projNames) {
 			projects.add(new Project(projName.first, projName.second));
@@ -73,26 +75,9 @@ public class UserScraper {
 	}
 
 	private String scrapeJoinDate(String htmlStr) throws Exception {
-		htmlStr = Helpers.removeWhitespace(htmlStr);
+		htmlStr = StringHelpers.removeWhitespace(htmlStr);
 		String regex = "<span class=\"join-date\">([A-Za-z0-9, ]*)</span>";
-		return Helpers.batchMatchOneGroup(regex, htmlStr).get(0);
-	}
-
-	public static void main(String[] args) throws Exception {
-		UserScraper us = new UserScraper();
-		UserData ud = us.scrapeUser("badlogic");
-		System.out.println("Name: " + ud.name);
-		System.out.println("Join date: " + ud.joinDate);
-		System.out.println("Num starred projs: " + ud.numStarredProjects);
-		System.out.println("Projects:");
-		for(Project p : ud.projects)
-			System.out.println(p);
-		System.out.println("Followers:");
-		for(String u : ud.followers)
-			System.out.println(u);
-		System.out.println("Following:");
-		for(String u : ud.following)
-			System.out.println(u);
+		return RegexHelpers.batchMatchOneGroup(regex, htmlStr).get(0);
 	}
 
 }

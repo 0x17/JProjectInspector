@@ -3,7 +3,7 @@ package org.andreschnabel.jprojectinspector.obsolete;
 
 import org.andreschnabel.jprojectinspector.obsolete.metrics.CodeMetrics;
 import org.andreschnabel.jprojectinspector.obsolete.metrics.GitHubMetrics;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -61,7 +61,7 @@ public class Launcher {
 
 		//Gson gson = new Gson();
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		Helpers.writeStrToFile(gson.toJson(summary), outFilename);
+		FileHelpers.writeStrToFile(gson.toJson(summary), outFilename);
 
 		//gm.close();
 	}

@@ -1,6 +1,9 @@
 package org.andreschnabel.jprojectinspector.model;
 
 public class ProjectStats {
+	public String owner;
+	public String name;
+	
 	public boolean containsTest;
 
 	// Code properties

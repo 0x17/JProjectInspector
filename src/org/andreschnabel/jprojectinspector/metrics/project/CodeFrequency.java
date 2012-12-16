@@ -1,24 +1,22 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.List;
 
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.StringTriple;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 public class CodeFrequency {
 
 	public int countCodeFrequencyForProj(Project project) throws Exception {		
-		String cfdStr = Helpers.loadUrlIntoStr("https://github.com/"+project.owner+"/"+project.repoName+"/graphs/code-frequency-data");
-		Pattern p = Pattern.compile("\\[([0-9]*),([0-9]*),(-[0-9]*)\\]");
-		Matcher m = p.matcher(cfdStr);
-		int linesAdded = 0;
-		int linesRemoved =  0;
-		if(m.groupCount() == 3) {
-			//long time = Long.valueOf(m.group(1));
-			linesAdded += Integer.valueOf(m.group(2));
-			linesRemoved += Integer.valueOf(m.group(3));
-		} else return 0;
+		String cfdStr = Helpers.loadUrlIntoStr("https://github.com/"+project.owner+"/"+project.repoName+"/graphs/code-frequency-data");	
+		List<StringTriple> triples = RegexHelpers.batchMatchThreeGroups("\\[([0-9]*),([0-9]*),(-[0-9]*)\\]", cfdStr);
+		
+		StringTriple last = triples.get(triples.size()-1);
+				
+		int linesAdded = Integer.valueOf(last.second);
+		int linesRemoved =  Integer.valueOf(last.third);
 
 		return linesAdded - linesRemoved;
 	}

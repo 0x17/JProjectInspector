@@ -7,7 +7,7 @@ import java.util.List;
 import org.andreschnabel.jprojectinspector.model.code.Clazz;
 import org.andreschnabel.jprojectinspector.model.code.Method;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.tree.CommonTree;
@@ -15,7 +15,7 @@ import org.antlr.runtime.tree.Tree;
 
 public class SimpleParser {	
 	public CommonTree getParseTreeForSourceFile(File f) throws Exception {
-		return getParseTreeForSourceStr(Helpers.readEntireFile(f));
+		return getParseTreeForSourceStr(FileHelpers.readEntireFile(f));
 	}
 	
 	public CommonTree getParseTreeForSourceStr(String sourceStr) throws Exception {
@@ -34,7 +34,7 @@ public class SimpleParser {
 	}
 	
 	public Clazz[] getClassesInSourceFile(File f) throws Exception {
-		return getClassesInSourceStr(Helpers.readEntireFile(f));
+		return getClassesInSourceStr(FileHelpers.readEntireFile(f));
 	}
 	
 	public Clazz[] getClassesInSourceStr(String sourceStr) throws Exception {

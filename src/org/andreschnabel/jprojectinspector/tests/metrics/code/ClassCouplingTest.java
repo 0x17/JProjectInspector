@@ -10,7 +10,9 @@ import java.util.Map;
 
 import org.andreschnabel.jprojectinspector.metrics.code.ClassCoupling;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,10 +27,10 @@ public class ClassCouplingTest {
 	
 	@Test
 	public void testCodeOfClassInSourceStr() throws Exception {
-		String testSrc = Helpers.readEntireFile(new File(TestCommon.TEST_SRC_FILENAME));
+		String testSrc = FileHelpers.readEntireFile(new File(TestCommon.TEST_SRC_FILENAME));
 		String actualClassStr = cc.getCodeOfClassInSrcStr("Point3D", testSrc);		
 		String expectedClassStr = "protectedintz;publicPoint3D(intx,inty){this(x,y,0);}publicPoint3D(intx,inty,intz){this.x=x;this.y=y;this.z=z;}";
-		assertEquals(expectedClassStr, Helpers.removeAllWhitespace(actualClassStr));
+		assertEquals(expectedClassStr, StringHelpers.removeAllWhitespace(actualClassStr));
 	}
 	
 	@Test
@@ -40,7 +42,7 @@ public class ClassCouplingTest {
 	@Test
 	public void testListClassNamesInProject() throws Exception {
 		List<String> actualClassLst = cc.listClassNamesInProject(new File(TestCommon.TEST_SRC_DIRECTORY), new HashMap<String, File>());
-		Helpers.assertListEquals(new String[] {"Point2D", "Point3D", "Position2D", "Position3D"}, actualClassLst);
+		Helpers.assertListEquals(new String[] {"Point2D", "Point3D", "Position2D", "Position3D", "PointsTest"}, actualClassLst);
 	}
 	
 	@Test
@@ -56,7 +58,7 @@ public class ClassCouplingTest {
 	@Test
 	public void testGetAverageCoupling() throws Exception {
 		float actualAvgCoupling = cc.getAverageCoupling(new File(TestCommon.TEST_SRC_DIRECTORY));
-		float expectedAvgCoupling = 2.0f/4.0f;
+		float expectedAvgCoupling = 3.0f/5.0f;
 		assertEquals(expectedAvgCoupling, actualAvgCoupling, TestCommon.DELTA);
 	}
 }

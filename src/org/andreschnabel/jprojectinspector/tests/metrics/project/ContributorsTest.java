@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,6 +20,7 @@ public class ContributorsTest {
 	@Test
 	public void testCountNumContributors() throws Exception {
 		assertEquals(85, contribs.countNumContributors(new Project("mono", "MonoGame")));
+		assertEquals(1, contribs.countNumContributors(TestCommon.THIS_PROJECT));
 	}
 
 	@Test

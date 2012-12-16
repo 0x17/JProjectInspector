@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 import org.eclipse.egit.github.core.SearchRepository;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.RepositoryService;
@@ -85,7 +87,7 @@ public class ProjectCollector {
 	}
 	
 	private boolean isLanguageSupported(String lang) {
-		return Helpers.equalsOneOf(lang, UnitTestDetector.getSupportedLangs());
+		return StringHelpers.equalsOneOf(lang, UnitTestDetector.getSupportedLangs());
 	}
 
 	public ProjectList collectProjects(String[] keywords, int numPages) throws Exception {

@@ -1,6 +1,8 @@
 package org.andreschnabel.jprojectinspector.utilities;
 
 
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+
 import com.google.gson.Gson;
 
 public class RateLimitChecker {

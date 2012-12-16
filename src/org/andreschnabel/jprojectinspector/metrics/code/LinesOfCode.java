@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 public class LinesOfCode {
 
@@ -14,7 +14,7 @@ public class LinesOfCode {
 	}
 
 	public int countLocOfSrcFile(File srcFile) throws Exception {
-		String srcStr = Helpers.readEntireFile(srcFile);
+		String srcStr = FileHelpers.readEntireFile(srcFile);
 		return countLocOfSrcStr(srcStr);
 	}
 

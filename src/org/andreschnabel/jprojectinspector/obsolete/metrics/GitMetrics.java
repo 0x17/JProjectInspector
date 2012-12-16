@@ -1,7 +1,8 @@
 
 package org.andreschnabel.jprojectinspector.obsolete.metrics;
 
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import java.io.File;
 
@@ -23,7 +24,7 @@ public class GitMetrics {// implements AutoCloseable {
 	
 	//@Override
 	public void close() throws Exception {
-		Helpers.deleteDir(new File(destPath + projName));
+		FileHelpers.deleteDir(new File(destPath + projName));
 	}
 
 	public GitSummary getSummary() {

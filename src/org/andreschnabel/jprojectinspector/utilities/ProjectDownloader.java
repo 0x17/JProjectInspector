@@ -2,6 +2,8 @@ package org.andreschnabel.jprojectinspector.utilities;
 
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import java.io.File;
 
@@ -16,7 +18,7 @@ public class ProjectDownloader {
 	public void deleteProject(Project p) throws Exception {
 		String destPath = Config.DEST_BASE + p.repoName;
 		//Helpers.deleteDir(new File(destPath));
-		Helpers.rmDir(destPath);
+		FileHelpers.rmDir(destPath);
 	}
 
 }

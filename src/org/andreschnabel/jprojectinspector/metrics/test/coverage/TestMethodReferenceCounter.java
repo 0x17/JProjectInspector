@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.List;
 
 import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 public class TestMethodReferenceCounter {
 	
@@ -16,7 +18,7 @@ public class TestMethodReferenceCounter {
 		}
 		else {
 			if(root.getName().endsWith(".java")) {
-				String srcStr = Helpers.readEntireFile(root);
+				String srcStr = FileHelpers.readEntireFile(root);
 				if(UnitTestDetector.isJavaSrcTest(srcStr, root.getName())) {
 					determineUniqueMethodsReferencedInTestStr(srcStr, testedMethodNames);
 				}
@@ -30,18 +32,16 @@ public class TestMethodReferenceCounter {
 	}
 
 	private void determineUniqueObjectMethodsReferencedInTestStr(String srcStr, List<String> testedMethodNames) throws Exception {
-		List<String> calledMethods = Helpers.batchMatchOneGroup("\\w+\\.(\\w+)\\(.*\\)", srcStr);
+		List<String> calledMethods = RegexHelpers.batchMatchOneGroup("\\w+\\.(\\w+)\\(.*\\)", srcStr);
 		for(String methodName : calledMethods) {
-			if(!testedMethodNames.contains(methodName))
-				testedMethodNames.add(methodName);
+			Helpers.addToLstNoDups(testedMethodNames, methodName);
 		}
 	}
 	
 	public void determineUniqueConstructorsReferencedInTestStr(String srcStr, List<String> testedMethodNames) throws Exception {
-		List<String> calledConstructors = Helpers.batchMatchOneGroup("new\\s+(\\w+)\\(.*\\)", srcStr);
+		List<String> calledConstructors = RegexHelpers.batchMatchOneGroup("new\\s+(\\w+)\\(.*\\)", srcStr);
 		for(String consName : calledConstructors) {
-			if(!testedMethodNames.contains(consName))
-				testedMethodNames.add(consName);
+			Helpers.addToLstNoDups(testedMethodNames, consName);
 		}
 	}
 

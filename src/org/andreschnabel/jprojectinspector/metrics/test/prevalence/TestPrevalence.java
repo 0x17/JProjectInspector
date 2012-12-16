@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
+import org.andreschnabel.jprojectinspector.model.TestPrevalenceSummary;
 import org.andreschnabel.jprojectinspector.utilities.ProjectCollector;
 import org.eclipse.egit.github.core.client.GitHubClient;
 

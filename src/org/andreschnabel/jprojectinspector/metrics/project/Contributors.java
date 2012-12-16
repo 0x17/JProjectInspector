@@ -5,7 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.LogCommand;
 import org.eclipse.jgit.lib.IndexDiff;
@@ -17,7 +18,7 @@ public class Contributors {
 
 	public int countNumContributors(Project project) throws Exception {
 		String contribsData = Helpers.loadUrlIntoStr("https://github.com/"+project.owner+"/"+project.repoName+"/graphs/contributors-data");
-		return Helpers.countOccurencesOfWord(contribsData, "\"author\"");
+		return StringHelpers.countOccurencesOfWord(contribsData, "\"author\"");
 	}
 	
 	public int countNumTestContributors(File root) throws Exception {

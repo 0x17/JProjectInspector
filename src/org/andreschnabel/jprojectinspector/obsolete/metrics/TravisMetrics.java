@@ -1,7 +1,7 @@
 
 package org.andreschnabel.jprojectinspector.obsolete.metrics;
 
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import com.google.gson.Gson;
 

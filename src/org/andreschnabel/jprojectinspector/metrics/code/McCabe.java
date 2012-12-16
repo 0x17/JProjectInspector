@@ -1,17 +1,18 @@
 package org.andreschnabel.jprojectinspector.metrics.code;
 
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.File;
 
 public class McCabe {
 
 	public int determineMcCabeForSrcStr(String srcStr) {
-		return Helpers.countOccurencesOfWords(srcStr, new String[]{"if", "for", "while", "case", "catch", "&&", "||", "?"});
+		return StringHelpers.countOccurencesOfWords(srcStr, new String[]{"if", "for", "while", "case", "catch", "&&", "||", "?"});
 	}
 
 	public float determineMcCabeForSrcFile(File srcFile) throws Exception {
-		return determineMcCabeForSrcStr(Helpers.readEntireFile(srcFile));
+		return determineMcCabeForSrcStr(FileHelpers.readEntireFile(srcFile));
 	}
 
 	public float determineMcCabeForDir(File root) throws Exception {

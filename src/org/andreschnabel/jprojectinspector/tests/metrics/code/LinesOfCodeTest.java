@@ -6,7 +6,7 @@ import java.io.File;
 
 import org.andreschnabel.jprojectinspector.metrics.code.LinesOfCode;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,8 +23,11 @@ public class LinesOfCodeTest {
 	public void testCountLocOfSrcStr() throws Exception {
 		assertEquals(0, loc.countLocOfSrcStr("//blabla"));
 		assertEquals(1, loc.countLocOfSrcStr("//blabla\nclass Test {}"));
-		String testSrcStr = Helpers.readEntireFile(new File(TestCommon.TEST_SRC_FILENAME));
+		String testSrcStr = FileHelpers.readEntireFile(new File(TestCommon.TEST_SRC_FILENAME));
 		assertEquals(43, loc.countLocOfSrcStr(testSrcStr)); // 43 according to cloc
+		
+		testSrcStr = FileHelpers.readEntireFile(new File(TestCommon.TEST_SRC_TEST_FILENAME));
+		assertEquals(11, loc.countLocOfSrcStr(testSrcStr));
 	}
 	
 	@Test
@@ -34,7 +37,7 @@ public class LinesOfCodeTest {
 	
 	@Test
 	public void testCountLocOfDir() throws Exception {
-		assertEquals(43, loc.countLocOfDir(new File(TestCommon.TEST_SRC_DIRECTORY)));
+		assertEquals(54, loc.countLocOfDir(new File(TestCommon.TEST_SRC_DIRECTORY)));
 	}
 
 	@Test

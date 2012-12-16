@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.metrics.test;
 
 import org.andreschnabel.jprojectinspector.metrics.code.LinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 import java.io.File;
 
@@ -19,7 +19,7 @@ public class TestLinesOfCode {
 			return sum;
 		}
 		else {
-			return root.getName().endsWith(".java") && UnitTestDetector.isJavaSrcTest(Helpers.readEntireFile(root), root.getName()) ? loc.countLocOfSrcFile(root) : 0;
+			return root.getName().endsWith(".java") && UnitTestDetector.isJavaSrcTest(FileHelpers.readEntireFile(root), root.getName()) ? loc.countLocOfSrcFile(root) : 0;
 		}
 	}
 

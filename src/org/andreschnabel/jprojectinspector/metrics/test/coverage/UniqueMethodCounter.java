@@ -6,7 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 public class UniqueMethodCounter {
 	
@@ -17,10 +18,10 @@ public class UniqueMethodCounter {
 		}
 		else {
 			if(root.getName().endsWith(".java")) {
-				String srcStr = Helpers.readEntireFile(root);
+				String srcStr = FileHelpers.readEntireFile(root);
 				if(!UnitTestDetector.isJavaSrcTest(srcStr, root.getName())) {
 					determineUniqueMethodsInSrcStr(srcStr, projectMethodNames);
-				}				
+				}
 			}
 		}
 	}
@@ -32,8 +33,7 @@ public class UniqueMethodCounter {
 		while(m.find()) {
 			if(m.groupCount() == 3) {
 				String methodName = m.group(3);
-				if(!projectMethodNames.contains(methodName))
-					projectMethodNames.add(methodName);
+				Helpers.addToLstNoDups(projectMethodNames, methodName);
 			}
 		}
 	}

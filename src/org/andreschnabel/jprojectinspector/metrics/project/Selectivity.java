@@ -3,7 +3,7 @@ package org.andreschnabel.jprojectinspector.metrics.project;
 import java.util.Collection;
 
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.GitHelpers;
 import org.eclipse.egit.github.core.PullRequest;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.client.GitHubClient;
@@ -19,17 +19,9 @@ public class Selectivity {
 	
 	public Selectivity() throws Exception {
 		// Authenticate to raise rate limit.
-		GitHubClient ghc = authenticate();
+		GitHubClient ghc = GitHelpers.authenticate();
 		repoService = new RepositoryService(ghc);
 		pullReqService = new PullRequestService(ghc);		
-	}
-	
-	private GitHubClient authenticate() throws Exception {		
-		GitHubClient ghc = new GitHubClient();
-		String user = Helpers.prompt("Username");
-		String pw = Helpers.prompt("Password");
-		ghc.setCredentials(user, pw);
-		return ghc;
 	}
 	
 	public int getSelectivity(Project p) throws Exception {

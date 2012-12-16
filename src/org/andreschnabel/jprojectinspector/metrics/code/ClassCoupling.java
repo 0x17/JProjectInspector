@@ -6,7 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 public class ClassCoupling {
 
@@ -22,8 +23,8 @@ public class ClassCoupling {
 	}
 
 	public List<String> listClassNamesInFile(File f, Map<String, File> classInFile) throws Exception {
-		String srcStr = Helpers.readEntireFile(f);
-		List<String> clsNames = Helpers.batchMatchOneGroup("class ([A-Za-z0-9]+)", srcStr);
+		String srcStr = FileHelpers.readEntireFile(f);
+		List<String> clsNames = RegexHelpers.batchMatchOneGroup("class ([A-Za-z0-9]+)", srcStr);
 
 		for(String className : clsNames) {
 			if(!classInFile.containsKey(className))
@@ -87,7 +88,7 @@ public class ClassCoupling {
 	}
 	
 	public String getCodeOfClassInFile(String className, File f) throws Exception {
-		String sourceStr = Helpers.readEntireFile(f);
+		String sourceStr = FileHelpers.readEntireFile(f);
 		return getCodeOfClassInSrcStr(className, sourceStr);
 	}
 

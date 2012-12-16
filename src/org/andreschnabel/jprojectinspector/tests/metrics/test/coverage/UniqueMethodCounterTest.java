@@ -27,7 +27,7 @@ public class UniqueMethodCounterTest {
 		String[] expectedMethods = {"Point2D", "Point3D", "Position2D", "getLocation", "Position3D"};
 		for(int i=0; i<expectedMethods.length; i++) {
 			assertEquals(expectedMethods[i], projectMethodNames.get(i));
-		}		
+		}
 	}
 
 	@Test

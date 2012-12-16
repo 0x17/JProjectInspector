@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.TestMethodReferenceCounter;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +24,7 @@ public class TestMethodReferenceCounterTest {
 	
 	@Test
 	public void testDetermineUniqueMethodsReferncedInTestStr() throws Exception {
-		String src = Helpers.readEntireFile(new File(TESTDATA_TEST));
+		String src = FileHelpers.readEntireFile(new File(TESTDATA_TEST));
 		List<String> testedMethodNames = new LinkedList<String>();
 		tmrc.determineUniqueMethodsReferencedInTestStr(src, testedMethodNames);		
 		String[] expectedMethodNames = { "Position2D", "getLocation" };

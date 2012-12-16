@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 public class PopularRepoScraper {
 	
@@ -41,25 +41,6 @@ public class PopularRepoScraper {
 	
 	public List<Project> scrapeInteresting() throws Exception {
 		return scrapeRepos(Helpers.loadUrlIntoStr(INTERESTING_URL));
-	}
-
-	public static void main(String[] args) throws Exception {
-		PopularRepoScraper prs = new PopularRepoScraper();
-		List<Project>	popularForked = prs.scrapePopularForked(),
-							popularStarred = prs.scrapePopularStarred(),
-							interesting = prs.scrapeInteresting();
-		System.out.println("Popular forked:");
-		printProjLst(popularForked);
-		System.out.println("Popular starred:");
-		printProjLst(popularStarred);
-		System.out.println("Interesting:");
-		printProjLst(interesting);
-	}
-	
-	private static void printProjLst(List<Project> lst) {
-		for(Project p : lst) {
-			System.out.println(p);
-		}
 	}
 
 }

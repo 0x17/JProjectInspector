@@ -7,8 +7,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 public class UnitTestDetector {
 	
@@ -32,10 +33,10 @@ public class UnitTestDetector {
 			return testFiles;
 		} else {
 			String filename = root.getName();
-			if(Helpers.strEndsWithOneOf(filename, ".java", ".rb", ".py", ".js", ".cpp", ".cs")) {
+			if(StringHelpers.strEndsWithOneOf(filename, ".java", ".rb", ".py", ".js", ".cpp", ".cs")) {
 				String srcStr = null;
 				try {
-					srcStr = Helpers.readEntireFile(root);
+					srcStr = FileHelpers.readEntireFile(root);
 				} catch(Exception e) { return testFiles; }				
 				
 			 	if((filename.endsWith(".java") && isJavaSrcTest(srcStr, filename))
@@ -61,10 +62,10 @@ public class UnitTestDetector {
 			return found;			
 		} else {
 			String filename = root.getName();
-			if(Helpers.strEndsWithOneOf(filename, ".java", ".rb", ".py", ".js", ".cpp", ".cs")) {
+			if(StringHelpers.strEndsWithOneOf(filename, ".java", ".rb", ".py", ".js", ".cpp", ".cs")) {
 				String srcStr = null;
 				try {
-					srcStr = Helpers.readEntireFile(root);
+					srcStr = FileHelpers.readEntireFile(root);
 				} catch(Exception e) { return false; }
 				
 			 	if(filename.endsWith(".java")) return isJavaSrcTest(srcStr, filename);
@@ -79,31 +80,31 @@ public class UnitTestDetector {
 	}
 
 	public static boolean isCsharpSrcTest(String srcStr, String filename) {
-		return Helpers.strContainsOneOf(srcStr, "[TestFixture]", "[Test]", "[TearDown]", "[Setup]", "using csUnit");
+		return StringHelpers.strContainsOneOf(srcStr, "[TestFixture]", "[Test]", "[TearDown]", "[Setup]", "using csUnit");
 	}
 
 	public static boolean isCppSrcTest(String srcStr, String filename) {
-		return Helpers.strContainsOneOf(srcStr, "CPPUNIT_TEST", "#include <cppunit", "#include<cppunit", "ASSERT_THAT", "EXPECT_THAT");
+		return StringHelpers.strContainsOneOf(srcStr, "CPPUNIT_TEST", "#include <cppunit", "#include<cppunit", "ASSERT_THAT", "EXPECT_THAT");
 	}
 
 	public static boolean isJavaScriptSrcTest(String srcStr, String filename) {
 		Pattern p = Pattern.compile("expect(.+).toBe(.+);");
 		Matcher m = p.matcher(srcStr);
 		if(m.matches()) return true;
-		return Helpers.strContainsOneOf(srcStr, "assertEqual", "registerTestSuite", "strictEqual", "deepEqual", "qunit.js", "expectEq", "expectCall", "buster.js", "buster.");
+		return StringHelpers.strContainsOneOf(srcStr, "assertEqual", "registerTestSuite", "strictEqual", "deepEqual", "qunit.js", "expectEq", "expectCall", "buster.js", "buster.");
 	}
 
 	public static boolean isPythonSrcTest(String srcStr, String filename) {
-		return Helpers.strContainsOneOf(srcStr, "import doctest", "import unittest", "from unittest", "TestCase", "assertEqual");
+		return StringHelpers.strContainsOneOf(srcStr, "import doctest", "import unittest", "from unittest", "TestCase", "assertEqual");
 	}
 
 	public static boolean isRubySrcTest(String srcStr, String filename) {
 		if(filename.endsWith("_spec.rb")) return true;
-		return Helpers.strContainsOneOf(srcStr, "cucumber", "assertEqual", "require 'test/unit'", "require \"test/unit\"", "Test::Unit", "require \"shoulda\"", "require 'shoulda'", "describe");
+		return StringHelpers.strContainsOneOf(srcStr, "cucumber", "assertEqual", "require 'test/unit'", "require \"test/unit\"", "Test::Unit", "require \"shoulda\"", "require 'shoulda'", "describe");
 	}
 
 	public static boolean isJavaSrcTest(String srcStr, String filename) {
-		return Helpers.strContainsOneOf(srcStr, "cucumber", "@Test", "org.junit", "assertEqual");
+		return StringHelpers.strContainsOneOf(srcStr, "cucumber", "@Test", "org.junit", "assertEqual");
 	}
 
 }

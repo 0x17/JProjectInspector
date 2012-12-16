@@ -1,7 +1,7 @@
 
 package org.andreschnabel.jprojectinspector.obsolete.metrics;
 
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -112,7 +112,7 @@ public class CodeMetrics {
 
 		while(br.ready()) {
 			String line = br.readLine().trim();
-			ctr += Helpers.countOccurencesOfWords(line, keywords);
+			ctr += StringHelpers.countOccurencesOfWords(line, keywords);
 		}
 
 		br.close();
@@ -121,7 +121,7 @@ public class CodeMetrics {
 	}
 
 	private boolean isControlStructureInString(String line) {
-		return Helpers.strContainsOneOf(line, new String[] {"if", "else", "do", "while", "switch"});
+		return StringHelpers.strContainsOneOf(line, new String[] {"if", "else", "do", "while", "switch"});
 	}
 
 	public class CodeSummary {

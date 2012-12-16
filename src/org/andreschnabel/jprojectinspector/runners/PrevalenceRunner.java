@@ -8,11 +8,13 @@ import java.util.List;
 import java.util.Random;
 
 import org.andreschnabel.jprojectinspector.metrics.test.prevalence.TestPrevalence;
-import org.andreschnabel.jprojectinspector.metrics.test.prevalence.TestPrevalenceSummary;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
-import org.andreschnabel.jprojectinspector.utilities.Helpers;
+import org.andreschnabel.jprojectinspector.model.TestPrevalenceSummary;
 import org.andreschnabel.jprojectinspector.utilities.ProjectCollector;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 import org.eclipse.egit.github.core.client.GitHubClient;
 
 import com.google.gson.Gson;
@@ -106,7 +108,7 @@ public class PrevalenceRunner {
 		
 		for(File f : dir.listFiles()) {
 			if(!f.isDirectory() && f.getName().endsWith(".json")) {
-				TestPrevMiniSummary s = gson.fromJson(Helpers.readEntireFile(f), TestPrevMiniSummary.class);
+				TestPrevMiniSummary s = gson.fromJson(FileHelpers.readEntireFile(f), TestPrevMiniSummary.class);
 				totalProjectCount += s.numProjectsTotal;
 				totalTestProjectCount += s.numTestedProjects;
 			}
@@ -128,7 +130,7 @@ public class PrevalenceRunner {
 			pl = jpc.collectProjects(options.keyword, options.numPages);
 		}
 		String plJson = gson.toJson(pl);
-		Helpers.writeStrToFile(plJson, options.collectFilename);
+		FileHelpers.writeStrToFile(plJson, options.collectFilename);
 		System.out.println("Finished collecting project list into: " + options.collectFilename + "!");
 	}
 
@@ -138,7 +140,7 @@ public class PrevalenceRunner {
 		
 		// Load project list from previously generated file if given
 		if(options.listFilename != null) {
-			String projectListJson = Helpers.readEntireFile(new File(options.listFilename));
+			String projectListJson = FileHelpers.readEntireFile(new File(options.listFilename));
 			ProjectList projectList = gson.fromJson(projectListJson, ProjectList.class);
 			options.keyword = projectList.keyword;
 			summary = tpd.determineTestPrevalence(projectList);
@@ -154,7 +156,7 @@ public class PrevalenceRunner {
 		}		 
 		
 		String summaryStr = gson.toJson(summary);		
-		Helpers.writeStrToFile(summaryStr, Helpers.capitalize(options.keyword) + "TestPrevalence.json");
+		FileHelpers.writeStrToFile(summaryStr, StringHelpers.capitalize(options.keyword) + "TestPrevalence.json");
 	}
 
 	private static String[] randomlyChoseKeywords(Options options) throws Exception {
@@ -194,12 +196,12 @@ public class PrevalenceRunner {
 	}
 	
 	private static void randomlyMinimizeProjectListFile(String srcFilename, String destFilename, int destSize) throws Exception {
-		String projectListJson = Helpers.readEntireFile(new File(srcFilename));
+		String projectListJson = FileHelpers.readEntireFile(new File(srcFilename));
 		ProjectList projectList = gson.fromJson(projectListJson, ProjectList.class);
 		
 		randomlyMinimizeProjectList(projectList, destSize);		
 		String outJson = gson.toJson(projectList);
-		Helpers.writeStrToFile(outJson, destFilename);
+		FileHelpers.writeStrToFile(outJson, destFilename);
 	}
 	
 	private static void randomlyMinimizeProjectList(ProjectList src, int destSize) throws Exception {
