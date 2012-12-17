@@ -22,7 +22,7 @@ public class ProjectStatsMeasurer {
 		ProjectStats stats = new ProjectStats();
 
 		UnitTestDetector utd = new UnitTestDetector();
-		stats.containsTest = utd.containsTest(project);
+		stats.containsTest = utd.containsTest(projectRoot);
 
 		ClassCoupling ccoupling = new ClassCoupling();
 		stats.coupling = ccoupling.getAverageCoupling(projectRoot);

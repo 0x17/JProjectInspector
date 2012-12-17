@@ -16,11 +16,8 @@ public class UnitTestDetector {
 	private final static String[] supportedLangs = new String[] { "Java", "Ruby", "C++", "C#", "JavaScript", "Python" };
 	public static String[] getSupportedLangs() { return supportedLangs; }
 
-	public boolean containsTest(Project p) throws Exception {
-		ProjectDownloader pd = new ProjectDownloader();
-		File pf = pd.loadProject(p);
+	public boolean containsTest(File pf) throws Exception {
 		boolean foundTest = traverseForTest(pf);
-		pd.deleteProject(p);
 		return foundTest;
 	}
 	
@@ -105,6 +102,14 @@ public class UnitTestDetector {
 
 	public static boolean isJavaSrcTest(String srcStr, String filename) {
 		return StringHelpers.strContainsOneOf(srcStr, "cucumber", "@Test", "org.junit", "assertEqual");
+	}
+
+	public boolean containsTestAndLoad(Project project) throws Exception {
+		ProjectDownloader pd = new ProjectDownloader();
+		File f = pd.loadProject(project);
+		boolean result = containsTest(f);
+		pd.deleteProject(project);
+		return result;
 	}
 
 }

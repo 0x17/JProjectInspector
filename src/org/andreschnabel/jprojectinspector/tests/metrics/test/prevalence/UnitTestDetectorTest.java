@@ -18,7 +18,7 @@ public class UnitTestDetectorTest {
 
 	@Test
 	public void testContainsTest() throws Exception {		
-		assertTrue(td.containsTest(new Project("skeeto","sample-java-project")));
-		assertTrue(td.containsTest(new Project("0x17", "ProjectInspector")));
+		assertTrue(td.containsTestAndLoad(new Project("skeeto","sample-java-project")));
+		assertTrue(td.containsTestAndLoad(new Project("0x17", "ProjectInspector")));
 	}
 }

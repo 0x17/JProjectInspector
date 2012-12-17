@@ -26,7 +26,7 @@ public class TestPrevalence {
 			Project p = projects.get(i);
 			System.out.println("Checking project " + p.toId() + " " + (i+1) + "/" + numProjs);
 			boolean tested = false;
-			if(jtd.containsTest(p)) {
+			if(jtd.containsTestAndLoad(p)) {
 				System.out.println("Found test!");
 				numTestProjs++;
 				tested = true;
