@@ -1,2 +1,0 @@
-# TODO
-See my mindmap.
