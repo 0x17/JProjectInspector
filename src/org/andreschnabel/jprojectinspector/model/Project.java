@@ -42,4 +42,15 @@ public class Project {
 		return true;
 	}
 
+	public static Project fromString(String s) throws Exception {
+		if(!s.contains("/"))
+			throw new Exception("Project string must contain /!");
+		
+		String[] parts = s.split("/");
+		if(parts.length != 2)
+			throw new Exception("Project string malformed!");
+		
+		return new Project(parts[0], parts[1]);
+	}
+
 }

@@ -18,10 +18,31 @@ import com.google.gson.Gson;
 public class ProjectStatsRunner {
 	
 	public static void main(String[] args) throws Exception {
-		if(args.length != 1 || args[0].endsWith(".json")) {
-			throw new Exception("Must supply json file with project list!");
+		if(args.length != 1) {
+			throw new Exception("Must supply one argument!");
 		}
 		
+		String arg = args[0];
+		if(arg.contains("/")) {
+			collectForSingleProject(Project.fromString(arg));
+		} else if(arg.endsWith(".json")) {
+			collectForProjectLst(arg);
+		} else {
+			throw new Exception("Argument must be project owner/repo or project list json file!");
+		}
+		
+	}
+	
+	public static void collectForSingleProject(Project p) throws Exception {
+		ProjectStatsMeasurer psm = new ProjectStatsMeasurer();
+		ProjectDownloader pd = new ProjectDownloader();
+		File projectRoot = pd.loadProject(p);
+		ProjectStats stats = psm.collectStats(p, projectRoot);
+		pd.deleteProject(p);
+		FileHelpers.writeObjToJsonFile(stats, "singleStats.json");
+	}
+	
+	public static void collectForProjectLst(String lstFilename) throws Exception {
 		ProjectDownloader pd = new ProjectDownloader();
 		ProjectStatsMeasurer psm = new ProjectStatsMeasurer();
 				
@@ -29,7 +50,7 @@ public class ProjectStatsRunner {
 		ProjectStatsList psl = new ProjectStatsList(stats);
 		
 		Gson gson = new Gson();
-		ProjectList plist = gson.fromJson(FileHelpers.readEntireFile(new File("randProjs.json")), ProjectList.class);
+		ProjectList plist = gson.fromJson(FileHelpers.readEntireFile(new File(lstFilename)), ProjectList.class);
 		
 		int i=1;
 		int nprojects = plist.projects.size();
