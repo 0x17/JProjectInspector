@@ -2,14 +2,13 @@ package org.andreschnabel.jprojectinspector.utilities;
 
 import java.io.File;
 
+import org.andreschnabel.jprojectinspector.metrics.code.AverageWMC;
 import org.andreschnabel.jprojectinspector.metrics.code.ClassCoupling;
 import org.andreschnabel.jprojectinspector.metrics.code.LinesOfCode;
-import org.andreschnabel.jprojectinspector.metrics.code.McCabe;
 import org.andreschnabel.jprojectinspector.metrics.project.CodeFrequency;
 import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
 import org.andreschnabel.jprojectinspector.metrics.project.Issues;
 import org.andreschnabel.jprojectinspector.metrics.project.ProjectAge;
-import org.andreschnabel.jprojectinspector.metrics.project.Selectivity;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.TestCoverage;
 import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
@@ -25,10 +24,10 @@ public class ProjectStatsMeasurer {
 		stats.containsTest = utd.containsTest(projectRoot);
 
 		ClassCoupling ccoupling = new ClassCoupling();
-		stats.coupling = ccoupling.getAverageCoupling(projectRoot);
+		stats.avgCoupling = ccoupling.getAverageCoupling(projectRoot);
 
-		McCabe mcCabe = new McCabe();
-		stats.mcCabe = mcCabe.determineMcCabeForDir(projectRoot);
+		AverageWMC mcCabe = new AverageWMC();
+		stats.avgWMC = mcCabe.determineAverageWMC(projectRoot);
 
 		LinesOfCode loc = new LinesOfCode();
 		stats.linesOfCode = loc.countLocForProj(project);
@@ -46,8 +45,10 @@ public class ProjectStatsMeasurer {
 		ProjectAge pa = new ProjectAge();
 		stats.projectAge = pa.getProjectAge(project);
 
-		Selectivity selectivity = new Selectivity();
-		stats.selectivity = selectivity.getSelectivity(project);
+		/*Selectivity selectivity = new Selectivity();
+		stats.selectivity = selectivity.getSelectivity(project);*/
+		// FIXME: Don't measure selectivity for now to avoid rate limit!
+		stats.selectivity = -1;
 
 		TestCoverage tc = new TestCoverage();
 		stats.testCoverage = tc.determineMethodCoverage(projectRoot);

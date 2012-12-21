@@ -14,6 +14,7 @@ public class LinesOfCode {
 	}
 
 	public int countLocOfSrcFile(File srcFile) throws Exception {
+		if(!srcFile.exists()) return 0;
 		String srcStr = FileHelpers.readEntireFile(srcFile);
 		return countLocOfSrcStr(srcStr);
 	}
@@ -66,6 +67,7 @@ public class LinesOfCode {
 	}
 
 	public int countLocOfDir(File root) throws Exception {
+		if(!root.exists()) return 0;
 		if(root.isDirectory()) {
 			int sum = 0;
 			for(File f : root.listFiles()) {

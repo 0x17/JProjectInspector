@@ -12,7 +12,8 @@ public class ProjectDownloader {
 	public File loadProject(Project p) throws Exception {
 		String destPath = Config.DEST_BASE + p.repoName;
 		Helpers.system("git clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
-		return new File(destPath);
+		File f = new File(destPath);
+		return f.exists() ? f : null;
 	}
 
 	public void deleteProject(Project p) throws Exception {

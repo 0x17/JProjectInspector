@@ -11,7 +11,7 @@ public class GitHelpers {
 		if(ghc == null) {
 			ghc = new GitHubClient();
 			String user = Helpers.prompt("Username");
-			String pw = Helpers.prompt("Password");
+			String pw = Helpers.promptPw("Password");
 			ghc.setCredentials(user, pw);
 		}
 		

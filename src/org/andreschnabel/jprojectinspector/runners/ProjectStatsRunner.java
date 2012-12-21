@@ -23,10 +23,10 @@ public class ProjectStatsRunner {
 		}
 		
 		String arg = args[0];
-		if(arg.contains("/")) {
-			collectForSingleProject(Project.fromString(arg));
-		} else if(arg.endsWith(".json")) {
+		if(arg.endsWith(".json")) {
 			collectForProjectLst(arg);
+		} else if(arg.contains("/")) {
+			collectForSingleProject(Project.fromString(arg));
 		} else {
 			throw new Exception("Argument must be project owner/repo or project list json file!");
 		}
@@ -37,11 +37,13 @@ public class ProjectStatsRunner {
 		ProjectStatsMeasurer psm = new ProjectStatsMeasurer();
 		ProjectDownloader pd = new ProjectDownloader();
 		File projectRoot = pd.loadProject(p);
-		try {
-			ProjectStats stats = psm.collectStats(p, projectRoot);
-			FileHelpers.writeObjToJsonFile(stats, "singleStats.json");
-		} finally {
-			pd.deleteProject(p);
+		if(projectRoot != null) {
+			try {
+				ProjectStats stats = psm.collectStats(p, projectRoot);
+				FileHelpers.writeObjToJsonFile(stats, "singleStats.json");
+			} finally {
+				pd.deleteProject(p);
+			}
 		}
 	}
 	
@@ -61,10 +63,12 @@ public class ProjectStatsRunner {
 		for(Project p : plist.projects) {
 			Helpers.log("Processing project " + i + "/" + nprojects);
 			File projectRoot = pd.loadProject(p);
-			try {
-				stats.add(psm.collectStats(p, projectRoot));
-			} finally {
-				pd.deleteProject(p);
+			if(projectRoot != null) {
+				try {
+					stats.add(psm.collectStats(p, projectRoot));
+				} finally {
+					pd.deleteProject(p);
+				}
 			}
 			i++;
 		}

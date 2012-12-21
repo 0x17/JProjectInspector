@@ -16,7 +16,7 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library name="gson-2.2.2.jar">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/gson-2.2.2.jar!/" />
@@ -27,7 +27,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library name="org.eclipse.jgit-2.1.0.201209190230-r.jar">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/org.eclipse.jgit-2.1.0.201209190230-r.jar!/" />
@@ -38,7 +38,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library name="junit4">
         <CLASSES>
           <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/" />
@@ -47,8 +47,17 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="gitective-core-0.9.1" level="project" />
-    <orderEntry type="library" name="org.eclipse.egit.github.core-2.1.2" level="project" />
+    <orderEntry type="library" exported="" name="gitective-core-0.9.1" level="project" />
+    <orderEntry type="library" exported="" name="org.eclipse.egit.github.core-2.1.2" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/antlr-3.4-complete.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

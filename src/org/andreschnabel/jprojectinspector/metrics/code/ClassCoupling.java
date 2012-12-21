@@ -8,12 +8,15 @@ import java.util.Map;
 
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.SourceHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 public class ClassCoupling {
 
 	public float getAverageCoupling(File root) throws Exception {
 		Map<String, File> classInFile = new HashMap<String, File>();
 		List<String> classNames = listClassNamesInProject(root, classInFile);
+		if(classNames == null) return 0.0f;
 		int classCount = classNames.size();
 		int couplingCount = 0;
 		for(String className : classNames) {
@@ -22,9 +25,9 @@ public class ClassCoupling {
 		return (float)couplingCount/classCount;
 	}
 
-	public List<String> listClassNamesInFile(File f, Map<String, File> classInFile) throws Exception {
+	public List<String> listClassNamesInFile(File f, Map<String, File> classInFile) throws Exception {		
 		String srcStr = FileHelpers.readEntireFile(f);
-		List<String> clsNames = RegexHelpers.batchMatchOneGroup("class ([A-Za-z0-9]+)", srcStr);
+		List<String> clsNames = RegexHelpers.batchMatchOneGroup("class\\s+([A-Za-z0-9]+)", StringHelpers.removeCommentsAndStrings(srcStr));
 
 		for(String className : clsNames) {
 			if(!classInFile.containsKey(className))
@@ -38,12 +41,14 @@ public class ClassCoupling {
 		List<String> clsNames = new LinkedList<String>();
 		if(rootDir.isDirectory()) {
 			for(File f : rootDir.listFiles()) {
-				clsNames.addAll(listClassNamesInProject(f, classInFile));
+				List<String> result = listClassNamesInProject(f, classInFile);
+				if(result != null)
+					clsNames.addAll(result);
 			}
 			return clsNames;
 		}
 		else {
-			return listClassNamesInFile(rootDir, classInFile);
+			return (rootDir.getName().endsWith(".java")) ? listClassNamesInFile(rootDir, classInFile) : null;
 		}
 	}
 	
@@ -58,39 +63,6 @@ public class ClassCoupling {
 
 		return refCls;
 	}
-	
-	public String getCodeOfClassInSrcStr(String className, String sourceStr) throws Exception {
-		String openStr = "class " + className;
-		int beginIndex = sourceStr.indexOf(openStr) + openStr.length();
-		// find opening parentheses
-		int i;
-		for(i=beginIndex; i<sourceStr.length(); i++) {
-			if(sourceStr.charAt(i) == '{')
-				break;
-		}
-		
-		// don't read { twice
-		i++;
-
-		// find corresponding closing one
-		beginIndex = i;
-		int parensCounter = 1;
-		for(; i<sourceStr.length() && parensCounter != 0; i++) {
-			char c = sourceStr.charAt(i);
-			if(c == '{') parensCounter++;
-			else if(c == '}') parensCounter--;
-		}
-		
-		// remove trailing } from result
-		i--;
-
-		return sourceStr.substring(beginIndex, i);
-	}
-	
-	public String getCodeOfClassInFile(String className, File f) throws Exception {
-		String sourceStr = FileHelpers.readEntireFile(f);
-		return getCodeOfClassInSrcStr(className, sourceStr);
-	}
 
 	public String getCodeOfClass(String className, Map<String, File> classInFile) throws Exception {
 		if(!classInFile.containsKey(className))
@@ -98,7 +70,7 @@ public class ClassCoupling {
 
 		File f = classInFile.get(className);
 		
-		return getCodeOfClassInFile(className, f);
+		return SourceHelpers.getCodeOfClassInFile(className, f);
 	}
 
 }

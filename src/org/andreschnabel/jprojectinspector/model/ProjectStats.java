@@ -8,8 +8,8 @@ public class ProjectStats {
 
 	// Code properties
 	public int linesOfCode;
-	public float mcCabe;
-	public float coupling;
+	public float avgWMC;
+	public float avgCoupling;
 
 	// Test properties
 	public float testCoverage;

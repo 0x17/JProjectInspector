@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.andreschnabel.jprojectinspector.model.code.Clazz;
 import org.andreschnabel.jprojectinspector.model.code.Method;
-import org.andreschnabel.jprojectinspector.tests.TestCommon;
+import org.andreschnabel.jprojectinspector.utilities.TestCommon;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;

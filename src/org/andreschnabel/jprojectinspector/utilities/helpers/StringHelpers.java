@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
+
 public class StringHelpers {
 
 	public static boolean strContainsOneOf(String str, String... candidates) {
@@ -60,6 +61,18 @@ public class StringHelpers {
 
 	public static String removeWhitespace(String s) {
 		return s.replaceAll("[\n\t]*", "");
+	}
+
+	public static String removeComments(String srcStr) {
+		return srcStr.replaceAll("/\\*[\\s\\S]*?\\*/", "").replaceAll("//.*?\n", "");
+	}
+
+	public static String removeCommentsAndStrings(String srcStr) {
+		return removeStrings(removeComments(srcStr));		
+	}
+
+	public static String removeStrings(String srcStr) {
+		return srcStr.replaceAll("\".*?\"", "");
 	}
 
 }

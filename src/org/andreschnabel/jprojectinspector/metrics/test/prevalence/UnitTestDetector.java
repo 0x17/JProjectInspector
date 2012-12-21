@@ -107,7 +107,7 @@ public class UnitTestDetector {
 	public boolean containsTestAndLoad(Project project) throws Exception {
 		ProjectDownloader pd = new ProjectDownloader();
 		File f = pd.loadProject(project);
-		boolean result = containsTest(f);
+		boolean result = (f == null) ? false : containsTest(f);
 		pd.deleteProject(project);
 		return result;
 	}

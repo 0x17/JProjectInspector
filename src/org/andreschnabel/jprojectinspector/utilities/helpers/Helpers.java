@@ -2,6 +2,7 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -15,7 +16,7 @@ import org.junit.Assert;
 
 
 public class Helpers {
-	
+
 	public static void system(String cmd) throws Exception {
 		System.out.println("Running: " + cmd);
 		try {
@@ -74,6 +75,19 @@ public class Helpers {
 		BufferedReader br = new BufferedReader(isr);
 		String input = br.readLine();
 		return input;
+	}
+	
+	public static String promptPw(String string) throws Exception {
+		final boolean RUNNING_IN_STUPID_ECLIPSE = true;
+		if(RUNNING_IN_STUPID_ECLIPSE) {
+			return prompt(string);
+		}
+		else {
+			System.out.print(string + ": ");
+			Console c = System.console();
+			char[] pw = c.readPassword();		
+			return new String(pw);
+		}
 	}
 
 	public static <T> void assertListEquals(T[] expectedValues, List<T> actualValues) {
