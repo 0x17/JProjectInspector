@@ -1,6 +1,11 @@
 package org.andreschnabel.jprojectinspector.model;
 
 public class ProjectStats {
+	public ProjectStats(Project project) {
+		owner = project.owner;
+		name = project.repoName;
+	}
+	
 	public String owner;
 	public String name;
 	

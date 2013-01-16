@@ -91,4 +91,10 @@ public class FileHelpers {
 		}
 	}
 
+	public static List<String> recursiveCollectSrcFiles(String dir) {
+		List<String> result = new LinkedList<String>();
+		recursiveCollectSrcFiles(result, new File(dir));
+		return result;
+	}
+
 }

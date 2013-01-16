@@ -1,5 +1,10 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class StringHelpers {
 
@@ -73,6 +78,42 @@ public class StringHelpers {
 
 	public static String removeStrings(String srcStr) {
 		return srcStr.replaceAll("\".*?\"", "");
+	}
+
+	public static String getFirstLine(String str) {
+		int firstNewline = str.indexOf('\n');
+		return str.substring(0, firstNewline);
+	}
+		
+	public static List<String> splitMethodBodies(String srcStr) throws Exception {
+		final Pattern methodDeclPattern = Pattern.compile("(private|public|protected)?(\\s+static)?\\s+\\w+\\s+(\\w+)\\(.*\\)");
+		List<String> bodies = new LinkedList<String>();
+		Matcher m = methodDeclPattern.matcher(srcStr);
+		while(m.find()) {
+			// move to first opening bracket
+			int i = m.end();
+			for(; i<srcStr.length() && srcStr.charAt(i) != '{'; i++);
+			int stackSize = 1;
+			
+			int methodBodyStart = i;
+			
+			// move forward until closing bracket found
+			for(; i<srcStr.length() && stackSize > 0; i++) {
+				switch(srcStr.charAt(i)) {
+				case '{':
+					stackSize++;
+					break;
+				case '}':
+					stackSize--;
+					break;
+				}
+			}
+			
+			int methodBodyEnd = i;
+			
+			bodies.add(srcStr.substring(methodBodyStart, methodBodyEnd));
+		}		
+		return bodies;
 	}
 
 }

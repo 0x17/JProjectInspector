@@ -40,10 +40,11 @@ public class ParserTest {
 		parser.reset();
 		
 		CommonTree t = (CommonTree) parser.javaSource().getTree();
+		System.out.println(t.toStringTree());
 
 		// printTree(t);
 
-		traverse(t);
+		//traverse(t);
 
 		//saveTreeToDot(t, args[0]);
 	}
@@ -57,7 +58,7 @@ public class ParserTest {
 		fw.close();
 	}
 
-	private static void traverse(Tree root) {
+	public static void traverse(Tree root) {
 		traverse(root, 0);
 	}
 

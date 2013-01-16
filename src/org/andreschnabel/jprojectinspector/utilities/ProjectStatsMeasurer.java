@@ -18,7 +18,7 @@ import org.andreschnabel.jprojectinspector.model.ProjectStats;
 public class ProjectStatsMeasurer {
 	
 	public ProjectStats collectStats(Project project, File projectRoot) throws Exception {		
-		ProjectStats stats = new ProjectStats();
+		ProjectStats stats = new ProjectStats(project);
 
 		UnitTestDetector utd = new UnitTestDetector();
 		stats.containsTest = utd.containsTest(projectRoot);
