@@ -9,13 +9,17 @@ import org.antlr.runtime.CommonTokenStream;
 public class ParserHelpers {
 	
 	public static JavaParser parserForFile(File f) throws Exception {		
-		ANTLRStringStream ss = new ANTLRStringStream(FileHelpers.readEntireFile(f));
+		return parserForStr(FileHelpers.readEntireFile(f));
+	}
+	
+	public static JavaParser parserForStr(String s) throws Exception {
+		ANTLRStringStream ss = new ANTLRStringStream(s);
 		JavaLexer lexer = new JavaLexer(ss);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		JavaParser parser = new JavaParser(tokens);
 		parser.compilationUnit();
 		parser.reset();
-		return parser;		
+		return parser;
 	}
 
 }

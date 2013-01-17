@@ -16,12 +16,16 @@ public class MethodCallCollector {
 	private final static String methodCallRegex = "(\\w+)\\s*\\.\\s*(\\w+)\\s*\\((.*?)\\)";
 	private final static Pattern methodCallPattern = Pattern.compile(methodCallRegex);
 	
-	public List<Method> collectMethodCallsForFile(File f, MethodIndex index) throws Exception {		
-		List<Method> calledMethods = new LinkedList<Method>();
-		String src = FileHelpers.readEntireFile(f);
-		Matcher m = methodCallPattern.matcher(src);
+	public List<Method> collectMethodCallsForFile(File f, MethodIndex index) throws Exception {
+		String srcStr = FileHelpers.readEntireFile(f);
+		return collectMethodCallsForSrcStr(srcStr, index);
+	}
+	
+	public List<Method> collectMethodCallsForSrcStr(String srcStr, MethodIndex index) throws Exception {
+		List<Method> calledMethods = new LinkedList<Method>();		
+		Matcher m = methodCallPattern.matcher(srcStr);
 		while(m.find()) {
-			if(m.groupCount() == 2) {
+			if(m.groupCount() == 3) {
 				String prefix = m.group(1);
 				String call = m.group(2);
 				String params = m.group(3);
@@ -33,12 +37,12 @@ public class MethodCallCollector {
 		return calledMethods;
 	}
 	
-	private Method tryFindMatch(String prefix, String call, String params, MethodIndex index) {
+	public Method tryFindMatch(String prefix, String call, String params, MethodIndex index) {
 		int numParams = params.contains(",") ? params.split(",").length : 1;
 		for(Method m : index.methods) {
-			if(m.identifier.equals("call")) {
+			if(m.identifier.equals(call)) {
 				if(m.paramTypes.length == numParams) { // TODO: Check if types really match
-					return m;					
+					return m;	
 				}
 			}
 		}
@@ -74,8 +78,4 @@ public class MethodCallCollector {
 			}
 		}
 	}
-	
-	public static void main(String[] args) {
-	}
-
 }

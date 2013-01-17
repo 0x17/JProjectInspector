@@ -1,8 +1,6 @@
 package org.andreschnabel.jprojectinspector.parsers.coverage;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -29,32 +27,33 @@ public class MethodIndexBuilder {
 		return index;
 	}
 
-	private List<Method> parseFile(File f) throws Exception {
-		String packName = determinePackageName(f.getName());
-		JavaParser parser = ParserHelpers.parserForFile(f);
-		CommonTree t = (CommonTree) parser.javaSource().getTree();		
-		return extractMethods(t, packName);
+	public List<Method> parseFile(File f) throws Exception {
+		String packName = determinePackageNameForFile(f);
+		JavaParser parser = ParserHelpers.parserForFile(f);		
+		return extractMethods(parser, packName);
 	}
 	
-	private static List<Method> extractMethods(Tree t, String packageName) {
+	public List<Method> parseSrcStr(String s) throws Exception {
+		String packName = determinePackageNameForSrcStr(s);
+		JavaParser parser = ParserHelpers.parserForStr(s);
+		return extractMethods(parser, packName);
+	}
+	
+	public static List<Method> extractMethods(JavaParser jp, String packageName) throws Exception {
+		CommonTree t = (CommonTree)jp.javaSource().getTree(); 
 		List<Method> methods = new LinkedList<Method>();
 		extractMethods(t, methods, packageName, null);
 		return methods;
 	}
 
-	private static String determinePackageName(String srcFilename) throws Exception {
-		FileReader fr = new FileReader(srcFilename);
-		BufferedReader br = new BufferedReader(fr);
-		StringBuilder srcStr = new StringBuilder();
-		while(br.ready()) {
-			String line = br.readLine();
-			srcStr.append(line);
-		}
-		br.close();
-		fr.close();
-
+	public static String determinePackageNameForFile(File f) throws Exception {
+		String srcStr = FileHelpers.readEntireFile(f);		
+		return determinePackageNameForSrcStr(srcStr);
+	}
+	
+	public static String determinePackageNameForSrcStr(String srcStr) throws Exception {
 		Pattern p = Pattern.compile("package\\s+([\\w\\.]+);");
-		Matcher m = p.matcher(srcStr.toString());
+		Matcher m = p.matcher(srcStr);
 		if(m.find()) {
 			return m.group(1);
 		} else throw new Exception("Unable to match package declaration!");
@@ -125,8 +124,4 @@ public class MethodIndexBuilder {
 			}
 		}
 	}
-
-	public static void main(String[] args) {
-	}
-
 }

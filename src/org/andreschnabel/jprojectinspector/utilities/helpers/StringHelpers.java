@@ -1,7 +1,9 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,6 +95,7 @@ public class StringHelpers {
 			// move to first opening bracket
 			int i = m.end();
 			for(; i<srcStr.length() && srcStr.charAt(i) != '{'; i++);
+			i++;
 			int stackSize = 1;
 			
 			int methodBodyStart = i;
@@ -109,11 +112,31 @@ public class StringHelpers {
 				}
 			}
 			
-			int methodBodyEnd = i;
+			int methodBodyEnd = i-1;
 			
 			bodies.add(srcStr.substring(methodBodyStart, methodBodyEnd));
 		}		
 		return bodies;
+	}
+	
+	public static Map<String, String> extractFieldDeclarations(String srcStr) throws Exception {
+		Map<String, String> fieldDecls = new HashMap<String, String>();
+		// Remove all package declarations
+		srcStr = srcStr.replaceAll("package\\s+[\\w\\.]+;", "");
+		// Remove all class declarations
+		srcStr = srcStr.replaceFirst("(public|private|protected)?\\s+class\\s+\\w+", "");
+		// Remove all method bodies -> only variable declarations left are field declarations.
+		for(String methodStr : splitMethodBodies(srcStr)) {
+			srcStr = srcStr.replaceFirst(methodStr, "");
+		}
+		final Pattern varDeclPattern = Pattern.compile("([\\w\\.\\-]+)\\s+(\\w+)");
+		Matcher m = varDeclPattern.matcher(srcStr);
+		while(m.find()) {
+			String type = m.group(1);
+			String ident = m.group(2);
+			fieldDecls.put(ident, type);
+		}
+		return fieldDecls;
 	}
 
 }

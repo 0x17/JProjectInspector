@@ -2,6 +2,10 @@ package org.andreschnabel.jprojectinspector.utilities.helpers;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
 
 public class StringHelpersTest {
@@ -45,6 +49,28 @@ public class StringHelpersTest {
 		assertEquals("Bernd sagt: ", StringHelpers.removeStrings("Bernd sagt: \"Lauer meer.\""));
 		assertEquals("", StringHelpers.removeStrings("\"\"\"\""));
 		assertEquals("  ", StringHelpers.removeStrings(" \"\" "));
+	}
+	
+	@Test
+	public void testSplitMethodBodies() throws Exception {
+		String src = "Das hier sollte nicht stören, oder?\n"
+			+"public static void main(String[] args) {Lach doch mal { Berndstyle } xD} "
+			+"das hier sollte auch egal sein";
+		List<String> methodBodies = StringHelpers.splitMethodBodies(src);
+		assertEquals(1, methodBodies.size());		
+		assertEquals("Lach doch mal { Berndstyle } xD", methodBodies.get(0));
+	}
+	
+	@Test
+	public void testExtractFieldDeclarations() throws Exception {
+		String src = "package blap.sdjkkjfnef;\n"
+			+ "\tpublic class Spurdo {\n"
+			+ "\t\tint zahl = 3;\n"
+			+ "de.uni-hannover.se.KlassenName obj;\n}\n";
+		Map<String, String> expectedFields = new HashMap<String, String>();
+		expectedFields.put("zahl", "int");
+		expectedFields.put("obj", "de.uni-hannover.se.KlassenName");
+		assertEquals(expectedFields, StringHelpers.extractFieldDeclarations(src));
 	}
 	
 }
