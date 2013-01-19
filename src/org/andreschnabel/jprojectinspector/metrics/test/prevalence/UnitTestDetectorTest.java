@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class UnitTestDetectorTest {
-	
+
 	private UnitTestDetector td;
 
 	@Before
@@ -16,8 +16,8 @@ public class UnitTestDetectorTest {
 	}
 
 	@Test
-	public void testContainsTest() throws Exception {		
-		assertTrue(td.containsTestAndLoad(new Project("skeeto","sample-java-project")));
+	public void testContainsTest() throws Exception {
+		assertTrue(td.containsTestAndLoad(new Project("skeeto", "sample-java-project")));
 		assertTrue(td.containsTestAndLoad(new Project("0x17", "ProjectInspector")));
 	}
 }

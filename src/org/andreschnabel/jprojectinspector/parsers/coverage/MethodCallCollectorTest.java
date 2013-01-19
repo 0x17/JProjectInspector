@@ -48,11 +48,11 @@ public class MethodCallCollectorTest {
 
 	@Test
 	public void testCollectTestFiles() throws Exception {
-		File[] expFiles = new File[] {
-			new File("testdata/PointsTest.java")
+		File[] expFiles = new File[]{
+				new File("testdata/PointsTest.java")
 		};
 		List<File> actualFiles = mcc.collectTestFiles(new File("testdata"));
-		AssertHelpers.arrayEqualsLstOrderInsensitive(expFiles , actualFiles);
+		AssertHelpers.arrayEqualsLstOrderInsensitive(expFiles, actualFiles);
 	}
 
 }

@@ -12,17 +12,17 @@ import org.andreschnabel.jprojectinspector.model.coverage.MethodIndex;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 public class MethodCallCollector {
-	
+
 	private final static String methodCallRegex = "(\\w+)\\s*\\.\\s*(\\w+)\\s*\\((.*?)\\)";
 	private final static Pattern methodCallPattern = Pattern.compile(methodCallRegex);
-	
+
 	public List<Method> collectMethodCallsForFile(File f, MethodIndex index) throws Exception {
 		String srcStr = FileHelpers.readEntireFile(f);
 		return collectMethodCallsForSrcStr(srcStr, index);
 	}
-	
+
 	public List<Method> collectMethodCallsForSrcStr(String srcStr, MethodIndex index) throws Exception {
-		List<Method> calledMethods = new LinkedList<Method>();		
+		List<Method> calledMethods = new LinkedList<Method>();
 		Matcher m = methodCallPattern.matcher(srcStr);
 		while(m.find()) {
 			if(m.groupCount() == 3) {
@@ -36,17 +36,17 @@ public class MethodCallCollector {
 		}
 		return calledMethods;
 	}
-	
+
 	public Method tryFindMatch(String prefix, String call, String params, MethodIndex index) {
 		int numParams = params.contains(",") ? params.split(",").length : 1;
 		for(Method m : index.methods) {
 			if(m.identifier.equals(call)) {
 				if(m.paramTypes.length == numParams) { // TODO: Check if types really match
-					return m;	
+					return m;
 				}
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -58,7 +58,7 @@ public class MethodCallCollector {
 		}
 		return result;
 	}
-	
+
 	public List<File> collectTestFiles(File root) throws Exception {
 		List<File> testFiles = new LinkedList<File>();
 		traverseRecursively(root, testFiles);
@@ -70,8 +70,7 @@ public class MethodCallCollector {
 			for(File f : root.listFiles()) {
 				traverseRecursively(f, testFiles);
 			}
-		}
-		else {
+		} else {
 			String filename = root.getName();
 			if(filename.endsWith(".java") && UnitTestDetector.isJavaSrcTest(FileHelpers.readEntireFile(root), filename)) {
 				testFiles.add(root);

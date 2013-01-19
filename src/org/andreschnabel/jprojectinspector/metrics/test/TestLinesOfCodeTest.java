@@ -4,12 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
-import org.andreschnabel.jprojectinspector.utilities.TestCommon;
+import org.andreschnabel.jprojectinspector.TestCommon;
 import org.junit.Before;
 import org.junit.Test;
 
 public class TestLinesOfCodeTest {
-	
+
 	private TestLinesOfCode tloc;
 
 	@Before

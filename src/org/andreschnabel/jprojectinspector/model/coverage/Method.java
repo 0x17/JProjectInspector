@@ -42,25 +42,25 @@ public class Method {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
-		Method other = (Method)obj;
-		if (clazzIdent == null) {
-			if (other.clazzIdent != null) return false;
-		} else if (!clazzIdent.equals(other.clazzIdent)) return false;
-		if (identifier == null) {
-			if (other.identifier != null) return false;
-		} else if (!identifier.equals(other.identifier)) return false;
-		if (packIdent == null) {
-			if (other.packIdent != null) return false;
-		} else if (!packIdent.equals(other.packIdent)) return false;
-		if (!Arrays.equals(paramTypes, other.paramTypes)) return false;
-		if (returnType == null) {
-			if (other.returnType != null) return false;
-		} else if (!returnType.equals(other.returnType)) return false;
+		if(this == obj) return true;
+		if(obj == null) return false;
+		if(getClass() != obj.getClass()) return false;
+		Method other = (Method) obj;
+		if(clazzIdent == null) {
+			if(other.clazzIdent != null) return false;
+		} else if(!clazzIdent.equals(other.clazzIdent)) return false;
+		if(identifier == null) {
+			if(other.identifier != null) return false;
+		} else if(!identifier.equals(other.identifier)) return false;
+		if(packIdent == null) {
+			if(other.packIdent != null) return false;
+		} else if(!packIdent.equals(other.packIdent)) return false;
+		if(!Arrays.equals(paramTypes, other.paramTypes)) return false;
+		if(returnType == null) {
+			if(other.returnType != null) return false;
+		} else if(!returnType.equals(other.returnType)) return false;
 		return true;
 	}
-	
-	
+
+
 }

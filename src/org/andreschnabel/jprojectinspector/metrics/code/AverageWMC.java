@@ -14,7 +14,7 @@ public class AverageWMC {
 	public int determineWMCforSrcFile(File srcFile, Aux a) throws Exception {
 		return determineWMCforSrcStr(FileHelpers.readEntireFile(srcFile), a);
 	}
-	
+
 	private class Aux {
 		int ccSum;
 		int count;
@@ -23,9 +23,9 @@ public class AverageWMC {
 	public float determineAverageWMC(File root) throws Exception {
 		Aux a = new Aux();
 		determineAverageWMCforDir(root, a);
-		return (float)a.ccSum/a.count;		
+		return (float) a.ccSum / a.count;
 	}
-	
+
 	private void determineAverageWMCforDir(File root, Aux a) throws Exception {
 		if(root.isDirectory()) {
 			for(File f : root.listFiles()) {

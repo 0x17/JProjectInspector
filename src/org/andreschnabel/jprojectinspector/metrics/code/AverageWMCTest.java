@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
-import org.andreschnabel.jprojectinspector.utilities.TestCommon;
+import org.andreschnabel.jprojectinspector.TestCommon;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class AverageWMCTest {
 
 	@Test
 	public void testDetermineMcCabeForSrcStr() throws Exception {
-		//assertEquals(4, mc.determineMcCabeForSrcStr("if for while case"));		
+		//assertEquals(4, mc.determineMcCabeForSrcStr("if for while case"));
 	}
 
 	@Test

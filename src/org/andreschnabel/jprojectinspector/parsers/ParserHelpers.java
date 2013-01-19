@@ -7,11 +7,11 @@ import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 
 public class ParserHelpers {
-	
-	public static JavaParser parserForFile(File f) throws Exception {		
+
+	public static JavaParser parserForFile(File f) throws Exception {
 		return parserForStr(FileHelpers.readEntireFile(f));
 	}
-	
+
 	public static JavaParser parserForStr(String s) throws Exception {
 		ANTLRStringStream ss = new ANTLRStringStream(s);
 		JavaLexer lexer = new JavaLexer(ss);

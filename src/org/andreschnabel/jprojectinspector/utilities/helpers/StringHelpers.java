@@ -19,13 +19,12 @@ public class StringHelpers {
 	public static int countOccurencesOfWord(String str, String word) {
 		int ctr = 0;
 		int j = 0;
-		for(int i=0; i<str.length(); i++) {
+		for(int i = 0; i < str.length(); i++) {
 			if(str.charAt(i) == word.charAt(j)) {
-				if(j == word.length() - 1)  {
+				if(j == word.length() - 1) {
 					ctr++;
 					j = 0;
-				}
-				else
+				} else
 					j++;
 			} else {
 				j = 0;
@@ -51,14 +50,14 @@ public class StringHelpers {
 	public static boolean strEndsWithOneOf(String str, String... suffixes) {
 		for(String suffix : suffixes)
 			if(str.endsWith(suffix)) return true;
-		
+
 		return false;
 	}
 
 	public static boolean equalsOneOf(String str, String... candidates) {
 		for(String candidate : candidates)
 			if(str.equals(candidate)) return true;
-		
+
 		return false;
 	}
 
@@ -75,7 +74,7 @@ public class StringHelpers {
 	}
 
 	public static String removeCommentsAndStrings(String srcStr) {
-		return removeStrings(removeComments(srcStr));		
+		return removeStrings(removeComments(srcStr));
 	}
 
 	public static String removeStrings(String srcStr) {
@@ -86,7 +85,7 @@ public class StringHelpers {
 		int firstNewline = str.indexOf('\n');
 		return str.substring(0, firstNewline);
 	}
-		
+
 	public static List<String> splitMethodBodies(String srcStr) throws Exception {
 		final Pattern methodDeclPattern = Pattern.compile("(private|public|protected)?(\\s+static)?\\s+\\w+\\s+(\\w+)\\(.*\\)");
 		List<String> bodies = new LinkedList<String>();
@@ -94,31 +93,31 @@ public class StringHelpers {
 		while(m.find()) {
 			// move to first opening bracket
 			int i = m.end();
-			for(; i<srcStr.length() && srcStr.charAt(i) != '{'; i++);
+			for(; i < srcStr.length() && srcStr.charAt(i) != '{'; i++) ;
 			i++;
 			int stackSize = 1;
-			
+
 			int methodBodyStart = i;
-			
+
 			// move forward until closing bracket found
-			for(; i<srcStr.length() && stackSize > 0; i++) {
+			for(; i < srcStr.length() && stackSize > 0; i++) {
 				switch(srcStr.charAt(i)) {
-				case '{':
-					stackSize++;
-					break;
-				case '}':
-					stackSize--;
-					break;
+					case '{':
+						stackSize++;
+						break;
+					case '}':
+						stackSize--;
+						break;
 				}
 			}
-			
-			int methodBodyEnd = i-1;
-			
+
+			int methodBodyEnd = i - 1;
+
 			bodies.add(srcStr.substring(methodBodyStart, methodBodyEnd));
-		}		
+		}
 		return bodies;
 	}
-	
+
 	public static Map<String, String> extractFieldDeclarations(String srcStr) throws Exception {
 		Map<String, String> fieldDecls = new HashMap<String, String>();
 		// Remove all package declarations

@@ -9,14 +9,13 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 public class TestMethodReferenceCounter {
-	
+
 	public void determineUniqueMethodsReferencedInTests(File root, List<String> testedMethodNames) throws Exception {
 		if(root.isDirectory()) {
 			for(File f : root.listFiles()) {
 				determineUniqueMethodsReferencedInTests(f, testedMethodNames);
 			}
-		}
-		else {
+		} else {
 			if(root.getName().endsWith(".java")) {
 				String srcStr = FileHelpers.readEntireFile(root);
 				if(UnitTestDetector.isJavaSrcTest(srcStr, root.getName())) {
@@ -27,7 +26,7 @@ public class TestMethodReferenceCounter {
 	}
 
 	public void determineUniqueMethodsReferencedInTestStr(String srcStr, List<String> testedMethodNames) throws Exception {
-		determineUniqueConstructorsReferencedInTestStr(srcStr, testedMethodNames);		
+		determineUniqueConstructorsReferencedInTestStr(srcStr, testedMethodNames);
 		determineUniqueObjectMethodsReferencedInTestStr(srcStr, testedMethodNames);
 	}
 
@@ -37,7 +36,7 @@ public class TestMethodReferenceCounter {
 			Helpers.addToLstNoDups(testedMethodNames, methodName);
 		}
 	}
-	
+
 	public void determineUniqueConstructorsReferencedInTestStr(String srcStr, List<String> testedMethodNames) throws Exception {
 		List<String> calledConstructors = RegexHelpers.batchMatchOneGroup("new\\s+(\\w+)\\(.*\\)", srcStr);
 		for(String consName : calledConstructors) {

@@ -24,7 +24,7 @@ public class UniqueMethodCounterTest {
 		umc.determineUniqueMethodsInProject(new File("testdata"), projectMethodNames);
 		assertEquals(5, projectMethodNames.size());
 		String[] expectedMethods = {"Point2D", "Point3D", "Position2D", "getLocation", "Position3D"};
-		for(int i=0; i<expectedMethods.length; i++) {
+		for(int i = 0; i < expectedMethods.length; i++) {
 			assertEquals(expectedMethods[i], projectMethodNames.get(i));
 		}
 	}

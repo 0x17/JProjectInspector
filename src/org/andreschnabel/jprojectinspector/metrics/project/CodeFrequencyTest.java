@@ -2,12 +2,12 @@ package org.andreschnabel.jprojectinspector.metrics.project;
 
 import static org.junit.Assert.*;
 
-import org.andreschnabel.jprojectinspector.utilities.TestCommon;
+import org.andreschnabel.jprojectinspector.TestCommon;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CodeFrequencyTest {
-	
+
 	private CodeFrequency cf;
 
 	@Before

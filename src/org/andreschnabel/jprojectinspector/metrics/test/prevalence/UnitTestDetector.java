@@ -12,14 +12,17 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 public class UnitTestDetector {
-	
-	private final static String[] supportedLangs = new String[] { "Java", "Ruby", "C++", "C#", "JavaScript", "Python" };
-	public static String[] getSupportedLangs() { return supportedLangs; }
+
+	private final static String[] supportedLangs = new String[]{"Java", "Ruby", "C++", "C#", "JavaScript", "Python"};
+
+	public static String[] getSupportedLangs() {
+		return supportedLangs;
+	}
 
 	public boolean containsTest(File pf) throws Exception {
 		return traverseForTest(pf);
 	}
-	
+
 	public List<File> getTestFiles(File root) throws Exception {
 		List<File> testFiles = new LinkedList<File>();
 		if(root.isDirectory()) {
@@ -33,16 +36,18 @@ public class UnitTestDetector {
 				String srcStr = null;
 				try {
 					srcStr = FileHelpers.readEntireFile(root);
-				} catch(Exception e) { return testFiles; }				
-				
-			 	if((filename.endsWith(".java") && isJavaSrcTest(srcStr, filename))
-			 	 || (filename.endsWith(".rb") && isRubySrcTest(srcStr, filename))
-			 	 || (filename.endsWith(".py") && isPythonSrcTest(srcStr, filename))
-			 	 || (filename.endsWith(".js") && isJavaScriptSrcTest(srcStr, filename))
-			 	 || (filename.endsWith(".cpp") && isCppSrcTest(srcStr, filename))
-			 	 || (filename.endsWith(".cs") && isCsharpSrcTest(srcStr, filename))) {
-			 		testFiles.add(root);
-			 	}
+				} catch(Exception e) {
+					return testFiles;
+				}
+
+				if((filename.endsWith(".java") && isJavaSrcTest(srcStr, filename))
+						|| (filename.endsWith(".rb") && isRubySrcTest(srcStr, filename))
+						|| (filename.endsWith(".py") && isPythonSrcTest(srcStr, filename))
+						|| (filename.endsWith(".js") && isJavaScriptSrcTest(srcStr, filename))
+						|| (filename.endsWith(".cpp") && isCppSrcTest(srcStr, filename))
+						|| (filename.endsWith(".cs") && isCsharpSrcTest(srcStr, filename))) {
+					testFiles.add(root);
+				}
 			}
 			return testFiles;
 		}
@@ -55,21 +60,23 @@ public class UnitTestDetector {
 				if(found) break;
 				found |= traverseForTest(entry);
 			}
-			return found;			
+			return found;
 		} else {
 			String filename = root.getName();
 			if(StringHelpers.strEndsWithOneOf(filename, ".java", ".rb", ".py", ".js", ".cpp", ".cs")) {
 				String srcStr = null;
 				try {
 					srcStr = FileHelpers.readEntireFile(root);
-				} catch(Exception e) { return false; }
-				
-			 	if(filename.endsWith(".java")) return isJavaSrcTest(srcStr, filename);
-			 	else if(filename.endsWith(".rb")) return isRubySrcTest(srcStr, filename);
-			 	else if(filename.endsWith(".py")) return isPythonSrcTest(srcStr, filename);
-			 	else if(filename.endsWith(".js")) return isJavaScriptSrcTest(srcStr, filename);
-			 	else if(filename.endsWith(".cpp")) return isCppSrcTest(srcStr, filename);
-			 	else if(filename.endsWith(".cs")) return isCsharpSrcTest(srcStr, filename);
+				} catch(Exception e) {
+					return false;
+				}
+
+				if(filename.endsWith(".java")) return isJavaSrcTest(srcStr, filename);
+				else if(filename.endsWith(".rb")) return isRubySrcTest(srcStr, filename);
+				else if(filename.endsWith(".py")) return isPythonSrcTest(srcStr, filename);
+				else if(filename.endsWith(".js")) return isJavaScriptSrcTest(srcStr, filename);
+				else if(filename.endsWith(".cpp")) return isCppSrcTest(srcStr, filename);
+				else if(filename.endsWith(".cs")) return isCsharpSrcTest(srcStr, filename);
 			}
 			return false;
 		}

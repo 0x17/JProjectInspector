@@ -9,13 +9,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class AssertHelpersTest {
-	
+
 	private String[] expectedValues;
 	private List<String> actualValues;
 
 	@Before
 	public void setUp() {
-		expectedValues = new String[] {"some", "strings"};
+		expectedValues = new String[]{"some", "strings"};
 		actualValues = new ArrayList<String>();
 		actualValues.add("strings");
 		actualValues.add("some");
@@ -29,14 +29,14 @@ public class AssertHelpersTest {
 			Assert.fail();
 		}
 	}
-	
-	@Test(expected=AssertionError.class)
+
+	@Test(expected = AssertionError.class)
 	public void testArrayEqualsLstOrderInsensitiveLengthFail() {
 		actualValues.add("doesntmatter");
 		AssertHelpers.arrayEqualsLstOrderInsensitive(expectedValues, actualValues);
 	}
-	
-	@Test(expected=AssertionError.class)
+
+	@Test(expected = AssertionError.class)
 	public void testArrayEqualsLstOrderInsensitiveContentFail() {
 		actualValues.clear();
 		actualValues.add("some");

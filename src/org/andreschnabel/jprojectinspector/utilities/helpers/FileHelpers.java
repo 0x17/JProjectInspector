@@ -25,7 +25,7 @@ public class FileHelpers {
 	public static void deleteDir(File root) throws Exception {
 		if(!root.isDirectory())
 			throw new Exception("Path must point to dir!");
-		
+
 		for(File f : root.listFiles()) {
 			if(f.isDirectory()) {
 				deleteDir(f);
@@ -60,7 +60,7 @@ public class FileHelpers {
 				sum += recursivelyCountFilesWithExtension(f, extension);
 			}
 			return sum;
-			
+
 		} else {
 			return rootDir.getName().endsWith(extension) ? 1 : 0;
 		}
@@ -75,7 +75,7 @@ public class FileHelpers {
 	public static List<String> listSourceFiles(String path) {
 		File dir = new File(path);
 		List<String> srcFilenames = new LinkedList<String>();
-		FileHelpers.recursiveCollectSrcFiles(srcFilenames, dir);		
+		FileHelpers.recursiveCollectSrcFiles(srcFilenames, dir);
 		return srcFilenames;
 	}
 

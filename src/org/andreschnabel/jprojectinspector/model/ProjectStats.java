@@ -5,10 +5,10 @@ public class ProjectStats {
 		owner = project.owner;
 		name = project.repoName;
 	}
-	
+
 	public final String owner;
 	public final String name;
-	
+
 	public boolean containsTest;
 
 	// Code properties

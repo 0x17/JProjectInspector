@@ -5,7 +5,7 @@ import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper.UserData;
 
 public class UserScraperRunner {
-	
+
 	public static void main(String[] args) throws Exception {
 		UserScraper us = new UserScraper();
 		UserData ud = us.scrapeUser("badlogic");

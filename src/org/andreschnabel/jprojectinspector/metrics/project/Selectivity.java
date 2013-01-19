@@ -12,18 +12,18 @@ import org.eclipse.egit.github.core.service.PullRequestService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 public class Selectivity {
-	
+
 	private static final int MAX_PULL_REQ_PAGES = 5;
 	private PullRequestService pullReqService;
 	private RepositoryService repoService;
-	
+
 	public Selectivity() throws Exception {
 		// Authenticate to raise rate limit.
 		GitHubClient ghc = GitHelpers.authenticate();
 		repoService = new RepositoryService(ghc);
-		pullReqService = new PullRequestService(ghc);		
+		pullReqService = new PullRequestService(ghc);
 	}
-	
+
 	public int getSelectivity(Project p) throws Exception {
 		Repository repo = repoService.getRepository(p.owner, p.repoName);
 		PageIterator<PullRequest> pullRequestIterator = pullReqService.pagePullRequests(repo, "closed");
@@ -31,10 +31,10 @@ public class Selectivity {
 		int numMerged = 0;
 		int numClosed = 0;
 
-		for(int i=0; i<MAX_PULL_REQ_PAGES && pullRequestIterator.hasNext(); i++) {
+		for(int i = 0; i < MAX_PULL_REQ_PAGES && pullRequestIterator.hasNext(); i++) {
 			Collection<PullRequest> pullRequests = pullRequestIterator.next();
-			for (PullRequest pr : pullRequests) {
-				if (pr.isMerged()) numMerged++;
+			for(PullRequest pr : pullRequests) {
+				if(pr.isMerged()) numMerged++;
 				numClosed++;
 			}
 		}

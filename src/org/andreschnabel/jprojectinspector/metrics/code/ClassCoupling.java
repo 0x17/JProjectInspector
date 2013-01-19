@@ -22,10 +22,10 @@ public class ClassCoupling {
 		for(String className : classNames) {
 			couplingCount += referencedClasses(className, classInFile).size();
 		}
-		return (float)couplingCount/classCount;
+		return (float) couplingCount / classCount;
 	}
 
-	public List<String> listClassNamesInFile(File f, Map<String, File> classInFile) throws Exception {		
+	public List<String> listClassNamesInFile(File f, Map<String, File> classInFile) throws Exception {
 		String srcStr = FileHelpers.readEntireFile(f);
 		List<String> clsNames = RegexHelpers.batchMatchOneGroup("class\\s+([A-Za-z0-9]+)", StringHelpers.removeCommentsAndStrings(srcStr));
 
@@ -46,17 +46,16 @@ public class ClassCoupling {
 					clsNames.addAll(result);
 			}
 			return clsNames;
-		}
-		else {
+		} else {
 			return (rootDir.getName().endsWith(".java")) ? listClassNamesInFile(rootDir, classInFile) : null;
 		}
 	}
-	
+
 	public List<String> referencedClasses(String className, Map<String, File> classInFile) throws Exception {
 		String classCode = getCodeOfClass(className, classInFile);
 		List<String> refCls = new LinkedList<String>();
 
-		for(String knownClassName : classInFile.keySet()) {			
+		for(String knownClassName : classInFile.keySet()) {
 			if(!knownClassName.equals(className) && classCode.contains(knownClassName))
 				refCls.add(knownClassName);
 		}
@@ -69,7 +68,7 @@ public class ClassCoupling {
 			return "";
 
 		File f = classInFile.get(className);
-		
+
 		return SourceHelpers.getCodeOfClassInFile(className, f);
 	}
 

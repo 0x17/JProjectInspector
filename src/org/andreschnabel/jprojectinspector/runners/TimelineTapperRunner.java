@@ -23,5 +23,5 @@ public class TimelineTapperRunner {
 		String json = gson.toJson(plst);
 		FileHelpers.writeStrToFile(json, "randProjs.json");
 	}
-	
+
 }

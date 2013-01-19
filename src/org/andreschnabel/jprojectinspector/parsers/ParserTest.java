@@ -15,7 +15,7 @@ public class ParserTest {
 		@SuppressWarnings("unchecked")
 		List<Token> myTokens = tokens.getTokens();
 		System.out.println("Tokens:");
-		for (Token t : myTokens) {
+		for(Token t : myTokens) {
 			System.out.println("Token = " + t.toString() + " (" + t.getType() + ")");
 		}
 		System.out.println("End Of Tokens");
@@ -34,11 +34,11 @@ public class ParserTest {
 		// printTokens(tokens);
 
 		JavaParser parser = new JavaParser(tokens);
-		
+
 		// Check for correctness
 		parser.compilationUnit();
 		parser.reset();
-		
+
 		CommonTree t = (CommonTree) parser.javaSource().getTree();
 		System.out.println(t.toStringTree());
 
@@ -63,7 +63,7 @@ public class ParserTest {
 	}
 
 	private static void traverse(Tree root, int layer) {
-		for (int i = 0; i < root.getChildCount(); i++) {
+		for(int i = 0; i < root.getChildCount(); i++) {
 			Tree child = root.getChild(i);
 			// System.out.println(child + " layer=" + layer);
 			if(child.getType() == 29) {

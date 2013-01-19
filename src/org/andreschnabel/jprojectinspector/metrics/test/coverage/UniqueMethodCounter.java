@@ -10,13 +10,12 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 public class UniqueMethodCounter {
-	
+
 	public void determineUniqueMethodsInProject(File root, List<String> projectMethodNames) throws Exception {
 		if(root.isDirectory()) {
 			for(File f : root.listFiles())
 				determineUniqueMethodsInProject(f, projectMethodNames);
-		}
-		else {
+		} else {
 			if(root.getName().endsWith(".java")) {
 				String srcStr = FileHelpers.readEntireFile(root);
 				if(!UnitTestDetector.isJavaSrcTest(srcStr, root.getName())) {
@@ -25,7 +24,7 @@ public class UniqueMethodCounter {
 			}
 		}
 	}
-	
+
 	public void determineUniqueMethodsInSrcStr(String srcStr, List<String> projectMethodNames) {
 		String methodRegex = "(private|public|protected)?(\\s+static)?\\s+\\w+\\s+(\\w+)\\(.*\\)";
 		Pattern p = Pattern.compile(methodRegex);

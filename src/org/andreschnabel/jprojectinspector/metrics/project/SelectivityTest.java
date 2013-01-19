@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.metrics.project;
 
 import static org.junit.Assert.assertEquals;
 
-import org.andreschnabel.jprojectinspector.utilities.TestCommon;
+import org.andreschnabel.jprojectinspector.TestCommon;
 import org.junit.Before;
 import org.junit.Test;
 

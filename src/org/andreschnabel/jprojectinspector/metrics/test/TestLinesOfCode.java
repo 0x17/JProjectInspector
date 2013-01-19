@@ -9,7 +9,7 @@ import java.io.File;
 public class TestLinesOfCode {
 
 	private final LinesOfCode loc = new LinesOfCode();
-	
+
 	public int countTestLocOfDir(File root) throws Exception {
 		if(root.isDirectory()) {
 			int sum = 0;
@@ -17,8 +17,7 @@ public class TestLinesOfCode {
 				sum += countTestLocOfDir(f);
 			}
 			return sum;
-		}
-		else {
+		} else {
 			return root.getName().endsWith(".java") && UnitTestDetector.isJavaSrcTest(FileHelpers.readEntireFile(root), root.getName()) ? loc.countLocOfSrcFile(root) : 0;
 		}
 	}

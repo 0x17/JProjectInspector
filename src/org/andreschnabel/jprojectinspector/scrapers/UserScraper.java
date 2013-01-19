@@ -9,7 +9,7 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 public class UserScraper {
-	
+
 	public class UserData {
 		public String name;
 		public String joinDate;
@@ -18,11 +18,11 @@ public class UserScraper {
 		public List<String> followers;
 		public List<String> following;
 	}
-	
-	public UserData scrapeUser(String name) throws Exception {		
+
+	public UserData scrapeUser(String name) throws Exception {
 		String mainHtml = Helpers.loadUrlIntoStr("https://github.com/" + name);
-		String followingHtml = Helpers.loadUrlIntoStr("https://github.com/"+name+"/following");
-		String followersHtml = Helpers.loadUrlIntoStr("https://github.com/"+name+"/followers");
+		String followingHtml = Helpers.loadUrlIntoStr("https://github.com/" + name + "/following");
+		String followersHtml = Helpers.loadUrlIntoStr("https://github.com/" + name + "/followers");
 		UserData ud = new UserData();
 		ud.name = name;
 		ud.joinDate = scrapeJoinDate(mainHtml);
@@ -32,12 +32,12 @@ public class UserScraper {
 		ud.following = scrapeFollowing(followingHtml, name);
 		return ud;
 	}
-	
+
 	private static List<String> scrapeNames(String htmlStr) throws Exception {
 		String regex = "<a href=\"/([a-zA-Z0-9]*)\">[a-zA-Z0-9]*</a>";
 		return RegexHelpers.batchMatchOneGroup(regex, htmlStr);
 	}
-	
+
 	private List<String> scrapeFollowing(String htmlStr, String name) throws Exception {
 		List<String> names = scrapeNames(htmlStr);
 		names.remove(name);
@@ -60,15 +60,15 @@ public class UserScraper {
 	private List<Project> scrapeProjects(String htmlStr) {
 		htmlStr = StringHelpers.removeAllWhitespace(htmlStr);
 		List<Project> projects = new LinkedList<Project>();
-		
+
 		String regex = "<spanclass=\"mega-iconmega-icon-repo-forked\"></span>"
-							+"<ahref=\"/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)\">[a-zA-Z0-9]*</a>";
+				+ "<ahref=\"/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)\">[a-zA-Z0-9]*</a>";
 		List<RegexHelpers.StringPair> projNames = RegexHelpers.batchMatchTwoGroups(regex, htmlStr);
-		
+
 		for(RegexHelpers.StringPair projName : projNames) {
 			projects.add(new Project(projName.first, projName.second));
 		}
-		
+
 		return projects;
 	}
 

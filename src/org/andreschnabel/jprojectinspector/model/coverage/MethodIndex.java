@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MethodIndex {
-	
+
 	public final List<Method> methods = new LinkedList<Method>();
 
 }

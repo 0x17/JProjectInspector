@@ -14,10 +14,10 @@ public class ProjectAge {
 		GitHubClient ghc = GitHelpers.authenticate();
 		RepositoryService repoService = new RepositoryService(ghc);
 		Repository repo = repoService.getRepository(project.owner, project.repoName);
-		
+
 		Date creationDate = repo.getCreatedAt();
 		long delta = (new Date().getTime() - creationDate.getTime());
-		
+
 		return delta;
 	}
 }

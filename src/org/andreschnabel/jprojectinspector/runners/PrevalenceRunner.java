@@ -21,14 +21,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class PrevalenceRunner {
-	
+
 	private final static Gson gson;
 	private static GitHubClient ghc;
 
 	static {
 		gson = new GsonBuilder().setPrettyPrinting().create();
 	}
-	
+
 	static class Options {
 		public String keyword = "unknown";
 		public int numPages = 1;
@@ -37,7 +37,7 @@ public class PrevalenceRunner {
 		public String dictionaryFilename = null;
 		public int numProjects = 1;
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		Options options = parseOptions(args);
 
@@ -47,22 +47,22 @@ public class PrevalenceRunner {
 			String pw = Helpers.prompt("Password");
 			ghc.setCredentials(user, pw);
 		}
-		
+
 		// Only collect non-forked java project filenames to given file
 		if(options.collectFilename != null) {
 			collectProjectNames(options);
 			return;
 		}
-		
+
 		detTestPrevForProjects(options);
-		
+
 		//UnitTestDetector utd = new UnitTestDetector();
 		//utd.containsTest(new Project("isaaccp","fun-todo"));
 	}
 
 	private static Options parseOptions(String[] args) throws Exception {
 		Options result = new Options();
-		
+
 		for(String arg : args) {
 			if(arg.contains("=")) {
 				String[] parts = arg.split("=");
@@ -90,7 +90,7 @@ public class PrevalenceRunner {
 		}
 		return result;
 	}
-	
+
 	private static class TestPrevMiniSummary {
 		public int numTestedProjects;
 		public int numProjectsTotal;
@@ -102,10 +102,10 @@ public class PrevalenceRunner {
 			throw new Exception("Directory doesn't exist: " + dirPath);
 		if(!dir.isDirectory())
 			throw new Exception("Summary folder path not pointing to dir: " + dirPath);
-		
+
 		int totalProjectCount = 0;
 		int totalTestProjectCount = 0;
-		
+
 		for(File f : dir.listFiles()) {
 			if(!f.isDirectory() && f.getName().endsWith(".json")) {
 				TestPrevMiniSummary s = gson.fromJson(FileHelpers.readEntireFile(f), TestPrevMiniSummary.class);
@@ -113,8 +113,8 @@ public class PrevalenceRunner {
 				totalTestProjectCount += s.numTestedProjects;
 			}
 		}
-		
-		float testPrev = (((float)totalTestProjectCount / totalProjectCount) * 100.0f);
+
+		float testPrev = (((float) totalTestProjectCount / totalProjectCount) * 100.0f);
 		System.out.println("Total number of projects: " + totalTestProjectCount);
 		System.out.println("Number of projects with tests: " + totalProjectCount);
 		System.out.println("Test prevalence = " + testPrev);
@@ -137,7 +137,7 @@ public class PrevalenceRunner {
 	private static void detTestPrevForProjects(Options options) throws Exception {
 		TestPrevalence tpd = new TestPrevalence();
 		TestPrevalenceSummary summary;
-		
+
 		// Load project list from previously generated file if given
 		if(options.listFilename != null) {
 			String projectListJson = FileHelpers.readEntireFile(new File(options.listFilename));
@@ -153,9 +153,9 @@ public class PrevalenceRunner {
 				ProjectList projectList = jpc.collectProjects(keywords, options.numPages);
 				summary = tpd.determineTestPrevalence(projectList);
 			}
-		}		 
-		
-		String summaryStr = gson.toJson(summary);		
+		}
+
+		String summaryStr = gson.toJson(summary);
 		FileHelpers.writeStrToFile(summaryStr, StringHelpers.capitalize(options.keyword) + "TestPrevalence.json");
 	}
 
@@ -166,7 +166,7 @@ public class PrevalenceRunner {
 		List<String> usedKeywords = new LinkedList<String>();
 		String[] keywords = new String[options.numProjects];
 		int randomIndex;
-		for(int i=0; i<keywords.length; i++) {
+		for(int i = 0; i < keywords.length; i++) {
 			// don't use keyword twice!
 			do {
 				randomIndex = r.nextInt(dictionary.length);
@@ -183,37 +183,37 @@ public class PrevalenceRunner {
 		List<String> dict = new LinkedList<String>();
 		FileReader fr = new FileReader(dictionaryFilename);
 		BufferedReader br = new BufferedReader(fr);
-		
+
 		while(br.ready()) {
 			String line = br.readLine().trim();
 			if(line.length() > 0)
 				dict.add(line);
 		}
-		
+
 		br.close();
 		fr.close();
 		return dict.toArray(new String[]{});
 	}
-	
+
 	private static void randomlyMinimizeProjectListFile(String srcFilename, String destFilename, int destSize) throws Exception {
 		String projectListJson = FileHelpers.readEntireFile(new File(srcFilename));
 		ProjectList projectList = gson.fromJson(projectListJson, ProjectList.class);
-		
-		randomlyMinimizeProjectList(projectList, destSize);		
+
+		randomlyMinimizeProjectList(projectList, destSize);
 		String outJson = gson.toJson(projectList);
 		FileHelpers.writeStrToFile(outJson, destFilename);
 	}
-	
+
 	private static void randomlyMinimizeProjectList(ProjectList src, int destSize) throws Exception {
 		List<Project> srcProjs = src.projects;
-		int initialSize = srcProjs.size();		
+		int initialSize = srcProjs.size();
 		Random r = new Random();
-		
+
 		if(initialSize <= destSize) {
 			throw new Exception("Dest size must be smaller than orig size for minimize!");
 		}
-		
-		for(int i=0; i<initialSize - destSize; i++) {
+
+		for(int i = 0; i < initialSize - destSize; i++) {
 			int rval = r.nextInt(srcProjs.size());
 			srcProjs.remove(rval);
 		}

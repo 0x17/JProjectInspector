@@ -18,24 +18,24 @@ public class Helpers {
 	public static void system(String cmd) throws Exception {
 		System.out.println("Running: " + cmd);
 		try {
-			Process p = Runtime.getRuntime().exec(cmd);		
-			InputStreamReader isr = new InputStreamReader(p.getInputStream());			
+			Process p = Runtime.getRuntime().exec(cmd);
+			InputStreamReader isr = new InputStreamReader(p.getInputStream());
 			p.waitFor();
-			
+
 			StringBuilder output = new StringBuilder();
 			int c;
 			while((c = isr.read()) != -1) {
-				output.append((char)c);
+				output.append((char) c);
 			}
-			System.out.print(output);		
-			
-		} catch (IOException e) {
+			System.out.print(output);
+
+		} catch(IOException e) {
 			System.out.println("Error executing: " + cmd);
 			e.printStackTrace();
 		}
 	}
-	
-	public static String loadUrlIntoStr(String urlStr) throws Exception {		
+
+	public static String loadUrlIntoStr(String urlStr) throws Exception {
 		URL url = new URL(urlStr);
 		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 		StringBuilder builder = new StringBuilder();
@@ -45,7 +45,7 @@ public class Helpers {
 		br.close();
 		return builder.toString();
 	}
-	
+
 	public static String loadHTMLUrlIntoStr(String urlStr) throws Exception {
 		// Taken from: http://stackoverflow.com/questions/1381617/simplest-way-to-correctly-load-html-from-web-page-into-a-string-in-java
 		URL url = new URL(urlStr);
@@ -57,35 +57,34 @@ public class Helpers {
 		String charset = m.matches() ? m.group(1) : "ISO-8859-1";
 		Reader r = new InputStreamReader(con.getInputStream(), charset);
 		StringBuilder buf = new StringBuilder();
-		while (true) {
-		  int ch = r.read();
-		  if (ch < 0)
-		    break;
-		  buf.append((char) ch);
+		while(true) {
+			int ch = r.read();
+			if(ch < 0)
+				break;
+			buf.append((char) ch);
 		}
 		return buf.toString();
 	}
-	
+
 	public static String prompt(String string) throws Exception {
 		System.out.print(string + ": ");
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		return br.readLine();
 	}
-	
+
 	public static String promptPw(String string) throws Exception {
 		final boolean RUNNING_IN_STUPID_ECLIPSE = true;
 		if(RUNNING_IN_STUPID_ECLIPSE) {
 			return prompt(string);
-		}
-		else {
+		} else {
 			System.out.print(string + ": ");
 			Console c = System.console();
-			char[] pw = c.readPassword();		
+			char[] pw = c.readPassword();
 			return new String(pw);
 		}
 	}
-	
+
 	public static <T> void addToLstNoDups(List<T> lst, T obj) {
 		if(!lst.contains(obj))
 			lst.add(obj);

@@ -20,20 +20,20 @@ public class ProjectCollector {
 	public static final boolean USE_EGIT = true;
 
 	@SuppressWarnings("unused")
-	private class Repository {		
+	private class Repository {
 		public String type, owner, username, created, created_at, description, pushed, name, language;
 		public int followers, forks, size, watchers;
 		public boolean fork;
 	}
-	
+
 	private class RepoSearch {
 		public List<Repository> repositories;
 	}
-	
+
 	public ProjectCollector(GitHubClient ghc) {
 		this.ghc = ghc;
 	}
-	
+
 	public ProjectList collectProjects(String keyword, int numPages) throws Exception {
 		RepositoryService repoService;
 		if(USE_EGIT)
@@ -41,10 +41,10 @@ public class ProjectCollector {
 
 		List<Project> result = new LinkedList<Project>();
 		Gson gson = new Gson();
-		
+
 		System.out.println("Collecting non-forked java projects for keyword " + keyword);
-		
-		for(int curPage=1; curPage<=numPages; curPage++) {
+
+		for(int curPage = 1; curPage <= numPages; curPage++) {
 			System.out.println("Page " + curPage);
 
 			if(USE_EGIT) {
@@ -59,8 +59,7 @@ public class ProjectCollector {
 						}
 					}
 				}
-			}
-			else {
+			} else {
 				String repoSearchUri = "https://api.github.com/legacy/repos/search/" + keyword + "?start_page=" + curPage;
 				String reposStr = Helpers.loadUrlIntoStr(repoSearchUri);
 
@@ -82,28 +81,28 @@ public class ProjectCollector {
 				}
 			}
 		}
-		
+
 		return new ProjectList(keyword, result);
 	}
-	
+
 	private boolean isLanguageSupported(String lang) {
 		return StringHelpers.equalsOneOf(lang, UnitTestDetector.getSupportedLangs());
 	}
 
 	public ProjectList collectProjects(String[] keywords, int numPages) throws Exception {
 		StringBuilder keywordStr = new StringBuilder();
-		for(int i=0; i<keywords.length; i++)
+		for(int i = 0; i < keywords.length; i++)
 			keywordStr.append(i == 0 ? "" : ",").append(keywords[i]);
-		
+
 		List<Project> flatLst = new LinkedList<Project>();
-		for(int i=0; i<keywords.length; i++) {
+		for(int i = 0; i < keywords.length; i++) {
 			ProjectList lst = collectProjects(keywords[i], numPages);
-			flatLst.addAll(lst.projects);			
+			flatLst.addAll(lst.projects);
 		}
-		
+
 		return new ProjectList(keywordStr.toString(), flatLst);
 	}
-	
+
 }
 
 

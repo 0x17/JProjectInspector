@@ -16,7 +16,7 @@ import org.eclipse.egit.github.core.service.RepositoryService;
 public class Issues {
 
 	public int getNumberOfIssues(Project p) throws Exception {
-		String pageSrc = Helpers.loadUrlIntoStr("https://github.com/"+p.owner+"/"+p.repoName);
+		String pageSrc = Helpers.loadUrlIntoStr("https://github.com/" + p.owner + "/" + p.repoName);
 		if(!pageSrc.contains("repo_issues")) { // issues disabled
 			return 0;
 		}
@@ -24,8 +24,7 @@ public class Issues {
 		Matcher m = pat.matcher(pageSrc);
 		if(m.find()) {
 			return Integer.valueOf(m.group(1));
-		}
-		else {		
+		} else {
 			GitHubClient ghc = GitHelpers.authenticate();
 			RepositoryService repoService = new RepositoryService(ghc);
 			IssueService issueService = new IssueService();
