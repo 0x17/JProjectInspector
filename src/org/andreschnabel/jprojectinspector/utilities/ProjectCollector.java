@@ -16,7 +16,7 @@ import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 public class ProjectCollector {
-	private GitHubClient ghc;
+	private final GitHubClient ghc;
 	public static final boolean USE_EGIT = true;
 
 	@SuppressWarnings("unused")

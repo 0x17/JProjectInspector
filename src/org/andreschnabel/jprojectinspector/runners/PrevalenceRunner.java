@@ -22,7 +22,7 @@ import com.google.gson.GsonBuilder;
 
 public class PrevalenceRunner {
 	
-	private static Gson gson;
+	private final static Gson gson;
 	private static GitHubClient ghc;
 
 	static {

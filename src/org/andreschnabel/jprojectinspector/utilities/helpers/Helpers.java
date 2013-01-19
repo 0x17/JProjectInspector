@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.junit.Assert;
-
 
 public class Helpers {
 
@@ -39,7 +37,7 @@ public class Helpers {
 	
 	public static String loadUrlIntoStr(String urlStr) throws Exception {		
 		URL url = new URL(urlStr);
-		BufferedReader br = new BufferedReader( new InputStreamReader(url.openStream()));
+		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 		StringBuilder builder = new StringBuilder();
 		while(br.ready()) {
 			builder.append(br.readLine() + "\n");
@@ -65,16 +63,14 @@ public class Helpers {
 		    break;
 		  buf.append((char) ch);
 		}
-		String str = buf.toString();
-		return str;
+		return buf.toString();
 	}
 	
 	public static String prompt(String string) throws Exception {
 		System.out.print(string + ": ");
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
-		String input = br.readLine();
-		return input;
+		return br.readLine();
 	}
 	
 	public static String promptPw(String string) throws Exception {
@@ -87,13 +83,6 @@ public class Helpers {
 			Console c = System.console();
 			char[] pw = c.readPassword();		
 			return new String(pw);
-		}
-	}
-
-	public static <T> void assertListEquals(T[] expectedValues, List<T> actualValues) {
-		Assert.assertEquals(expectedValues.length, actualValues.size());
-		for(int i=0; i<expectedValues.length; i++) {
-			Assert.assertEquals(expectedValues[i], actualValues.get(i));
 		}
 	}
 	

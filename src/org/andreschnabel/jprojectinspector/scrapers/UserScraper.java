@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.StringPair;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
@@ -36,8 +35,7 @@ public class UserScraper {
 	
 	private static List<String> scrapeNames(String htmlStr) throws Exception {
 		String regex = "<a href=\"/([a-zA-Z0-9]*)\">[a-zA-Z0-9]*</a>";
-		List<String> usernames = RegexHelpers.batchMatchOneGroup(regex, htmlStr);
-		return usernames;
+		return RegexHelpers.batchMatchOneGroup(regex, htmlStr);
 	}
 	
 	private List<String> scrapeFollowing(String htmlStr, String name) throws Exception {
@@ -65,9 +63,9 @@ public class UserScraper {
 		
 		String regex = "<spanclass=\"mega-iconmega-icon-repo-forked\"></span>"
 							+"<ahref=\"/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)\">[a-zA-Z0-9]*</a>";
-		List<StringPair> projNames = RegexHelpers.batchMatchTwoGroups(regex, htmlStr);
+		List<RegexHelpers.StringPair> projNames = RegexHelpers.batchMatchTwoGroups(regex, htmlStr);
 		
-		for(StringPair projName : projNames) {
+		for(RegexHelpers.StringPair projName : projNames) {
 			projects.add(new Project(projName.first, projName.second));
 		}
 		

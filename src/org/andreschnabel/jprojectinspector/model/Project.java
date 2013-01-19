@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.model;
 
 public class Project {
-	public String owner;
-	public String repoName;
+	public final String owner;
+	public final String repoName;
 	
 	public Project(String owner, String repoName) {
 		this.owner = owner;

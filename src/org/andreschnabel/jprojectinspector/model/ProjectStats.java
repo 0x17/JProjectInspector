@@ -6,8 +6,8 @@ public class ProjectStats {
 		name = project.repoName;
 	}
 	
-	public String owner;
-	public String name;
+	public final String owner;
+	public final String name;
 	
 	public boolean containsTest;
 

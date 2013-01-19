@@ -59,7 +59,7 @@ public class MethodIndexBuilder {
 		} else throw new Exception("Unable to match package declaration!");
 	}
 
-	private static String[] extractParams(Tree paramLst) {;
+	private static String[] extractParams(Tree paramLst) {
 		int numParams = paramLst.getChildCount();
 		String[] params = new String[numParams];
 		for(int i=0; i<numParams; i++) {

@@ -8,7 +8,7 @@ import java.io.File;
 
 public class TestLinesOfCode {
 
-	private LinesOfCode loc = new LinesOfCode();
+	private final LinesOfCode loc = new LinesOfCode();
 	
 	public int countTestLocOfDir(File root) throws Exception {
 		if(root.isDirectory()) {

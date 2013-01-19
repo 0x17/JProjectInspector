@@ -3,11 +3,11 @@ package org.andreschnabel.jprojectinspector.model.coverage;
 import java.util.Arrays;
 
 public class Method {
-	public String returnType;
-	public String packIdent;
-	public String clazzIdent;
-	public String identifier;
-	public String[] paramTypes;
+	public final String returnType;
+	public final String packIdent;
+	public final String clazzIdent;
+	public final String identifier;
+	public final String[] paramTypes;
 
 	public Method(String returnType, String packIdent, String clazzIdent, String identifier, String[] paramTypes) {
 		this.returnType = returnType;

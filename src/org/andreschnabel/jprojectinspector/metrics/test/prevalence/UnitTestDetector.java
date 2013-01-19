@@ -17,8 +17,7 @@ public class UnitTestDetector {
 	public static String[] getSupportedLangs() { return supportedLangs; }
 
 	public boolean containsTest(File pf) throws Exception {
-		boolean foundTest = traverseForTest(pf);
-		return foundTest;
+		return traverseForTest(pf);
 	}
 	
 	public List<File> getTestFiles(File root) throws Exception {

@@ -12,7 +12,7 @@ public class RateLimitChecker {
 		int limit;
 	}
 
-	private static RateLimitResult rateLimitResult;
+	private final static RateLimitResult rateLimitResult;
 
 	static {
 		String rateLimitUri = "https://api.github.com/rate_limit";

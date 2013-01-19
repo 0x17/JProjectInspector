@@ -5,6 +5,6 @@ import java.util.List;
 
 public class MethodIndex {
 	
-	public List<Method> methods = new LinkedList<Method>();
+	public final List<Method> methods = new LinkedList<Method>();
 
 }
