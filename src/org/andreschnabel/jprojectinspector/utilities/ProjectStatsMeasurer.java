@@ -10,8 +10,8 @@ import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
 import org.andreschnabel.jprojectinspector.metrics.project.Issues;
 import org.andreschnabel.jprojectinspector.metrics.project.ProjectAge;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
-import org.andreschnabel.jprojectinspector.metrics.test.simplecoverage.SimpleTestCoverage;
 import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
+import org.andreschnabel.jprojectinspector.metrics.test.simplecoverage.SimpleTestCoverage;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectStats;
 
@@ -29,8 +29,7 @@ public class ProjectStatsMeasurer {
 		AverageWMC mcCabe = new AverageWMC();
 		stats.avgWMC = mcCabe.determineAverageWMC(projectRoot);
 
-		LinesOfCode loc = new LinesOfCode();
-		stats.linesOfCode = loc.countLocForProj(project);
+		stats.linesOfCode = LinesOfCode.countLocForProj(project);
 
 		CodeFrequency cf = new CodeFrequency();
 		stats.codeFrequency = cf.countCodeFrequencyForProj(project);

@@ -7,7 +7,6 @@ import java.util.List;
 import org.andreschnabel.jprojectinspector.model.coverage.Method;
 import org.andreschnabel.jprojectinspector.parsers.ParserHelpers;
 import org.andreschnabel.jprojectinspector.parsers.coverage.MethodIndexBuilder;
-import org.junit.Before;
 import org.junit.Test;
 
 public class MethodIndexBuilderTest {

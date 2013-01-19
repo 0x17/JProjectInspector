@@ -1,14 +1,12 @@
 package org.andreschnabel.jprojectinspector.metrics.test;
 
+import java.io.File;
+
 import org.andreschnabel.jprojectinspector.metrics.code.LinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
-import java.io.File;
-
 public class TestLinesOfCode {
-
-	private final LinesOfCode loc = new LinesOfCode();
 
 	public int countTestLocOfDir(File root) throws Exception {
 		if(root.isDirectory()) {
@@ -18,7 +16,7 @@ public class TestLinesOfCode {
 			}
 			return sum;
 		} else {
-			return root.getName().endsWith(".java") && UnitTestDetector.isJavaSrcTest(FileHelpers.readEntireFile(root), root.getName()) ? loc.countLocOfSrcFile(root) : 0;
+			return root.getName().endsWith(".java") && UnitTestDetector.isJavaSrcTest(FileHelpers.readEntireFile(root), root.getName()) ? LinesOfCode.countLocOfSrcFile(root) : 0;
 		}
 	}
 

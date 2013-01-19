@@ -10,7 +10,6 @@ import org.andreschnabel.jprojectinspector.model.coverage.Method;
 import org.andreschnabel.jprojectinspector.model.coverage.MethodIndex;
 import org.andreschnabel.jprojectinspector.parsers.coverage.MethodCallCollector;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
-import org.junit.Before;
 import org.junit.Test;
 
 public class MethodCallCollectorTest {

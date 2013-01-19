@@ -8,18 +8,18 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 public class LinesOfCode {
 
-	public int countLocForProj(Project project) throws Exception {
+	public static int countLocForProj(Project project) throws Exception {
 		File root = new File(Config.DEST_BASE + project.repoName);
 		return countLocOfDir(root);
 	}
 
-	public int countLocOfSrcFile(File srcFile) throws Exception {
+	public static int countLocOfSrcFile(File srcFile) throws Exception {
 		if(!srcFile.exists()) return 0;
 		String srcStr = FileHelpers.readEntireFile(srcFile);
 		return countLocOfSrcStr(srcStr);
 	}
 
-	public int countLocOfSrcStr(String srcStr) throws Exception {
+	public static int countLocOfSrcStr(String srcStr) throws Exception {
 		int counter = 0;
 
 		boolean lineContainsCode = false;
@@ -69,7 +69,7 @@ public class LinesOfCode {
 		return counter;
 	}
 
-	public int countLocOfDir(File root) throws Exception {
+	public static int countLocOfDir(File root) throws Exception {
 		if(!root.exists()) return 0;
 		if(root.isDirectory()) {
 			int sum = 0;
