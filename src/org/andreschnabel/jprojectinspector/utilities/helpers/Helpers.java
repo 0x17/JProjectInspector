@@ -14,6 +14,10 @@ import java.util.regex.Pattern;
 
 
 public class Helpers {
+	
+	public static boolean runningOnUnix() {
+		return !System.getProperty("os.name").toLowerCase().contains("win");
+	}
 
 	public static void system(String cmd) throws Exception {
 		System.out.println("Running: " + cmd);

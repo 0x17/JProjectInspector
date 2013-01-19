@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.andreschnabel.jprojectinspector.Config;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -48,9 +50,14 @@ public class FileHelpers {
 	}
 
 	public static void rmDir(String destPath) throws Exception {
-		if(destPath.startsWith("/tmp/"))
-			Helpers.system("rm -rf " + destPath);
-		else throw new Exception("Never leave /tmp/ with rm -rf!");
+		if(destPath.startsWith(Config.DEST_BASE)) {
+			String rmCmd = Helpers.runningOnUnix() ? "rm -rf" : "rmdir /S /Q";
+			if(Helpers.runningOnUnix())
+				Helpers.system(rmCmd + " " + destPath + File.separator);
+			else
+				deleteDir(new File(destPath + File.separator));
+		}
+		else throw new Exception("Never leave "+Config.DEST_BASE+" with recursive force deletion!");
 	}
 
 	public static int recursivelyCountFilesWithExtension(File rootDir, String extension) {

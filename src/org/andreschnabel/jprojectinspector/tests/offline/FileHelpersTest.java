@@ -3,10 +3,14 @@ package org.andreschnabel.jprojectinspector.tests.offline;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
+import org.andreschnabel.jprojectinspector.Config;
+import org.andreschnabel.jprojectinspector.TestCommon;
+import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Test;
 
@@ -47,7 +51,7 @@ public class FileHelpersTest {
 
 	@Test
 	public void testRmDir() throws Exception {
-		String dirname = "testdir";
+		String dirname = Config.DEST_BASE + "testdir";
 		File dir = new File(dirname);
 		assertTrue(dir.mkdir());
 		assertTrue(dir.exists());
@@ -59,25 +63,57 @@ public class FileHelpersTest {
 	public void testRecursivelyCountFilesWithExtension() {
 		assertEquals(2, FileHelpers.recursivelyCountFilesWithExtension(new File("testdata"), "java"));
 	}
+	
+	@SuppressWarnings("unused")
+	private class MiniClass {	
+		public String name;
+		public int number;
+	}
 
 	@Test
-	public void testWriteObjToJsonFile() {
-		fail("Not yet implemented");
+	public void testWriteObjToJsonFile() throws Exception {
+		MiniClass obj = new MiniClass();
+		obj.name = "Test";
+		obj.number = 23;
+		FileHelpers.writeObjToJsonFile(obj, "obj.json");
+		File f = new File("obj.json");
+		assertTrue(f.exists());
+		String json = FileHelpers.readEntireFile(f);
+		System.out.println(json);
+		assertEquals("{\n"
+			+"  \"name\": \"Test\",\n"
+			+"  \"number\": 23\n"
+			+"}\n", json);
+		
+		f.delete();
 	}
 
 	@Test
 	public void testListSourceFiles() {
-		fail("Not yet implemented");
+		List<String> out = FileHelpers.listSourceFiles(TestCommon.TEST_SRC_DIRECTORY);
+		String[] files = new String[] {
+			"Points.java", "PointsTest.java"
+		};
+		AssertHelpers.arrayEqualsLstOrderInsensitive(files, out);
 	}
 
 	@Test
 	public void testRecursiveCollectSrcFilesListOfStringFile() {
-		fail("Not yet implemented");
+		List<String> out = new LinkedList<String>();
+		FileHelpers.recursiveCollectSrcFiles(out, new File(TestCommon.TEST_SRC_DIRECTORY));
+		String[] files = new String[] {
+			"Points.java", "PointsTest.java"
+		};
+		AssertHelpers.arrayEqualsLstOrderInsensitive(files, out);
 	}
 
 	@Test
 	public void testRecursiveCollectSrcFilesString() {
-		fail("Not yet implemented");
+		List<String> out = FileHelpers.recursiveCollectSrcFiles(TestCommon.TEST_SRC_DIRECTORY);
+		String[] files = new String[] {
+			"Points.java", "PointsTest.java"
+		};
+		AssertHelpers.arrayEqualsLstOrderInsensitive(files, out);
 	}
 
 }

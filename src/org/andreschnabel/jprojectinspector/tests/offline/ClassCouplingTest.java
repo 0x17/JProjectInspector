@@ -43,7 +43,7 @@ public class ClassCouplingTest {
 	@Test
 	public void testListClassNamesInProject() throws Exception {
 		List<String> actualClassLst = cc.listClassNamesInProject(new File(TestCommon.TEST_SRC_DIRECTORY), new HashMap<String, File>());
-		AssertHelpers.arrayEqualsLstOrderSensitive(new String[]{"PointsTest", "Point2D", "Point3D", "Position2D", "Position3D"}, actualClassLst);
+		AssertHelpers.arrayEqualsLstOrderInsensitive(new String[]{"PointsTest", "Point2D", "Point3D", "Position2D", "Position3D"}, actualClassLst);
 	}
 
 	@Test
