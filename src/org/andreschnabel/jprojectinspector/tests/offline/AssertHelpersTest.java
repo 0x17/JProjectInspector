@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.tests;
+package org.andreschnabel.jprojectinspector.tests.offline;
 
 import java.util.ArrayList;
 import java.util.List;

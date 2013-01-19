@@ -8,9 +8,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class StringHelpers {
+public final class StringHelpers {
 
-	public static boolean strContainsOneOf(String str, String... candidates) {
+	public static boolean containsOneOf(String str, String... candidates) {
 		for(String candidate : candidates)
 			if(str.contains(candidate)) return true;
 		return false;

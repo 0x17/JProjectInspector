@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.tests;
+package org.andreschnabel.jprojectinspector.tests.online;
 
 import static org.junit.Assert.*;
 

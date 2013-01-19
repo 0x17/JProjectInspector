@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.tests;
+package org.andreschnabel.jprojectinspector.tests.offline;
 
 import static org.junit.Assert.*;
 
@@ -11,6 +11,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class StringHelpersTest {
+	
+	@Test
+	public void testStrContainsOneOf() {
+		Assert.assertTrue(StringHelpers.containsOneOf("dies ist ein test", "ein"));
+		Assert.assertFalse(StringHelpers.containsOneOf("dies ist ein test", ":D"));
+	}
 
 	@Test
 	public void testCapitalize() {

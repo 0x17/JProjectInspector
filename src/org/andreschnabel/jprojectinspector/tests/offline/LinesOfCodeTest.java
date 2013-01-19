@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.tests;
+package org.andreschnabel.jprojectinspector.tests.offline;
 
 import org.andreschnabel.jprojectinspector.TestCommon;
 import org.andreschnabel.jprojectinspector.metrics.code.LinesOfCode;
@@ -29,9 +29,5 @@ public class LinesOfCodeTest {
 	@Test
 	public void testCountLocOfDir() throws Exception {
 		assertEquals(54, LinesOfCode.countLocOfDir(new File(TestCommon.TEST_SRC_DIRECTORY)));
-	}
-
-	@Test
-	public void testCountLocForProj() {
 	}
 }

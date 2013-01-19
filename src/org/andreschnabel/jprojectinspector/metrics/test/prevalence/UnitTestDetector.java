@@ -83,31 +83,31 @@ public class UnitTestDetector {
 	}
 
 	public static boolean isCsharpSrcTest(String srcStr, String filename) {
-		return StringHelpers.strContainsOneOf(srcStr, "[TestFixture]", "[Test]", "[TearDown]", "[Setup]", "using csUnit");
+		return StringHelpers.containsOneOf(srcStr, "[TestFixture]", "[Test]", "[TearDown]", "[Setup]", "using csUnit");
 	}
 
 	public static boolean isCppSrcTest(String srcStr, String filename) {
-		return StringHelpers.strContainsOneOf(srcStr, "CPPUNIT_TEST", "#include <cppunit", "#include<cppunit", "ASSERT_THAT", "EXPECT_THAT");
+		return StringHelpers.containsOneOf(srcStr, "CPPUNIT_TEST", "#include <cppunit", "#include<cppunit", "ASSERT_THAT", "EXPECT_THAT");
 	}
 
 	public static boolean isJavaScriptSrcTest(String srcStr, String filename) {
 		Pattern p = Pattern.compile("expect(.+).toBe(.+);");
 		Matcher m = p.matcher(srcStr);
 		if(m.matches()) return true;
-		return StringHelpers.strContainsOneOf(srcStr, "assertEqual", "registerTestSuite", "strictEqual", "deepEqual", "qunit.js", "expectEq", "expectCall", "buster.js", "buster.");
+		return StringHelpers.containsOneOf(srcStr, "assertEqual", "registerTestSuite", "strictEqual", "deepEqual", "qunit.js", "expectEq", "expectCall", "buster.js", "buster.");
 	}
 
 	public static boolean isPythonSrcTest(String srcStr, String filename) {
-		return StringHelpers.strContainsOneOf(srcStr, "import doctest", "import unittest", "from unittest", "TestCase", "assertEqual");
+		return StringHelpers.containsOneOf(srcStr, "import doctest", "import unittest", "from unittest", "TestCase", "assertEqual");
 	}
 
 	public static boolean isRubySrcTest(String srcStr, String filename) {
 		if(filename.endsWith("_spec.rb")) return true;
-		return StringHelpers.strContainsOneOf(srcStr, "cucumber", "assertEqual", "require 'test/unit'", "require \"test/unit\"", "Test::Unit", "require \"shoulda\"", "require 'shoulda'", "describe");
+		return StringHelpers.containsOneOf(srcStr, "cucumber", "assertEqual", "require 'test/unit'", "require \"test/unit\"", "Test::Unit", "require \"shoulda\"", "require 'shoulda'", "describe");
 	}
 
 	public static boolean isJavaSrcTest(String srcStr, String filename) {
-		return StringHelpers.strContainsOneOf(srcStr, "cucumber", "@Test", "org.junit", "assertEqual");
+		return StringHelpers.containsOneOf(srcStr, "cucumber", "@Test", "org.junit", "assertEqual");
 	}
 
 	public boolean containsTestAndLoad(Project project) throws Exception {
