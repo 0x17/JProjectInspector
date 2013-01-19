@@ -1,10 +1,10 @@
-package org.andreschnabel.jprojectinspector.metrics.test.coverage;
+package org.andreschnabel.jprojectinspector.metrics.test.simplecoverage;
 
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TestCoverage {
+public class SimpleTestCoverage {
 
 	public float determineMethodCoverage(File root) throws Exception {
 		List<String> projectMethodNames = new LinkedList<String>();

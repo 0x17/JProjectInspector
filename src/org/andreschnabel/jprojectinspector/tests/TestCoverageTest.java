@@ -5,17 +5,17 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 
 import org.andreschnabel.jprojectinspector.TestCommon;
-import org.andreschnabel.jprojectinspector.metrics.test.coverage.TestCoverage;
+import org.andreschnabel.jprojectinspector.metrics.test.simplecoverage.SimpleTestCoverage;
 import org.junit.Before;
 import org.junit.Test;
 
 public class TestCoverageTest {
 
-	private TestCoverage tc;
+	private SimpleTestCoverage tc;
 
 	@Before
 	public void setUp() throws Exception {
-		this.tc = new TestCoverage();
+		this.tc = new SimpleTestCoverage();
 	}
 
 	@Test

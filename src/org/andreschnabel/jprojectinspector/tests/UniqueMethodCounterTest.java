@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.andreschnabel.jprojectinspector.metrics.test.coverage.UniqueMethodCounter;
+import org.andreschnabel.jprojectinspector.metrics.test.simplecoverage.UniqueMethodCounter;
 import org.junit.Before;
 import org.junit.Test;
 

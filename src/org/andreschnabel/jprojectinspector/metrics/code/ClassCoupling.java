@@ -27,7 +27,7 @@ public class ClassCoupling {
 
 	public List<String> listClassNamesInFile(File f, Map<String, File> classInFile) throws Exception {
 		String srcStr = FileHelpers.readEntireFile(f);
-		List<String> clsNames = RegexHelpers.batchMatchOneGroup("class\\s+([A-Za-z0-9]+)", StringHelpers.removeCommentsAndStrings(srcStr));
+		List<String> clsNames = RegexHelpers.batchMatchOneGroup("class\\s+(\\w+)", StringHelpers.removeCommentsAndStrings(srcStr));
 
 		for(String className : clsNames) {
 			if(!classInFile.containsKey(className))

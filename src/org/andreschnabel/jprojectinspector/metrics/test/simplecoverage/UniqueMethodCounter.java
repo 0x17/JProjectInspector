@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.metrics.test.coverage;
+package org.andreschnabel.jprojectinspector.metrics.test.simplecoverage;
 
 import java.io.File;
 import java.util.List;
