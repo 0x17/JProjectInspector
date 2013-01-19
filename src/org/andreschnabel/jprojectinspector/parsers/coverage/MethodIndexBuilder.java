@@ -17,7 +17,7 @@ import org.antlr.runtime.tree.Tree;
 
 public class MethodIndexBuilder {
 
-	public MethodIndex buildIndexForProject(File root) throws Exception {
+	public static MethodIndex buildIndexForProject(File root) throws Exception {
 		MethodIndex index = new MethodIndex();
 
 		List<File> filesToParse = collectNonTestFiles(root);
@@ -27,13 +27,13 @@ public class MethodIndexBuilder {
 		return index;
 	}
 
-	public List<Method> parseFile(File f) throws Exception {
+	public static List<Method> parseFile(File f) throws Exception {
 		String packName = determinePackageNameForFile(f);
 		JavaParser parser = ParserHelpers.parserForFile(f);
 		return extractMethods(parser, packName);
 	}
 
-	public List<Method> parseSrcStr(String s) throws Exception {
+	public static List<Method> parseSrcStr(String s) throws Exception {
 		String packName = determinePackageNameForSrcStr(s);
 		JavaParser parser = ParserHelpers.parserForStr(s);
 		return extractMethods(parser, packName);
@@ -105,13 +105,13 @@ public class MethodIndexBuilder {
 		}
 	}
 
-	private List<File> collectNonTestFiles(File root) throws Exception {
+	private static List<File> collectNonTestFiles(File root) throws Exception {
 		List<File> nonTestFiles = new LinkedList<File>();
 		traverseRecursively(root, nonTestFiles);
 		return nonTestFiles;
 	}
 
-	private void traverseRecursively(File root, List<File> nonTestFiles) throws Exception {
+	private static void traverseRecursively(File root, List<File> nonTestFiles) throws Exception {
 		if(root.isDirectory()) {
 			for(File f : root.listFiles()) {
 				traverseRecursively(f, nonTestFiles);

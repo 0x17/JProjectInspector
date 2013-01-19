@@ -16,12 +16,12 @@ public class MethodCallCollector {
 	private final static String methodCallRegex = "(\\w+)\\s*\\.\\s*(\\w+)\\s*\\((.*?)\\)";
 	private final static Pattern methodCallPattern = Pattern.compile(methodCallRegex);
 
-	public List<Method> collectMethodCallsForFile(File f, MethodIndex index) throws Exception {
+	public static List<Method> collectMethodCallsForFile(File f, MethodIndex index) throws Exception {
 		String srcStr = FileHelpers.readEntireFile(f);
 		return collectMethodCallsForSrcStr(srcStr, index);
 	}
 
-	public List<Method> collectMethodCallsForSrcStr(String srcStr, MethodIndex index) throws Exception {
+	public static List<Method> collectMethodCallsForSrcStr(String srcStr, MethodIndex index) throws Exception {
 		List<Method> calledMethods = new LinkedList<Method>();
 		Matcher m = methodCallPattern.matcher(srcStr);
 		while(m.find()) {
@@ -37,7 +37,7 @@ public class MethodCallCollector {
 		return calledMethods;
 	}
 
-	public Method tryFindMatch(String prefix, String call, String params, MethodIndex index) {
+	public static Method tryFindMatch(String prefix, String call, String params, MethodIndex index) {
 		int numParams = params.contains(",") ? params.split(",").length : 1;
 		for(Method m : index.methods) {
 			if(m.identifier.equals(call)) {
@@ -50,7 +50,7 @@ public class MethodCallCollector {
 		return null;
 	}
 
-	public List<Method> collectMethodCallsForTestFiles(File root, MethodIndex index) throws Exception {
+	public static List<Method> collectMethodCallsForTestFiles(File root, MethodIndex index) throws Exception {
 		List<File> testFiles = collectTestFiles(root);
 		List<Method> result = new LinkedList<Method>();
 		for(File f : testFiles) {
@@ -59,13 +59,13 @@ public class MethodCallCollector {
 		return result;
 	}
 
-	public List<File> collectTestFiles(File root) throws Exception {
+	public static List<File> collectTestFiles(File root) throws Exception {
 		List<File> testFiles = new LinkedList<File>();
 		traverseRecursively(root, testFiles);
 		return testFiles;
 	}
 
-	private void traverseRecursively(File root, List<File> testFiles) throws Exception {
+	private static void traverseRecursively(File root, List<File> testFiles) throws Exception {
 		if(root.isDirectory()) {
 			for(File f : root.listFiles()) {
 				traverseRecursively(f, testFiles);
