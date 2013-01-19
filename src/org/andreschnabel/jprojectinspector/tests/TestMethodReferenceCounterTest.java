@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.metrics.test.coverage;
+package org.andreschnabel.jprojectinspector.tests;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.andreschnabel.jprojectinspector.TestCommon;
+import org.andreschnabel.jprojectinspector.metrics.test.coverage.TestMethodReferenceCounter;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Before;
 import org.junit.Test;

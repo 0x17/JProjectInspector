@@ -1,10 +1,11 @@
-package org.andreschnabel.jprojectinspector.metrics.code;
+package org.andreschnabel.jprojectinspector.tests;
 
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
 import org.andreschnabel.jprojectinspector.TestCommon;
+import org.andreschnabel.jprojectinspector.metrics.code.LinesOfCode;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.metrics.test.coverage;
+package org.andreschnabel.jprojectinspector.tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.andreschnabel.jprojectinspector.metrics.test.coverage.UniqueMethodCounter;
 import org.junit.Before;
 import org.junit.Test;
 

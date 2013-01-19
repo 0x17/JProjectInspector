@@ -1,8 +1,9 @@
-package org.andreschnabel.jprojectinspector.metrics.project;
+package org.andreschnabel.jprojectinspector.tests;
 
 import static org.junit.Assert.assertEquals;
 
 import org.andreschnabel.jprojectinspector.TestCommon;
+import org.andreschnabel.jprojectinspector.metrics.project.Selectivity;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.metrics.code;
+package org.andreschnabel.jprojectinspector.tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.andreschnabel.jprojectinspector.TestCommon;
+import org.andreschnabel.jprojectinspector.metrics.code.ClassCoupling;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.SourceHelpers;

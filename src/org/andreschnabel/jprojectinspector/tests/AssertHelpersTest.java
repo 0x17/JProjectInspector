@@ -1,10 +1,11 @@
-package org.andreschnabel.jprojectinspector.utilities.helpers;
+package org.andreschnabel.jprojectinspector.tests;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
 
+import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.junit.Before;
 import org.junit.Test;
 

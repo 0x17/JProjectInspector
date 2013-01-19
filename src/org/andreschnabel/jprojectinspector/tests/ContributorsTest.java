@@ -1,8 +1,9 @@
-package org.andreschnabel.jprojectinspector.metrics.project;
+package org.andreschnabel.jprojectinspector.tests;
 
 import static org.junit.Assert.*;
 
 import org.andreschnabel.jprojectinspector.TestCommon;
+import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.junit.Before;
 import org.junit.Test;

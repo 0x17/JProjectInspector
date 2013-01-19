@@ -1,10 +1,11 @@
-package org.andreschnabel.jprojectinspector.utilities;
+package org.andreschnabel.jprojectinspector.tests;
 
 import static org.junit.Assert.*;
 
 import java.util.List;
 
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.TimelineTapper;
 import org.junit.Before;
 import org.junit.Test;
 

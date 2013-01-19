@@ -1,7 +1,9 @@
-package org.andreschnabel.jprojectinspector.utilities.helpers;
+package org.andreschnabel.jprojectinspector.tests;
 
 import java.util.List;
 
+import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers.StringTriple;
 import org.junit.Test;
 
