@@ -14,7 +14,7 @@ public class TimelineTapper {
 		List<Project> projs = new LinkedList<Project>();
 		List<String> projNames = new LinkedList<String>();
 
-		Pattern p = Pattern.compile("\\{\"repository\":([^\\}]+)\\}");
+		Pattern p = Pattern.compile("\\{\"pushed_at\":(.+?)\\}");
 		Pattern q = Pattern.compile("\"owner\":\"([\\w-]+)\"");
 		Pattern r = Pattern.compile("\"name\":\"([\\w-]+)\"");
 
