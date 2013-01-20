@@ -1,6 +1,5 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
@@ -39,12 +38,11 @@ public class FileHelpers {
 
 	public static String readEntireFile(File file) throws Exception {
 		FileReader fr = new FileReader(file);
-		BufferedReader br = new BufferedReader(fr);
 		StringBuilder builder = new StringBuilder();
-		while(br.ready()) {
-			builder.append(br.readLine() + "\n");
+		int ch;
+		while((ch = fr.read()) != -1) {
+			builder.append((char)ch);
 		}
-		br.close();
 		fr.close();
 		return builder.toString();
 	}

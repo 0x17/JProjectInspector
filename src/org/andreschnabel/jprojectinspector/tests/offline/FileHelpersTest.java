@@ -45,7 +45,7 @@ public class FileHelpersTest {
 				+ "- [gson](http://code.google.com/p/google-gson/)\n"
 				+ "- [JGit](http://www.eclipse.org/jgit/)\n"
 				+ "- [egit-github](https://github.com/eclipse/egit-github/tree/master/org.eclipse.egit.github.core)\n"
-				+ "- [gitective](https://github.com/kevinsawicki/gitective)\n";
+				+ "- [gitective](https://github.com/kevinsawicki/gitective)";
 		assertEquals(expContent, content);
 	}
 
@@ -79,11 +79,10 @@ public class FileHelpersTest {
 		File f = new File("obj.json");
 		assertTrue(f.exists());
 		String json = FileHelpers.readEntireFile(f);
-		System.out.println(json);
 		assertEquals("{\n"
 			+"  \"name\": \"Test\",\n"
 			+"  \"number\": 23\n"
-			+"}\n", json);
+			+"}", json);
 		
 		f.delete();
 	}
