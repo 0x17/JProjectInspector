@@ -20,8 +20,8 @@ public class StringHelpersTest {
 
 	@Test
 	public void testCapitalize() {
-		Assert.assertEquals("Bernd", StringHelpers.capitalize("bernd"));
-		assertEquals("Bernd", StringHelpers.capitalize("Bernd"));
+		Assert.assertEquals("Bernd", StringHelpers.capitalizeFirstLetter("bernd"));
+		assertEquals("Bernd", StringHelpers.capitalizeFirstLetter("Bernd"));
 	}
 
 	@Test

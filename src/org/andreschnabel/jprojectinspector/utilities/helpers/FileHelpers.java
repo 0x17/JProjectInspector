@@ -102,4 +102,55 @@ public class FileHelpers {
 		return result;
 	}
 
+	public static void deleteFile(String path) throws Exception {
+		File f = new File(path);
+		if(!f.delete()) throw new Exception("Failed to delete file!");
+	}
+	
+	public static File enforceDir(String path) throws Exception {
+		File root = new File(path);
+		if(!root.isDirectory()) {
+			throw new Exception("Path must point to directory!");
+		}
+		return root;
+	}
+	
+	public static List<String> listTestFiles(String path) throws Exception {
+		File root = enforceDir(path);
+		List<String> testfiles = new LinkedList<String>();
+		recursivelyCollectTestFiles(root, testfiles);
+		return testfiles;
+	}
+	
+	public static void recursivelyCollectTestFiles(File root, List<String> testfiles) {	
+		for(File f : root.listFiles()) {
+			if(f.isDirectory()) {
+				recursivelyCollectTestFiles(f, testfiles);
+			} else {
+				String fname = f.getName();
+				if(fname.endsWith("Test.java"))
+					testfiles.add(f.getPath());
+			}
+		}
+	}
+
+	public static List<String> listProductFiles(String path) throws Exception {
+		File root = enforceDir(path);
+		List<String> productfiles = new LinkedList<String>();
+		recursivelyCollectProductFiles(root, productfiles);
+		return productfiles;
+	}
+
+	public static void recursivelyCollectProductFiles(File root, List<String> productfiles) {
+		for(File f : root.listFiles()) {
+			if(f.isDirectory()) {
+				recursivelyCollectProductFiles(f, productfiles);
+			} else {
+				String fname = f.getName();
+				if(!fname.endsWith("Test.java") && fname.endsWith(".java"))
+					productfiles.add(f.getPath());
+			}
+		}
+	}
+
 }

@@ -156,7 +156,7 @@ public class PrevalenceRunner {
 		}
 
 		String summaryStr = gson.toJson(summary);
-		FileHelpers.writeStrToFile(summaryStr, StringHelpers.capitalize(options.keyword) + "TestPrevalence.json");
+		FileHelpers.writeStrToFile(summaryStr, StringHelpers.capitalizeFirstLetter(options.keyword) + "TestPrevalence.json");
 	}
 
 	private static String[] randomlyChoseKeywords(Options options) throws Exception {

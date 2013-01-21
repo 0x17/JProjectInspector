@@ -41,12 +41,6 @@ public final class StringHelpers {
 		return sum;
 	}
 
-	public static String capitalize(String str) {
-		char[] chars = str.toCharArray();
-		chars[0] = Character.toUpperCase(chars[0]);
-		return new String(chars);
-	}
-
 	public static boolean strEndsWithOneOf(String str, String... suffixes) {
 		for(String suffix : suffixes)
 			if(str.endsWith(suffix)) return true;
@@ -136,6 +130,15 @@ public final class StringHelpers {
 			fieldDecls.put(ident, type);
 		}
 		return fieldDecls;
+	}
+
+	public static String capitalizeFirstLetter(String s) {
+		if(s == null) return null;
+		else if(s.isEmpty()) return s;
+		else {
+			char firstLetter = Character.toUpperCase(s.charAt(0));
+			return firstLetter + s.substring(1);
+		}
 	}
 
 }
