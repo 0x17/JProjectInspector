@@ -35,15 +35,6 @@ public class CoverageHeuristic {
 	}
 
 	public static List<String> listUntestedMethods(String classPath, Map<String, String> hasTestIndex) throws Exception {
-		// TODO Auto-generated method stub
-		
-		// List methods of class file (Class.java) using SourceHelpers
-		// If there's no ClassTest.java for this Class then return all methods
-		// Else
-		// 	List methods of test (ClassTest.java) using SourceHelpers
-		//		look for each method if there's a testMethod in the ClassTest.java
-		//			if there's no corresponding test method add it to the result
-		
 		String testPath = hasTestIndex.get(classPath);
 		List<String> methodsInProduct = SourceHelpers.listMethodNamesInSrcStr(FileHelpers.readEntireFile(new File(classPath)));
 		
@@ -62,15 +53,32 @@ public class CoverageHeuristic {
 		return methodsInProduct; 
 	}
 
-	public static float determineCoverage(String rootPath) {
-		// TODO Auto-generated method stub
+	public static float determineCoverage(String rootPath) throws Exception {
+		List<String> allMethods = determineAllMethods(rootPath);
+		List<String> untestedMethods = determineUntestedMethods(rootPath);
 		
-		// Recursively traverse sub-directory tree below rootPath.
-		// Basically build list of ALL methods in path by adding all methods of each non-test class
-		// Then build list of ALL untested methods in path by adding all untested methods of each non-test class
-		// Coverage = (float)(#all-methods - #untested-methods) / #all-methods
-		
-		return 0;
+		int numMethods = allMethods.size();
+		return (float)(numMethods - untestedMethods.size()) / numMethods;
+	}
+	
+	public static List<String> determineUntestedMethods(String rootPath) throws Exception {
+		List<String> untestedMethods = new LinkedList<String>();
+		Map<String, String> classHasTest = buildClassHasTestIndex(rootPath);
+		List<String> classPaths = FileHelpers.listProductFiles(rootPath);
+		for(String classPath : classPaths) {
+			untestedMethods.addAll(listUntestedMethods(classPath, classHasTest));
+		}
+		return untestedMethods;
+	}
+	
+	public static List<String> determineAllMethods(String rootPath) throws Exception {
+		List<String> allMethods = new LinkedList<String>();
+		List<String> classPaths = FileHelpers.listProductFiles(rootPath);
+		for(String classPath : classPaths) {
+			String srcStr = FileHelpers.readEntireFile(new File(classPath));
+			allMethods.addAll(SourceHelpers.listMethodNamesInSrcStr(srcStr));
+		}
+		return allMethods;
 	}
 
 }

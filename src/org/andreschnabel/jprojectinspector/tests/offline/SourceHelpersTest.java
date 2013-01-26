@@ -5,6 +5,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.andreschnabel.jprojectinspector.TestCommon;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.SourceHelpers;
 import org.junit.Test;
@@ -28,10 +29,13 @@ public class SourceHelpersTest {
 	}
 	
 	@Test
-	public void testListMethodNamesInSrcStr() {
+	public void testListMethodNamesInSrcStr() throws Exception {
 		List<String> methodNames = SourceHelpers.listMethodNamesInSrcStr(SRC_STR);
 		Assert.assertEquals(1, methodNames.size());
 		Assert.assertEquals("main", methodNames.get(0));
+		
+		methodNames = SourceHelpers.listMethodNamesInSrcStr(FileHelpers.readEntireFile(new File(TestCommon.TEST_SRC_FILENAME)));
+		Assert.assertEquals(2+2+3+2, methodNames.size());
 	}
 
 	@Test

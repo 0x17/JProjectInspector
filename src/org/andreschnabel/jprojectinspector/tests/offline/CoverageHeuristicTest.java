@@ -25,8 +25,15 @@ public class CoverageHeuristicTest {
 	}
 	
 	@Test
-	public void testDetermineCoverage() {
+	public void testDetermineCoverage() throws Exception {
 		float coverage = CoverageHeuristic.determineCoverage("testdata");
+		System.out.println(coverage);
+	}
+	
+	@Test
+	public void testDetermineAllMethods() throws Exception {
+		List<String> methods = CoverageHeuristic.determineAllMethods(TestCommon.TEST_SRC_DIRECTORY);
+		Assert.assertTrue(methods.size() > 0);
 	}
 
 }
