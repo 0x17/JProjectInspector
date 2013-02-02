@@ -25,10 +25,10 @@ public final class OfflineProjectStripper {
 			}
 			Helpers.log("Checked: " + p + " " + (online? "online" : "offline"));
 		}
-		FileHelpers.writeObjToJsonFile(projLst, "STRIPPED" + projLstFilename);
+		FileHelpers.writeObjToJsonFile(outLst, "STRIPPED" + projLstFilename);
 	}
 
-	private static boolean isOffline(Project p) throws Exception {
+	public static boolean isOffline(Project p) throws Exception {
 		try {
 			String projPageSrc = Helpers.loadUrlIntoStr("https://github.com/" + p.owner + "/" + p.repoName);
 			return projPageSrc.contains("Page not found &middot; GitHub");
