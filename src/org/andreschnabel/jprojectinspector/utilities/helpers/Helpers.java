@@ -24,14 +24,15 @@ public class Helpers {
 		try {
 			Process p = Runtime.getRuntime().exec(cmd);
 			InputStreamReader isr = new InputStreamReader(p.getInputStream());
+			
 			p.waitFor();
-
+			
 			StringBuilder output = new StringBuilder();
 			int c;
 			while((c = isr.read()) != -1) {
 				output.append((char) c);
 			}
-			System.out.print(output);
+			System.out.print(output);		
 
 		} catch(IOException e) {
 			System.out.println("Error executing: " + cmd);
