@@ -20,7 +20,9 @@ public final class Contributors {
 
 	public static int countNumContributors(Project project) throws Exception {
 		String contribsData = Helpers.loadUrlIntoStr("https://github.com/" + project.owner + "/" + project.repoName + "/graphs/contributors-data");
-		return StringHelpers.countOccurencesOfWord(contribsData, "\"author\"");
+		int ncontribs = StringHelpers.countOccurencesOfWord(contribsData, "\"author\"");
+		// some projects don't have any graphs yet gathered by GitHub...
+		return ncontribs == 0 ? 1 : ncontribs; // FIXME: This may be incorrect!
 	}
 
 	public static int countNumTestContributors(File root) throws Exception {
