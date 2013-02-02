@@ -13,14 +13,14 @@ import com.google.gson.GsonBuilder;
 public class TimelineTapperRunner {
 
 	public static void main(String[] args) throws Exception {
-		List<Project> projs = TimelineTapper.tapUniqueProjects("Java", 1);
+		List<Project> projs = TimelineTapper.tapUniqueProjects("Java", 512);
 		for(Project p : projs) {
 			System.out.println(p);
 		}
 		ProjectList plst = new ProjectList("none", projs);
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json = gson.toJson(plst);
-		FileHelpers.writeStrToFile(json, "NEWProjs.json");
+		FileHelpers.writeStrToFile(json, "ZwischenvortragProjekte.json");
 	}
 
 }

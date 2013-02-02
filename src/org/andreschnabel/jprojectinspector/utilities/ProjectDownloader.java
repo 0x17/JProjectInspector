@@ -7,16 +7,18 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import java.io.File;
 
-public class ProjectDownloader {
+public final class ProjectDownloader {
+	
+	private ProjectDownloader() {}
 
-	public File loadProject(Project p) throws Exception {
+	public static File loadProject(Project p) throws Exception {
 		String destPath = Config.DEST_BASE + p.repoName;
 		Helpers.system("git clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
 		File f = new File(destPath);
 		return f.exists() ? f : null;
 	}
 
-	public void deleteProject(Project p) throws Exception {
+	public static void deleteProject(Project p) throws Exception {
 		String destPath = Config.DEST_BASE + p.repoName;
 		//Helpers.deleteDir(new File(destPath));
 		FileHelpers.rmDir(destPath);

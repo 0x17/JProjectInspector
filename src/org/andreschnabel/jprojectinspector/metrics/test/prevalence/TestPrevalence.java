@@ -11,10 +11,10 @@ import org.andreschnabel.jprojectinspector.utilities.ProjectCollector;
 import org.eclipse.egit.github.core.client.GitHubClient;
 
 public class TestPrevalence {
+	
+	private TestPrevalence() {}
 
-	public TestPrevalenceSummary determineTestPrevalence(ProjectList lst) throws Exception {
-		UnitTestDetector jtd = new UnitTestDetector();
-
+	public static TestPrevalenceSummary determineTestPrevalence(ProjectList lst) throws Exception {
 		List<Project> projects = lst.projects;
 		int numTestProjs = 0;
 		int numProjs = projects.size();
@@ -26,7 +26,7 @@ public class TestPrevalence {
 			Project p = projects.get(i);
 			System.out.println("Checking project " + p.toId() + " " + (i + 1) + "/" + numProjs);
 			boolean tested = false;
-			if(jtd.containsTestAndLoad(p)) {
+			if(UnitTestDetector.containsTestAndLoad(p)) {
 				System.out.println("Found test!");
 				numTestProjs++;
 				tested = true;
@@ -48,7 +48,7 @@ public class TestPrevalence {
 		return summary;
 	}
 
-	public TestPrevalenceSummary determineTestPrevalence(String keyword, int numPages, GitHubClient ghc) throws Exception {
+	public static TestPrevalenceSummary determineTestPrevalence(String keyword, int numPages, GitHubClient ghc) throws Exception {
 		ProjectCollector jpc = new ProjectCollector(ghc);
 		return determineTestPrevalence(jpc.collectProjects(keyword, numPages));
 	}

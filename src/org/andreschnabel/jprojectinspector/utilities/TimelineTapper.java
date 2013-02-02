@@ -8,7 +8,10 @@ import java.util.regex.Pattern;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
-public class TimelineTapper {
+public final class TimelineTapper {
+	
+	private TimelineTapper() {}
+	
 	public static List<Project> tapUniqueProjects(String lang, int upToNum) throws Exception {
 		List<Project> projs = new LinkedList<Project>();
 		List<String> projNames = new LinkedList<String>();

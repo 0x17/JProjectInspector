@@ -5,7 +5,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import com.google.gson.Gson;
 
-public class RateLimitChecker {
+public final class RateLimitChecker {
+	
+	private RateLimitChecker() {}
 
 	static class RateLimitResult {
 		int remaining;

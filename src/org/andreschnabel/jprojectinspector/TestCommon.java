@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 
-public class TestCommon {
+public final class TestCommon {
 	public static final String TEST_SRC_DIRECTORY = "testdata";
 	public static final String TEST_SRC_FILENAME = "testdata"+File.separator+"Points.java";
 	public static final String TEST_SRC_TEST_FILENAME = "testdata"+File.separator+"PointsTest.java";

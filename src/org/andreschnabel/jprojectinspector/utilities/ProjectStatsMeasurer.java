@@ -15,13 +15,14 @@ import org.andreschnabel.jprojectinspector.metrics.test.simplecoverage.SimpleTes
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectStats;
 
-public class ProjectStatsMeasurer {
+public final class ProjectStatsMeasurer {
+	
+	private ProjectStatsMeasurer() {}
 
-	public ProjectStats collectStats(Project project, File projectRoot) throws Exception {
+	public static ProjectStats collectStats(Project project, File projectRoot) throws Exception {
 		ProjectStats stats = new ProjectStats(project);
 
-		UnitTestDetector utd = new UnitTestDetector();
-		stats.containsTest = utd.containsTest(projectRoot);
+		stats.containsTest = UnitTestDetector.containsTest(projectRoot);
 
 		ClassCoupling ccoupling = new ClassCoupling();
 		stats.avgCoupling = ccoupling.getAverageCoupling(projectRoot);

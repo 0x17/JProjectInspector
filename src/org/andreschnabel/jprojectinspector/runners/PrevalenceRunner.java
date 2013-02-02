@@ -20,7 +20,7 @@ import org.eclipse.egit.github.core.client.GitHubClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class PrevalenceRunner {
+public final class PrevalenceRunner {
 
 	private final static Gson gson;
 	private static GitHubClient ghc;
@@ -135,7 +135,6 @@ public class PrevalenceRunner {
 	}
 
 	private static void detTestPrevForProjects(Options options) throws Exception {
-		TestPrevalence tpd = new TestPrevalence();
 		TestPrevalenceSummary summary;
 
 		// Load project list from previously generated file if given
@@ -143,15 +142,15 @@ public class PrevalenceRunner {
 			String projectListJson = FileHelpers.readEntireFile(new File(options.listFilename));
 			ProjectList projectList = gson.fromJson(projectListJson, ProjectList.class);
 			options.keyword = projectList.keyword;
-			summary = tpd.determineTestPrevalence(projectList);
+			summary = TestPrevalence.determineTestPrevalence(projectList);
 		} else {
 			if(options.dictionaryFilename == null)
-				summary = tpd.determineTestPrevalence(options.keyword, options.numPages, ghc);
+				summary = TestPrevalence.determineTestPrevalence(options.keyword, options.numPages, ghc);
 			else {
 				ProjectCollector jpc = new ProjectCollector(ghc);
 				String[] keywords = randomlyChoseKeywords(options);
 				ProjectList projectList = jpc.collectProjects(keywords, options.numPages);
-				summary = tpd.determineTestPrevalence(projectList);
+				summary = TestPrevalence.determineTestPrevalence(projectList);
 			}
 		}
 

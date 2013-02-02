@@ -15,7 +15,7 @@ import org.eclipse.egit.github.core.SearchRepository;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
-public class ProjectCollector {
+public final class ProjectCollector {		
 	private final GitHubClient ghc;
 	public static final boolean USE_EGIT = true;
 

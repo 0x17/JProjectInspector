@@ -15,8 +15,10 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import com.google.gson.Gson;
 
-public class ProjectStatsRunner {
-
+public final class ProjectStatsRunner {
+	
+	private ProjectStatsRunner() {}
+	
 	public static void main(String[] args) throws Exception {
 		if(args.length != 1) {
 			throw new Exception("Must supply one argument!");
@@ -34,23 +36,18 @@ public class ProjectStatsRunner {
 	}
 
 	public static void collectForSingleProject(Project p) throws Exception {
-		ProjectStatsMeasurer psm = new ProjectStatsMeasurer();
-		ProjectDownloader pd = new ProjectDownloader();
-		File projectRoot = pd.loadProject(p);
+		File projectRoot = ProjectDownloader.loadProject(p);
 		if(projectRoot != null) {
 			try {
-				ProjectStats stats = psm.collectStats(p, projectRoot);
+				ProjectStats stats = ProjectStatsMeasurer.collectStats(p, projectRoot);
 				FileHelpers.writeObjToJsonFile(stats, "singleStats.json");
 			} finally {
-				pd.deleteProject(p);
+				ProjectDownloader.deleteProject(p);
 			}
 		}
 	}
 
 	public static void collectForProjectLst(String lstFilename) throws Exception {
-		ProjectDownloader pd = new ProjectDownloader();
-		ProjectStatsMeasurer psm = new ProjectStatsMeasurer();
-
 		List<ProjectStats> stats = new LinkedList<ProjectStats>();
 		ProjectStatsList psl = new ProjectStatsList(stats);
 
@@ -62,12 +59,12 @@ public class ProjectStatsRunner {
 
 		for(Project p : plist.projects) {
 			Helpers.log("Processing project " + i + "/" + nprojects);
-			File projectRoot = pd.loadProject(p);
+			File projectRoot = ProjectDownloader.loadProject(p);
 			if(projectRoot != null) {
 				try {
-					stats.add(psm.collectStats(p, projectRoot));
+					stats.add(ProjectStatsMeasurer.collectStats(p, projectRoot));
 				} finally {
-					pd.deleteProject(p);
+					ProjectDownloader.deleteProject(p);
 				}
 			}
 			i++;

@@ -12,6 +12,8 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 public class UnitTestDetector {
+	
+	private UnitTestDetector()  {}
 
 	private final static String[] supportedLangs = new String[]{"Java", "Ruby", "C++", "C#", "JavaScript", "Python"};
 
@@ -19,11 +21,11 @@ public class UnitTestDetector {
 		return supportedLangs;
 	}
 
-	public boolean containsTest(File pf) throws Exception {
+	public static boolean containsTest(File pf) throws Exception {
 		return traverseForTest(pf);
 	}
 
-	public List<File> getTestFiles(File root) throws Exception {
+	public static List<File> getTestFiles(File root) throws Exception {
 		List<File> testFiles = new LinkedList<File>();
 		if(root.isDirectory()) {
 			for(File entry : root.listFiles()) {
@@ -53,7 +55,7 @@ public class UnitTestDetector {
 		}
 	}
 
-	private boolean traverseForTest(File root) throws Exception {
+	private static boolean traverseForTest(File root) throws Exception {
 		boolean found = false;
 		if(root.isDirectory()) {
 			for(File entry : root.listFiles()) {
@@ -110,11 +112,10 @@ public class UnitTestDetector {
 		return StringHelpers.containsOneOf(srcStr, "cucumber", "@Test", "org.junit", "assertEqual");
 	}
 
-	public boolean containsTestAndLoad(Project project) throws Exception {
-		ProjectDownloader pd = new ProjectDownloader();
-		File f = pd.loadProject(project);
+	public static boolean containsTestAndLoad(Project project) throws Exception {
+		File f = ProjectDownloader.loadProject(project);
 		boolean result = (f == null) ? false : containsTest(f);
-		pd.deleteProject(project);
+		ProjectDownloader.deleteProject(project);
 		return result;
 	}
 
