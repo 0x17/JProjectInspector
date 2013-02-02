@@ -1,7 +1,12 @@
 package org.andreschnabel.jprojectinspector.model;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+
+import com.google.gson.Gson;
 
 public class ProjectList {
 	public final String keyword;
@@ -15,5 +20,9 @@ public class ProjectList {
 	public ProjectList() {
 		keyword = "none";
 		projects = new LinkedList<Project>();
+	}
+	
+	public static ProjectList fromFile(String filename) throws Exception {
+		return new Gson().fromJson(FileHelpers.readEntireFile(new File(filename)), ProjectList.class);
 	}
 }

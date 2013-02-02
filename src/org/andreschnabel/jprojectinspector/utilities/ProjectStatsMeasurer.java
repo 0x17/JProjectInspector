@@ -35,8 +35,7 @@ public final class ProjectStatsMeasurer {
 		CodeFrequency cf = new CodeFrequency();
 		stats.codeFrequency = cf.countCodeFrequencyForProj(project);
 
-		Contributors contribs = new Contributors();
-		stats.numContributors = contribs.countNumContributors(project);
+		stats.numContributors = Contributors.countNumContributors(project);
 		//stats.numTestContributors = contribs.countNumTestContributors(projectRoot);
 
 		Issues issues = new Issues();

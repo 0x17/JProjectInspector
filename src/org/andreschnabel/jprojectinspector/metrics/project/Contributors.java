@@ -14,14 +14,16 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 
-public class Contributors {
+public final class Contributors {
+	
+	private Contributors() {}
 
-	public int countNumContributors(Project project) throws Exception {
+	public static int countNumContributors(Project project) throws Exception {
 		String contribsData = Helpers.loadUrlIntoStr("https://github.com/" + project.owner + "/" + project.repoName + "/graphs/contributors-data");
 		return StringHelpers.countOccurencesOfWord(contribsData, "\"author\"");
 	}
 
-	public int countNumTestContributors(File root) throws Exception {
+	public static int countNumTestContributors(File root) throws Exception {
 		if(!root.exists())
 			throw new Exception("Check out first!");
 

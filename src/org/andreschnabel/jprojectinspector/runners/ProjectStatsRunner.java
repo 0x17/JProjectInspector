@@ -13,8 +13,6 @@ import org.andreschnabel.jprojectinspector.utilities.ProjectStatsMeasurer;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
-import com.google.gson.Gson;
-
 public final class ProjectStatsRunner {
 	
 	private ProjectStatsRunner() {}
@@ -51,8 +49,7 @@ public final class ProjectStatsRunner {
 		List<ProjectStats> stats = new LinkedList<ProjectStats>();
 		ProjectStatsList psl = new ProjectStatsList(stats);
 
-		Gson gson = new Gson();
-		ProjectList plist = gson.fromJson(FileHelpers.readEntireFile(new File(lstFilename)), ProjectList.class);
+		ProjectList plist = ProjectList.fromFile(lstFilename);
 
 		int i = 1;
 		int nprojects = plist.projects.size();

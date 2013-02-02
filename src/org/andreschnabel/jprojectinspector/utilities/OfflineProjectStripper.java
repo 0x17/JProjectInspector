@@ -1,6 +1,5 @@
 package org.andreschnabel.jprojectinspector.utilities;
 
-import java.io.File;
 import java.util.LinkedList;
 
 import org.andreschnabel.jprojectinspector.model.Project;
@@ -8,15 +7,12 @@ import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
-import com.google.gson.Gson;
-
 public final class OfflineProjectStripper {
 	
 	private OfflineProjectStripper() {}
 	
 	public static void stripOfflineProjs(String projLstFilename) throws Exception {
-		Gson gson = new Gson();
-		ProjectList projLst = gson.fromJson(FileHelpers.readEntireFile(new File(projLstFilename)), ProjectList.class);
+		ProjectList projLst = ProjectList.fromFile(projLstFilename);
 		ProjectList outLst = new ProjectList(projLst.keyword, new LinkedList<Project>());
 		for(Project p : projLst.projects) {			
 			boolean online = !isOffline(p);
@@ -36,4 +32,10 @@ public final class OfflineProjectStripper {
 			return true;
 		}
 	}
+	
+	//public static void main(String[] args) throws Exception {
+		//stripOfflineProjs("ZwischenvortragProjekte.json");
+		//ProjectList projLst = ProjectList.fromFile("STRIPPEDZwischenvortragProjekte.json");
+		//System.out.println(projLst.projects.size());
+	//}
 }

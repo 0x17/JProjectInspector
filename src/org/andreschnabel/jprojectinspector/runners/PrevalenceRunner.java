@@ -140,7 +140,7 @@ public final class PrevalenceRunner {
 		// Load project list from previously generated file if given
 		if(options.listFilename != null) {
 			String projectListJson = FileHelpers.readEntireFile(new File(options.listFilename));
-			ProjectList projectList = gson.fromJson(projectListJson, ProjectList.class);
+			ProjectList projectList = ProjectList.fromFile(projectListJson);
 			options.keyword = projectList.keyword;
 			summary = TestPrevalence.determineTestPrevalence(projectList);
 		} else {
@@ -196,7 +196,7 @@ public final class PrevalenceRunner {
 
 	private static void randomlyMinimizeProjectListFile(String srcFilename, String destFilename, int destSize) throws Exception {
 		String projectListJson = FileHelpers.readEntireFile(new File(srcFilename));
-		ProjectList projectList = gson.fromJson(projectListJson, ProjectList.class);
+		ProjectList projectList = ProjectList.fromFile(projectListJson);
 
 		randomlyMinimizeProjectList(projectList, destSize);
 		String outJson = gson.toJson(projectList);

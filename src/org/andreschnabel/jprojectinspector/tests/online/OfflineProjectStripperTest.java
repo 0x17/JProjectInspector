@@ -1,7 +1,5 @@
 package org.andreschnabel.jprojectinspector.tests.online;
 
-import java.io.File;
-
 import junit.framework.Assert;
 
 import org.andreschnabel.jprojectinspector.model.Project;
@@ -10,8 +8,6 @@ import org.andreschnabel.jprojectinspector.utilities.OfflineProjectStripper;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Test;
-
-import com.google.gson.Gson;
 
 public class OfflineProjectStripperTest {
 
@@ -24,7 +20,7 @@ public class OfflineProjectStripperTest {
 		FileHelpers.writeObjToJsonFile(pl, pltestfname);
 		OfflineProjectStripper.stripOfflineProjs(pltestfname);
 		FileHelpers.deleteFile(pltestfname);
-		ProjectList pl2 = new Gson().fromJson(FileHelpers.readEntireFile(new File("STRIPPED"+pltestfname)), ProjectList.class);
+		ProjectList pl2 = ProjectList.fromFile("STRIPPED"+pltestfname);
 		AssertHelpers.arrayEqualsLstOrderSensitive(new Project[] {Project.fromString("0x17/JProjectInspector")}, pl2.projects);
 		FileHelpers.deleteFile("STRIPPED"+pltestfname);		
 	}
