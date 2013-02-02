@@ -9,12 +9,11 @@ import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 public class TimelineTapper {
-
-	public List<Project> tapUniqueProjects(String lang, int upToNum) throws Exception {
+	public static List<Project> tapUniqueProjects(String lang, int upToNum) throws Exception {
 		List<Project> projs = new LinkedList<Project>();
 		List<String> projNames = new LinkedList<String>();
 
-		Pattern p = Pattern.compile("\\{\"pushed_at\":(.+?)\\}");
+		Pattern p = Pattern.compile("\\{(.*?\"language\":\"" + lang + "\".*?)\\}");
 		Pattern q = Pattern.compile("\"owner\":\"([\\w-]+)\"");
 		Pattern r = Pattern.compile("\"name\":\"([\\w-]+)\"");
 
