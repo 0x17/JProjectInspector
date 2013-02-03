@@ -30,7 +30,7 @@ public final class ProjectDownloader {
 		int ctr=1;
 		int numProjs = plist.projects.size();
 		for(Project p : plist.projects) {
-			Helpers.log("Loading " + p + " (" + ctr + "/" + numProjs + ")"); 
+			Helpers.log("Loading " + p + " (" + (ctr++) + "/" + numProjs + ")"); 
 			String destPath = preloadPath(p);
 			Helpers.system("git clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
 		}
