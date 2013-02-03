@@ -139,8 +139,7 @@ public final class PrevalenceRunner {
 
 		// Load project list from previously generated file if given
 		if(options.listFilename != null) {
-			String projectListJson = FileHelpers.readEntireFile(new File(options.listFilename));
-			ProjectList projectList = ProjectList.fromFile(projectListJson);
+			ProjectList projectList = ProjectList.fromFile(options.listFilename);
 			options.keyword = projectList.keyword;
 			summary = TestPrevalence.determineTestPrevalence(projectList);
 		} else {
