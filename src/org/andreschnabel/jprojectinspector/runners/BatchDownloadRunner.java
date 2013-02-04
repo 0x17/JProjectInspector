@@ -8,6 +8,7 @@ public class BatchDownloadRunner {
 	public static void main(String[] args) throws Exception {
 		ProjectList plist = ProjectList.fromFile(args[0]);
 		ProjectDownloader.loadProjects(plist);
+		//ProjectDownloader.deleteEmtpyPreloads();
 	}
 
 }
