@@ -3,6 +3,8 @@ package org.andreschnabel.jprojectinspector.tests.offline;
 import java.io.File;
 import java.util.List;
 
+import junit.framework.Assert;
+
 import org.andreschnabel.jprojectinspector.metrics.test.TestContributors;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.junit.Test;
@@ -10,7 +12,9 @@ import org.junit.Test;
 public class TestContributorsTest {
 
 	@Test
-	public void testNumTestContribs() {
+	public void testNumTestContribs() throws Exception {
+		int numContribs = TestContributors.numTestContribs(new File("C:\\Users\\Andre\\Dropbox\\Code\\JProjectInspector"));
+		Assert.assertEquals(1, numContribs);
 	}
 
 	@Test

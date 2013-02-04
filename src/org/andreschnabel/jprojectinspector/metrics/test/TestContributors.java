@@ -35,8 +35,6 @@ public final class TestContributors {
 	}
 
 	public static List<String> contribNamesForFile(File f) throws Exception {
-		//String cmd = "git log --follow --pretty=format:%an -- " + f.getName();
-		
 		List<String> result = new LinkedList<String>();
 		
 		ProcessBuilder pb = new ProcessBuilder("git", "log", "--follow", "--pretty=format:%an", "--", f.getName());
