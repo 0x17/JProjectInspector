@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
+import org.andreschnabel.jprojectinspector.metrics.test.TestContributors;
 import org.andreschnabel.jprojectinspector.metrics.test.prevalence.TestFrameworkDetector;
 import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.model.Project;
@@ -16,7 +17,25 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 public class PreloadMetricsRunner {
 	
 	public static void main(String[] args) throws Exception {
-		testFrameworksForPreloads();
+		testContribsForPreloads();
+	}
+	
+	public static void testContribsForPreloads() throws Exception {
+		File[] preloadPaths = ProjectDownloader.getPreloadPaths();
+		
+		int nprojects = preloadPaths.length;
+		int ctr = 1;
+		int contribsTotal = 0;
+		
+		for(File pf : preloadPaths) {
+			int ncontribs = TestContributors.numTestContribs(pf);
+			contribsTotal += ncontribs;
+			Helpers.log(pf.getName() + " has " + ncontribs + " test contributors! (" + (ctr++) + "/" + nprojects + ")");			
+		}
+		
+		float contribsPerProj = (float)contribsTotal / nprojects;
+		
+		Helpers.log(contribsTotal + " test contributors total.\nThat is: " + contribsPerProj + " contributors per project.");
 	}
 	
 	public static void contribsForPreloads() throws Exception {
