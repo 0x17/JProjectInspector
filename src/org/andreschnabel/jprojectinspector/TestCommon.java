@@ -5,6 +5,7 @@ import java.io.File;
 import org.andreschnabel.jprojectinspector.model.Project;
 
 public final class TestCommon {
+	public static final String MAIN_DIR = System.getProperty("user.dir"); 
 	public static final String TEST_SRC_DIRECTORY = "testdata";
 	public static final String TEST_SRC_FILENAME = "testdata"+File.separator+"Points.java";
 	public static final String TEST_SRC_TEST_FILENAME = "testdata"+File.separator+"PointsTest.java";
