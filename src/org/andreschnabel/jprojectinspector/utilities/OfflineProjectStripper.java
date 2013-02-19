@@ -1,11 +1,11 @@
 package org.andreschnabel.jprojectinspector.utilities;
 
-import java.util.LinkedList;
-
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+
+import java.util.LinkedList;
 
 public final class OfflineProjectStripper {
 	
@@ -32,10 +32,5 @@ public final class OfflineProjectStripper {
 			return true;
 		}
 	}
-	
-	//public static void main(String[] args) throws Exception {
-		//stripOfflineProjs("ZwischenvortragProjekte.json");
-		//ProjectList projLst = ProjectList.fromFile("STRIPPEDZwischenvortragProjekte.json");
-		//System.out.println(projLst.projects.size());
-	//}
+
 }
