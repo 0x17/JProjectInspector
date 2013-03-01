@@ -24,6 +24,10 @@ public class UnitTestDetector {
 	public static boolean containsTest(File pf) throws Exception {
 		return traverseForTest(pf);
 	}
+	
+	public static int countTestFiles(File pf) throws Exception {
+		return getTestFiles(pf).size();
+	}
 
 	public static List<File> getTestFiles(File root) throws Exception {
 		List<File> testFiles = new LinkedList<File>();
