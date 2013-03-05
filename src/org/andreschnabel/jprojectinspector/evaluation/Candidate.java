@@ -1,7 +1,9 @@
 package org.andreschnabel.jprojectinspector.evaluation;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "candidate")
 public class Candidate {
-	
 	public String login;
 	public String name;
 	public String email;
