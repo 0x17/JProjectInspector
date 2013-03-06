@@ -45,14 +45,19 @@ public class CandidateTapper {
 					c.login = usrMatcher.group(1);
 
 					Matcher emailMatcher = emailPattern.matcher(userStr);
-					emailMatcher.find();
-					c.email = emailMatcher.group(1);
+					if(emailMatcher.find()) {
+						c.email = emailMatcher.group(1);
+					}
 
 					Matcher nameMatcher = namePattern.matcher(userStr);
-					nameMatcher.find();
-					c.name = nameMatcher.group(1);
+					if(nameMatcher.find()) {
+						c.name = nameMatcher.group(1);
+					}
 
-					candidates.add(c);
+					if(c.name != null && c.email != null && c.login != null && !candidates.contains(c)) {
+						candidates.add(c);
+						Helpers.log("Added rough candidate: " + c);
+					}
 				}
 			}
 			
@@ -61,10 +66,35 @@ public class CandidateTapper {
 		
 		return candidates;
 	}
-	
-	public static void main(String[] args) throws Exception {
-		for(Candidate candidate : tapCandidates(1))
-			System.out.println(candidate);
+
+	public static List<Candidate> addMostRecentRepoTriples(List<Candidate> candidates) throws Exception {
+		for(Candidate c : candidates) {
+			addMostRecentRepoTriple(c);
+		}
+		return candidates;
+	}
+
+	public static Candidate addMostRecentRepoTriple(Candidate candidate) throws Exception {
+		String profile = Helpers.loadHTMLUrlIntoStr("https://github.com/" + candidate.login + "?tab=repositories");
+
+		Pattern projPattern = Pattern.compile("<li class=\"public source[\\s\\S]+?(<time.+?</time>)");
+		Matcher projMatcher = projPattern.matcher(profile);
+
+		Pattern projNameSubPattern = Pattern.compile("<a href=\"/.+?/.+?\">(.+?)</a>");
+
+		int curProj = 0;
+		while(projMatcher.find() && curProj < 3) {
+			String timeStr = projMatcher.group(1);
+			if(timeStr.contains("2013")) {
+				String projStr = projMatcher.group(0);
+				Matcher projNameSubPatternMatcher = projNameSubPattern.matcher(projStr);
+				if(projNameSubPatternMatcher.find()) {
+					candidate.repos[curProj++] = projNameSubPatternMatcher.group(1);
+				}
+			}
+		}
+
+		return candidate;
 	}
 
 }
