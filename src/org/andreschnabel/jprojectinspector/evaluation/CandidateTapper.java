@@ -84,9 +84,10 @@ public class CandidateTapper {
 
 		int curProj = 0;
 		while(projMatcher.find() && curProj < 3) {
+			String projStr = projMatcher.group(0);
 			String timeStr = projMatcher.group(1);
-			if(timeStr.contains("2013")) {
-				String projStr = projMatcher.group(0);
+			// Only include projects with activity from this year and written in Java.
+			if(timeStr.contains("2013") && projStr.contains("<li>Java</li>")) {
 				Matcher projNameSubPatternMatcher = projNameSubPattern.matcher(projStr);
 				if(projNameSubPatternMatcher.find()) {
 					candidate.repos[curProj++] = projNameSubPatternMatcher.group(1);
@@ -95,6 +96,11 @@ public class CandidateTapper {
 		}
 
 		return candidate;
+	}
+	
+	// Testing
+	public static void main(String[] args) throws Exception {
+		CandidateTapper.addMostRecentRepoTriple(new Candidate("0x17", null, null));
 	}
 
 }
