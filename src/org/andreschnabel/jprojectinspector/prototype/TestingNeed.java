@@ -28,9 +28,10 @@ public class TestingNeed {
 
 			testingNeed = contribsPerLoc + commitsPerLoc + churnPerLoc;
 
+		} catch(Exception e) {
+			testingNeed = -1;
 		} finally {
 			ProjectDownloader.deleteProject(p);
-			testingNeed = -1;
 		}
 
 		return testingNeed;
