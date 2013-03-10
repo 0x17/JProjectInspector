@@ -3,7 +3,6 @@ package org.andreschnabel.jprojectinspector.utilities.helpers;
 
 import java.io.BufferedReader;
 import java.io.Console;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
@@ -17,27 +16,6 @@ public class Helpers {
 	
 	public static boolean runningOnUnix() {
 		return !System.getProperty("os.name").toLowerCase().contains("win");
-	}
-
-	public static void system(String cmd) throws Exception {
-		System.out.println("Running: " + cmd);
-		try {
-			Process p = Runtime.getRuntime().exec(cmd);
-			InputStreamReader isr = new InputStreamReader(p.getInputStream());
-			
-			p.waitFor();
-			
-			StringBuilder output = new StringBuilder();
-			int c;
-			while((c = isr.read()) != -1) {
-				output.append((char) c);
-			}
-			System.out.print(output);		
-
-		} catch(IOException e) {
-			System.out.println("Error executing: " + cmd);
-			e.printStackTrace();
-		}
 	}
 
 	public static String loadUrlIntoStr(String urlStr) throws Exception {

@@ -1,17 +1,12 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.andreschnabel.jprojectinspector.Config;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.andreschnabel.jprojectinspector.Config;
+
+import java.io.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class FileHelpers {
 
@@ -51,7 +46,7 @@ public class FileHelpers {
 		if(destPath.startsWith(Config.DEST_BASE)) {
 			String rmCmd = Helpers.runningOnUnix() ? "rm -rf" : "rmdir /S /Q";
 			if(Helpers.runningOnUnix())
-				Helpers.system(rmCmd + " " + destPath + File.separator);
+				ProcessHelpers.system(rmCmd + " " + destPath + File.separator);
 			else
 				deleteDir(new File(destPath + File.separator));
 		}

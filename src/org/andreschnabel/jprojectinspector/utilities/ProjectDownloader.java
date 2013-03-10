@@ -1,13 +1,14 @@
 package org.andreschnabel.jprojectinspector.utilities;
 
-import java.io.File;
-
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
+
+import java.io.File;
 
 public final class ProjectDownloader {
 	
@@ -15,7 +16,7 @@ public final class ProjectDownloader {
 
 	public static File loadProject(Project p) throws Exception {
 		String destPath = Config.DEST_BASE + p.repoName;
-		Helpers.system("git clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
+		ProcessHelpers.system("git clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
 		File f = new File(destPath);
 		return f.exists() ? f : null;
 	}
@@ -36,7 +37,7 @@ public final class ProjectDownloader {
 				Helpers.log("Skipping...");
 				continue;
 			}
-			Helpers.system("git clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
+			ProcessHelpers.system("git clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
 		}
 	}
 	
