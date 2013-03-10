@@ -24,6 +24,30 @@ public class GitHelpers {
 		return result;
 	}
 
+	public static int numContribs(File repoPath) throws Exception {
+		return listAllContribs(repoPath).size();
+	}
+
+	public static List<String> listAllContribs(File repoPath) throws Exception {
+		String out = ProcessHelpers.monitorProcess(repoPath, "git", "log", "--all", "--format=%aN");
+		String[] lines = out.split("\n");
+		List<String> contribs = new LinkedList<String>();
+		for(String line : lines) {
+			if(!contribs.contains(line))
+				contribs.add(line);
+		}
+		return contribs;
+	}
+
+	public static int numCommits(File repoPath) throws Exception {
+		return listAllCommits(repoPath).length;
+	}
+
+	public static String[] listAllCommits(File repoPath) throws Exception {
+		String out = ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--no-merges master");
+		return out.split("\n");
+	}
+
 	public static String[] listCommitsInYear(File repoPath, int year) throws Exception {
 		return listCommitsBetweenDates(repoPath, String.valueOf(year) + "-01-01", String.valueOf(year + 1) + "-01-01");
 	}
