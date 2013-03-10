@@ -22,7 +22,7 @@ public class Candidate {
 		this.email = email;
 	}
 	
-	public Candidate(String login, String name, String email, String[] repos) {
+	public Candidate(String login, String name, String email, String... repos) {
 		super();
 		this.login = login;
 		this.name = name;

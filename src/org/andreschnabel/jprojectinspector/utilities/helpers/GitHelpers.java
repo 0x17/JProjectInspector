@@ -1,21 +1,39 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import org.eclipse.egit.github.core.client.GitHubClient;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GitHelpers {
 
-	private static GitHubClient ghc = null;
+	public static List<String> contribNamesForFile(File f) throws Exception {
+		List<String> result = new LinkedList<String>();
 
-	public static GitHubClient authenticate() throws Exception {
-		// Usually I try to avoid side effects but here caching is very helpful!
-		if(ghc == null) {
-			ghc = new GitHubClient();
-			String user = Helpers.prompt("Username");
-			String pw = Helpers.promptPw("Password");
-			ghc.setCredentials(user, pw);
+		ProcessBuilder pb = new ProcessBuilder("git", "log", "--follow", "--pretty=format:%an", "--", f.getName());
+		pb.directory(f.getParentFile());
+
+		Process p = pb.start();
+		InputStreamReader isr = new InputStreamReader(p.getInputStream());
+
+		p.waitFor();
+
+		StringBuilder output = new StringBuilder();
+		int c;
+		while((c = isr.read()) != -1) {
+			output.append((char) c);
 		}
 
-		return ghc;
+		String[] names = output.toString().split("\n");
+		for(String name : names) {
+			if(name != null && !name.isEmpty()) {
+				if(!result.contains(name)) {
+					result.add(name);
+				}
+			}
+		}
+
+		return result;
 	}
 
 }

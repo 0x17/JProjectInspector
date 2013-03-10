@@ -1,17 +1,17 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GitHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.GitHubHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.eclipse.egit.github.core.Issue;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.IssueService;
 import org.eclipse.egit.github.core.service.RepositoryService;
+
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Issues {
 
@@ -25,7 +25,7 @@ public class Issues {
 		if(m.find()) {
 			return Integer.valueOf(m.group(1));
 		} else {
-			GitHubClient ghc = GitHelpers.authenticate();
+			GitHubClient ghc = GitHubHelpers.authenticate();
 			RepositoryService repoService = new RepositoryService(ghc);
 			IssueService issueService = new IssueService();
 			Repository repo = repoService.getRepository(p.owner, p.repoName);
