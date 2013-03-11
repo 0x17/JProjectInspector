@@ -8,7 +8,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.GitHelpers;
 
 import java.io.File;
 
-public class TestingNeed {
+public final class TestingNeed {
+
+	private TestingNeed() {}
 
 	public static float determineTestingNeedForProject(Project p) throws Exception {
 		float testingNeed = 0;
@@ -27,6 +29,8 @@ public class TestingNeed {
 			float churnPerLoc = totalChurn / (float)loc;
 
 			testingNeed = contribsPerLoc + commitsPerLoc + churnPerLoc;
+
+			// Test coverage und vielleicht Mala...
 
 		} catch(Exception e) {
 			testingNeed = -1;

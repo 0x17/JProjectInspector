@@ -47,8 +47,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="gitective-core-0.9.1" level="project" />
-    <orderEntry type="library" exported="" name="org.eclipse.egit.github.core-2.1.2" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
@@ -58,6 +56,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="gitective-core-0.9.1" level="project" />
+    <orderEntry type="library" name="org.eclipse.egit.github.core-2.1.2" level="project" />
   </component>
 </module>
 

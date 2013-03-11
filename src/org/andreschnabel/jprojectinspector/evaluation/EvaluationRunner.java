@@ -5,7 +5,7 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.XmlHelpers;
 import java.io.File;
 import java.util.List;
 
-public class EvaluationRunner {
+public final class EvaluationRunner {
 
 	public static void main(String[] args) throws Exception {
 		List<Candidate> candidates = CandidateTapper.tapCandidates(100);
