@@ -11,6 +11,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class XmlHelpers {
 
@@ -38,6 +39,9 @@ public class XmlHelpers {
 	}
 
 	public static Object deserializeFromXml(Class<?> clazz, File in) throws Exception {
+		if(!in.exists())
+			throw new FileNotFoundException(in.getAbsolutePath());
+		
 		JAXBContext jc = JAXBContext.newInstance(clazz);
 		Unmarshaller um = jc.createUnmarshaller();
 		return um.unmarshal(in);

@@ -16,11 +16,19 @@ public class CandidateTapper {
 	private CandidateTapper() {}
 	
 	public static List<Candidate> tapCandidates(final int upTo) throws Exception {
+		return tapCandidates(upTo, null);
+	}
+	
+	public static List<Candidate> tapCandidates(final int upTo, List<Candidate> oldCandidates) throws Exception {
 		final Pattern userPattern = Pattern.compile("\\{\"login\":\"([A-Za-z0-9-]+?)\",\"type\":\"User\",.+?\\}");
 		final Pattern emailPattern = Pattern.compile("\"email\":\"([A-Za-z0-9-\\.@]+?)\"");
 		final Pattern namePattern = Pattern.compile("\"name\":\"(.+?)\"");
 		
 		List<Candidate> candidates = new LinkedList<Candidate>();
+		
+		if(oldCandidates != null) {
+			candidates.addAll(oldCandidates);
+		}
 		
 		String lastTimeline = null;
 		
@@ -54,9 +62,14 @@ public class CandidateTapper {
 						c.name = nameMatcher.group(1);
 					}
 
-					if(c.name != null && c.email != null && c.login != null && !candidates.contains(c)) {
-						candidates.add(c);
-						Helpers.log("Added rough candidate: " + c);
+					if(c.name != null && c.email != null && c.login != null && !candidateWithLogin(c.login, candidates)) {
+						addMostRecentRepoTriple(c);
+						if(c.repos[0] != null && c.repos[1] != null && c.repos[2] != null) {
+							candidates.add(c);
+							Helpers.log("Candidate: " + c + " " + candidates.size() + "/" + upTo);
+						} else {
+							Helpers.log(c + " not enough active repos!");
+						}
 					}
 				}
 			}
@@ -67,15 +80,22 @@ public class CandidateTapper {
 		return candidates;
 	}
 
-	public static List<Candidate> addMostRecentRepoTriples(List<Candidate> candidates) throws Exception {
+	private static boolean candidateWithLogin(String login, List<Candidate> candidates) {		
 		for(Candidate c : candidates) {
-			addMostRecentRepoTriple(c);
+			if(c.login.equals(login))
+				return true;
 		}
-		return candidates;
+		
+		return false;
 	}
 
 	public static Candidate addMostRecentRepoTriple(Candidate candidate) throws Exception {
-		String profile = Helpers.loadHTMLUrlIntoStr("https://github.com/" + candidate.login + "?tab=repositories");
+		String profile;
+		try {
+			profile = Helpers.loadHTMLUrlIntoStr("https://github.com/" + candidate.login + "?tab=repositories");
+		} catch(Exception e) {
+			return candidate;
+		}
 
 		Pattern projPattern = Pattern.compile("<li class=\"public source[\\s\\S]+?(<time.+?</time>)");
 		Matcher projMatcher = projPattern.matcher(profile);
@@ -87,20 +107,27 @@ public class CandidateTapper {
 			String projStr = projMatcher.group(0);
 			String timeStr = projMatcher.group(1);
 			// Only include projects with activity from this year and written in Java.
-			if(timeStr.contains("2013") && projStr.contains("<li>Java</li>")) {
+			if(timeStr.contains("2012")/* && projStr.contains("<li>Java</li>")*/) {
 				Matcher projNameSubPatternMatcher = projNameSubPattern.matcher(projStr);
 				if(projNameSubPatternMatcher.find()) {
-					candidate.repos[curProj++] = projNameSubPatternMatcher.group(1);
+					String nrepo = projNameSubPatternMatcher.group(1);
+					if(!containsRepo(candidate.repos, nrepo)) {
+						candidate.repos[curProj++] = nrepo;
+						Helpers.log("Added active java project \""+ nrepo +"\" maintained by " + candidate.login);
+					}
 				}
 			}
 		}
 
 		return candidate;
 	}
-	
-	// Testing
-	public static void main(String[] args) throws Exception {
-		CandidateTapper.addMostRecentRepoTriple(new Candidate("0x17", null, null));
+
+	private static boolean containsRepo(String[] repos, String repo) {
+		for(int i=0; i<3; i++) {
+			if(repos[i] != null && repos[i].equals(repo))
+				return true;
+		}
+		return false;
 	}
 
 }

@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.evaluation;
 
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.XmlHelpers;
 
 import java.io.File;
@@ -8,12 +9,11 @@ import java.util.List;
 public final class EvaluationRunner {
 
 	public static void main(String[] args) throws Exception {
-		List<Candidate> candidates = CandidateTapper.tapCandidates(100);
-		List<Candidate> extendedCandidates = CandidateTapper.addMostRecentRepoTriples(candidates);
-		List<Candidate> filteredCandidates = CandidateFilter.filterCandidates(extendedCandidates);
-
-		CandidateLst cl = new CandidateLst(filteredCandidates);
-		XmlHelpers.serializeToXml(cl, new File("candidates.xml"));
+		CandidateLst oldclst = (CandidateLst)XmlHelpers.deserializeFromXml(CandidateLst.class, new File("candidates250.xml"));
+		List<Candidate> candidates = CandidateTapper.tapCandidates(500, oldclst.candidates);
+		CandidateLst cl = new CandidateLst(candidates);
+		XmlHelpers.serializeToXml(cl, new File("candidates500.xml"));
+		Helpers.log("Wrote " + cl.candidates.size() + " candidates!");
 	}
 
 }
