@@ -32,10 +32,15 @@ public class CsvHelpers {
 		return parseCsv(FileHelpers.readEntireFile(f));
 	}
 	
-	public static List<String[]> parseCsv(String content) throws Exception {
+	public static String determineFirstLine(String content) {
+		return content.contains("\n") ? content.substring(0, content.indexOf("\n")) : content;
+	}
+	
+	public static List<String[]> parseCsv(String content) throws Exception {		
+		content += "\n";
+		
 		List<String[]> rows = new LinkedList<String[]>();	
-		String firstLine = content.substring(0, content.indexOf("\n"));
-		int numColumns = countColumns(firstLine);
+		int numColumns = countColumns(determineFirstLine(content));
 		
 		String[] curRow = new String[numColumns];
 		int curColumn = 0;
@@ -45,17 +50,16 @@ public class CsvHelpers {
 		boolean escaped = false;
 		for(int i=0; i<content.length(); i++) {
 			char c = content.charAt(i);
+			if(c == '"') escaped = !escaped;
 			switch(c) {
-			case '"':
-				escaped = !escaped;
+			case '\n':
+				rows.add(curRow);
+				curRow[curColumn++] = buf.toString();
+				curRow = new String[numColumns];
+				curColumn = 0;
 				break;
 			case ',':
 				if(!escaped) {
-					if(curColumn == numColumns) {
-						rows.add(curRow);
-						curRow = new String[numColumns];
-						curColumn = 0;
-					}
 					curRow[curColumn++] = buf.toString();
 					buf = new StringBuffer();
 				}

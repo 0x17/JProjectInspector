@@ -1,7 +1,10 @@
 package org.andreschnabel.jprojectinspector.utilities;
 
+import java.util.List;
+
 import junit.framework.Assert;
 
+import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.CsvHelpers;
 import org.junit.Test;
 
@@ -20,7 +23,15 @@ public class CsvHelpersTest {
 	}
 
 	@Test
-	public void testParseCsvStringSingleLine() {
+	public void testParseCsvStringSingleLine() throws Exception {
+		String csvLine = "Name,\"Age\",date of birth";
+		String[] cols = new String[] {"Name", "\"Age\"", "date of birth"};
+		
+		List<String[]> rows = CsvHelpers.parseCsv(csvLine);
+		Assert.assertEquals(1, rows.size());
+		
+		String[] firstRow = rows.get(0);
+		AssertHelpers.arrayEqualsArrayOrderSensitive(cols, firstRow);
 	}
 	
 	@Test
