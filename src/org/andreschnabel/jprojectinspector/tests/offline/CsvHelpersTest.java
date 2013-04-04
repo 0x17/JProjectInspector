@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.utilities;
+package org.andreschnabel.jprojectinspector.tests.offline;
 
 import java.util.List;
 
