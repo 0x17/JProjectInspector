@@ -17,7 +17,7 @@ public class Runner {
 			rp.user = UserGuesser.guessUserWithProjects(rp, projs);			
 		}
 		
-		XmlHelpers.serializeToXml(results, new File("responses500.xml"));
+		XmlHelpers.serializeToXml(new ResponseProjectsLst(results), new File("responses500.xml"));
 	}
 
 	
