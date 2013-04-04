@@ -5,6 +5,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "responseprojects")
 public class ResponseProjects {
 	
+	public String user;
+	
 	public String leastTested;
 	public String mostTested;	
 	
@@ -54,10 +56,11 @@ public class ResponseProjects {
 
 	@Override
 	public String toString() {
-		return "ResponseProjects [leastTested=" + leastTested + ", mostTested=" + mostTested + ", lowestBugCount=" + lowestBugCount
-			+ ", highestBugCount=" + highestBugCount + "]";
+		return "ResponseProjects [user=" + user + ", leastTested=" + leastTested + ", mostTested=" + mostTested
+			+ ", lowestBugCount=" + lowestBugCount + ", highestBugCount=" + highestBugCount + "]";
 	}
 	
 	
+
 	
 }

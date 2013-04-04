@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.andreschnabel.jprojectinspector.evaluation.CandidateLst;
+import org.andreschnabel.jprojectinspector.evaluation.projects.UserProjects;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.XmlHelpers;
 
 public class SurveyProjectExtractor {
 	
