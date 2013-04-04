@@ -35,7 +35,20 @@ public class CsvHelpersTest {
 	}
 	
 	@Test
-	public void testParseCsvStringMultiLines() {
+	public void testParseCsvStringMultiLines() throws Exception {
+		String csvLines = "Name,Age,Comment\nPeter,23,Testcomment\nHans,44,Finish\n";
+		
+		String[] row1 = new String[] {"Name", "Age", "Comment"};
+		String[] row2 = new String[] {"Peter", "23", "Testcomment"};
+		String[] row3 = new String[] {"Hans", "44", "Finish"};
+		
+		List<String[]> rows = CsvHelpers.parseCsv(csvLines);
+		
+		Assert.assertEquals(3, rows.size());
+		
+		AssertHelpers.arrayEqualsArrayOrderSensitive(row1, rows.get(0));		
+		AssertHelpers.arrayEqualsArrayOrderSensitive(row2, rows.get(1));
+		AssertHelpers.arrayEqualsArrayOrderSensitive(row3, rows.get(2));
 	}
 
 }

@@ -36,8 +36,9 @@ public class CsvHelpers {
 		return content.contains("\n") ? content.substring(0, content.indexOf("\n")) : content;
 	}
 	
-	public static List<String[]> parseCsv(String content) throws Exception {		
-		content += "\n";
+	public static List<String[]> parseCsv(String content) throws Exception {
+		if(!content.endsWith("\n"))
+			content += "\n";
 		
 		List<String[]> rows = new LinkedList<String[]>();	
 		int numColumns = countColumns(determineFirstLine(content));
@@ -48,22 +49,30 @@ public class CsvHelpers {
 		StringBuffer buf = new StringBuffer();
 		
 		boolean escaped = false;
-		for(int i=0; i<content.length(); i++) {
+		
+		for(int i=0; i<content.length(); i++) {			
 			char c = content.charAt(i);
+			
 			if(c == '"') escaped = !escaped;
+			
 			switch(c) {
 			case '\n':
-				rows.add(curRow);
-				curRow[curColumn++] = buf.toString();
-				curRow = new String[numColumns];
-				curColumn = 0;
+				if(curColumn == numColumns-1) {					
+					curRow[curColumn++] = buf.toString();
+					buf = new StringBuffer();
+					rows.add(curRow);
+					curRow = new String[numColumns];
+					curColumn = 0;
+				}
 				break;
+				
 			case ',':
 				if(!escaped) {
 					curRow[curColumn++] = buf.toString();
 					buf = new StringBuffer();
 				}
 				break;
+				
 			default:
 				buf.append(c);
 				break;
