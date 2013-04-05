@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.prototype;
 
-import org.andreschnabel.jprojectinspector.metrics.code.LinesOfCode;
+import org.andreschnabel.jprojectinspector.metrics.code.JavaLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
@@ -17,7 +17,7 @@ public final class TestingNeed {
 
 		try {
 			File repoPath = ProjectDownloader.loadProject(p);
-			int loc = LinesOfCode.countLocForProj(p);
+			int loc = JavaLinesOfCode.countLocForProj(p);
 			int ncontribs = Contributors.countNumContributors(p);
 			int ncommits = GitHelpers.numCommits(repoPath);
 			String[] commits = GitHelpers.listAllCommits(repoPath);

@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.andreschnabel.jprojectinspector.metrics.code.AverageWMC;
 import org.andreschnabel.jprojectinspector.metrics.code.ClassCoupling;
-import org.andreschnabel.jprojectinspector.metrics.code.LinesOfCode;
+import org.andreschnabel.jprojectinspector.metrics.code.JavaLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.project.CodeFrequency;
 import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
 import org.andreschnabel.jprojectinspector.metrics.project.Issues;
@@ -30,7 +30,7 @@ public final class ProjectStatsMeasurer {
 		AverageWMC mcCabe = new AverageWMC();
 		stats.avgWMC = mcCabe.determineAverageWMC(projectRoot);
 
-		stats.linesOfCode = LinesOfCode.countLocForProj(project);
+		stats.linesOfCode = JavaLinesOfCode.countLocForProj(project);
 
 		CodeFrequency cf = new CodeFrequency();
 		stats.codeFrequency = cf.countCodeFrequencyForProj(project);

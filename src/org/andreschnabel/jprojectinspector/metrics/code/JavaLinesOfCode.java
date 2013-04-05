@@ -6,7 +6,7 @@ import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
-public class LinesOfCode {
+public class JavaLinesOfCode {
 
 	public static int countLocForProj(Project project) throws Exception {
 		File root = new File(Config.DEST_BASE + project.repoName);
