@@ -87,5 +87,11 @@ public class GitHelpers {
 		return parseChurnStatsFromShortStat(out);
 	}
 
-
+	public static String[] listCommitComments(File repoPath, int count) throws Exception {
+		String out = ProcessHelpers.monitorProcess(repoPath, "git", "--no-pager", "log", "-n", String.valueOf(count), "--pretty=oneline");
+		String[] comments = out.split("[0-9a-zA-Z]{40}");
+		for(int i=0; i<comments.length; i++)
+			comments[i] = comments[i].replace("\n", "");
+		return comments;
+	}
 }

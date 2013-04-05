@@ -50,9 +50,9 @@ public final class ProjectDownloader {
 		}
 	}
 
-	public static String shaFromLatestCommitAtDate(File rootPath, String date) throws Exception {
-		String out = ProcessHelpers.monitorProcess(rootPath, "git", "log", "-1", "-until=" + date);
-		Pattern commitRegex = Pattern.compile("commit ([0-9a-zA-Z]+)");
+	public static String shaFromLatestCommitAtDate(File repoPath, String date) throws Exception {
+		String out = ProcessHelpers.monitorProcess(repoPath, "git", "log", "-1", "-until=" + date);
+		Pattern commitRegex = Pattern.compile("commit ([0-9a-zA-Z]{40})");
 		String[] lines = out.split("\n");
 		Matcher commitMatcher = commitRegex.matcher(lines[0]);
 		if(commitMatcher.find()) {

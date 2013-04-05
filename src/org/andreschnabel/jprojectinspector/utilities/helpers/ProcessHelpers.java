@@ -10,6 +10,7 @@ public class ProcessHelpers {
 		ProcessBuilder pb = new ProcessBuilder(command);
 		pb.directory(workDir);
 
+		pb.redirectErrorStream(true);
 		Process p = pb.start();
 		InputStreamReader isr = new InputStreamReader(p.getInputStream());
 
