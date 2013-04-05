@@ -15,8 +15,6 @@ public class ClocTest {
 		List<Cloc.ClocResult> results = Cloc.determineLinesOfCode(new File("."));
 		Assert.assertFalse(results.isEmpty());
 
-		boolean containsJava = false;
-
 		Assert.assertTrue(ListHelpers.contains(new Predicate<Cloc.ClocResult>() {
 			@Override
 			public boolean invoke(Cloc.ClocResult result) {
