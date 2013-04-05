@@ -44,7 +44,7 @@ public class GitHelpers {
 	}
 
 	public static String[] listAllCommits(File repoPath) throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--no-merges master");
+		String out = ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--no-merges", "master");
 		return out.split("\n");
 	}
 
