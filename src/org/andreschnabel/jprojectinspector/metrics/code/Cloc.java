@@ -1,13 +1,12 @@
 package org.andreschnabel.jprojectinspector.metrics.code;
 
+import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
+
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
 
 public class Cloc {
 	
@@ -41,13 +40,6 @@ public class Cloc {
 			clocResults.add(cr);
 		}
 		return clocResults;
-	}
-	
-	public static void main(String[] args) throws Exception {
-		List<ClocResult> results = Cloc.determineLinesOfCode(new File("."));
-		for(ClocResult r : results) {
-			Helpers.log(r.toString());
-		}
 	}
 
 }
