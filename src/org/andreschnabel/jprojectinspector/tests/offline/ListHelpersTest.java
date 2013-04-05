@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.tests.offline;
 
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 import org.junit.Assert;
@@ -50,5 +51,37 @@ public class ListHelpersTest {
 	public void testCountUpTo() throws Exception {
 		Integer[] oneToTen = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 		AssertHelpers.arrayEqualsLstOrderSensitive(oneToTen, ListHelpers.countUpTo(10));
+	}
+
+	@Test
+	public void testMap() throws Exception {
+		Integer[] oneToTen = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		Integer[] oneToTenSquared = new Integer[] { 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 };
+		Transform<Integer, Integer> square = new Transform<Integer, Integer>() {
+			@Override
+			public Integer invoke(Integer obj) {
+				return obj * obj;
+			}
+		};
+		AssertHelpers.arrayEqualsLstOrderSensitive(oneToTenSquared, ListHelpers.map(square, ListHelpers.fromArray(oneToTen)));
+	}
+
+	@Test
+	public void testFromArray() throws Exception {
+		Integer[] oneToTen = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		AssertHelpers.arrayEqualsLstOrderSensitive(oneToTen, ListHelpers.fromArray(oneToTen));
+	}
+
+	@Test
+	public void testFilter() throws Exception {
+		Integer[] oneToTen = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		Integer[] evens = new Integer[] { 2, 4, 6, 8, 10 };
+		Predicate<Integer> isEven = new Predicate<Integer>() {
+			@Override
+			public boolean invoke(Integer num) {
+				return num % 2 == 0;
+			}
+		};
+		AssertHelpers.arrayEqualsLstOrderSensitive(evens, ListHelpers.filter(isEven, ListHelpers.fromArray(oneToTen)));
 	}
 }

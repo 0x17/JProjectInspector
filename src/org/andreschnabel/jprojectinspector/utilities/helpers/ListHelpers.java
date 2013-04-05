@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.Transform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,4 +38,29 @@ public class ListHelpers {
 		return nums;
 	}
 
+
+	public static <T,U> List<U> map(Transform<T,U> transform, List<T> srcLst) {
+		List<U> destLst = new ArrayList<U>(srcLst.size());
+		for(T obj : srcLst) {
+			destLst.add(transform.invoke(obj));
+		}
+		return destLst;
+	}
+
+	public static <T> List<T> filter(Predicate<T> pred, List<T> srcLst) {
+		List<T> destLst = new ArrayList<T>(srcLst.size());
+		for(T obj : srcLst) {
+			if(pred.invoke(obj))
+				destLst.add(obj);
+		}
+		return destLst;
+	}
+
+	public static <T> List<T> fromArray(T[] array) {
+		List<T> lst = new ArrayList<T>(array.length);
+		for(T t : array) {
+			lst.add(t);
+		}
+		return lst;
+	}
 }
