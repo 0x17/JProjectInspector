@@ -58,6 +58,12 @@ public class GitHelpers {
 		return out.split("\n");
 	}
 
+	// Date format: YYYY-MM-DD
+	public static String[] listCommitsUntilDate(File repoPath, String date) throws Exception {
+		String out = ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--before=\""+date+"\"", "--no-merges master");
+		return out.split("\n");
+	}
+
 	public static class ChurnStats {
 		public int numDeletions;
 		public int numInsertions;
