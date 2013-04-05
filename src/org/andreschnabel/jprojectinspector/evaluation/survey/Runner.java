@@ -20,13 +20,6 @@ public class Runner {
 	}
 
 	private static void collectMetrics() throws Exception {
-		// Testing
-		/*List<ResponseProjects> rprojs = new LinkedList<ResponseProjects>();
-		ResponseProjects rp = new ResponseProjects("ProjectInspector", "KCImageCollector", "ProjectInspector", "KCImageCollector");
-		rp.user = "0x17";
-		rprojs.add(rp);
-		ResponseProjectsLst rpl = new ResponseProjectsLst(rprojs);*/
-
 		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
 		ProjectMetricsLst metrics = MetricsCollector.collectMetricsForResponses(rpl);
 		XmlHelpers.serializeToXml(metrics, new File("metrics500.xml"));

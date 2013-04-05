@@ -17,10 +17,23 @@ public final class ProjectDownloader {
 	private ProjectDownloader() {}
 
 	public static File loadProject(Project p) throws Exception {
+		if(!isProjectOnline(p)) {
+			return null;
+		}
 		String destPath = Config.DEST_BASE + p.repoName;
 		ProcessHelpers.system("git clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
 		File f = new File(destPath);
 		return f.exists() ? f : null;
+	}
+
+	public static boolean isProjectOnline(Project p) {
+		String projHtml;
+		try {
+			projHtml = Helpers.loadHTMLUrlIntoStr("https://github.com/"+p.owner+"/"+p.repoName);
+		} catch(Exception e) {
+			return false;
+		}
+		return projHtml != null && !projHtml.contains("<title>Page not found &middot; GitHub</title>");
 	}
 
 	public static void deleteProject(Project p) throws Exception {

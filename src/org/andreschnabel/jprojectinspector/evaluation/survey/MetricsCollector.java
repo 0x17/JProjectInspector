@@ -34,6 +34,11 @@ public class MetricsCollector {
 		for(Project p : plist) {
 			File path = ProjectDownloader.loadProject(p);
 
+			if(path == null) {
+				Helpers.log("Download failed. Skip!");
+				continue;
+			}
+
 			ProjectMetrics pm = new ProjectMetrics();
 
 			List<Cloc.ClocResult> clocResults = Cloc.determineLinesOfCode(path);
