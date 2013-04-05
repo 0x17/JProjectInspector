@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 public class Issues {
 
-	public int getNumberOfIssues(Project p) throws Exception {
+	public static int getNumberOfIssues(Project p) throws Exception {
 		String pageSrc = Helpers.loadUrlIntoStr("https://github.com/" + p.owner + "/" + p.repoName);
 		if(!pageSrc.contains("repo_issues")) { // issues disabled
 			return 0;

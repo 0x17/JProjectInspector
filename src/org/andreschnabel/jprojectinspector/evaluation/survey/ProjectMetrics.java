@@ -1,11 +1,13 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
+import org.andreschnabel.jprojectinspector.model.Project;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "responsemetrics")
-public class ResponseMetrics {
+@XmlRootElement(name = "projectmetrics")
+public class ProjectMetrics {
 
-	public ResponseProjects responses;
+	public Project project;
 
 	public int linesOfCode;
 	public int testLinesOfCode;
@@ -15,8 +17,11 @@ public class ResponseMetrics {
 
 	public int numIssues;
 
-	public ResponseMetrics(ResponseProjects responses, int linesOfCode, int testLinesOfCode, int numCommits, int numContribs, int numIssues) {
-		this.responses = responses;
+	public ProjectMetrics() {
+	}
+
+	public ProjectMetrics(Project project, int linesOfCode, int testLinesOfCode, int numCommits, int numContribs, int numIssues) {
+		this.project = project;
 		this.linesOfCode = linesOfCode;
 		this.testLinesOfCode = testLinesOfCode;
 		this.numCommits = numCommits;
@@ -24,29 +29,26 @@ public class ResponseMetrics {
 		this.numIssues = numIssues;
 	}
 
-	public ResponseMetrics() {
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if(this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
 
-		ResponseMetrics that = (ResponseMetrics) o;
+		ProjectMetrics that = (ProjectMetrics) o;
 
 		if(linesOfCode != that.linesOfCode) return false;
 		if(numCommits != that.numCommits) return false;
 		if(numContribs != that.numContribs) return false;
 		if(numIssues != that.numIssues) return false;
 		if(testLinesOfCode != that.testLinesOfCode) return false;
-		if(!responses.equals(that.responses)) return false;
+		if(!project.equals(that.project)) return false;
 
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = responses.hashCode();
+		int result = project.hashCode();
 		result = 31 * result + linesOfCode;
 		result = 31 * result + testLinesOfCode;
 		result = 31 * result + numCommits;
@@ -54,4 +56,17 @@ public class ResponseMetrics {
 		result = 31 * result + numIssues;
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return "ProjectMetrics{" +
+				"project=" + project +
+				", linesOfCode=" + linesOfCode +
+				", testLinesOfCode=" + testLinesOfCode +
+				", numCommits=" + numCommits +
+				", numContribs=" + numContribs +
+				", numIssues=" + numIssues +
+				'}';
+	}
 }
+

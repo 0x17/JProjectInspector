@@ -11,7 +11,11 @@ import java.util.regex.Pattern;
 public class Cloc {
 	
 	private Cloc() {}
-	
+
+	public static List<ClocResult> determineLinesOfCode(File path) throws Exception {
+		return determineLinesOfCode(path, path.getPath());
+	}
+
 	public static class ClocResult {		
 		public String language;
 		public int fileCount;
@@ -26,9 +30,9 @@ public class Cloc {
 		}
 	}	
 	
-	public static List<ClocResult> determineLinesOfCode(File rootPath) throws Exception {
+	public static List<ClocResult> determineLinesOfCode(File rootPath, String targetName) throws Exception {
 		List<ClocResult> clocResults = new LinkedList<ClocResult>();
-		String out = ProcessHelpers.monitorProcess(rootPath, "perl", "libs/cloc.pl", "-xml", rootPath.getPath());
+		String out = ProcessHelpers.monitorProcess(rootPath, "perl", "libs/cloc.pl", "-xml", targetName);
 		Pattern langLine = Pattern.compile("<language name=\"([^\"]+)\" files_count=\"(\\d+?)\" blank=\"(\\d+?)\" comment=\"(\\d+?)\" code=\"(\\d+?)\" />");
 		Matcher m = langLine.matcher(out);
 		while(m.find()) {

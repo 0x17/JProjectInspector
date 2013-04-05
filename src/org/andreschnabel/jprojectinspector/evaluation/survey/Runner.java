@@ -24,11 +24,12 @@ public class Runner {
 
 		// Testing
 		List<ResponseProjects> rprojs = new LinkedList<ResponseProjects>();
-		ResponseProjects rp = new ResponseProjects("JProjectInspector", "KCImageCollector", "JProjectInspector", "KCImageCollector");
+		ResponseProjects rp = new ResponseProjects("ProjectInspector", "KCImageCollector", "ProjectInspector", "KCImageCollector");
+		rp.user = "0x17";
 		rprojs.add(rp);
 
 		ResponseProjectsLst rpl = new ResponseProjectsLst(rprojs);
-		ResponseMetricsLst metrics = MetricsCollector.collectMetricsForResponses(rpl);
+		ProjectMetricsLst metrics = MetricsCollector.collectMetricsForResponses(rpl);
 		XmlHelpers.serializeToXml(metrics, new File("metrics500.xml"));
 	}
 
