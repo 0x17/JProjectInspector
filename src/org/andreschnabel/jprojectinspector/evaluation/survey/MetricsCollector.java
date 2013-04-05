@@ -19,7 +19,8 @@ public class MetricsCollector {
 		List<ProjectMetrics> results = new LinkedList<ProjectMetrics>();
 
 		for(ResponseProjects responseProj : rpl.responseProjs) {
-			results.addAll(collectMetricsForResponse(responseProj));
+			if(responseProj.user != null)
+				results.addAll(collectMetricsForResponse(responseProj));
 		}
 
 		ProjectMetricsLst rml = new ProjectMetricsLst(results);
