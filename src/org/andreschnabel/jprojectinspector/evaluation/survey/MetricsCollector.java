@@ -37,7 +37,7 @@ public class MetricsCollector {
 				try {
 					File path = ProjectDownloader.loadProject(p);
 					if(path == null) {
-						throw new Exception("Download failed. Skip!");
+						throw new Exception("Download of "+p+" failed. Skip!");
 					}
 
 					List<Cloc.ClocResult> clocResults = Cloc.determineLinesOfCode(path);
