@@ -22,7 +22,7 @@ public class Cloc {
 		public int blankLines;
 		public int commentLines;
 		public int codeLines;
-		
+
 		@Override
 		public String toString() {
 			return "ClocResult [language=" + language + ", fileCount=" + fileCount + ", blankLines=" + blankLines
@@ -32,16 +32,20 @@ public class Cloc {
 	
 	public static List<ClocResult> determineLinesOfCode(File rootPath, String targetName) throws Exception {
 		List<ClocResult> clocResults = new LinkedList<ClocResult>();
-		String out = ProcessHelpers.monitorProcess(rootPath, "perl", "libs/cloc.pl", "-xml", targetName);
+		String out = ProcessHelpers.monitorProcess(rootPath, "perl", "E:\\cloc.pl", "-xml", targetName);
 		Pattern langLine = Pattern.compile("<language name=\"([^\"]+)\" files_count=\"(\\d+?)\" blank=\"(\\d+?)\" comment=\"(\\d+?)\" code=\"(\\d+?)\" />");
 		Matcher m = langLine.matcher(out);
 		while(m.find()) {
 			ClocResult cr = new ClocResult();
 			cr.language = m.group(1);
-			cr.blankLines = Integer.valueOf(m.group(2));
-			cr.commentLines = Integer.valueOf(m.group(3));
-			cr.codeLines = Integer.valueOf(m.group(4));
-			clocResults.add(cr);
+			cr.fileCount = Integer.valueOf(m.group(2));
+			cr.blankLines = Integer.valueOf(m.group(3));
+			cr.commentLines = Integer.valueOf(m.group(4));
+			cr.codeLines = Integer.valueOf(m.group(5));
+
+			// XML is used for configs way too often.
+			if(!cr.language.toLowerCase().equals("xml"))
+				clocResults.add(cr);
 		}
 		return clocResults;
 	}
