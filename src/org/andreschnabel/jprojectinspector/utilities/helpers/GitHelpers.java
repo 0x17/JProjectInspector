@@ -100,4 +100,11 @@ public class GitHelpers {
 			comments[i] = comments[i].replace("\n", "");
 		return comments;
 	}
+
+	public static void main(String[] args) throws Exception {
+		String[] commits = listAllCommits(new File("."));
+		for(String commit : commits) {
+			Helpers.log(commit);
+		}
+	}
 }
