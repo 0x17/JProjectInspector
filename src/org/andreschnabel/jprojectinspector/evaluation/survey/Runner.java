@@ -2,11 +2,12 @@ package org.andreschnabel.jprojectinspector.evaluation.survey;
 
 import org.andreschnabel.jprojectinspector.evaluation.projects.UserProjects;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.XmlHelpers;
 
 import java.io.File;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,26 +40,25 @@ public class Runner {
 	}
 
 	private static int countProjectsWithoutUser() throws Exception {
-		int count = 0;
 		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
-		for(ResponseProjects rp : rpl.responseProjs) {
-			if(rp.user == null) {
-				count++;
+		Predicate<ResponseProjects> isWithoutUser = new Predicate<ResponseProjects>() {
+			@Override
+			public boolean invoke(ResponseProjects rp) {
+				return rp.user == null;
 			}
-		}
-		return count;
+		};
+		return ListHelpers.count(isWithoutUser, rpl.responseProjs);
 	}
 	
 	private static List<ResponseProjects> getProjectsWithUser() throws Exception {
 		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
-		List<ResponseProjects> toRem = new LinkedList<ResponseProjects>();
-		for(ResponseProjects rp : rpl.responseProjs) {
-			if(rp.user == null) {
-				toRem.add(rp);
+		Predicate<ResponseProjects> isWithUser = new Predicate<ResponseProjects>() {
+			@Override
+			public boolean invoke(ResponseProjects rp) {
+				return rp.user != null;
 			}
-		}
-		rpl.responseProjs.removeAll(toRem);
-		return rpl.responseProjs;
+		};
+		return ListHelpers.filter(isWithUser, rpl.responseProjs);
 	}
 
 	private static void connectProjectsWithUsers() throws Exception {

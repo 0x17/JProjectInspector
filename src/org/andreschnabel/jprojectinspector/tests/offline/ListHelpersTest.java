@@ -82,6 +82,17 @@ public class ListHelpersTest {
 				return num % 2 == 0;
 			}
 		};
-		AssertHelpers.arrayEqualsLstOrderSensitive(evens, ListHelpers.filter(isEven, ListHelpers.fromArray(oneToTen)));
+		AssertHelpers.arrayEqualsLstOrderSensitive(evens, ListHelpers.filter(isEven, ListHelpers.countUpTo(10)));
+	}
+
+	@Test
+	public void testCount() throws Exception {
+		Predicate<Integer> isEven = new Predicate<Integer>() {
+			@Override
+			public boolean invoke(Integer num) {
+				return num % 2 == 0;
+			}
+		};
+		Assert.assertEquals(5, ListHelpers.count(isEven, ListHelpers.countUpTo(10)));
 	}
 }

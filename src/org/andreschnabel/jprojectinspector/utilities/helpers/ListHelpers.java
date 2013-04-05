@@ -63,4 +63,13 @@ public class ListHelpers {
 		}
 		return lst;
 	}
+
+	public static <T> int count(Predicate<T> pred, List<T> lst) {
+		int n = 0;
+		for(T obj : lst) {
+			if(pred.invoke(obj))
+				n++;
+		}
+		return n;
+	}
 }
