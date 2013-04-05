@@ -1,21 +1,35 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 import org.andreschnabel.jprojectinspector.evaluation.projects.UserProjects;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.XmlHelpers;
+
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class Runner {
 
 	public static void main(String[] args) throws Exception {
 		//connectProjectsWithUsers();
 		//showProjectWithoutUserCount();
-		showLanguageDistribution();
+		//showLanguageDistribution();
+		collectMetrics();
+	}
+
+	private static void collectMetrics() throws Exception {
+		//ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
+
+		// Testing
+		List<ResponseProjects> rprojs = new LinkedList<ResponseProjects>();
+		ResponseProjects rp = new ResponseProjects("JProjectInspector", "KCImageCollector", "JProjectInspector", "KCImageCollector");
+		rprojs.add(rp);
+
+		ResponseProjectsLst rpl = new ResponseProjectsLst(rprojs);
+		ResponseMetricsLst metrics = MetricsCollector.collectMetricsForResponses(rpl);
+		XmlHelpers.serializeToXml(metrics, new File("metrics500.xml"));
 	}
 
 	private static void showLanguageDistribution() throws Exception {
