@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.tests.offline;
 
+import org.andreschnabel.jprojectinspector.utilities.IndexedTransform;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
@@ -64,6 +65,18 @@ public class ListHelpersTest {
 			}
 		};
 		AssertHelpers.arrayEqualsLstOrderSensitive(oneToTenSquared, ListHelpers.map(square, ListHelpers.fromArray(oneToTen)));
+	}
+
+	@Test
+	public void testMapi() throws Exception {
+		String[] names = new String[] { "Hans", "Peter", "Uwe", "Harald", "Anton", "Heinrich", "Hermann", "Siegfried", "Joachim", "Heinz" };
+		IndexedTransform<String, Integer> itrans = new IndexedTransform<String, Integer>() {
+			@Override
+			public Integer invoke(int i, String obj) {
+				return i;
+			}
+		};
+		AssertHelpers.lstEqualsLstOrderSensitive(ListHelpers.range(10), ListHelpers.mapi(itrans, ListHelpers.fromArray(names)));
 	}
 
 	@Test

@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
+import org.andreschnabel.jprojectinspector.utilities.IndexedTransform;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
 
@@ -43,6 +44,15 @@ public class ListHelpers {
 		List<U> destLst = new ArrayList<U>(srcLst.size());
 		for(T obj : srcLst) {
 			destLst.add(transform.invoke(obj));
+		}
+		return destLst;
+	}
+
+	public static <T,U> List<U> mapi(IndexedTransform<T,U> transform, List<T> srcLst) {
+		List<U> destLst = new ArrayList<U>(srcLst.size());
+		for(int i=0; i<srcLst.size(); i++) {
+			T obj = srcLst.get(i);
+			destLst.add(transform.invoke(i, obj));
 		}
 		return destLst;
 	}

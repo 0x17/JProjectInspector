@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import java.util.List;
-
 import org.junit.Assert;
+
+import java.util.List;
 
 public class AssertHelpers {
 
@@ -33,4 +33,12 @@ public class AssertHelpers {
 		}
 	}
 
+	public static <T> void lstEqualsLstOrderSensitive(List<T> expectedValues, List<T> actualValues) {
+		Assert.assertEquals(expectedValues.size(), actualValues.size());
+		for(int i = 0; i < expectedValues.size(); i++) {
+			if(!expectedValues.get(i).equals(actualValues.get(i))) {
+				Assert.fail(i + "th element not equal, is " + actualValues.get(i) + " should be " + expectedValues.get(i));
+			}
+		}
+	}
 }

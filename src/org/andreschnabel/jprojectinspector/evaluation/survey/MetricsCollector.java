@@ -5,9 +5,9 @@ import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
 import org.andreschnabel.jprojectinspector.metrics.project.Issues;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.IndexedTransform;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.utilities.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GitHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
@@ -31,9 +31,9 @@ public class MetricsCollector {
 	}
 
 	public static List<ProjectMetrics> collectMetricsForResponse(ResponseProjects rp) {
-		Transform<Project, ProjectMetrics> projToMetrics = new Transform<Project, ProjectMetrics>() {
+		IndexedTransform<Project, ProjectMetrics> projToMetrics = new IndexedTransform<Project, ProjectMetrics>() {
 			@Override
-			public ProjectMetrics invoke(Project p) {
+			public ProjectMetrics invoke(int i, Project p) {
 				try {
 					File path = ProjectDownloader.loadProject(p);
 					if(path == null) {
@@ -54,7 +54,7 @@ public class MetricsCollector {
 					pm.project = p;
 					pm.testLinesOfCode = TestLinesOfCode.countTestLocHeuristic(path);
 
-					Helpers.log("Determined metrics for " + p + " result: " + pm);
+					Helpers.log("Determined metrics for " + p + " result: " + pm + " :: " + (i+1));
 
 					ProjectDownloader.deleteProject(p);
 
@@ -72,7 +72,7 @@ public class MetricsCollector {
 			public boolean invoke(ProjectMetrics pm) {
 				return pm != null;
 			}
-		}, ListHelpers.map(projToMetrics, rp.toProjectList()));
+		}, ListHelpers.mapi(projToMetrics, rp.toProjectList()));
 	}
 
 }
