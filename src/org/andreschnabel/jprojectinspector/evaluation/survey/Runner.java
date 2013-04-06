@@ -3,6 +3,7 @@ package org.andreschnabel.jprojectinspector.evaluation.survey;
 import org.andreschnabel.jprojectinspector.evaluation.projects.UserProjects;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.XmlHelpers;
@@ -17,7 +18,27 @@ public class Runner {
 		//connectProjectsWithUsers();
 		//showProjectWithoutUserCount();
 		//showLanguageDistribution();
-		collectMetrics();
+		//collectMetrics();
+		metricsResultsToCsv(',');
+	}
+
+	private static void metricsResultsToCsv(Character sep) throws Exception {
+		ProjectMetricsLst metrics = (ProjectMetricsLst)XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("metrics500.xml"));
+		StringBuilder sb = new StringBuilder();
+		sb.append("owner,repo,loc,testloc,commits,contribs,issues\n");
+		for(ProjectMetrics projectMetric : metrics.projectMetrics) {
+			sb.append(projectMetricsToCsvLine(projectMetric, sep));
+		}
+		FileHelpers.writeStrToFile(sb.toString(), "metrics500.csv");
+	}
+
+	private static String projectMetricsToCsvLine(ProjectMetrics pm, Character sep) {
+		return pm.project.owner + sep + pm.project.repoName + sep +
+				pm.linesOfCode + sep +
+				pm.testLinesOfCode + sep +
+				pm.numCommits + sep +
+				pm.numContribs + sep +
+				pm.numIssues + "\n";
 	}
 
 	private static void collectMetrics() throws Exception {
