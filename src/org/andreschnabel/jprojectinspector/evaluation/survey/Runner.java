@@ -20,14 +20,27 @@ public class Runner {
 		//showLanguageDistribution();
 		//collectMetrics();
 		//metricsResultsToCsv(',');
-		visualize();
+		//visualizeAllMetrics();
+		//calcDeltas();
 	}
 
-	private static void visualize() throws Exception {
+	private static void calcDeltas() {
+		// TODO Auto-generated method stub		
+	}
+	
+	private static void visualizeAllMetrics() throws Exception {
+		visualize(Metric.LOC, "linesLoc.js");
+		visualize(Metric.TLOC, "linesTloc.js");
+		visualize(Metric.Contribs, "linesContribs.js");
+		visualize(Metric.Commits, "linesCommits.js");
+		visualize(Metric.Issues, "linesIssues.js");
+	}
+
+	private static void visualize(final Metric m, String outFilename) throws Exception {
 		ProjectMetricsLst metrics = (ProjectMetricsLst)XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("metrics500.xml"));
 		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
-		String out = ResultVisualizer.resultsToJsArrays(rpl.responseProjs, metrics.projectMetrics);
-		FileHelpers.writeStrToFile(out, "lines.js");
+		String out = ResultVisualizer.resultsToJsArrays(rpl.responseProjs, metrics.projectMetrics, m);
+		FileHelpers.writeStrToFile(out, outFilename);
 	}
 
 	private static void metricsResultsToCsv(Character sep) throws Exception {

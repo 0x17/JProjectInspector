@@ -16,7 +16,7 @@ public class ResultVisualizer {
 	public final static int MIN_BUGS = 2;
 	public final static int MAX_BUGS = 3;
 
-	public static String resultsToJsArrays(final List<ResponseProjects> rplorig, final List<ProjectMetrics> pml) {
+	public static String resultsToJsArrays(final List<ResponseProjects> rplorig, final List<ProjectMetrics> pml, Metric m) {
 		Predicate<ResponseProjects> notNull = new Predicate<ResponseProjects>() {
 			@Override
 			public boolean invoke(ResponseProjects rp) {
@@ -29,7 +29,7 @@ public class ResultVisualizer {
 
 		List<List<Integer>> ys = new LinkedList<List<Integer>>();
 		for(int i=0; i<4; i++) {
-			ys.add(ListHelpers.map(transformForType(i, pml), rpl));
+			ys.add(ListHelpers.map(transformForType(i, pml, m), rpl));
 		}
 
 		//normalizeYs(ys);
@@ -79,7 +79,7 @@ public class ResultVisualizer {
 		return ListHelpers.reduce(binOp, "", nums);
 	}
 
-	public static Transform<ResponseProjects, Integer> transformForType(final int type, final List<ProjectMetrics> pml) {
+	public static Transform<ResponseProjects, Integer> transformForType(final int type, final List<ProjectMetrics> pml, final Metric m) {
 		return new Transform<ResponseProjects, Integer>() {
 			@Override
 			public Integer invoke(ResponseProjects rp) {
@@ -107,7 +107,22 @@ public class ResultVisualizer {
 					}
 				};
 				ProjectMetrics pm = ListHelpers.find(isProj, pml);
-				return pm != null ? pm.linesOfCode : 0;
+				if(pm != null) {
+					switch(m) {
+					case Commits:
+						return pm.numCommits;
+					case Contribs:
+						return pm.numContribs;
+					case Issues:
+						return pm.numIssues;
+					case LOC:
+						return pm.linesOfCode;
+					case TLOC:
+						return pm.testLinesOfCode;
+					default:
+						return 0;
+					}
+				} else return 0;
 			}
 		};
 	}
