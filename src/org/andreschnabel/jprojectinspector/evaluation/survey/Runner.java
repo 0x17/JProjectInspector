@@ -1,16 +1,19 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
 import org.andreschnabel.jprojectinspector.evaluation.projects.UserProjects;
+import org.andreschnabel.jprojectinspector.evaluation.survey.DeltaCalculator.Deltas;
+import org.andreschnabel.jprojectinspector.evaluation.survey.DeltaCalculator.MetricsDeltas;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.XmlHelpers;
-
-import java.io.File;
-import java.util.List;
-import java.util.Map;
 
 public class Runner {
 
@@ -24,10 +27,32 @@ public class Runner {
 		//calcDeltas();
 	}
 
-	private static void calcDeltas() {
-		// TODO Auto-generated method stub		
+	private static List<Deltas> calcDeltas() throws Exception {
+		ProjectMetricsLst metrics = (ProjectMetricsLst)XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("metrics500.xml"));
+		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
+		
+		List<Deltas> deltasLst = DeltaCalculator.calculateDeltas(rpl.responseProjs, metrics.projectMetrics);
+		
+		Transform<Deltas, String> deltaToCsvLine = new Transform<DeltaCalculator.Deltas, String>() {
+			@Override
+			public String invoke(Deltas d) {
+				return d.toCsvLine(',');
+			}
+		};
+		
+		List<String> lines = ListHelpers.map(deltaToCsvLine , deltasLst);
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(Deltas.csvHeader(','));
+		for(String line : lines) {
+			sb.append(line);
+		}
+		
+		FileHelpers.writeStrToFile(sb.toString(), "deltas.csv");
+		
+		return deltasLst;
 	}
-	
+
 	private static void visualizeAllMetrics() throws Exception {
 		visualize(Metric.LOC, "linesLoc.js");
 		visualize(Metric.TLOC, "linesTloc.js");
