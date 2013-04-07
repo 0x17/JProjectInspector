@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
+import org.andreschnabel.jprojectinspector.utilities.BinaryOperator;
 import org.andreschnabel.jprojectinspector.utilities.IndexedTransform;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
@@ -81,5 +82,20 @@ public class ListHelpers {
 				n++;
 		}
 		return n;
+	}
+
+	public static <T> T find(Predicate<T> pred, List<T> lst) {
+		for(T obj : lst) {
+			if(pred.invoke(obj))
+				return obj;
+		}
+		return null;
+	}
+
+	public static <T,U> U reduce(BinaryOperator<T,U> op, U accum, List<T> srcLst) {
+		for(T obj : srcLst) {
+			accum = op.invoke(accum, obj);
+		}
+		return accum;
 	}
 }

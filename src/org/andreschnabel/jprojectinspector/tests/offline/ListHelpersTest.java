@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.tests.offline;
 
+import org.andreschnabel.jprojectinspector.utilities.BinaryOperator;
 import org.andreschnabel.jprojectinspector.utilities.IndexedTransform;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
@@ -107,5 +108,39 @@ public class ListHelpersTest {
 			}
 		};
 		Assert.assertEquals(5, ListHelpers.count(isEven, ListHelpers.countUpTo(10)));
+	}
+
+	@Test
+	public void testFind() throws Exception {
+		List<Integer> nums = ListHelpers.countUpTo(10);
+
+		Predicate<Integer> pred10 = new Predicate<Integer>() {
+			@Override
+			public boolean invoke(Integer num) {
+				return num == 10;
+			}
+		};
+		Assert.assertEquals(10, (int)ListHelpers.find(pred10, nums));
+
+		Predicate<Integer> pred20 = new Predicate<Integer>() {
+			@Override
+			public boolean invoke(Integer num) {
+				return num == 20;
+			}
+		};
+		Assert.assertEquals(null, ListHelpers.find(pred20, nums));
+	}
+
+	@Test
+	public void testReduce() throws Exception {
+		List<Integer> nums = ListHelpers.countUpTo(10);
+		int sumOfIntsTo10 = 10 * 11 / 2;
+		BinaryOperator<Integer, Integer> add = new BinaryOperator<Integer, Integer>() {
+			@Override
+			public Integer invoke(Integer a, Integer b) {
+				return a + b;
+			}
+		};
+		Assert.assertEquals(sumOfIntsTo10, (int)ListHelpers.reduce(add, 0, nums));
 	}
 }
