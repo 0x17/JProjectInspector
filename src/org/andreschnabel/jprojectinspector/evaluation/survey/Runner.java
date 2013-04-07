@@ -31,6 +31,11 @@ public class Runner {
 	private static void countCorrectPredictions() throws Exception {
 		PredictionMethods measures = new PredictionMethods() {
 			@Override
+			public String getName() {
+				return "method1";
+			}
+
+			@Override
 			public float testEffortPredictionMeasure(ProjectMetrics m) {
 				return (float) m.testLinesOfCode / (m.linesOfCode + 1.0f);
 			}
@@ -38,12 +43,14 @@ public class Runner {
 			@Override
 			public float bugCountPredictionMeasure(ProjectMetrics m) {
 				return 1.0f / (m.testLinesOfCode + 1.0f) * (float) m.linesOfCode;
+				//return (m.linesOfCode - m.testLinesOfCode) / (m.linesOfCode + 1.0f);
 			}
 		};
 		countCorrectPredictions(measures);
 	}
 
 	private interface PredictionMethods {
+		public String getName();
 		public float testEffortPredictionMeasure(ProjectMetrics m);
 		public float bugCountPredictionMeasure(ProjectMetrics m);
 	}
@@ -136,6 +143,7 @@ public class Runner {
 				teCorrect++;
 		}
 
+		Helpers.log("Method = " + predMethods.getName());
 		float percentCorrect = teCorrect / (float)total * 100.0f;
 		Helpers.log("Correct test effort predictions = " + teCorrect + " of " + total + " " + percentCorrect + "%");
 		percentCorrect = bcCorrect / (float)total * 100.0f;
