@@ -1,12 +1,7 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-
 import org.andreschnabel.jprojectinspector.evaluation.projects.UserProjects;
 import org.andreschnabel.jprojectinspector.evaluation.survey.DeltaCalculator.Deltas;
-import org.andreschnabel.jprojectinspector.evaluation.survey.DeltaCalculator.MetricsDeltas;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
@@ -14,6 +9,10 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.XmlHelpers;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 public class Runner {
 
@@ -24,7 +23,120 @@ public class Runner {
 		//collectMetrics();
 		//metricsResultsToCsv(',');
 		//visualizeAllMetrics();
-		calcDeltas();
+		//calcDeltas();
+		countCorrectPredictions(1.0f);
+	}
+
+	private static void countCorrectPredictions(final float k) throws Exception {
+		ProjectMetricsLst metrics = (ProjectMetricsLst)XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("metrics500.xml"));
+		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
+		final List<ProjectMetrics> pml = metrics.projectMetrics;
+
+		int teCorrect = 0;
+		int bcCorrect = 0;
+		int total = 0;
+
+		for(ResponseProjects rp : rpl.responseProjs) {
+			if(rp.user == null) continue;
+
+			List<Project> projs = rp.toProjectList();
+			total += projs.size();
+
+			Transform<Project, Float> bcPred = new Transform<Project, Float>() {
+				@Override
+				public Float invoke(Project p) {
+					ProjectMetrics m = metricsForProject(p, pml);
+					if(m != null) {
+						int loc = m.linesOfCode;
+						int tloc = m.testLinesOfCode;
+						return bugPredictionMeasure(loc, tloc, k);
+					} else return 0.0f;
+				}
+			};
+			List<Float> bcPredVals = ListHelpers.map(bcPred, projs);
+
+			int lowestPredIx = 0, highestPredIx = 0;
+			float min, max;
+
+			max = 0;
+			for(int i=0; i<projs.size(); i++) {
+				if(bcPredVals.get(i) > max) {
+					max = bcPredVals.get(i);
+					highestPredIx = i;
+				}
+			}
+
+			min = 0;
+			for(int i=0; i<projs.size(); i++) {
+				if(bcPredVals.get(i) < min) {
+					min = bcPredVals.get(i);
+					lowestPredIx = i;
+				}
+			}
+
+			if(rp.highestBugCount.equals(projs.get(highestPredIx).repoName))
+				bcCorrect++;
+			if(rp.lowestBugCount.equals(projs.get(lowestPredIx).repoName))
+				bcCorrect++;
+
+			Transform<Project, Float> tePred = new Transform<Project, Float>() {
+				@Override
+				public Float invoke(Project p) {
+					ProjectMetrics m = metricsForProject(p, pml);
+					if(m != null) {
+						int loc = m.linesOfCode;
+						int tloc = m.testLinesOfCode;
+						return testEffortPredictionMeasure(loc, tloc, k);
+					} else return 0.0f;
+				}
+			};
+			List<Float> tePredVals = ListHelpers.map(tePred, projs);
+
+			lowestPredIx = highestPredIx = 0;
+
+			max = 0;
+			for(int i=0; i<projs.size(); i++) {
+				if(tePredVals.get(i) > max) {
+					max = tePredVals.get(i);
+					highestPredIx = i;
+				}
+			}
+
+			min = 0;
+			for(int i=0; i<projs.size(); i++) {
+				if(tePredVals.get(i) < min) {
+					min = tePredVals.get(i);
+					lowestPredIx = i;
+				}
+			}
+
+			if(rp.mostTested.equals(projs.get(highestPredIx).repoName))
+				teCorrect++;
+			if(rp.leastTested.equals(projs.get(lowestPredIx).repoName))
+				teCorrect++;
+		}
+
+		Helpers.log("k = " + k);
+		Helpers.log("Correct test effort predictions = " + teCorrect + " of " + total);
+		Helpers.log("Correct bug count predictions = " + bcCorrect + " of " + total);
+	}
+
+	private static float testEffortPredictionMeasure(int loc, int tloc, float k) {
+		return k * tloc / (loc + 1);
+	}
+
+	private static float bugPredictionMeasure(int loc, int tloc, float k) {
+		return k / (tloc + 1) * loc;
+	}
+
+	public static ProjectMetrics metricsForProject(final Project p, List<ProjectMetrics> pml) {
+		Predicate<ProjectMetrics> isProj = new Predicate<ProjectMetrics>() {
+			@Override
+			public boolean invoke(ProjectMetrics obj) {
+				return obj.project.equals(p);
+			}
+		};
+		return ListHelpers.find(isProj, pml);
 	}
 
 	private static List<Deltas> calcDeltas() throws Exception {
