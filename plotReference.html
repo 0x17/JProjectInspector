@@ -18,13 +18,13 @@
 				r.text(100, 50, "Least Bugs").attr({ fill: "#cc0000" });
 				r.text(100, 60, "Most Bugs").attr({ fill: "#ff0000" });
 				
-                var lines = r.linechart(0 /* x */,
+                var lines = r.linechart(30 /* x */,
 										0 /* y*/,
 										1280 /* w*/,
 										600 /* h */,
 										xs,
 										ys,
-										/* options */ { nostroke: true, axis: "0 0 1 1", symbol: "circle", smooth: true, colors: ["#00cc00", "#00ff00", "#cc0000", "#ff0000"] })
+										/* options */ { nostroke: false, axis: "0 0 1 1", symbol: "circle", smooth: true, colors: ["#00cc00", "#00ff00", "#cc0000", "#ff0000"] })
 
                 lines.symbols.attr({ r: 4 });
             };
