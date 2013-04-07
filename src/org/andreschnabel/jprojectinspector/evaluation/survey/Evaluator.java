@@ -13,6 +13,8 @@ import java.util.List;
 public class Evaluator {
 
 	public static void countCorrectPredictions() throws Exception {
+		Quality q[] = new Quality[4];
+
 		PredictionMethods measures1 = new PredictionMethods() {
 			@Override
 			public String getName() { return "method1"; }
@@ -26,25 +28,25 @@ public class Evaluator {
 				//return (m.linesOfCode - m.testLinesOfCode) / (m.linesOfCode + 1.0f);
 			}
 		};
-		countCorrectPredictions(measures1);
+		q[0] = countCorrectPredictions(measures1);
 
 		PredictionMethods measures2 = new PredictionMethods() {
 			@Override
 			public String getName() { return "method2"; }
 			@Override
 			public float testEffortPredictionMeasure(ProjectMetrics m) {
-				return m.testLinesOfCode;
+				return (float)m.numContribs / (m.linesOfCode / 1000.0f);
 			}
 			@Override
 			public float bugCountPredictionMeasure(ProjectMetrics m) {
-				return 1.0f / (m.testLinesOfCode + 1.0f);
+				return (float)m.numCommits / (m.linesOfCode / 1000.0f);
 			}
 		};
-		countCorrectPredictions(measures2);
+		q[1] = countCorrectPredictions(measures2);
 
 		PredictionMethods measures3 = new PredictionMethods() {
 			@Override
-			public String getName() { return "method1"; }
+			public String getName() { return "method3"; }
 			@Override
 			public float testEffortPredictionMeasure(ProjectMetrics m) {
 				if(m.testLinesOfCode == 0)
@@ -60,7 +62,47 @@ public class Evaluator {
 					return 1.0f / m.testLinesOfCode;
 			}
 		};
-		countCorrectPredictions(measures3);
+		q[2] = countCorrectPredictions(measures3);
+
+		PredictionMethods measures4 = new PredictionMethods() {
+			@Override
+			public String getName() { return "method4"; }
+			@Override
+			public float testEffortPredictionMeasure(ProjectMetrics m) {
+				float term1 = (float) m.testLinesOfCode / (m.linesOfCode + 1.0f);
+				float term2 = (float)m.numCommits / (m.linesOfCode / 1000.0f);
+				return (term1+term2)/2.0f;
+			}
+			@Override
+			public float bugCountPredictionMeasure(ProjectMetrics m) {
+				float term1 = 1.0f / (m.testLinesOfCode + 1.0f) * (float) m.linesOfCode;
+				float term2 = (float)m.numCommits / (m.linesOfCode / 1000.0f);
+				return (term1+term2)/2.0f;
+			}
+		};
+		q[3] = countCorrectPredictions(measures4);
+
+		printWinner(q);
+	}
+
+	private static void printWinner(Quality[] q) {
+		int maxTestEffortIx = 0;
+		int maxBugCountIx = 0;
+		int maxTestEffortCorrect = 0;
+		int maxBugCountCorrect = 0;
+		for(int i=0; i<q.length; i++) {
+			if(q[i].bcCorrect > maxBugCountCorrect) {
+				maxBugCountCorrect = q[i].bcCorrect;
+				maxBugCountIx = i;
+			}
+			if(q[i].teCorrect > maxTestEffortCorrect) {
+				maxTestEffortCorrect = q[i].teCorrect;
+				maxTestEffortIx = i;
+			}
+		}
+
+		Helpers.log("Bug count: Winning method no. " + (maxBugCountIx + 1));
+		Helpers.log("Test effort: Winning method no. " + (maxTestEffortIx+1));
 	}
 
 	public interface PredictionMethods {
@@ -74,7 +116,7 @@ public class Evaluator {
 		TestEffort
 	}
 
-	public static void countCorrectPredictions(final PredictionMethods predMethods) throws Exception {
+	public static Quality countCorrectPredictions(final PredictionMethods predMethods) throws Exception {
 		ProjectMetricsLst metrics = (ProjectMetricsLst) XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("metrics500.xml"));
 		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
 		final List<ProjectMetrics> pml = metrics.projectMetrics;
@@ -118,6 +160,8 @@ public class Evaluator {
 		Helpers.log("Correct test effort predictions = " + teCorrect + " of " + total + " -> " + percentCorrect + "%");
 		percentCorrect = bcCorrect / (float)total * 100.0f;
 		Helpers.log("Correct bug count predictions = " + bcCorrect + " of " + total + " -> " + percentCorrect + "%");
+
+		return new Quality(teCorrect, bcCorrect);
 	}
 
 	private static int getLowestPredictionIndex(List<Project> projs, List<Float> predVals) {
@@ -180,4 +224,13 @@ public class Evaluator {
 		return ListHelpers.find(isProj, pml);
 	}
 
+	private static class Quality {
+		public final int teCorrect;
+		public final int bcCorrect;
+
+		public Quality(int teCorrect, int bcCorrect) {
+			this.teCorrect = teCorrect;
+			this.bcCorrect = bcCorrect;
+		}
+	}
 }
