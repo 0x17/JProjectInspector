@@ -24,7 +24,7 @@ public class Runner {
 		//collectMetrics();
 		//metricsResultsToCsv(',');
 		//visualizeAllMetrics();
-		//calcDeltas();
+		calcDeltas();
 	}
 
 	private static List<Deltas> calcDeltas() throws Exception {
@@ -32,6 +32,14 @@ public class Runner {
 		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
 		
 		List<Deltas> deltasLst = DeltaCalculator.calculateDeltas(rpl.responseProjs, metrics.projectMetrics);
+		
+		Predicate<Deltas> nonNull = new Predicate<DeltaCalculator.Deltas>() {
+			@Override
+			public boolean invoke(Deltas obj) {
+				return obj.user != null;
+			}
+		};
+		deltasLst = ListHelpers.filter(nonNull, deltasLst);
 		
 		Transform<Deltas, String> deltaToCsvLine = new Transform<DeltaCalculator.Deltas, String>() {
 			@Override
