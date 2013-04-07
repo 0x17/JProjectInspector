@@ -24,10 +24,31 @@ public class Runner {
 		//metricsResultsToCsv(',');
 		//visualizeAllMetrics();
 		//calcDeltas();
-		countCorrectPredictions(1.0f);
+
+		countCorrectPredictions();
 	}
 
-	private static void countCorrectPredictions(final float k) throws Exception {
+	private static void countCorrectPredictions() throws Exception {
+		PredictionMethods measures = new PredictionMethods() {
+			@Override
+			public float testEffortPredictionMeasure(ProjectMetrics m) {
+				return (float) m.testLinesOfCode / (m.linesOfCode + 1.0f);
+			}
+
+			@Override
+			public float bugCountPredictionMeasure(ProjectMetrics m) {
+				return 1.0f / (m.testLinesOfCode + 1.0f) * (float) m.linesOfCode;
+			}
+		};
+		countCorrectPredictions(measures);
+	}
+
+	private interface PredictionMethods {
+		public float testEffortPredictionMeasure(ProjectMetrics m);
+		public float bugCountPredictionMeasure(ProjectMetrics m);
+	}
+
+	private static void countCorrectPredictions(final PredictionMethods predMethods) throws Exception {
 		ProjectMetricsLst metrics = (ProjectMetricsLst)XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("metrics500.xml"));
 		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
 		final List<ProjectMetrics> pml = metrics.projectMetrics;
@@ -40,17 +61,21 @@ public class Runner {
 			if(rp.user == null) continue;
 
 			List<Project> projs = rp.toProjectList();
-			total += projs.size();
+
+			Predicate<Project> isInvalid = new Predicate<Project>() {
+				@Override
+				public boolean invoke(Project p) {
+					return metricsForProject(p, pml) == null;
+				}
+			};
+			if(ListHelpers.contains(isInvalid, projs)) continue;
+
+			total += 2;
 
 			Transform<Project, Float> bcPred = new Transform<Project, Float>() {
 				@Override
 				public Float invoke(Project p) {
-					ProjectMetrics m = metricsForProject(p, pml);
-					if(m != null) {
-						int loc = m.linesOfCode;
-						int tloc = m.testLinesOfCode;
-						return bugPredictionMeasure(loc, tloc, k);
-					} else return 0.0f;
+					return predMethods.bugCountPredictionMeasure(metricsForProject(p, pml));
 				}
 			};
 			List<Float> bcPredVals = ListHelpers.map(bcPred, projs);
@@ -58,7 +83,7 @@ public class Runner {
 			int lowestPredIx = 0, highestPredIx = 0;
 			float min, max;
 
-			max = 0;
+			max = Integer.MIN_VALUE;
 			for(int i=0; i<projs.size(); i++) {
 				if(bcPredVals.get(i) > max) {
 					max = bcPredVals.get(i);
@@ -66,7 +91,7 @@ public class Runner {
 				}
 			}
 
-			min = 0;
+			min = Integer.MAX_VALUE;
 			for(int i=0; i<projs.size(); i++) {
 				if(bcPredVals.get(i) < min) {
 					min = bcPredVals.get(i);
@@ -82,19 +107,14 @@ public class Runner {
 			Transform<Project, Float> tePred = new Transform<Project, Float>() {
 				@Override
 				public Float invoke(Project p) {
-					ProjectMetrics m = metricsForProject(p, pml);
-					if(m != null) {
-						int loc = m.linesOfCode;
-						int tloc = m.testLinesOfCode;
-						return testEffortPredictionMeasure(loc, tloc, k);
-					} else return 0.0f;
+					return predMethods.testEffortPredictionMeasure(metricsForProject(p, pml));
 				}
 			};
 			List<Float> tePredVals = ListHelpers.map(tePred, projs);
 
 			lowestPredIx = highestPredIx = 0;
 
-			max = 0;
+			max = Integer.MIN_VALUE;
 			for(int i=0; i<projs.size(); i++) {
 				if(tePredVals.get(i) > max) {
 					max = tePredVals.get(i);
@@ -102,7 +122,7 @@ public class Runner {
 				}
 			}
 
-			min = 0;
+			min = Integer.MAX_VALUE;
 			for(int i=0; i<projs.size(); i++) {
 				if(tePredVals.get(i) < min) {
 					min = tePredVals.get(i);
@@ -116,17 +136,10 @@ public class Runner {
 				teCorrect++;
 		}
 
-		Helpers.log("k = " + k);
-		Helpers.log("Correct test effort predictions = " + teCorrect + " of " + total);
-		Helpers.log("Correct bug count predictions = " + bcCorrect + " of " + total);
-	}
-
-	private static float testEffortPredictionMeasure(int loc, int tloc, float k) {
-		return k * tloc / (loc + 1);
-	}
-
-	private static float bugPredictionMeasure(int loc, int tloc, float k) {
-		return k / (tloc + 1) * loc;
+		float percentCorrect = teCorrect / (float)total * 100.0f;
+		Helpers.log("Correct test effort predictions = " + teCorrect + " of " + total + " " + percentCorrect + "%");
+		percentCorrect = bcCorrect / (float)total * 100.0f;
+		Helpers.log("Correct bug count predictions = " + bcCorrect + " of " + total + " " + percentCorrect + "%");
 	}
 
 	public static ProjectMetrics metricsForProject(final Project p, List<ProjectMetrics> pml) {
