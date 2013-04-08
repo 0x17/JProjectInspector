@@ -10,93 +10,20 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.XmlHelpers;
 import java.io.File;
 import java.util.List;
 
-public class Evaluator {
+public class Benchmark {
 
-	public static void countCorrectPredictions() throws Exception {
-		Quality q[] = new Quality[4];
-
-		PredictionMethods measures1 = new PredictionMethods() {
-			@Override
-			public String getName() { return "method1"; }
-			@Override
-			public float testEffortPredictionMeasure(ProjectMetrics m) {
-				return (float) m.testLinesOfCode / (m.linesOfCode + 1.0f);
-			}
-			@Override
-			public float bugCountPredictionMeasure(ProjectMetrics m) {
-				return 1.0f / (m.testLinesOfCode + 1.0f) * (float) m.linesOfCode;
-				//return (m.linesOfCode - m.testLinesOfCode) / (m.linesOfCode + 1.0f);
-			}
-		};
-		q[0] = countCorrectPredictions(measures1);
-
-		PredictionMethods measures2 = new PredictionMethods() {
-			@Override
-			public String getName() { return "method2"; }
-			@Override
-			public float testEffortPredictionMeasure(ProjectMetrics m) {
-				return (float)m.numContribs / (m.linesOfCode / 1000.0f);
-			}
-			@Override
-			public float bugCountPredictionMeasure(ProjectMetrics m) {
-				return (float)m.numCommits / (m.linesOfCode / 1000.0f);
-			}
-		};
-		q[1] = countCorrectPredictions(measures2);
-
-		PredictionMethods measures3 = new PredictionMethods() {
-			@Override
-			public String getName() { return "method3"; }
-			@Override
-			public float testEffortPredictionMeasure(ProjectMetrics m) {
-				if(m.testLinesOfCode == 0)
-					return (float) m.testLinesOfCode / (m.linesOfCode + 1.0f);
-				else
-					return m.testLinesOfCode;
-			}
-			@Override
-			public float bugCountPredictionMeasure(ProjectMetrics m) {
-				if(m.testLinesOfCode == 0)
-					return 1.0f / (m.testLinesOfCode + 1.0f) * (float) m.linesOfCode;
-				else
-					return 1.0f / m.testLinesOfCode;
-			}
-		};
-		q[2] = countCorrectPredictions(measures3);
-
-		PredictionMethods measures4 = new PredictionMethods() {
-			@Override
-			public String getName() { return "method4"; }
-			@Override
-			public float testEffortPredictionMeasure(ProjectMetrics m) {
-				float term1 = (float) m.testLinesOfCode / (m.linesOfCode + 1.0f);
-				float term2 = (float)m.numCommits / (m.linesOfCode / 1000.0f);
-				return (term1+term2)/2.0f;
-			}
-			@Override
-			public float bugCountPredictionMeasure(ProjectMetrics m) {
-				float term1 = 1.0f / (m.testLinesOfCode + 1.0f) * (float) m.linesOfCode;
-				float term2 = (float)m.numCommits / (m.linesOfCode / 1000.0f);
-				return (term1+term2)/2.0f;
-			}
-		};
-		q[3] = countCorrectPredictions(measures4);
-
-		printWinner(q);
-	}
-
-	private static void printWinner(Quality[] q) {
+	public static void printWinner(List<Quality> q) {
 		int maxTestEffortIx = 0;
 		int maxBugCountIx = 0;
 		int maxTestEffortCorrect = 0;
 		int maxBugCountCorrect = 0;
-		for(int i=0; i<q.length; i++) {
-			if(q[i].bcCorrect > maxBugCountCorrect) {
-				maxBugCountCorrect = q[i].bcCorrect;
+		for(int i=0; i<q.size(); i++) {
+			if(q.get(i).bcCorrect > maxBugCountCorrect) {
+				maxBugCountCorrect = q.get(i).bcCorrect;
 				maxBugCountIx = i;
 			}
-			if(q[i].teCorrect > maxTestEffortCorrect) {
-				maxTestEffortCorrect = q[i].teCorrect;
+			if(q.get(i).teCorrect > maxTestEffortCorrect) {
+				maxTestEffortCorrect = q.get(i).teCorrect;
 				maxTestEffortIx = i;
 			}
 		}
@@ -111,7 +38,7 @@ public class Evaluator {
 		public float bugCountPredictionMeasure(ProjectMetrics m);
 	}
 
-	enum PredictionTypes {
+	public enum PredictionTypes {
 		BugCount,
 		TestEffort
 	}
@@ -125,6 +52,9 @@ public class Evaluator {
 		int bcCorrect = 0;
 		int total = 0;
 
+		int numValidResponses = 0;
+		int numProjects = 0;
+
 		for(ResponseProjects rp : rpl.responseProjs) {
 			if(rp.user == null) continue;
 
@@ -133,6 +63,8 @@ public class Evaluator {
 			if(skipInvalidProjects(pml, projs)) continue;
 
 			total += 2;
+			numValidResponses++;
+			numProjects += projs.size();
 
 			List<Float> bcPredVals = calcPredictionValues(predMethods, PredictionTypes.BugCount, pml, projs);
 
@@ -155,6 +87,7 @@ public class Evaluator {
 				teCorrect++;
 		}
 
+		Helpers.log("Avg. num projs = " + numProjects/(float)numValidResponses);
 		Helpers.log("Method = " + predMethods.getName());
 		float percentCorrect = teCorrect / (float)total * 100.0f;
 		Helpers.log("Correct test effort predictions = " + teCorrect + " of " + total + " -> " + percentCorrect + "%");
@@ -176,7 +109,7 @@ public class Evaluator {
 		return lowestPredIx;
 	}
 
-	private static int getHighestPredIndex(List<Project> projs, List<Float> predVals) {
+	public static int getHighestPredIndex(List<Project> projs, List<Float> predVals) {
 		int highestPredIx = 0;
 		float max = Integer.MIN_VALUE;
 		for(int i=0; i<projs.size(); i++) {
@@ -188,7 +121,7 @@ public class Evaluator {
 		return highestPredIx;
 	}
 
-	private static List<Float> calcPredictionValues(final PredictionMethods predMethods, final PredictionTypes predType, final List<ProjectMetrics> pml, List<Project> projs) {
+	public static List<Float> calcPredictionValues(final PredictionMethods predMethods, final PredictionTypes predType, final List<ProjectMetrics> pml, List<Project> projs) {
 		Transform<Project, Float> bcPred = new Transform<Project, Float>() {
 			@Override
 			public Float invoke(Project p) {
@@ -204,7 +137,7 @@ public class Evaluator {
 		return ListHelpers.map(bcPred, projs);
 	}
 
-	private static boolean skipInvalidProjects(final List<ProjectMetrics> pml, List<Project> projs) {
+	public static boolean skipInvalidProjects(final List<ProjectMetrics> pml, List<Project> projs) {
 		Predicate<Project> isInvalid = new Predicate<Project>() {
 			@Override
 			public boolean invoke(Project p) {
@@ -224,7 +157,7 @@ public class Evaluator {
 		return ListHelpers.find(isProj, pml);
 	}
 
-	private static class Quality {
+	public static class Quality {
 		public final int teCorrect;
 		public final int bcCorrect;
 

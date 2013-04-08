@@ -24,7 +24,24 @@ public class Runner {
 		//metricsResultsToCsv(',');
 		//visualizeAllMetrics();
 		//calcDeltas();
-		Evaluator.countCorrectPredictions();
+		checkCandidates();
+	}
+
+	private static void checkCandidates() {
+		List<Benchmark.PredictionMethods> candidates = PredictionCandidates.getCandidates();
+		Transform<Benchmark.PredictionMethods, Benchmark.Quality> candToQuality = new Transform<Benchmark.PredictionMethods, Benchmark.Quality>() {
+			@Override
+			public Benchmark.Quality invoke(Benchmark.PredictionMethods pm) {
+				try {
+					return Benchmark.countCorrectPredictions(pm);
+				} catch(Exception e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		};
+		List<Benchmark.Quality> qualities = ListHelpers.map(candToQuality, candidates);
+		Benchmark.printWinner(qualities);
 	}
 
 	private static List<Deltas> calcDeltas() throws Exception {
