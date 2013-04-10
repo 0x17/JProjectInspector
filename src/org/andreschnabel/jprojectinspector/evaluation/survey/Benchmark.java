@@ -5,9 +5,7 @@ import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.XmlHelpers;
 
-import java.io.File;
 import java.util.List;
 
 public class Benchmark {
@@ -43,9 +41,7 @@ public class Benchmark {
 		TestEffort
 	}
 
-	public static Quality countCorrectPredictions(final PredictionMethods predMethods) throws Exception {
-		ProjectMetricsLst metrics = (ProjectMetricsLst) XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("metrics500.xml"));
-		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
+	public static Quality countCorrectPredictions(final PredictionMethods predMethods, ProjectMetricsLst metrics, ResponseProjectsLst rpl) throws Exception {
 		final List<ProjectMetrics> pml = metrics.projectMetrics;
 
 		int teCorrect = 0;

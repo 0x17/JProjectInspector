@@ -1,17 +1,16 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
+import org.andreschnabel.jprojectinspector.evaluation.projects.UserProject;
+import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.andreschnabel.jprojectinspector.evaluation.projects.UserProject;
-import org.andreschnabel.jprojectinspector.evaluation.projects.UserProjects;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
-
 public class UserGuesser {
 	
-	public static String guessUserWithProjects(ResponseProjects rp, UserProjects projs) {
+	public static String guessUserWithProjects(ResponseProjects rp, List<UserProject> usrProjs) {
 		List<String> projNames = new ArrayList<String>();
 		ListHelpers.addNoDups(projNames, rp.highestBugCount);
 		ListHelpers.addNoDups(projNames, rp.lowestBugCount);
@@ -19,8 +18,7 @@ public class UserGuesser {
 		ListHelpers.addNoDups(projNames, rp.mostTested);
 		
 		Map<String, Integer> userHits = new HashMap<String, Integer>();
-				
-		List<UserProject> usrProjs = projs.usrProjs;
+
 		for(UserProject up : usrProjs) {
 			if(projNames.contains(up.name)) {
 				if(userHits.containsKey(up.user)) {

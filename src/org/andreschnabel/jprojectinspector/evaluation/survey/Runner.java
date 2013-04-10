@@ -27,13 +27,16 @@ public class Runner {
 		checkCandidates();
 	}
 
-	private static void checkCandidates() {
+	private static void checkCandidates() throws Exception {
+		final ProjectMetricsLst metrics = (ProjectMetricsLst)XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("metrics500.xml"));
+		final ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
+
 		List<Benchmark.PredictionMethods> candidates = PredictionCandidates.getCandidates();
 		Transform<Benchmark.PredictionMethods, Benchmark.Quality> candToQuality = new Transform<Benchmark.PredictionMethods, Benchmark.Quality>() {
 			@Override
 			public Benchmark.Quality invoke(Benchmark.PredictionMethods pm) {
 				try {
-					return Benchmark.countCorrectPredictions(pm);
+					return Benchmark.countCorrectPredictions(pm, metrics, rpl);
 				} catch(Exception e) {
 					e.printStackTrace();
 					return null;
@@ -180,7 +183,7 @@ public class Runner {
 		UserProjects projs = (UserProjects)XmlHelpers.deserializeFromXml(UserProjects.class, new File("userprojects500.xml"));
 		
 		for(ResponseProjects rp : results) {			
-			rp.user = UserGuesser.guessUserWithProjects(rp, projs);			
+			rp.user = UserGuesser.guessUserWithProjects(rp, projs.usrProjs);
 		}
 		
 		XmlHelpers.serializeToXml(new ResponseProjectsLst(results), new File("responses500.xml"));
