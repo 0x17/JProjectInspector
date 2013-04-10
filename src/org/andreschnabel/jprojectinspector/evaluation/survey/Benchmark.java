@@ -41,9 +41,7 @@ public class Benchmark {
 		TestEffort
 	}
 
-	public static Quality countCorrectPredictions(final PredictionMethods predMethods, ProjectMetricsLst metrics, ResponseProjectsLst rpl) throws Exception {
-		final List<ProjectMetrics> pml = metrics.projectMetrics;
-
+	public static Quality countCorrectPredictions(final PredictionMethods predMethods, List<ProjectMetrics> pml, List<ResponseProjects> rpl) throws Exception {
 		int teCorrect = 0;
 		int bcCorrect = 0;
 		int total = 0;
@@ -51,7 +49,7 @@ public class Benchmark {
 		int numValidResponses = 0;
 		int numProjects = 0;
 
-		for(ResponseProjects rp : rpl.responseProjs) {
+		for(ResponseProjects rp : rpl) {
 			if(rp.user == null) continue;
 
 			List<Project> projs = rp.toProjectList();

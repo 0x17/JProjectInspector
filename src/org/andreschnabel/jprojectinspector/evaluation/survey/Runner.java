@@ -36,7 +36,7 @@ public class Runner {
 			@Override
 			public Benchmark.Quality invoke(Benchmark.PredictionMethods pm) {
 				try {
-					return Benchmark.countCorrectPredictions(pm, metrics, rpl);
+					return Benchmark.countCorrectPredictions(pm, metrics.projectMetrics, rpl.responseProjs);
 				} catch(Exception e) {
 					e.printStackTrace();
 					return null;

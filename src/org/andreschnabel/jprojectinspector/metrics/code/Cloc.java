@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.code;
 
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
 
 import java.io.File;
@@ -28,11 +29,18 @@ public class Cloc {
 			return "ClocResult [language=" + language + ", fileCount=" + fileCount + ", blankLines=" + blankLines
 				+ ", commentLines=" + commentLines + ", codeLines=" + codeLines + "]";
 		}
-	}	
-	
+	}
+
 	public static List<ClocResult> determineLinesOfCode(File rootPath, String targetName) throws Exception {
 		List<ClocResult> clocResults = new LinkedList<ClocResult>();
-		String out = ProcessHelpers.monitorProcess(rootPath, "perl", "E:\\cloc.pl", "-xml", targetName);
+
+		String out;
+		if(Helpers.runningOnUnix()) {
+			out = ProcessHelpers.monitorProcess(rootPath, "/usr/local/bin/cloc", "-xml", targetName);
+		} else {
+			out = ProcessHelpers.monitorProcess(rootPath, "perl", "E:\\cloc.pl", "-xml", targetName);
+		}
+
 		Pattern langLine = Pattern.compile("<language name=\"([^\"]+)\" files_count=\"(\\d+?)\" blank=\"(\\d+?)\" comment=\"(\\d+?)\" code=\"(\\d+?)\" />");
 		Matcher m = langLine.matcher(out);
 		while(m.find()) {
