@@ -93,7 +93,7 @@ public class Benchmark {
 		return new Quality(teCorrect, bcCorrect);
 	}
 
-	private static int getLowestPredictionIndex(List<Project> projs, List<Float> predVals) {
+	public static int getLowestPredictionIndex(List<Project> projs, List<Float> predVals) {
 		int lowestPredIx = 0;
 		float min = Integer.MAX_VALUE;
 		for(int i=0; i<projs.size(); i++) {
