@@ -9,7 +9,7 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ResultVisualizer {
+public class ResultVisualizerJS {
 
 	public final static int LEAST_TESTED = 0;
 	public final static int MOST_TESTED = 1;
