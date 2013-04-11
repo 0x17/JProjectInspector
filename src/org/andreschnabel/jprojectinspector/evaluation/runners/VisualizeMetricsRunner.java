@@ -32,7 +32,7 @@ public class VisualizeMetricsRunner {
 		sb.append(getCsvHeader() + "\n");
 		for(ResponseProjects rp : rpl) {
 			if(rp.user == null) continue;
-			List<Project> plist = rp.toProjectList();
+			List<Project> plist = rp.toProjectListDups();
 			if(Benchmark.skipInvalidProjects(pml, plist)) continue;
 
 			StringBuilder userRow = new StringBuilder();

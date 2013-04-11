@@ -1,12 +1,11 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.LinkedList;
+import java.util.List;
 
 @XmlRootElement(name = "responseprojects")
 public class ResponseProjects {
@@ -34,6 +33,15 @@ public class ResponseProjects {
 		ListHelpers.addNoDups(projs, new Project(user, mostTested));
 		ListHelpers.addNoDups(projs, new Project(user, lowestBugCount));
 		ListHelpers.addNoDups(projs, new Project(user, highestBugCount));
+		return projs;
+	}
+
+	public List<Project> toProjectListDups() {
+		List<Project> projs = new LinkedList<Project>();
+		projs.add(new Project(user, leastTested));
+		projs.add(new Project(user, mostTested));
+		projs.add(new Project(user, lowestBugCount));
+		projs.add(new Project(user, highestBugCount));
 		return projs;
 	}
 
