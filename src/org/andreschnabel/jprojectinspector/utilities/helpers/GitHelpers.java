@@ -1,6 +1,9 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
+import org.andreschnabel.jprojectinspector.utilities.Transform;
+
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -54,13 +57,13 @@ public class GitHelpers {
 
 	// Date format: YYYY-MM-DD
 	public static String[] listCommitsBetweenDates(File repoPath, String startDate, String endDate)  throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--since=\""+startDate+"\"", "--before=\""+endDate+"\"", "--no-merges master");
+		String out = ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--since="+startDate, "--before="+endDate, "--no-merges", "master");
 		return out.split("\n");
 	}
 
 	// Date format: YYYY-MM-DD
 	public static String[] listCommitsUntilDate(File repoPath, String date) throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--before=\""+date+"\"", "--no-merges master");
+		String out = ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--before="+date, "--no-merges", "master");
 		return out.split("\n");
 	}
 
@@ -72,14 +75,41 @@ public class GitHelpers {
 		public int getChurnedLoc() { return numInsertions + numDeletions; }
 	}
 
-	public static ChurnStats parseChurnStatsFromShortStat(String shortStat) {
+	public static ChurnStats parseChurnStatsFromShortStat(final String shortStat) {
 		ChurnStats cs = new ChurnStats();
-		Pattern pat = Pattern.compile("(\\d+) files changed, (\\d+) insertions\\(\\+\\), (\\d+) deletions\\(\\-\\)");
-		Matcher m = pat.matcher(shortStat);
-		m.find();
-		cs.filesChanged = Integer.valueOf(m.group(1));
-		cs.numInsertions = Integer.valueOf(m.group(2));
-		cs.numDeletions = Integer.valueOf(m.group(3));
+
+		Pattern[] pats = new Pattern[] {
+			Pattern.compile("(\\d+) files changed"),
+			Pattern.compile("(\\d+) insertions\\(\\+\\)"),
+			Pattern.compile("(\\d+) deletions\\(\\-\\)")
+		};
+
+		Transform<Pattern, Matcher> matcherFromPattern = new Transform<Pattern, Matcher>() {
+			@Override
+			public Matcher invoke(Pattern p) {
+				return p.matcher(shortStat);
+			}
+		};
+		List<Matcher> matchers = ListHelpers.map(matcherFromPattern, ListHelpers.fromArray(pats));
+
+		for(int i=0; i<pats.length; i++) {
+			Matcher m = matchers.get(i);
+			if(m.find()) {
+				int val = Integer.valueOf(m.group(1));
+				switch(i) {
+				case 0:
+					cs.filesChanged = val;
+					break;
+				case 1:
+					cs.numInsertions = val;
+					break;
+				case 2:
+					cs.numDeletions = val;
+					break;
+				}
+			}
+		}
+
 		return cs;
 	}
 
@@ -93,18 +123,13 @@ public class GitHelpers {
 		return parseChurnStatsFromShortStat(out);
 	}
 
-	public static String[] listCommitComments(File repoPath, int count) throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, "git", "--no-pager", "log", "-n", String.valueOf(count), "--pretty=oneline");
-		String[] comments = out.split("[0-9a-zA-Z]{40}");
-		for(int i=0; i<comments.length; i++)
-			comments[i] = comments[i].replace("\n", "");
-		return comments;
-	}
-
-	public static void main(String[] args) throws Exception {
-		String[] commits = listAllCommits(new File("."));
-		for(String commit : commits) {
-			Helpers.log(commit);
+	public static List<String> listCommitComments(File repoPath, File f) throws Exception {
+		String out = ProcessHelpers.monitorProcess(repoPath, "git", "--no-pager", "log", "--pretty=oneline", f.getName());
+		String[] comments = out.split("[0-9a-zA-Z]{40} ");
+		List<String> result = new ArrayList<String>(comments.length-1);
+		for(int i=1; i<comments.length; i++) {
+			result.add(comments[i].replace("\n", ""));
 		}
+		return result;
 	}
 }

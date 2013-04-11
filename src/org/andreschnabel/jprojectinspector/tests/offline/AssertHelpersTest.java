@@ -1,13 +1,13 @@
 package org.andreschnabel.jprojectinspector.tests.offline;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import junit.framework.Assert;
-
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class AssertHelpersTest {
 
@@ -45,4 +45,25 @@ public class AssertHelpersTest {
 		AssertHelpers.arrayEqualsLstOrderInsensitive(expectedValues, actualValues);
 	}
 
+	@Test
+	public void testListNotEmptyOk() throws Exception {
+		AssertHelpers.listNotEmpty(actualValues);
+	}
+
+	@Test
+	public void testArrayNotEmptyOk() throws Exception {
+		AssertHelpers.arrayNotEmpty(expectedValues);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void testListNotEmptyFail() throws Exception {
+		List<Object> emptyLst = new LinkedList<Object>();
+		AssertHelpers.listNotEmpty(emptyLst);
+	}
+
+	@Test(expected = AssertionError.class)
+	public void testArrayNotEmptyFail() throws Exception {
+		Object[] emptyArray = new Object[0];
+		AssertHelpers.arrayNotEmpty(emptyArray);
+	}
 }

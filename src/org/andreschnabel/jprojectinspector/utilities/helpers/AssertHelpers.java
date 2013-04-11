@@ -41,4 +41,14 @@ public class AssertHelpers {
 			}
 		}
 	}
+
+	public static <T> void arrayNotEmpty(T[] arr) {
+		Assert.assertNotNull(arr);
+		Assert.assertTrue(arr.length > 0);
+	}
+
+	public static <T> void listNotEmpty(List<T> lst) {
+		Assert.assertNotNull(lst);
+		Assert.assertTrue(lst.size() > 0);
+	}
 }
