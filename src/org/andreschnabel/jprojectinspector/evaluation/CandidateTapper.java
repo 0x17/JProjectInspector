@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.evaluation;
 
+import org.andreschnabel.jprojectinspector.model.survey.Candidate;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import java.util.LinkedList;

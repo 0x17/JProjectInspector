@@ -1,26 +1,18 @@
 package org.andreschnabel.jprojectinspector.tests.offline;
 
-import static org.junit.Assert.assertEquals;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestLinesOfCode;
+import org.junit.Test;
 
 import java.io.File;
 
-import org.andreschnabel.jprojectinspector.TestCommon;
-import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class TestLinesOfCodeTest {
 
-	private TestLinesOfCode tloc;
-
-	@Before
-	public void setUp() throws Exception {
-		this.tloc = new TestLinesOfCode();
-	}
-
 	@Test
 	public void testCountTestLocOfDir() throws Exception {
-		int locOfDir = tloc.countTestLocOfDir(new File(TestCommon.TEST_SRC_DIRECTORY));
+		int locOfDir = JavaTestLinesOfCode.countJavaTestLocOfDir(new File(TestCommon.TEST_SRC_DIRECTORY));
 		assertEquals(11, locOfDir);
 	}
 

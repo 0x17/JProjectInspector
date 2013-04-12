@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.tools;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.ProjectMetrics;
+import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
 import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
 import org.andreschnabel.jprojectinspector.metrics.project.Issues;

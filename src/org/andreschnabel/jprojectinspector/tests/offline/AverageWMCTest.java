@@ -4,18 +4,18 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
-import org.andreschnabel.jprojectinspector.TestCommon;
-import org.andreschnabel.jprojectinspector.metrics.code.AverageWMC;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaAverageWMC;
 import org.junit.Before;
 import org.junit.Test;
 
 public class AverageWMCTest {
 
-	private AverageWMC mc;
+	private JavaAverageWMC mc;
 
 	@Before
 	public void setUp() throws Exception {
-		this.mc = new AverageWMC();
+		this.mc = new JavaAverageWMC();
 	}
 
 	@Test

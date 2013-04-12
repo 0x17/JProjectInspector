@@ -11,7 +11,7 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.andreschnabel.jprojectinspector.Config;
-import org.andreschnabel.jprojectinspector.TestCommon;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Test;

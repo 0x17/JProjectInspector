@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.tests.online;
 
 import static org.junit.Assert.*;
 
-import org.andreschnabel.jprojectinspector.TestCommon;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.metrics.project.CodeFrequency;
 import org.junit.Before;
 import org.junit.Test;

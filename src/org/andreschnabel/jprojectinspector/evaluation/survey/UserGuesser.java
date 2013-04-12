@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
-import org.andreschnabel.jprojectinspector.evaluation.projects.UserProject;
+import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
+import org.andreschnabel.jprojectinspector.model.survey.UserProject;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 import java.util.ArrayList;

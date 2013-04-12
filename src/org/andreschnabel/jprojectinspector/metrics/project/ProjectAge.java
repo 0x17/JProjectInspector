@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class ProjectAge {
 
-	public long getProjectAge(Project project) throws Exception {
+	public static long getProjectAge(Project project) throws Exception {
 		GitHubClient ghc = GitHubHelpers.authenticate();
 		RepositoryService repoService = new RepositoryService(ghc);
 		Repository repo = repoService.getRepository(project.owner, project.repoName);

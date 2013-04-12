@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.tests.offline;
 
 import junit.framework.Assert;
-import org.andreschnabel.jprojectinspector.TestCommon;
-import org.andreschnabel.jprojectinspector.metrics.test.TestContributors;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestContributors;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GitHelpers;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class TestContributorsTest {
 
 	@Test
 	public void testNumTestContribs() throws Exception {
-		int numContribs = TestContributors.numTestContribs(new File(TestCommon.MAIN_DIR));
+		int numContribs = JavaTestContributors.numTestContribs(new File(TestCommon.MAIN_DIR));
 		Assert.assertEquals(1, numContribs);
 	}
 

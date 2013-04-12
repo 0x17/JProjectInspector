@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
-import org.andreschnabel.jprojectinspector.model.ProjectStats;
-import org.andreschnabel.jprojectinspector.model.ProjectStatsList;
+import org.andreschnabel.jprojectinspector.model.metrics.ProjectStats;
+import org.andreschnabel.jprojectinspector.model.metrics.ProjectStatsList;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.ProjectStatsMeasurer;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;

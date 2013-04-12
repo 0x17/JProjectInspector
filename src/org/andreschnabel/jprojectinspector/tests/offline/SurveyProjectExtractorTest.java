@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.tests.offline;
 
 import junit.framework.Assert;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.ResponseProjects;
+import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.evaluation.survey.SurveyProjectExtractor;
 import org.junit.Test;
 

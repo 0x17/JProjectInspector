@@ -1,6 +1,8 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
+import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;

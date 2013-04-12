@@ -6,6 +6,7 @@ import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ListHelpers {
@@ -68,11 +69,7 @@ public class ListHelpers {
 	}
 
 	public static <T> List<T> fromArray(T[] array) {
-		List<T> lst = new ArrayList<T>(array.length);
-		for(T t : array) {
-			lst.add(t);
-		}
-		return lst;
+		return Arrays.asList(array);
 	}
 
 	public static <T> int count(Predicate<T> pred, List<T> lst) {

@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.tests.online;
 
 import static org.junit.Assert.assertTrue;
 
-import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
+import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.junit.Test;
 

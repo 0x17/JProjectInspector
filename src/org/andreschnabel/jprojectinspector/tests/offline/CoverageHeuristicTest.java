@@ -5,7 +5,7 @@ import java.util.Map;
 
 import junit.framework.Assert;
 
-import org.andreschnabel.jprojectinspector.TestCommon;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.parsers.coverage.CoverageHeuristic;
 import org.junit.Test;
 

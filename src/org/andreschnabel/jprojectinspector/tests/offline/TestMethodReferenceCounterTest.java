@@ -6,8 +6,8 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.andreschnabel.jprojectinspector.TestCommon;
-import org.andreschnabel.jprojectinspector.metrics.test.simplecoverage.TestMethodReferenceCounter;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage.TestMethodReferenceCounter;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Before;
 import org.junit.Test;

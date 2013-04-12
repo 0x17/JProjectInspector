@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.tools;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.ProjectMetrics;
+import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
 
 public class AnalyzeResult {
 

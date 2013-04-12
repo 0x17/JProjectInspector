@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
-import org.andreschnabel.jprojectinspector.metrics.test.TestContributors;
-import org.andreschnabel.jprojectinspector.metrics.test.prevalence.TestFrameworkDetector;
-import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestContributors;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestFrameworkDetector;
+import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
@@ -28,7 +28,7 @@ public class PreloadMetricsRunner {
 		int contribsTotal = 0;
 		
 		for(File pf : preloadPaths) {
-			int ncontribs = TestContributors.numTestContribs(pf);
+			int ncontribs = JavaTestContributors.numTestContribs(pf);
 			contribsTotal += ncontribs;
 			Helpers.log(pf.getName() + " has " + ncontribs + " test contributors! (" + (ctr++) + "/" + nprojects + ")");			
 		}
@@ -84,7 +84,7 @@ public class PreloadMetricsRunner {
 		
 		for(File f : preloadPaths) {
 			Helpers.log("Looking for test framework in " + f.getName() + " (" + (ctr++) + "/" + numProjs + ")");
-			int fw = TestFrameworkDetector.checkForFramework(f);
+			int fw = JavaTestFrameworkDetector.checkForFramework(f);
 			if(counts.containsKey(fw))
 				counts.put(fw, counts.get(fw)+1);
 			else

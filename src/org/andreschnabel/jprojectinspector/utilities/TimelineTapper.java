@@ -1,12 +1,12 @@
 package org.andreschnabel.jprojectinspector.utilities;
 
+import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 public final class TimelineTapper {
 	
@@ -61,6 +61,7 @@ public final class TimelineTapper {
 
 							Helpers.log("Found java project: " + proj);
 						} catch(Exception e) {
+							e.printStackTrace();
 						}
 					}
 				}

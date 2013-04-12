@@ -6,8 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import java.io.File;
 import java.util.List;
 
-import org.andreschnabel.jprojectinspector.model.coverage.Method;
-import org.andreschnabel.jprojectinspector.model.coverage.MethodIndex;
+import org.andreschnabel.jprojectinspector.model.metrics.coverage.Method;
+import org.andreschnabel.jprojectinspector.model.metrics.coverage.MethodIndex;
 import org.andreschnabel.jprojectinspector.parsers.coverage.MethodCallCollector;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.junit.Test;

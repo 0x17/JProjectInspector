@@ -1,5 +1,7 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
+import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,10 +39,10 @@ public class PredictionCandidates {
 			public String getName() { return "method3"; }
 			@Override
 			public float testEffortPredictionMeasure(ProjectMetrics m) {
-				if(m.testLinesOfCode == 0)
-					return (float) m.testLinesOfCode / (m.linesOfCode + 1.0f);
+				if(m.testLinesOfCode != 0)
+					return (float) m.testLinesOfCode / (m.linesOfCode+1);
 				else
-					return m.testLinesOfCode;
+					return m.linesOfCode;
 			}
 			@Override
 			public float bugCountPredictionMeasure(ProjectMetrics m) {

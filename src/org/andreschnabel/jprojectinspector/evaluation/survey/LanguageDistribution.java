@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 
 public class LanguageDistribution {
 	

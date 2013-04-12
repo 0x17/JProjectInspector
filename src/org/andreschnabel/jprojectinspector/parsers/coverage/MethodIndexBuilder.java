@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.andreschnabel.jprojectinspector.metrics.test.prevalence.UnitTestDetector;
-import org.andreschnabel.jprojectinspector.model.coverage.Method;
-import org.andreschnabel.jprojectinspector.model.coverage.MethodIndex;
+import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
+import org.andreschnabel.jprojectinspector.model.metrics.coverage.Method;
+import org.andreschnabel.jprojectinspector.model.metrics.coverage.MethodIndex;
 import org.andreschnabel.jprojectinspector.parsers.JavaParser;
 import org.andreschnabel.jprojectinspector.parsers.ParserHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;

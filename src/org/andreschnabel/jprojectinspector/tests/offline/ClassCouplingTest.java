@@ -8,8 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.andreschnabel.jprojectinspector.TestCommon;
-import org.andreschnabel.jprojectinspector.metrics.code.ClassCoupling;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaClassCoupling;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.SourceHelpers;
@@ -19,11 +19,11 @@ import org.junit.Test;
 
 public class ClassCouplingTest {
 
-	private ClassCoupling cc;
+	private JavaClassCoupling cc;
 
 	@Before
 	public void setUp() throws Exception {
-		this.cc = new ClassCoupling();
+		this.cc = new JavaClassCoupling();
 	}
 
 	@Test
