@@ -112,4 +112,10 @@ public class GitHelpersTest {
 		Assert.assertEquals("Added README.md and TODO.md", last);
 		Assert.assertEquals(2, commitComments.size());
 	}
+	
+	@Test
+	public void testLatestCommitUntilDate() throws Exception {
+		String latestSha1 = GitHelpers.latestCommitUntilDate(new File("."), "2012-11-27");
+		Assert.assertEquals("52c8a477c6bce5bca8c1c1c000c8c4f4a33d6f8d", latestSha1);
+	}
 }

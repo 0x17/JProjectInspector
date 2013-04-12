@@ -40,7 +40,7 @@ public class ResultVisualizerJS {
 		return linesFromXsAndYs(xs, ys);
 	}
 
-	private static void normalizeYs(List<List<Integer>> ys) {
+	public static void normalizeYs(List<List<Integer>> ys) {
 		for(int i=0; i<ys.get(0).size(); i++) {
 			int max = 0;
 			for(int j=0; j<ys.size(); j++) {

@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.runners;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
-import org.andreschnabel.jprojectinspector.scrapers.UserScraper.UserData;
+import org.andreschnabel.jprojectinspector.model.UserData;
 
 public class UserScraperRunner {
 

@@ -1,5 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities;
 
+import java.io.File;
+
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
@@ -7,10 +9,6 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
-
-import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public final class ProjectDownloader {
 	
@@ -53,25 +51,6 @@ public final class ProjectDownloader {
 				continue;
 			}
 			ProcessHelpers.system("git clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
-		}
-	}
-
-	public static void revertProjectsToDate(File rootPath, ProjectList plist, String date) throws Exception {
-		for(Project project : plist.projects) {
-			String sha1 = shaFromLatestCommitAtDate(rootPath, date);
-			ProcessHelpers.monitorProcess(rootPath, "git", "reset", "--hard", sha1);
-		}
-	}
-
-	public static String shaFromLatestCommitAtDate(File repoPath, String date) throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, "git", "log", "-1", "-until=" + date);
-		Pattern commitRegex = Pattern.compile("commit ([0-9a-zA-Z]{40})");
-		String[] lines = out.split("\n");
-		Matcher commitMatcher = commitRegex.matcher(lines[0]);
-		if(commitMatcher.find()) {
-			return commitMatcher.group(1);
-		} else {
-			throw new Exception("Malformed git log output!");
 		}
 	}
 	

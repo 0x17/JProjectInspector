@@ -66,6 +66,10 @@ public class GitHelpers {
 		String out = ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--before="+date, "--no-merges", "master");
 		return out.split("\n");
 	}
+	
+	public static String latestCommitUntilDate(File repoPath, String date) throws Exception {
+		return listCommitsUntilDate(repoPath, date)[0];
+	}
 
 	public static class ChurnStats {
 		public int numDeletions;
@@ -132,4 +136,10 @@ public class GitHelpers {
 		}
 		return result;
 	}
+	
+public static void revertProjectToDate(File repoPath, String date) throws Exception {
+	String sha1 = latestCommitUntilDate(repoPath, date);
+	String out = ProcessHelpers.monitorProcess(repoPath, "git", "reset", "--hard", sha1);
+	Helpers.log("Revert out = " + out);
+}
 }
