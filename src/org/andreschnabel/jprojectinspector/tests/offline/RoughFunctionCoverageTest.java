@@ -10,7 +10,7 @@ import java.util.Map;
 public class RoughFunctionCoverageTest {
 	@Test
 	public void testApproxFunctionCoverage() throws Exception {
-		Map<String, Float> coverages = RoughFunctionCoverage.approxFunctionCoverage(new File("."));
+		Map<String, Float> coverages = RoughFunctionCoverage.approxFunctionCoverage(new File("testdata"));
 
 		for(String lang : coverages.keySet()) {
 			float cov = coverages.get(lang);

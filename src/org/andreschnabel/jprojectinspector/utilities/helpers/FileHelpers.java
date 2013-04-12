@@ -174,7 +174,10 @@ public class FileHelpers {
 	}
 
 	public static String extension(File f) {
-		String[] parts = f.getName().split(".");
-		return parts[parts.length-1];
+		String filename = f.getName();
+		if(filename.contains(".") && filename.charAt(0) != '.') {
+			String[] parts = filename.split("\\.");
+			return parts[parts.length-1];
+		} else return "";
 	}
 }

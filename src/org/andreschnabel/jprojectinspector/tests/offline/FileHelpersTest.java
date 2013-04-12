@@ -143,4 +143,9 @@ public class FileHelpersTest {
 		Assert.assertEquals(TestCommon.TEST_SRC_FILENAME, out.get(0));
 	}
 
+	@Test
+	public void testExtension() throws Exception {
+		Assert.assertEquals("md", FileHelpers.extension(new File("README.md")));
+		Assert.assertEquals("", FileHelpers.extension(new File(".gitignore")));
+	}
 }

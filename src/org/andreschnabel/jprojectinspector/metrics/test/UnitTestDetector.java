@@ -29,6 +29,28 @@ public class UnitTestDetector {
 		return getTestFiles(pf).size();
 	}
 
+	public static boolean isTest(File f) throws Exception {
+		String filename = f.getName();
+		if(StringHelpers.strEndsWithOneOf(filename, ".java", ".rb", ".py", ".js", ".cpp", ".cs")) {
+			String srcStr;
+			try {
+				srcStr = FileHelpers.readEntireFile(f);
+			} catch(Exception e) {
+				return false;
+			}
+
+			if((filename.endsWith(".java") && isJavaSrcTest(srcStr, filename))
+					|| (filename.endsWith(".rb") && isRubySrcTest(srcStr, filename))
+					|| (filename.endsWith(".py") && isPythonSrcTest(srcStr, filename))
+					|| (filename.endsWith(".js") && isJavaScriptSrcTest(srcStr, filename))
+					|| (filename.endsWith(".cpp") && isCppSrcTest(srcStr, filename))
+					|| (filename.endsWith(".cs") && isCsharpSrcTest(srcStr, filename))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public static List<File> getTestFiles(File root) throws Exception {
 		List<File> testFiles = new LinkedList<File>();
 		if(root.isDirectory()) {

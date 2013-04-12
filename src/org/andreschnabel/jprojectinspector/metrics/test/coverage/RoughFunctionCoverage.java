@@ -62,7 +62,7 @@ public class RoughFunctionCoverage {
 				loc += r.codeLines;
 			}
 
-			if(UnitTestDetector.containsTest(f)) {
+			if(UnitTestDetector.isTest(f)) {
 				unknownLangTloc += loc;
 			} else {
 				unknownLangLoc += loc;
@@ -97,7 +97,7 @@ public class RoughFunctionCoverage {
 					public boolean invoke(File f) {
 						boolean isTest = false;
 						try {
-							isTest = UnitTestDetector.containsTest(f);
+							isTest = UnitTestDetector.isTest(f);
 						} catch(Exception e) {
 							e.printStackTrace();
 						}
