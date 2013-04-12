@@ -3,12 +3,34 @@ package org.andreschnabel.jprojectinspector.utilities.helpers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.andreschnabel.jprojectinspector.Config;
+import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.Tautology;
+import org.andreschnabel.jprojectinspector.utilities.Transform;
 
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class FileHelpers {
+
+	public static List<File> filesWithPredicateInTree(File root, Predicate<File> pred) throws Exception {
+		if(!root.isDirectory())
+			throw new Exception("Path must point to dir!");
+
+		List<File> files = new LinkedList<File>();
+
+		for(File f : root.listFiles()) {
+			if(f.isDirectory()) {
+				files.addAll(filesWithPredicateInTree(f, pred));
+			} else {
+				if(pred.invoke(f)) {
+					files.add(f);
+				}
+			}
+		}
+
+		return files;
+	}
 
 	public static void writeStrToFile(String str, String outFilename) throws IOException {
 		FileWriter fw = new FileWriter(outFilename);
@@ -72,29 +94,14 @@ public class FileHelpers {
 		writeStrToFile(jsonStr, outFilename);
 	}
 
-	public static List<String> listSourceFiles(String path) {
-		File dir = new File(path);
-		List<String> srcFilenames = new LinkedList<String>();
-		FileHelpers.recursiveCollectSrcFiles(srcFilenames, dir);
-		return srcFilenames;
-	}
-
-	public static void recursiveCollectSrcFiles(List<String> srcFilenames, File dir) {
-		for(File f : dir.listFiles()) {
-			if(f.isDirectory()) {
-				recursiveCollectSrcFiles(srcFilenames, f);
-			} else {
-				String name = f.getName();
-				if(name.endsWith(".java"))
-					srcFilenames.add(name);
+	public static List<File> recursiveCollectJavaSrcFiles(File dir) throws Exception {
+		Predicate<File> isJavaSrc = new Predicate<File>() {
+			@Override
+			public boolean invoke(File f) {
+				return f.getName().endsWith(".java");
 			}
-		}
-	}
-
-	public static List<String> recursiveCollectSrcFiles(String dir) {
-		List<String> result = new LinkedList<String>();
-		recursiveCollectSrcFiles(result, new File(dir));
-		return result;
+		};
+		return filesWithPredicateInTree(dir, isJavaSrc);
 	}
 
 	public static void deleteFile(String path) throws Exception {
@@ -152,4 +159,22 @@ public class FileHelpers {
 		return new File(path).exists();
 	}
 
+	public static List<String> listJavaSourceFiles(File dir) throws Exception {
+		Transform<File, String> fileToName = new Transform<File, String>() {
+			@Override
+			public String invoke(File f) {
+				return f.getName();
+			}
+		};
+		return ListHelpers.map(fileToName, FileHelpers.recursiveCollectJavaSrcFiles(dir));
+	}
+
+	public static List<File> filesInTree(File root) throws Exception {
+		return filesWithPredicateInTree(root, new Tautology());
+	}
+
+	public static String extension(File f) {
+		String[] parts = f.getName().split(".");
+		return parts[parts.length-1];
+	}
 }

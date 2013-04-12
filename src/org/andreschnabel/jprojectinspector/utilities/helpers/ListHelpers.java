@@ -95,4 +95,12 @@ public class ListHelpers {
 		}
 		return accum;
 	}
+
+	public static <T> List<T> remDups(List<T> lst) {
+		List<T> copy = new ArrayList<T>();
+		for(T obj : lst) {
+			ListHelpers.addNoDups(copy, obj);
+		}
+		return copy;
+	}
 }

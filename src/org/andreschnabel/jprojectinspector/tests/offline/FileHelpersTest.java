@@ -1,20 +1,19 @@
 package org.andreschnabel.jprojectinspector.tests.offline;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import junit.framework.Assert;
+import org.andreschnabel.jprojectinspector.Config;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
+import org.andreschnabel.jprojectinspector.utilities.Transform;
+import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+import org.junit.Test;
 
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-import junit.framework.Assert;
-
-import org.andreschnabel.jprojectinspector.Config;
-import org.andreschnabel.jprojectinspector.tests.TestCommon;
-import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class FileHelpersTest {
 
@@ -90,8 +89,8 @@ public class FileHelpersTest {
 	}
 
 	@Test
-	public void testListSourceFiles() {
-		List<String> out = FileHelpers.listSourceFiles(TestCommon.TEST_SRC_DIRECTORY);
+	public void testListSourceFiles() throws Exception {
+		List<String> out = FileHelpers.listJavaSourceFiles(new File(TestCommon.TEST_SRC_DIRECTORY));
 		String[] files = new String[] {
 			"Points.java", "PointsTest.java"
 		};
@@ -99,22 +98,19 @@ public class FileHelpersTest {
 	}
 
 	@Test
-	public void testRecursiveCollectSrcFilesListOfStringFile() {
-		List<String> out = new LinkedList<String>();
-		FileHelpers.recursiveCollectSrcFiles(out, new File(TestCommon.TEST_SRC_DIRECTORY));
+	public void testRecursiveCollectSrcFilesListOfStringFile() throws Exception {
+		List<File> out = FileHelpers.recursiveCollectJavaSrcFiles(new File(TestCommon.TEST_SRC_DIRECTORY));
 		String[] files = new String[] {
 			"Points.java", "PointsTest.java"
 		};
-		AssertHelpers.arrayEqualsLstOrderInsensitive(files, out);
-	}
-
-	@Test
-	public void testRecursiveCollectSrcFilesString() {
-		List<String> out = FileHelpers.recursiveCollectSrcFiles(TestCommon.TEST_SRC_DIRECTORY);
-		String[] files = new String[] {
-			"Points.java", "PointsTest.java"
+		Transform<File, String> fileToName = new Transform<File, String>() {
+			@Override
+			public String invoke(File f) {
+				return f.getName();
+			}
 		};
-		AssertHelpers.arrayEqualsLstOrderInsensitive(files, out);
+		List<String> outNames = ListHelpers.map(fileToName, out);
+		AssertHelpers.arrayEqualsLstOrderInsensitive(files, outNames);
 	}
 	
 	@Test
