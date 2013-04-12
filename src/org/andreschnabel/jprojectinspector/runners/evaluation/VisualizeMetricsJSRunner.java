@@ -24,8 +24,8 @@ public class VisualizeMetricsJSRunner {
 	}
 
 	public static void visualize(final Metric m, String outFilename) throws Exception {
-		ProjectMetricsLst metrics = (ProjectMetricsLst)XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("metrics500.xml"));
-		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
+		ProjectMetricsLst metrics = (ProjectMetricsLst)XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("data/metrics500.xml"));
+		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("data/responses500.xml"));
 		String out = ResultVisualizerJS.resultsToJsArrays(rpl.responseProjs, metrics.projectMetrics, m);
 		FileHelpers.writeStrToFile(out, outFilename);
 	}

@@ -15,10 +15,10 @@ import java.util.List;
 public class VisualizeMetricsRunner {
 
 	public static void main(String[] args) throws Exception {
-		ProjectMetricsLst metrics = (ProjectMetricsLst)XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("metrics500.xml"));
-		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
+		ProjectMetricsLst metrics = (ProjectMetricsLst)XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("data/metrics500.xml"));
+		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("data/responses500.xml"));
 		String out = visualizeMetrics(rpl.responseProjs, metrics.projectMetrics);
-		FileHelpers.writeStrToFile(out, "vis500.csv");
+		FileHelpers.writeStrToFile(out, "data/vis500.csv");
 	}
 
 	public static String getCsvHeader() {

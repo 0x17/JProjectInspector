@@ -15,9 +15,9 @@ public class ProjsForCandidatesRunner {
 	}
 
 	public static void userProjsForCandidates() throws Exception {
-		CandidateLst clst = (CandidateLst) XmlHelpers.deserializeFromXml(CandidateLst.class, new File("candidates500.xml"));
+		CandidateLst clst = (CandidateLst) XmlHelpers.deserializeFromXml(CandidateLst.class, new File("data/candidates500.xml"));
 		List<UserProject> userProjects = UserProjectCollector.userProjectsForCandidates(clst.candidates);
-		XmlHelpers.serializeToXml(new UserProjects(userProjects), new File("userprojects500.xml"));
+		XmlHelpers.serializeToXml(new UserProjects(userProjects), new File("data/userprojects500.xml"));
 	}
 
 }

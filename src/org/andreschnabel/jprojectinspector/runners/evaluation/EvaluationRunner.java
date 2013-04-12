@@ -12,10 +12,10 @@ import java.util.List;
 public final class EvaluationRunner {
 
 	public static void main(String[] args) throws Exception {
-		CandidateLst oldclst = (CandidateLst)XmlHelpers.deserializeFromXml(CandidateLst.class, new File("candidates250.xml"));
+		CandidateLst oldclst = (CandidateLst)XmlHelpers.deserializeFromXml(CandidateLst.class, new File("data/candidates250.xml"));
 		List<Candidate> candidates = CandidateTapper.tapCandidates(500, oldclst.candidates);
 		CandidateLst cl = new CandidateLst(candidates);
-		XmlHelpers.serializeToXml(cl, new File("candidates500.xml"));
+		XmlHelpers.serializeToXml(cl, new File("data/candidates500.xml"));
 		Helpers.log("Wrote " + cl.candidates.size() + " candidates!");
 	}
 

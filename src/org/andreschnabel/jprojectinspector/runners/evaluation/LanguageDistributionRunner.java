@@ -28,7 +28,7 @@ public class LanguageDistributionRunner {
 	}
 
 	public static List<ResponseProjects> getProjectsWithUser() throws Exception {
-		ResponseProjectsLst rpl = (ResponseProjectsLst) XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
+		ResponseProjectsLst rpl = (ResponseProjectsLst) XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("data/responses500.xml"));
 		Predicate<ResponseProjects> isWithUser = new Predicate<ResponseProjects>() {
 			@Override
 			public boolean invoke(ResponseProjects rp) {

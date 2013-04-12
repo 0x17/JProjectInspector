@@ -18,14 +18,14 @@ public class MetricsResultsToCsvRunner {
 	}
 
 	public static void metricsResultsToCsv(Character sep) throws Exception {
-		ProjectMetricsLst metrics = (ProjectMetricsLst) XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("metrics500.xml"));
-		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
+		ProjectMetricsLst metrics = (ProjectMetricsLst) XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("data/metrics500.xml"));
+		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("data/responses500.xml"));
 		StringBuilder sb = new StringBuilder();
 		sb.append("owner,repo,loc,testloc,commits,contribs,issues,survey\n");
 		for(ProjectMetrics projectMetric : metrics.projectMetrics) {
 			sb.append(projectMetricsToCsvLine(projectMetric, sep, rpl.responseProjs));
 		}
-		FileHelpers.writeStrToFile(sb.toString(), "metrics500.csv");
+		FileHelpers.writeStrToFile(sb.toString(), "data/metrics500.csv");
 	}
 
 	public static String projectMetricsToCsvLine(ProjectMetrics pm, Character sep, List<ResponseProjects> responseProjs) {

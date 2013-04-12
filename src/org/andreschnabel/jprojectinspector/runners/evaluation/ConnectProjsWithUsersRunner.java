@@ -19,14 +19,14 @@ public class ConnectProjsWithUsersRunner {
 	}
 
 	public static void connectProjectsWithUsers() throws Exception {
-		List<ResponseProjects> results = SurveyProjectExtractor.extractProjectsFromResults(new File("responses500.csv"));
-		UserProjects projs = (UserProjects) XmlHelpers.deserializeFromXml(UserProjects.class, new File("userprojects500.xml"));
+		List<ResponseProjects> results = SurveyProjectExtractor.extractProjectsFromResults(new File("data/responses500.csv"));
+		UserProjects projs = (UserProjects) XmlHelpers.deserializeFromXml(UserProjects.class, new File("data/userprojects500.xml"));
 
 		for(ResponseProjects rp : results) {
 			rp.user = UserGuesser.guessUserWithProjects(rp, projs.usrProjs);
 		}
 
-		XmlHelpers.serializeToXml(new ResponseProjectsLst(results), new File("responses500.xml"));
+		XmlHelpers.serializeToXml(new ResponseProjectsLst(results), new File("data/responses500.xml"));
 	}
 
 
@@ -36,7 +36,7 @@ public class ConnectProjsWithUsersRunner {
 	}
 
 	public static int countProjectsWithoutUser() throws Exception {
-		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("responses500.xml"));
+		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("data/responses500.xml"));
 		Predicate<ResponseProjects> isWithoutUser = new Predicate<ResponseProjects>() {
 			@Override
 			public boolean invoke(ResponseProjects rp) {
