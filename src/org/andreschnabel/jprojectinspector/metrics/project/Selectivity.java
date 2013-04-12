@@ -14,17 +14,28 @@ import java.util.Collection;
 public class Selectivity {
 
 	private static final int MAX_PULL_REQ_PAGES = 5;
-	private PullRequestService pullReqService;
-	private RepositoryService repoService;
+	private static PullRequestService pullReqService;
+	private static RepositoryService repoService;
+	private static boolean initialized = false;
 
-	public Selectivity() throws Exception {
-		// Authenticate to raise rate limit.
-		GitHubClient ghc = GitHubHelpers.authenticate();
-		repoService = new RepositoryService(ghc);
-		pullReqService = new PullRequestService(ghc);
+	private static void assertInitialized() {
+		if(!initialized) {
+			// Authenticate to raise rate limit.
+			GitHubClient ghc = null;
+			try {
+				ghc = GitHubHelpers.authenticate();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			repoService = new RepositoryService(ghc);
+			pullReqService = new PullRequestService(ghc);
+			initialized = true;
+		}
 	}
 
-	public int getSelectivity(Project p) throws Exception {
+	public static int getSelectivity(Project p) throws Exception {
+		assertInitialized();
+
 		Repository repo = repoService.getRepository(p.owner, p.repoName);
 		PageIterator<PullRequest> pullRequestIterator = pullReqService.pagePullRequests(repo, "closed");
 
