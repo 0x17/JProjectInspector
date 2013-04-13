@@ -13,6 +13,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/antlr-3.4-complete.jar"/>
+	<classpathentry kind="lib" path="libs/iText-2.1.5.jar"/>
+	<classpathentry kind="lib" path="libs/jcommon-1.0.17.jar"/>
+	<classpathentry kind="lib" path="libs/jfreechart-1.0.14.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="libs/org.eclipse.egit.github.core-2.1.2.jar" sourcepath="libs/org.eclipse.egit.github.core-2.1.2-sources.jar">
 		<attributes>

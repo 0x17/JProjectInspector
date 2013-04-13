@@ -65,6 +65,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="jfreechart-1.0.14" level="project" />
   </component>
 </module>
 
