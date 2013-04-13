@@ -115,7 +115,7 @@ public class GitHelpersTest {
 	
 	@Test
 	public void testLatestCommitUntilDate() throws Exception {
-		String latestSha1 = GitHelpers.latestCommitUntilDate(new File("."), "2012-11-27");
-		Assert.assertEquals("52c8a477c6bce5bca8c1c1c000c8c4f4a33d6f8d", latestSha1);
+		String latestSha1 = GitHelpers.latestCommitUntilDate(new File("."), "2012-12-18");
+		Assert.assertEquals("43878103962d51bcac7e5317d8805030edc73f0b", latestSha1);
 	}
 }
