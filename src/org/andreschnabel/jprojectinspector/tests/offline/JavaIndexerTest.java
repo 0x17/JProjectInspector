@@ -22,6 +22,7 @@ public class JavaIndexerTest {
 				"\n" +
 				"import org.junit.Test;\n" +
 				"\n" +
+				"public JavaIndexerTest() {} \n" +
 				"public class JavaIndexerTest {\n" +
 				"\t@Test\n" +
 				"\tpublic void testListFunctionDeclarations() throws Exception {\n" +
@@ -33,7 +34,7 @@ public class JavaIndexerTest {
 				"\t}\n" +
 				"}\n";
 		List<String> decls = indexer.listFunctionDeclarations(codeStr);
-		AssertHelpers.arrayEqualsLstOrderInsensitive(new String[] {"testListFunctionDeclarations", "testListFunctionCalls"}, decls);
+		AssertHelpers.arrayEqualsLstOrderInsensitive(new String[] {"JavaIndexerTest", "testListFunctionDeclarations", "testListFunctionCalls"}, decls);
 	}
 
 	@Test
@@ -53,6 +54,6 @@ public class JavaIndexerTest {
 				"\t\treturn funcNames;\n" +
 				"\t}";
 		List<String> calls = indexer.listFunctionCalls(codeStr);
-		AssertHelpers.arrayEqualsLstOrderInsensitive(new String[] {"compile", "matcher", "find", "groupCount", "group", "addNoDups"}, calls);
+		AssertHelpers.arrayEqualsLstOrderInsensitive(new String[] {"compile", "matcher", "find", "groupCount", "group", "addNoDups", "LinkedList"}, calls);
 	}
 }

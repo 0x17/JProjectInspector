@@ -30,6 +30,8 @@ public class JavaIndexer implements FunctionIndexer {
 		List<String> calledMethods = null;
 		try {
 			calledMethods = ListHelpers.remDups(RegexHelpers.batchMatchOneGroup("\\w+\\.(\\w+)\\(.*\\)", src));
+			calledMethods.addAll(ListHelpers.remDups(RegexHelpers.batchMatchOneGroup("new ([^<]+?)\\(", src)));
+			calledMethods.addAll(ListHelpers.remDups(RegexHelpers.batchMatchOneGroup("new (.+?)<.+?>\\(", src)));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
