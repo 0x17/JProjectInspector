@@ -5,9 +5,7 @@ import org.andreschnabel.jprojectinspector.utilities.IndexedTransform;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class ListHelpers {
 
@@ -102,5 +100,14 @@ public class ListHelpers {
 			ListHelpers.addNoDups(copy, obj);
 		}
 		return copy;
+	}
+
+	public static <T,U> Map<T, U> zipMap(List<T> keys, List<U> vals) {
+		Map<T, U> mapping = new HashMap<T, U>();
+		for(int i = 0; i < keys.size(); i++) {
+			T key = keys.get(i);
+			mapping.put(key, vals.get(i));
+		}
+		return mapping;
 	}
 }
