@@ -1,26 +1,23 @@
 package org.andreschnabel.jprojectinspector.metrics.test.coverage;
 
-import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
-import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
-import org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers.JavaIndexer;
-import org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers.JavaScriptIndexer;
-import org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers.PythonIndexer;
-import org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers.RubyIndexer;
-import org.andreschnabel.jprojectinspector.utilities.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.Transform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
+import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
+import org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers.IndexerRegistry;
+import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.Transform;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+
 public class RoughFunctionCoverage {
 
 	public static Map<String, Float> approxFunctionCoverage(File rootPath) throws Exception {
-		final Map<String, FunctionIndexer> indexerForExtension = getIndexers();
+		final Map<String, FunctionIndexer> indexerForExtension = IndexerRegistry.indexerForExtension;
 
 		final List<File> files = FileHelpers.filesInTree(rootPath);
 
@@ -73,15 +70,6 @@ public class RoughFunctionCoverage {
 		coverages.put("unknown", unknownLangLoc == 0 ? 0.0f : unknownLangTloc / (float)unknownLangLoc);
 
 		return coverages;
-	}
-
-	private static Map<String, FunctionIndexer> getIndexers() {
-		Map<String, FunctionIndexer> indexerForExtension = new HashMap<String, FunctionIndexer>();
-		indexerForExtension.put("java", new JavaIndexer());
-		indexerForExtension.put("js", new JavaScriptIndexer());
-		indexerForExtension.put("rb", new RubyIndexer());
-		indexerForExtension.put("py", new PythonIndexer());
-		return indexerForExtension;
 	}
 
 	private enum Mode {
