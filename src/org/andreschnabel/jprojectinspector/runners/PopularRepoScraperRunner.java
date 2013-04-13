@@ -8,10 +8,9 @@ import org.andreschnabel.jprojectinspector.scrapers.PopularRepoScraper;
 public class PopularRepoScraperRunner {
 
 	public static void main(String[] args) throws Exception {
-		PopularRepoScraper prs = new PopularRepoScraper();
-		List<Project> popularForked = prs.scrapePopularForked(),
-				popularStarred = prs.scrapePopularStarred(),
-				interesting = prs.scrapeInteresting();
+		List<Project> popularForked = PopularRepoScraper.scrapePopularForked(),
+				popularStarred = PopularRepoScraper.scrapePopularStarred(),
+				interesting = PopularRepoScraper.scrapeInteresting();
 		System.out.println("Popular forked:");
 		printProjLst(popularForked);
 		System.out.println("Popular starred:");

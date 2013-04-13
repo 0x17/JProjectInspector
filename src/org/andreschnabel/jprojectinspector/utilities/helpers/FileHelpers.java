@@ -1,15 +1,20 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.Tautology;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
 
-import java.io.*;
-import java.util.LinkedList;
-import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class FileHelpers {
 
@@ -170,7 +175,7 @@ public class FileHelpers {
 	}
 
 	public static List<File> filesInTree(File root) throws Exception {
-		return filesWithPredicateInTree(root, new Tautology());
+		return filesWithPredicateInTree(root, new Tautology<File>());
 	}
 
 	public static String extension(File f) {

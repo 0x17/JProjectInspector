@@ -7,8 +7,7 @@ import org.andreschnabel.jprojectinspector.model.UserData;
 public class UserScraperRunner {
 
 	public static void main(String[] args) throws Exception {
-		UserScraper us = new UserScraper();
-		UserData ud = us.scrapeUser("badlogic");
+		UserData ud = UserScraper.scrapeUser("badlogic");
 		System.out.println("Name: " + ud.name);
 		System.out.println("Join date: " + ud.joinDate);
 		System.out.println("Num starred projs: " + ud.numStarredProjects);
