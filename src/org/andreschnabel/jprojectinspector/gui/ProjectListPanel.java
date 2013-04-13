@@ -8,6 +8,9 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
+import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 
 public class ProjectListPanel extends JPanel {
@@ -25,8 +28,11 @@ public class ProjectListPanel extends JPanel {
 	}
 	
 	public void addProject(Project p) {
-		projects.add(p);
-		
+		ListHelpers.addNoDups(projects, p);		
+		updateLst();
+	}
+	
+	public void updateLst() {
 		String[] projsArray = new String[projects.size()];
 		for(int i=0; i<projsArray.length; i++) {
 			projsArray[i] = projects.get(i).toString();
@@ -37,6 +43,17 @@ public class ProjectListPanel extends JPanel {
 
 	public List<Project> getProjects() {
 		return projects;
+	}
+
+	public void removeOffline() {
+		Predicate<Project> isOnline = new Predicate<Project>() {
+			@Override
+			public boolean invoke(Project p) {
+				return ProjectDownloader.isProjectOnline(p);
+			}
+		};
+		projects = ListHelpers.filter(isOnline, projects);
+		updateLst();
 	}
 
 }

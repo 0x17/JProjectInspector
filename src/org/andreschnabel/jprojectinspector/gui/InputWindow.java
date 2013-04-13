@@ -23,8 +23,6 @@ public class InputWindow extends JFrame {
 	private final static int NCOLUMNS = 10;
 	private final JTextField ownerField = new JTextField(NCOLUMNS);
 	private final JTextField repoField = new JTextField(NCOLUMNS);
-	
-	private JButton startBtn;
 
 	public InputWindow() {
 		super("Inputs");
@@ -36,8 +34,18 @@ public class InputWindow extends JFrame {
 		projLstPanel = new ProjectListPanel();
 		add(projLstPanel, BorderLayout.CENTER);
 		
-		startBtn = new JButton("Start");
-		add(startBtn, BorderLayout.SOUTH);
+		JButton remOfflineBtn = new JButton("Remove offline");
+		remOfflineBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				projLstPanel.removeOffline();
+			}
+		});
+		JButton startBtn = new JButton("Start");		
+		JPanel bottomPane = new JPanel(new FlowLayout());
+		bottomPane.add(remOfflineBtn);
+		bottomPane.add(startBtn);		
+		add(bottomPane, BorderLayout.SOUTH);
 		
 		setSize(640, 480);
 		setLocationRelativeTo(null);
