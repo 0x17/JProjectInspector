@@ -25,9 +25,14 @@ public class RoughCoverageRunner {
 				try {
 					File path = ProjectDownloader.loadProject(p);
 					cov = RoughFunctionCoverage.approxFunctionCoverage(path);
-					ProjectDownloader.deleteProject(p);
 				} catch(Exception e) {
 					e.printStackTrace();
+				} finally {
+					try {
+						ProjectDownloader.deleteProject(p);
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
 				}
 				return cov;
 			}

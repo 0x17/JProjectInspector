@@ -41,7 +41,8 @@ public class RoughFunctionCoverage {
 				}
 			};
 			List<String> calledFuncs = ListHelpers.filter(wasCalled, funcDecls);
-			coverages.put(lang, (float)calledFuncs.size() / (float)funcDecls.size());
+
+			coverages.put(lang, funcDecls.isEmpty() ? 0.0f : (float)calledFuncs.size() / (float)funcDecls.size());
 		}
 
 		Predicate<File> unknownLang = new Predicate<File>() {
@@ -69,7 +70,7 @@ public class RoughFunctionCoverage {
 			}
 		}
 
-		coverages.put("unknown", unknownLangTloc / (float)unknownLangLoc);
+		coverages.put("unknown", unknownLangLoc == 0 ? 0.0f : unknownLangTloc / (float)unknownLangLoc);
 
 		return coverages;
 	}
