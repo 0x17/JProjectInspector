@@ -1,11 +1,12 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
+import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.File;
 
-public class JavaTestFrameworkDetector {
+public class JavaTestFrameworkDetector implements OfflineMetric {
 	
 	public static final int FRAMEWORK_NONE = -1;
 	public static final int FRAMEWORK_JUNIT = 0;
@@ -43,4 +44,13 @@ public class JavaTestFrameworkDetector {
 		else return FRAMEWORK_NONE;
 	}
 
+	@Override
+	public String getName() {
+		return "jtestframework";
+	}
+
+	@Override
+	public float measure(File repoRoot) throws Exception {
+		return checkForFramework(repoRoot);
+	}
 }

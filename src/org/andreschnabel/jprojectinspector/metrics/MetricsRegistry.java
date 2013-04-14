@@ -1,6 +1,8 @@
 package org.andreschnabel.jprojectinspector.metrics;
 
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.*;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage.SimpleJavaTestCoverage;
 import org.andreschnabel.jprojectinspector.metrics.project.*;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
@@ -33,6 +35,7 @@ public class MetricsRegistry {
 		ms.add(new UnitTestDetector());
 		ms.add(new ContributorsOffline());
 		ms.add(new Commits());
+		initJavaSpecificOfflineMetrics(ms);
 
 		// Add more offline metrics here!
 		// ms.add(new MyMetric());
@@ -45,6 +48,16 @@ public class MetricsRegistry {
 		};
 		List<String> names = ListHelpers.map(metricToName, ms);
 		offlineMetrics = ListHelpers.zipMap(names, ms);
+	}
+
+	private static void initJavaSpecificOfflineMetrics(List<OfflineMetric> ms) {
+		ms.add(new JavaAverageWMC());
+		ms.add(new JavaClassCoupling());
+		ms.add(new JavaLinesOfCode());
+		ms.add(new JavaTestContributors());
+		ms.add(new JavaTestFrameworkDetector());
+		ms.add(new JavaTestLinesOfCode());
+		ms.add(new SimpleJavaTestCoverage());
 	}
 
 	private static void initOnlineMetrics() {

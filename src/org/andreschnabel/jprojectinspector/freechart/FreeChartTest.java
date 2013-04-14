@@ -24,6 +24,6 @@ public class FreeChartTest {
 		Dimension dim = new Dimension(640, 480);
 		ChartWindow cw = new ChartWindow("OS Stats 2", createBarChart(), dim);
 		cw.setVisible(true);
-		//FreeChartPdfExporter.saveChartToPDF(chart, "testfreechart.pdf", dim.width, dim.height);
+		FreeChartPdfExporter.saveChartToPDF(createBarChart(), "testfreechart.pdf", dim.width, dim.height);
 	}
 }

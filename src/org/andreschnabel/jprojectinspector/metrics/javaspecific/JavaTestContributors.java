@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
+import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GitHelpers;
@@ -8,9 +9,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-public final class JavaTestContributors {
-	
-	private JavaTestContributors() {}
+public final class JavaTestContributors implements OfflineMetric {
 	
 	public static int numTestContribs(File pf) throws Exception {
 		List<String> testContribs = new LinkedList<String>();
@@ -35,5 +34,13 @@ public final class JavaTestContributors {
 	}
 
 
+	@Override
+	public String getName() {
+		return "jntestcontribs";
+	}
 
+	@Override
+	public float measure(File repoRoot) throws Exception {
+		return numTestContribs(repoRoot);
+	}
 }

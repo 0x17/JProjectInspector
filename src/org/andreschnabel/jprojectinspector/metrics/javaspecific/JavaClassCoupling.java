@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
+import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.SourceHelpers;
@@ -11,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class JavaClassCoupling {
+public class JavaClassCoupling implements OfflineMetric {
 
 	public float getAverageCoupling(File root) throws Exception {
 		Map<String, File> classInFile = new HashMap<String, File>();
@@ -72,4 +73,13 @@ public class JavaClassCoupling {
 		return SourceHelpers.getCodeOfClassInFile(className, f);
 	}
 
+	@Override
+	public String getName() {
+		return "jcoupling";
+	}
+
+	@Override
+	public float measure(File repoRoot) throws Exception {
+		return getAverageCoupling(repoRoot);
+	}
 }

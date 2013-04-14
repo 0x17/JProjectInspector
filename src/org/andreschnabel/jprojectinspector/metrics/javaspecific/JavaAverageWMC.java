@@ -1,11 +1,12 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
+import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.File;
 
-public class JavaAverageWMC {
+public class JavaAverageWMC implements OfflineMetric {
 
 	public int determineWMCforSrcStr(String srcStr, Aux a) {
 		return StringHelpers.countOccurencesOfWords(srcStr, new String[]{"if", "for", "while", "case", "catch", "&&", "||", "?"});
@@ -13,6 +14,16 @@ public class JavaAverageWMC {
 
 	public int determineWMCforSrcFile(File srcFile, Aux a) throws Exception {
 		return determineWMCforSrcStr(FileHelpers.readEntireFile(srcFile), a);
+	}
+
+	@Override
+	public String getName() {
+		return "javgwmc";
+	}
+
+	@Override
+	public float measure(File repoRoot) throws Exception {
+		return determineAverageWMC(repoRoot);
 	}
 
 	private class Aux {

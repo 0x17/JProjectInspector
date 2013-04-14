@@ -1,12 +1,13 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
 import org.andreschnabel.jprojectinspector.Config;
+import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 import java.io.File;
 
-public class JavaLinesOfCode {
+public class JavaLinesOfCode implements OfflineMetric {
 
 	public static int countLocForProj(Project project) throws Exception {
 		File root = new File(Config.DEST_BASE + project.repoName);
@@ -81,4 +82,13 @@ public class JavaLinesOfCode {
 			return countLocOfSrcFile(root);
 	}
 
+	@Override
+	public String getName() {
+		return "jloc";
+	}
+
+	@Override
+	public float measure(File repoRoot) throws Exception {
+		return countLocOfDir(repoRoot);
+	}
 }
