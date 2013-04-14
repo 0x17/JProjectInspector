@@ -42,6 +42,8 @@ public class FrontStats {
 		else return 0;
 	}
 
+	private final static String NLINESPACECRAP = "\n?\\s*";
+
 	public static int getNumberOfPullRequests(String html) {
 		return extractNumWithRegex(html, "highlight=\"repo_pulls\">Pull Requests <span class='counter'>(\\d+)</span></a></li>");
 	}
@@ -51,11 +53,11 @@ public class FrontStats {
 	}
 
 	public static int getNumberOfStars(String html) {
-		return extractNumWithRegex(html, "stargazers\">(\\d+)</a>");
+		return extractNumWithRegex(html, "stargazers\">"+NLINESPACECRAP+"(\\d+)"+NLINESPACECRAP+"</a>");
 	}
 
 	public static int getNumberOfCommits(String html) {
-		return extractNumWithRegex(html, "/commits/master\">\\s*<span class=\"mini-icon mini-icon-history tooltipped\" title=\"Browse commits for this branch\"></span>\n\\s*(\\d+) commits\n");
+		return extractNumWithRegex(html, "/commits/master\">\\s*<span class=\"mini-icon mini-icon-history tooltipped\" title=\"Browse commits for this branch\"></span>\n\\s*(\\d+)\\+? commits\n");
 	}
 
 	public static int getNumberOfBranches(String html) {
@@ -63,7 +65,7 @@ public class FrontStats {
 	}
 
 	public static int getNumberOfForks(String html) {
-		return extractNumWithRegex(html, "network\" class=\"social-count\">(\\d+)</a>");
+		return extractNumWithRegex(html, "network\" class=\"social-count\">"+NLINESPACECRAP+"(\\d+)"+NLINESPACECRAP+"</a>");
 	}
 
 }
