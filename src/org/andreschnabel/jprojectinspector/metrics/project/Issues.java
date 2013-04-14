@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
+import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GitHubHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Issues {
+public class Issues implements OnlineMetric {
 
 	public static int getNumberOfIssues(Project p) throws Exception {
 		String pageSrc = Helpers.loadUrlIntoStr("https://github.com/" + p.owner + "/" + p.repoName);
@@ -34,4 +35,8 @@ public class Issues {
 		}
 	}
 
+	@Override
+	public float measure(Project p) throws Exception {
+		return getNumberOfIssues(p);
+	}
 }

@@ -1,11 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.test.coverage;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
+import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers.IndexerRegistry;
@@ -14,7 +9,13 @@ import org.andreschnabel.jprojectinspector.utilities.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
-public class RoughFunctionCoverage {
+import java.io.File;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+public class RoughFunctionCoverage implements OfflineMetric {
 
 	public static Map<String, Float> approxFunctionCoverage(File rootPath) throws Exception {
 		final Map<String, FunctionIndexer> indexerForExtension = IndexerRegistry.indexerForExtension;
@@ -55,10 +56,7 @@ public class RoughFunctionCoverage {
 		List<File> unknownLangFiles = FileHelpers.filesWithPredicateInTree(rootPath, unknownLang);
 		for(File f : unknownLangFiles) {
 			List<Cloc.ClocResult> res = Cloc.determineLinesOfCode(f.getParentFile(), f.getName());
-			int loc = 0;
-			for(Cloc.ClocResult r : res) {
-				loc += r.codeLines;
-			}
+			int loc = Cloc.ClocResult.accumResults(res).codeLines;
 
 			if(UnitTestDetector.isTest(f)) {
 				unknownLangTloc += loc;
@@ -70,6 +68,17 @@ public class RoughFunctionCoverage {
 		coverages.put("unknown", unknownLangLoc == 0 ? 0.0f : unknownLangTloc / (float)unknownLangLoc);
 
 		return coverages;
+	}
+
+	@Override
+	public float measure(File repoRoot) throws Exception {
+		Map<String, Float> coverages = approxFunctionCoverage(repoRoot);
+		String firstKey = null;
+		for(String key : coverages.keySet()) {
+			firstKey = key;
+			break;
+		}
+		return coverages.get(firstKey);
 	}
 
 	private enum Mode {

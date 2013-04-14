@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.test;
 
+import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
@@ -11,9 +12,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UnitTestDetector {
-	
-	private UnitTestDetector()  {}
+public class UnitTestDetector implements OfflineMetric {
 
 	private final static String[] supportedLangs = new String[]{"Java", "Ruby", "C++", "C#", "JavaScript", "Python"};
 
@@ -145,4 +144,8 @@ public class UnitTestDetector {
 		return result;
 	}
 
+	@Override
+	public float measure(File repoRoot) throws Exception {
+		return containsTest(repoRoot) ? 1.0f : 0.0f;
+	}
 }

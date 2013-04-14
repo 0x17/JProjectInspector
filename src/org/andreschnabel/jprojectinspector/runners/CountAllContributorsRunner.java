@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.runners;
 
-import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
+import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOnline;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
@@ -11,7 +11,7 @@ public class CountAllContributorsRunner {
 		ProjectList plist = ProjectList.fromFile(args[0]);
 		int contribCount = 0;
 		for(Project p : plist.projects) {
-			int ncontribs = Contributors.countNumContributors(p);
+			int ncontribs = ContributorsOnline.countNumContributors(p);
 			contribCount += ncontribs;
 			Helpers.log("Project " + p + " has " + ncontribs + " contributors!");
 		}

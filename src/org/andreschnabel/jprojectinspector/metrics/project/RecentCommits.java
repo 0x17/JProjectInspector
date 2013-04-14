@@ -1,12 +1,13 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
+import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 import java.util.List;
 
-public class CommitActivity {
+public class RecentCommits implements OnlineMetric {
 
 	private final static int NUM_PREV_WEEKS_CONSIDERED = 3;
 
@@ -27,4 +28,8 @@ public class CommitActivity {
 		return numRecentCommits;
 	}
 
+	@Override
+	public float measure(Project p) throws Exception {
+		return getNumOfRecentCommits(p);
+	}
 }

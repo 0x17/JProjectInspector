@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
+import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
@@ -7,6 +8,53 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FrontStats {
+
+	public static class RoughCommits implements OnlineMetric {
+		@Override
+		public float measure(Project p) throws Exception {
+			return statsForProject(p).ncommits;
+		}
+	}
+
+	public static class Branches implements OnlineMetric {
+		@Override
+		public float measure(Project p) throws Exception {
+			return statsForProject(p).nbranches;
+		}
+	}
+
+	public static class Forks implements OnlineMetric {
+
+		@Override
+		public float measure(Project p) throws Exception {
+			return statsForProject(p).nforks;
+		}
+	}
+
+	public static class Stars implements OnlineMetric {
+
+		@Override
+		public float measure(Project p) throws Exception {
+			return statsForProject(p).nstars;
+		}
+	}
+
+	public static class Issues implements OnlineMetric {
+
+		@Override
+		public float measure(Project p) throws Exception {
+			return statsForProject(p).nissues;
+		}
+	}
+
+	public static class PullRequests implements OnlineMetric {
+
+		@Override
+		public float measure(Project p) throws Exception {
+			return statsForProject(p).npullreqs;
+		}
+	}
+
 
 	public int ncommits;
 	public int nbranches;

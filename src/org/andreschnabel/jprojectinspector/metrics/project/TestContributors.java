@@ -1,12 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
+import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.LogCommand;
 import org.eclipse.jgit.lib.IndexDiff;
@@ -14,16 +8,11 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 
-public final class Contributors {
-	
-	private Contributors() {}
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
-	public static int countNumContributors(Project project) throws Exception {
-		String contribsData = Helpers.loadUrlIntoStr("https://github.com/" + project.owner + "/" + project.repoName + "/graphs/contributors-data");
-		int ncontribs = StringHelpers.countOccurencesOfWord(contribsData, "\"author\"");
-		// some projects don't have any graphs yet gathered by GitHub...
-		return ncontribs == 0 ? 1 : ncontribs; // FIXME: This may be incorrect!
-	}
+public class TestContributors implements OfflineMetric {
 
 	public static int countNumTestContributors(File root) throws Exception {
 		if(!root.exists())
@@ -66,4 +55,8 @@ public final class Contributors {
 		return authors.size();
 	}
 
+	@Override
+	public float measure(File repoRoot) throws Exception {
+		return countNumTestContributors(repoRoot);
+	}
 }

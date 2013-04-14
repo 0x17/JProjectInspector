@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
+import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GitHubHelpers;
 import org.eclipse.egit.github.core.PullRequest;
@@ -11,7 +12,7 @@ import org.eclipse.egit.github.core.service.RepositoryService;
 
 import java.util.Collection;
 
-public class Selectivity {
+public class Selectivity implements OnlineMetric {
 
 	private static final int MAX_PULL_REQ_PAGES = 5;
 	private static PullRequestService pullReqService;
@@ -53,4 +54,8 @@ public class Selectivity {
 		return numClosed == 0 ? 0 : numMerged / numClosed;
 	}
 
+	@Override
+	public float measure(Project p) throws Exception {
+		return getSelectivity(p);
+	}
 }

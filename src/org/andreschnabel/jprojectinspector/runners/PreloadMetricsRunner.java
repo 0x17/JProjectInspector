@@ -1,17 +1,17 @@
 package org.andreschnabel.jprojectinspector.runners;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestContributors;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestFrameworkDetector;
+import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOnline;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class PreloadMetricsRunner {
@@ -44,7 +44,7 @@ public class PreloadMetricsRunner {
 		int ncontribs = 0;
 		int ctr = 1;
 		for(Project p : plist.projects) {
-			int nc = Contributors.countNumContributors(p);
+			int nc = ContributorsOnline.countNumContributors(p);
 			Helpers.log(p + " has " + nc + " contributors. (" + (ctr++) + "/" + nprojects + ")");
 			ncontribs += nc;
 		}

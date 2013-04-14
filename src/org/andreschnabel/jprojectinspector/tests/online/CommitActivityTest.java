@@ -2,18 +2,18 @@ package org.andreschnabel.jprojectinspector.tests.online;
 
 import static org.junit.Assert.*;
 
+import org.andreschnabel.jprojectinspector.metrics.project.RecentCommits;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
-import org.andreschnabel.jprojectinspector.metrics.project.CommitActivity;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CommitActivityTest {
 
-	private CommitActivity ca;
+	private RecentCommits ca;
 
 	@Before
 	public void setUp() throws Exception {
-		this.ca = new CommitActivity();
+		this.ca = new RecentCommits();
 	}
 
 	@Test

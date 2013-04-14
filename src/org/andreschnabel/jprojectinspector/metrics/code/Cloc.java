@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.code;
 
+import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
 
@@ -9,9 +10,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Cloc {
-	
-	private Cloc() {}
+public class Cloc implements OfflineMetric {
+
+	@Override
+	public float measure(File repoRoot) throws Exception {
+		return ClocResult.accumResults(determineLinesOfCode(repoRoot)).codeLines;
+	}
 
 	public static List<ClocResult> determineLinesOfCode(File path) throws Exception {
 		return determineLinesOfCode(path, path.getPath());
@@ -28,6 +32,18 @@ public class Cloc {
 		public String toString() {
 			return "ClocResult [language=" + language + ", fileCount=" + fileCount + ", blankLines=" + blankLines
 				+ ", commentLines=" + commentLines + ", codeLines=" + codeLines + "]";
+		}
+
+		public static ClocResult accumResults(List<ClocResult> results) {
+			ClocResult accum = new ClocResult();
+			accum.language = "All";
+			for(ClocResult result : results) {
+				accum.codeLines += result.codeLines;
+				accum.blankLines += result.blankLines;
+				accum.commentLines += result.commentLines;
+				accum.fileCount += result.fileCount;
+			}
+			return accum;
 		}
 	}
 

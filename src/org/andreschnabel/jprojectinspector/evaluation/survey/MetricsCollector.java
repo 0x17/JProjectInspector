@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
-import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
+import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOnline;
 import org.andreschnabel.jprojectinspector.metrics.project.Issues;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
 import org.andreschnabel.jprojectinspector.model.Project;
@@ -53,7 +53,7 @@ public class MetricsCollector {
 					ProjectMetrics pm = new ProjectMetrics();
 					pm.linesOfCode = locSum;
 					pm.numCommits = GitHelpers.numCommits(path);
-					pm.numContribs = Contributors.countNumContributors(p);
+					pm.numContribs = ContributorsOnline.countNumContributors(p);
 					pm.numIssues = Issues.getNumberOfIssues(p);
 					pm.project = p;
 					pm.testLinesOfCode = TestLinesOfCode.countTestLocHeuristic(path);

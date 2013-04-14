@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public class TestPrevalence {
-	
-	private TestPrevalence() {}
-
 	public static TestPrevalenceSummary determineTestPrevalence(ProjectList lst) throws Exception {
 		List<Project> projects = lst.projects;
 		int numTestProjs = 0;
@@ -52,5 +49,4 @@ public class TestPrevalence {
 		ProjectCollector jpc = new ProjectCollector(ghc);
 		return determineTestPrevalence(jpc.collectProjects(keyword, numPages));
 	}
-
 }

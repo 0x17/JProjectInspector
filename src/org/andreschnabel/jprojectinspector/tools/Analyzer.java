@@ -1,11 +1,11 @@
 package org.andreschnabel.jprojectinspector.tools;
 
-import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
-import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
+import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOnline;
 import org.andreschnabel.jprojectinspector.metrics.project.Issues;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GitHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
@@ -38,7 +38,7 @@ public class Analyzer {
 		ProjectMetrics pm = new ProjectMetrics();
 		pm.linesOfCode = locSum;
 		pm.numCommits = GitHelpers.numCommits(path);
-		pm.numContribs = Contributors.countNumContributors(p);
+		pm.numContribs = ContributorsOnline.countNumContributors(p);
 		pm.numIssues = Issues.getNumberOfIssues(p);
 		pm.project = p;
 		pm.testLinesOfCode = TestLinesOfCode.countTestLocHeuristic(path);

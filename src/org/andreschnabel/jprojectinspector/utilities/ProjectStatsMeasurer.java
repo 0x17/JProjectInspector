@@ -6,7 +6,7 @@ import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage.SimpleJavaTestCoverage;
 import org.andreschnabel.jprojectinspector.metrics.project.CodeFrequency;
-import org.andreschnabel.jprojectinspector.metrics.project.Contributors;
+import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOnline;
 import org.andreschnabel.jprojectinspector.metrics.project.Issues;
 import org.andreschnabel.jprojectinspector.metrics.project.ProjectAge;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
@@ -35,7 +35,7 @@ public final class ProjectStatsMeasurer {
 		CodeFrequency cf = new CodeFrequency();
 		stats.codeFrequency = cf.countCodeFrequencyForProj(project);
 
-		stats.numContributors = Contributors.countNumContributors(project);
+		stats.numContributors = ContributorsOnline.countNumContributors(project);
 		//stats.numTestContributors = contribs.countNumTestContributors(projectRoot);
 
 		stats.numIssues = Issues.getNumberOfIssues(project);
