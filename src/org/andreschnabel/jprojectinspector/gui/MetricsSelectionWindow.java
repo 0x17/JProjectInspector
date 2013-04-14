@@ -17,7 +17,7 @@ public class MetricsSelectionWindow extends JFrame {
 		add(topLbl, BorderLayout.NORTH);
 
 		List<String> ms = MetricsRegistry.listAllMetrics();
-		JList<String> metricNamesLst = new JList<String>(ms.toArray(new String[] {}));
+		JList metricNamesLst = new JList(ms.toArray(new String[] {}));
 		add(new JScrollPane(metricNamesLst), BorderLayout.CENTER);
 
 		JButton measureBtn = new JButton("Measure");

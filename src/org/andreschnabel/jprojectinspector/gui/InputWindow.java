@@ -46,7 +46,7 @@ public class InputWindow extends JFrame {
 			addAllBtn.setVisible(false);
 		}
 	}
-	private final JComboBox<String> userReposCombo = new JComboBox<String>();
+	private final JComboBox userReposCombo = new JComboBox();
 
 	private JButton addAllBtn = new JButton("+All");
 
@@ -137,7 +137,7 @@ public class InputWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String owner = ownerField.getText();
 				for(int i=0; i<userReposCombo.getItemCount(); i++) {
-					String repo = userReposCombo.getItemAt(i);
+					String repo = (String)userReposCombo.getItemAt(i);
 					projLstPanel.addProject(new Project(owner, repo));
 				}
 			}
