@@ -10,6 +10,8 @@ import java.io.File;
 
 public class CsvTableWindow extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+
 	public CsvTableWindow(CsvData data) {
 		super(data.title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

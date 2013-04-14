@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProjectTableModel extends AbstractTableModel {
+public class InputProjectTableModel extends AbstractTableModel {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -19,7 +19,7 @@ public class ProjectTableModel extends AbstractTableModel {
 		statsCache.put(p, stats);
 	}
 
-	public ProjectTableModel(final List<Project> projects) {
+	public InputProjectTableModel(final List<Project> projects) {
 		this.projects = projects;
 	}
 

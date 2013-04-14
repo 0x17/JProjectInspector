@@ -12,15 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProjectTablePanel extends JPanel {
+public class InputProjectTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	private List<Project> projects = new ArrayList<Project>();
-	private final ProjectTableModel tableModel = new ProjectTableModel(projects);
+	private final InputProjectTableModel tableModel = new InputProjectTableModel(projects);
 	private final JTable projTable = new JTable(tableModel);
 
-	public ProjectTablePanel() {
+	public InputProjectTablePanel() {
 		JScrollPane scrollPane = new JScrollPane(projTable);
 		add(scrollPane);
 	}

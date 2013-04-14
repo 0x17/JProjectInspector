@@ -7,6 +7,8 @@ import java.util.List;
 
 public class CsvTableModel extends AbstractTableModel {
 
+	private static final long serialVersionUID = 1L;
+	
 	private final List<String[]> rows;
 
 	public CsvTableModel(CsvData data) {

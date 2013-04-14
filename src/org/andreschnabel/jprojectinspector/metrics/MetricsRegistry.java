@@ -1,9 +1,28 @@
 package org.andreschnabel.jprojectinspector.metrics;
 
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
-import org.andreschnabel.jprojectinspector.metrics.javaspecific.*;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaAverageWMC;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaClassCoupling;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaLinesOfCode;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestContributors;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestFrameworkDetector;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage.SimpleJavaTestCoverage;
-import org.andreschnabel.jprojectinspector.metrics.project.*;
+import org.andreschnabel.jprojectinspector.metrics.project.CodeFrequency;
+import org.andreschnabel.jprojectinspector.metrics.project.Commits;
+import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOffline;
+import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOnline;
+import org.andreschnabel.jprojectinspector.metrics.project.FrontStats;
+import org.andreschnabel.jprojectinspector.metrics.project.Issues;
+import org.andreschnabel.jprojectinspector.metrics.project.ProjectAge;
+import org.andreschnabel.jprojectinspector.metrics.project.RecentCommits;
+import org.andreschnabel.jprojectinspector.metrics.project.Selectivity;
+import org.andreschnabel.jprojectinspector.metrics.project.TestContributors;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.RoughFunctionCoverage;
@@ -11,11 +30,6 @@ import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AsmHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
-
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 public class MetricsRegistry {
 

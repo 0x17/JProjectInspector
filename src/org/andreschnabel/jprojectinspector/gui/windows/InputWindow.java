@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.windows;
 
-import org.andreschnabel.jprojectinspector.gui.tables.ProjectTablePanel;
+import org.andreschnabel.jprojectinspector.gui.tables.InputProjectTablePanel;
 import org.andreschnabel.jprojectinspector.gui.listeners.QuitOnEscapeKeyListener;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
@@ -18,16 +18,20 @@ public class InputWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private final ProjectTablePanel projLstPanel;
+	private final InputProjectTablePanel projLstPanel;
 	
 	private JLabel ownerLbl, repoLbl;
 	
 	private final static int NCOLUMNS = 10;
+
 	private final JTextField ownerField = new JTextField(NCOLUMNS);
 	private final JTextField repoField = new JTextField(NCOLUMNS);
+
 	private KeyListener keyListener = new QuitOnEscapeKeyListener();
 	private DocumentListener docListener = new EmptyReposComboOnChange();
+
 	private SettingsWindow settingsWindow = new SettingsWindow();
+	private final MetricsSelectionWindow metricsSelectionWindow;
 
 	private final class EmptyReposComboOnChange implements DocumentListener {
 		@Override
@@ -62,13 +66,15 @@ public class InputWindow extends JFrame {
 		
 		initTopPane();
 
-		projLstPanel = new ProjectTablePanel();
+		projLstPanel = new InputProjectTablePanel();
 		add(projLstPanel, BorderLayout.CENTER);
 		
 		initBottomPane();
 		
 		setSize(750, 540);
 		setLocationRelativeTo(null);
+
+		metricsSelectionWindow = new MetricsSelectionWindow(projLstPanel);
 	}
 
 	private void initTopPane() {
@@ -84,20 +90,47 @@ public class InputWindow extends JFrame {
 		
 		topPane.add(repoLbl);
 		topPane.add(repoField);
-		
-		JButton addBtn = new JButton("Add");
-		addBtn.addActionListener(new ActionListener() {
+
+		initAddButton(topPane);
+		initQueryProjsButton(topPane);
+		initUserReposCombo(topPane);
+		initAddAllButton(topPane);
+
+		add(topPane, BorderLayout.NORTH);
+		addKeyListenerToPanel(topPane);
+	}
+
+	private void initUserReposCombo(JPanel topPane) {
+		userReposCombo.setEditable(false);
+		topPane.add(userReposCombo);
+		userReposCombo.setVisible(false);
+		userReposCombo.addItemListener(new ItemListener() {
 			@Override
-			public void actionPerformed(ActionEvent ae) {
+			public void itemStateChanged(ItemEvent ie) {
+				String repoName = (String)ie.getItem();
+				if(repoName != null && !repoName.isEmpty()) {
+					repoField.setText(repoName);
+				}
+			}
+		});
+	}
+
+	private void initAddAllButton(JPanel topPane) {
+		addAllBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 				String owner = ownerField.getText();
-				String repo = repoField.getText();
-				if(owner != null && !owner.isEmpty() && repo != null && !repo.isEmpty()) {
+				for(int i=0; i<userReposCombo.getItemCount(); i++) {
+					String repo = (String)userReposCombo.getItemAt(i);
 					projLstPanel.addProject(new Project(owner, repo));
 				}
 			}
 		});
-		topPane.add(addBtn);
-		
+		addAllBtn.setVisible(false);
+		topPane.add(addAllBtn);
+	}
+
+	private void initQueryProjsButton(JPanel topPane) {
 		JButton queryProjsBtn = new JButton("Query");
 		queryProjsBtn.addActionListener(new ActionListener() {
 			@Override
@@ -133,37 +166,23 @@ public class InputWindow extends JFrame {
 			}
 		});
 		topPane.add(queryProjsBtn);
-		
-		userReposCombo.setEditable(false);
-		topPane.add(userReposCombo);
-		userReposCombo.setVisible(false);
-		userReposCombo.addItemListener(new ItemListener() {			
-			@Override
-			public void itemStateChanged(ItemEvent ie) {
-				String repoName = (String)ie.getItem();
-				if(repoName != null && !repoName.isEmpty()) {
-					repoField.setText(repoName);
-				}
-			}
-		});
+	}
 
-		addAllBtn.addActionListener(new ActionListener() {
+	private void initAddButton(JPanel topPane) {
+		JButton addBtn = new JButton("Add");
+		addBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent ae) {
 				String owner = ownerField.getText();
-				for(int i=0; i<userReposCombo.getItemCount(); i++) {
-					String repo = (String)userReposCombo.getItemAt(i);
+				String repo = repoField.getText();
+				if(owner != null && !owner.isEmpty() && repo != null && !repo.isEmpty()) {
 					projLstPanel.addProject(new Project(owner, repo));
 				}
 			}
 		});
-		addAllBtn.setVisible(false);
-		topPane.add(addAllBtn);
-
-		add(topPane, BorderLayout.NORTH);
-		addKeyListenerToPanel(topPane);
+		topPane.add(addBtn);
 	}
-	
+
 	private void initBottomPane() {
 		JButton remOfflineBtn = new JButton("Remove offline");
 		remOfflineBtn.addActionListener(new ActionListener() {
@@ -174,6 +193,12 @@ public class InputWindow extends JFrame {
 		});
 
 		JButton startBtn = new JButton("Start");
+		startBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				metricsSelectionWindow.setVisible(true);
+			}
+		});
 
 		JButton configBtn = new JButton("Config");
 		configBtn.addActionListener(new ActionListener() {
@@ -197,10 +222,6 @@ public class InputWindow extends JFrame {
 		for(Component c : p.getComponents()) {
 			c.addKeyListener(keyListener);
 		}
-	}
-	
-	public static void main(String[] args) throws Exception {
-		new InputWindow().setVisible(true);
 	}
 	
 }
