@@ -53,7 +53,7 @@ public class UserScraper {
 	public static List<Project> scrapeProjects(String htmlStr) {
 		List<Project> projects = new LinkedList<Project>();
 
-		String regex = "<a href=\"/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/network\"";
+		String regex = "<a href=\"/([a-zA-Z0-9\\-\\_]+)/([a-zA-Z0-9\\-\\_]+)/network\"";
 		List<RegexHelpers.StringPair> projNames = RegexHelpers.batchMatchTwoGroups(regex, htmlStr);
 
 		for(RegexHelpers.StringPair projName : projNames) {

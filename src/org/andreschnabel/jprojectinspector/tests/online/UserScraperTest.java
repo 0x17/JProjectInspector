@@ -7,6 +7,8 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
 public class UserScraperTest {
 	@Test
 	public void testScrapeUser() throws Exception {
@@ -104,6 +106,19 @@ public class UserScraperTest {
 
 	@Test
 	public void testScrapeJoinDate() throws Exception {
+	}
 
+	@Test
+	public void testScrapeProjectsOfUser() throws Exception {
+		String user = "jlnr";
+		List<Project> projs = UserScraper.scrapeProjectsOfUser(user);
+		String[] repoNames = new String[] {
+				"gosu-forum", "gosu", "petermorphose", "releasy", "libmodbus", "mruby_demo_game", "lonesome_cowboy", "freegemas", "0hgame", "72hgdc_magic", "CptnCpp"
+		};
+		Project[] expectedProjs = new Project[repoNames.length];
+		for(int i = 0; i < repoNames.length; i++) {
+			expectedProjs[i] = new Project(user, repoNames[i]);
+		}
+		AssertHelpers.arrayEqualsLstOrderInsensitive(expectedProjs, projs);
 	}
 }
