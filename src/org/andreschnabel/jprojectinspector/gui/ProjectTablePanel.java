@@ -1,6 +1,8 @@
 package org.andreschnabel.jprojectinspector.gui;
 
+import org.andreschnabel.jprojectinspector.metrics.project.FrontStats;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
@@ -14,17 +16,37 @@ public class ProjectTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private final List<Project> projects = new ArrayList<Project>();
-	private final JTable projTable = new JTable(new ProjectTableModel(projects));
+	private List<Project> projects = new ArrayList<Project>();
+	private final ProjectTableModel tableModel = new ProjectTableModel(projects);
+	private final JTable projTable = new JTable(tableModel);
 
 	public ProjectTablePanel() {
 		JScrollPane scrollPane = new JScrollPane(projTable);
 		add(scrollPane);
 	}
 	
-	public void addProject(Project p) {
-		ListHelpers.addNoDups(projects, p);		
-		updateTable();
+	public void addProject(final Project p) {
+		AsyncTask<FrontStats> queryStatsTask = new AsyncTask<FrontStats>() {
+			@Override
+			public void onFinished(FrontStats stats) {
+				if(stats != null) {
+					tableModel.putInCache(p, stats);
+					updateTable();
+				}
+			}
+			@Override
+			public FrontStats doInBackground() {
+				FrontStats stats = null;
+				try {
+					stats = FrontStats.statsForProject(p);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				return stats;
+			}
+		};
+		ListHelpers.addNoDups(projects, p);
+		queryStatsTask.execute();
 	}
 	
 	public void updateTable() {
@@ -36,14 +58,25 @@ public class ProjectTablePanel extends JPanel {
 	}
 
 	public void removeOffline() {
-		Predicate<Project> isOffline = new Predicate<Project>() {
+		AsyncTask<List<Project>> determineOfflineProjsTask = new AsyncTask<List<Project>>() {
 			@Override
-			public boolean invoke(Project p) {
-				return !ProjectDownloader.isProjectOnline(p);
+			public void onFinished(List<Project> toRem) {
+				projects.removeAll(toRem);
+				updateTable();
+			}
+			@Override
+			public List<Project> doInBackground() {
+				Predicate<Project> isOffline = new Predicate<Project>() {
+					@Override
+					public boolean invoke(Project p) {
+						return !ProjectDownloader.isProjectOnline(p);
+					}
+				};
+				List<Project> toRem = ListHelpers.filter(isOffline, projects);
+				return toRem;
 			}
 		};
-		ListHelpers.removeAll(isOffline, projects);
-		updateTable();
+		determineOfflineProjsTask.execute();
 	}
 
 }

@@ -95,9 +95,12 @@ public class FrontStats {
 	public static FrontStats statsForProject(Project p) throws Exception {
 		FrontStats stats = new FrontStats();
 
-		String html = Helpers.loadHTMLUrlIntoStr("https://github.com/" + p.owner + "/" + p.repoName);
-		if(html.contains("<title>Page not found &middot; GitHub</title>"))
+		String html;
+		try {
+			html = Helpers.loadUrlIntoStr("https://github.com/" + p.owner + "/" + p.repoName);
+		} catch(Exception e) {
 			return stats;
+		}
 
 		stats.ncommits = getNumberOfCommits(html);
 		stats.nbranches = getNumberOfBranches(html);
@@ -143,4 +146,31 @@ public class FrontStats {
 		return extractNumWithRegex(html, "network\" class=\"social-count\">"+NLINESPACECRAP+"(\\d+)"+NLINESPACECRAP+"</a>");
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
+
+		FrontStats that = (FrontStats) o;
+
+		if(nbranches != that.nbranches) return false;
+		if(ncommits != that.ncommits) return false;
+		if(nforks != that.nforks) return false;
+		if(nissues != that.nissues) return false;
+		if(npullreqs != that.npullreqs) return false;
+		if(nstars != that.nstars) return false;
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = ncommits;
+		result = 31 * result + nbranches;
+		result = 31 * result + nforks;
+		result = 31 * result + nstars;
+		result = 31 * result + nissues;
+		result = 31 * result + npullreqs;
+		return result;
+	}
 }

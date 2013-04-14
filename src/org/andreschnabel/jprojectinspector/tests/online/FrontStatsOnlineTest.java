@@ -27,4 +27,10 @@ public class FrontStatsOnlineTest {
 		Assert.assertTrue(396 <= stats.nstars);
 		Assert.assertTrue(2 <= stats.npullreqs);
 	}
+
+	@Test
+	public void testOfflineProject() throws Exception {
+		FrontStats stats = FrontStats.statsForProject(new Project("0x17", "nonexistant"));
+		Assert.assertEquals(new FrontStats(), stats);
+	}
 }

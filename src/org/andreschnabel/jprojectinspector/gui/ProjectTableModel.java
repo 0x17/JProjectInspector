@@ -15,6 +15,10 @@ public class ProjectTableModel extends AbstractTableModel {
 	private final Map<Project, FrontStats> statsCache = new HashMap<Project, FrontStats>();
 	private final List<Project> projects;
 
+	public void putInCache(Project p, FrontStats stats) {
+		statsCache.put(p, stats);
+	}
+
 	public ProjectTableModel(final List<Project> projects) {
 		this.projects = projects;
 	}
@@ -47,16 +51,11 @@ public class ProjectTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Project p = projects.get(rowIndex);
-		FrontStats stats = null;
+		FrontStats stats;
 		if(statsCache.containsKey(p)) {
 			stats = statsCache.get(p);
 		} else {
-			try {
-				stats = FrontStats.statsForProject(p);
-				statsCache.put(p, stats);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
+			stats = new FrontStats();
 		}
 
 		switch(columnIndex) {
