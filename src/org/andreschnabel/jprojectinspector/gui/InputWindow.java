@@ -2,7 +2,9 @@ package org.andreschnabel.jprojectinspector.gui;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
+import org.andreschnabel.jprojectinspector.utilities.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
+import org.andreschnabel.jprojectinspector.utilities.TaskCallback;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -97,24 +99,36 @@ public class InputWindow extends JFrame {
 		queryProjsBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				String owner = ownerField.getText();
+				final String owner = ownerField.getText();
 				if(owner == null || owner.isEmpty()) return;
-				
 				userReposCombo.removeAll();
-				
-				if(ProjectDownloader.isUserOnline(owner)) {
-					try {
-						List<Project> scrapedProjs = UserScraper.scrapeProjectsOfUser(owner);
-						for(Project p : scrapedProjs) {
-							userReposCombo.addItem(p.repoName);
-						}						
-						userReposCombo.setVisible(true);
-						addAllBtn.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
+				TaskCallback<List<Project>> callback = new TaskCallback<List<Project>>() {
+					@Override
+					public void onFinished(List<Project> scrapedProjs) {
+						if(scrapedProjs != null) {
+							for(Project p : scrapedProjs) {
+								userReposCombo.addItem(p.repoName);
+							}
+							userReposCombo.setVisible(true);
+							addAllBtn.setVisible(true);
+						}
 					}
-				}
-				
+				};
+				AsyncTask<List<Project>> scrapeProjectsTask = new AsyncTask<List<Project>>(callback) {
+					@Override
+					public List<Project> doInBackground() {
+						List<Project> scrapedProjs = null;
+						if(ProjectDownloader.isUserOnline(owner)) {
+							try {
+								scrapedProjs = UserScraper.scrapeProjectsOfUser(owner);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+						return scrapedProjs;
+					}
+				};
+				scrapeProjectsTask.execute();
 			}
 		});
 		topPane.add(queryProjsBtn);
