@@ -4,7 +4,6 @@ import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 import org.andreschnabel.jprojectinspector.utilities.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.utilities.TaskCallback;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -102,19 +101,7 @@ public class InputWindow extends JFrame {
 				final String owner = ownerField.getText();
 				if(owner == null || owner.isEmpty()) return;
 				userReposCombo.removeAll();
-				TaskCallback<List<Project>> callback = new TaskCallback<List<Project>>() {
-					@Override
-					public void onFinished(List<Project> scrapedProjs) {
-						if(scrapedProjs != null) {
-							for(Project p : scrapedProjs) {
-								userReposCombo.addItem(p.repoName);
-							}
-							userReposCombo.setVisible(true);
-							addAllBtn.setVisible(true);
-						}
-					}
-				};
-				AsyncTask<List<Project>> scrapeProjectsTask = new AsyncTask<List<Project>>(callback) {
+				AsyncTask<List<Project>> scrapeProjectsTask = new AsyncTask<List<Project>>() {
 					@Override
 					public List<Project> doInBackground() {
 						List<Project> scrapedProjs = null;
@@ -126,6 +113,16 @@ public class InputWindow extends JFrame {
 							}
 						}
 						return scrapedProjs;
+					}
+					@Override
+					public void onFinished(List< Project > scrapedProjs) {
+						if(scrapedProjs != null) {
+							for(Project p : scrapedProjs) {
+								userReposCombo.addItem(p.repoName);
+							}
+							userReposCombo.setVisible(true);
+							addAllBtn.setVisible(true);
+						}
 					}
 				};
 				scrapeProjectsTask.execute();
