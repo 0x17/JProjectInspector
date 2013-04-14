@@ -13,19 +13,17 @@ import java.util.List;
 
 public class InputWindow extends JFrame {
 
-	private final class QuitOnEscapeKeyListener implements KeyListener {
-		@Override
-		public void keyTyped(KeyEvent arg0) {}
-		@Override
-		public void keyReleased(KeyEvent arg0) {}
-		@Override
-		public void keyPressed(KeyEvent ke) {
-			if(ke.getKeyCode() == 27) {
-				System.exit(0);
-			}
-		}
-	}
+	private static final long serialVersionUID = 1L;
 
+	private final ProjectTablePanel projLstPanel;
+	
+	private JLabel ownerLbl, repoLbl;
+	
+	private final static int NCOLUMNS = 10;
+	private final JTextField ownerField = new JTextField(NCOLUMNS);
+	private final JTextField repoField = new JTextField(NCOLUMNS);
+	private KeyListener keyListener = new QuitOnEscapeKeyListener();
+	private DocumentListener docListener = new EmptyReposComboOnChange();
 	private final class EmptyReposComboOnChange implements DocumentListener {
 		@Override
 		public void insertUpdate(DocumentEvent e) {
@@ -48,18 +46,6 @@ public class InputWindow extends JFrame {
 			addAllBtn.setVisible(false);
 		}
 	}
-
-	private static final long serialVersionUID = 1L;
-	private final ProjectTablePanel projLstPanel;
-	
-	private JLabel ownerLbl, repoLbl;
-	
-	private final static int NCOLUMNS = 10;
-	private final JTextField ownerField = new JTextField(NCOLUMNS);
-	private final JTextField repoField = new JTextField(NCOLUMNS);
-	private KeyListener keyListener = new QuitOnEscapeKeyListener();
-	private DocumentListener docListener = new EmptyReposComboOnChange();
-	
 	private final JComboBox<String> userReposCombo = new JComboBox<String>();
 
 	private JButton addAllBtn = new JButton("+All");

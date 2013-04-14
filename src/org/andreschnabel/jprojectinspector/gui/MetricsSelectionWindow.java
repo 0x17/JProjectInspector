@@ -10,6 +10,7 @@ public class MetricsSelectionWindow extends JFrame {
 
 	public MetricsSelectionWindow() {
 		super("Metrics Selection");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 
 		JLabel topLbl = new JLabel("Select metrics to measure. Try cmd+click and shift+click.");
