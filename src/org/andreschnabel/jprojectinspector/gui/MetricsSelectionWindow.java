@@ -1,12 +1,19 @@
 package org.andreschnabel.jprojectinspector.gui;
 
-import org.andreschnabel.jprojectinspector.metrics.MetricsRegistry;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+
+import org.andreschnabel.jprojectinspector.metrics.MetricsRegistry;
+
 public class MetricsSelectionWindow extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 
 	public MetricsSelectionWindow() {
 		super("Metrics Selection");

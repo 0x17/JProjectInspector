@@ -2,9 +2,15 @@ package org.andreschnabel.jprojectinspector.utilities.helpers;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,6 +41,21 @@ public class FileHelpers {
 		}
 
 		return files;
+	}
+	
+	public static Class<?> loadClassFromFile(File f) {
+		Class<?> cls = null;
+		try {
+		    URI uri = f.toURI();
+		    URL url = uri.toURL();
+		    URL[] urls = new URL[]{url};
+		    ClassLoader cl = new URLClassLoader(urls);
+		    String classname = f.getPath().replace("/", ".");
+			cls = cl.loadClass(classname);
+		} catch (MalformedURLException e) {
+		} catch (ClassNotFoundException e2) {
+		}
+		return cls;
 	}
 
 	public static void writeStrToFile(String str, String outFilename) throws IOException {
@@ -67,6 +88,19 @@ public class FileHelpers {
 		}
 		fr.close();
 		return builder.toString();
+	}
+	
+	public static byte[] readBytes(File file) throws Exception {
+		byte[] buf = new byte[(int)file.length()];
+		InputStream ios = null;
+		try {
+			ios = new FileInputStream(file);
+			ios.read(buf);
+		} finally {
+			if(ios != null)
+				ios.close();
+		}
+		return buf;
 	}
 
 	public static void rmDir(String destPath) throws Exception {
@@ -184,5 +218,9 @@ public class FileHelpers {
 			String[] parts = filename.split("\\.");
 			return parts[parts.length-1];
 		} else return "";
+	}
+
+	public static String trimExtension(File f) {
+		return f.getName().substring(0, f.getName().lastIndexOf("."));
 	}
 }

@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ProjectTableModel extends AbstractTableModel {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private final Map<Project, FrontStats> statsCache = new HashMap<Project, FrontStats>();
 	private final List<Project> projects;
 

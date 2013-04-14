@@ -9,6 +9,7 @@ import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.RoughFunctionCoverage;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
+import org.andreschnabel.jprojectinspector.utilities.helpers.AsmHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 import java.io.File;
@@ -24,6 +25,11 @@ public class MetricsRegistry {
 	static {
 		initOfflineMetrics();
 		initOnlineMetrics();
+		/*try {
+			initMetricsWithAsm(new File("bin/org/andreschnabel/jprojectinspector/metrics"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
 	}
 
 	private static void initOfflineMetrics() {
@@ -48,6 +54,19 @@ public class MetricsRegistry {
 		};
 		List<String> names = ListHelpers.map(metricToName, ms);
 		offlineMetrics = ListHelpers.zipMap(names, ms);
+	}
+
+	private static void initMetricsWithAsm(File path) throws Exception {
+		List<Class<?>> offmx = AsmHelpers.findClassesImplementingInterfaceInDir(path, "OfflineMetric");
+		for(Class<?> c : offmx) {
+			OfflineMetric om = (OfflineMetric)c.newInstance();
+			offlineMetrics.put(om.getName(), om);
+		}
+		List<Class<?>> onmx = AsmHelpers.findClassesImplementingInterfaceInDir(path, "OnlineMetric");
+		for(Class<?> c : onmx) {
+			OnlineMetric om = (OnlineMetric)c.newInstance();
+			onlineMetrics.put(om.getName(), om);
+		}
 	}
 
 	private static void initJavaSpecificOfflineMetrics(List<OfflineMetric> ms) {
