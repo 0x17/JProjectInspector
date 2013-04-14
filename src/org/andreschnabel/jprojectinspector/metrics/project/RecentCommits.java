@@ -29,6 +29,11 @@ public class RecentCommits implements OnlineMetric {
 	}
 
 	@Override
+	public String getName() {
+		return "nrecentcommits";
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return getNumOfRecentCommits(p);
 	}

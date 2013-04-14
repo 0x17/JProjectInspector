@@ -15,6 +15,11 @@ public final class ContributorsOnline implements OnlineMetric {
 	}
 
 	@Override
+	public String getName() {
+		return "ncontribsonline";
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return countNumContributors(p);
 	}

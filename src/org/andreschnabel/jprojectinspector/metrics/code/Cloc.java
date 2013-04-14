@@ -13,6 +13,11 @@ import java.util.regex.Pattern;
 public class Cloc implements OfflineMetric {
 
 	@Override
+	public String getName() {
+		return "loc";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return ClocResult.accumResults(determineLinesOfCode(repoRoot)).codeLines;
 	}

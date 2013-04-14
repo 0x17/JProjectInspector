@@ -24,6 +24,11 @@ public class CodeFrequency implements OnlineMetric {
 	}
 
 	@Override
+	public String getName() {
+		return "codefreq";
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return countCodeFrequencyForProj(p);
 	}

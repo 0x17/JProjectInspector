@@ -21,6 +21,11 @@ public class TestLinesOfCode implements OfflineMetric {
 	}
 
 	@Override
+	public String getName() {
+		return "tloc";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return countTestLocHeuristic(repoRoot);
 	}

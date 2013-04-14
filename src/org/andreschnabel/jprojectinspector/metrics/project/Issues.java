@@ -36,6 +36,11 @@ public class Issues implements OnlineMetric {
 	}
 
 	@Override
+	public String getName() {
+		return "nissues";
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return getNumberOfIssues(p);
 	}

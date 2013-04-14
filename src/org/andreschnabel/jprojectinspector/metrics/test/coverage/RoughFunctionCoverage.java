@@ -71,6 +71,11 @@ public class RoughFunctionCoverage implements OfflineMetric {
 	}
 
 	@Override
+	public String getName() {
+		return "cov";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		Map<String, Float> coverages = approxFunctionCoverage(repoRoot);
 		String firstKey = null;

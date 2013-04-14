@@ -55,6 +55,11 @@ public class Selectivity implements OnlineMetric {
 	}
 
 	@Override
+	public String getName() {
+		return "selectivity";
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return getSelectivity(p);
 	}

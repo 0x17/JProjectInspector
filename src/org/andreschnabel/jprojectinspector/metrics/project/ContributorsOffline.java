@@ -7,6 +7,11 @@ import java.io.File;
 
 public class ContributorsOffline implements OfflineMetric {
 	@Override
+	public String getName() {
+		return "ncontribs";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return GitHelpers.numContribs(repoRoot);
 	}

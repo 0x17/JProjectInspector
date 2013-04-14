@@ -11,12 +11,22 @@ public class FrontStats {
 
 	public static class RoughCommits implements OnlineMetric {
 		@Override
+		public String getName() {
+			return "nroughcommits";
+		}
+
+		@Override
 		public float measure(Project p) throws Exception {
 			return statsForProject(p).ncommits;
 		}
 	}
 
 	public static class Branches implements OnlineMetric {
+		@Override
+		public String getName() {
+			return "nbranches";
+		}
+
 		@Override
 		public float measure(Project p) throws Exception {
 			return statsForProject(p).nbranches;
@@ -26,12 +36,21 @@ public class FrontStats {
 	public static class Forks implements OnlineMetric {
 
 		@Override
+		public String getName() {
+			return "nforks";
+		}
+
+		@Override
 		public float measure(Project p) throws Exception {
 			return statsForProject(p).nforks;
 		}
 	}
 
 	public static class Stars implements OnlineMetric {
+		@Override
+		public String getName() {
+			return "nstars";
+		}
 
 		@Override
 		public float measure(Project p) throws Exception {
@@ -40,6 +59,10 @@ public class FrontStats {
 	}
 
 	public static class Issues implements OnlineMetric {
+		@Override
+		public String getName() {
+			return "nissues2";
+		}
 
 		@Override
 		public float measure(Project p) throws Exception {
@@ -48,6 +71,10 @@ public class FrontStats {
 	}
 
 	public static class PullRequests implements OnlineMetric {
+		@Override
+		public String getName() {
+			return "npullrequests";
+		}
 
 		@Override
 		public float measure(Project p) throws Exception {

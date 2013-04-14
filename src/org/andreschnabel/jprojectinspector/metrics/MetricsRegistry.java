@@ -6,17 +6,18 @@ import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.RoughFunctionCoverage;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.Transform;
+import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class MetricsRegistry {
 
-	public final static Map<String, OfflineMetric> offlineMetrics = new HashMap<String, OfflineMetric>();
-	public final static Map<String, OnlineMetric> onlineMetrics = new HashMap<String, OnlineMetric>();
+	public static Map<String, OfflineMetric> offlineMetrics;
+	public static Map<String, OnlineMetric> onlineMetrics;
 
 	static {
 		initOfflineMetrics();
@@ -24,28 +25,54 @@ public class MetricsRegistry {
 	}
 
 	private static void initOfflineMetrics() {
-		offlineMetrics.put("loc", new Cloc());
-		offlineMetrics.put("tloc", new TestLinesOfCode());
-		offlineMetrics.put("cov", new RoughFunctionCoverage());
-		offlineMetrics.put("ntestcontribs", new TestContributors());
-		offlineMetrics.put("containstest", new UnitTestDetector());
-		offlineMetrics.put("ncontribs", new ContributorsOffline());
-		offlineMetrics.put("ncommits", new Commits());
+		List<OfflineMetric> ms = new LinkedList<OfflineMetric>();
+		ms.add(new Cloc());
+		ms.add(new TestLinesOfCode());
+		ms.add(new RoughFunctionCoverage());
+		ms.add(new TestContributors());
+		ms.add(new UnitTestDetector());
+		ms.add(new ContributorsOffline());
+		ms.add(new Commits());
+
+		// Add more offline metrics here!
+		// ms.add(new MyMetric());
+
+		Transform<OfflineMetric, String> metricToName = new Transform<OfflineMetric, String>() {
+			@Override
+			public String invoke(OfflineMetric m) {
+				return m.getName();
+			}
+		};
+		List<String> names = ListHelpers.map(metricToName, ms);
+		offlineMetrics = ListHelpers.zipMap(names, ms);
 	}
 
 	private static void initOnlineMetrics() {
-		onlineMetrics.put("ncontribsonline", new ContributorsOnline());
-		onlineMetrics.put("nissues", new Issues());
-		onlineMetrics.put("nbranches", new FrontStats.Branches());
-		onlineMetrics.put("nroughcommits", new FrontStats.RoughCommits());
-		onlineMetrics.put("nissues2", new FrontStats.Issues());
-		onlineMetrics.put("nstars", new FrontStats.Stars());
-		onlineMetrics.put("npullreqs", new FrontStats.PullRequests());
-		onlineMetrics.put("nforks", new FrontStats.Forks());
-		onlineMetrics.put("codefreq", new CodeFrequency());
-		onlineMetrics.put("selectivity", new Selectivity());
-		onlineMetrics.put("projectage", new ProjectAge());
-		onlineMetrics.put("nrecentcommits", new RecentCommits());
+		List<OnlineMetric> ms = new LinkedList<OnlineMetric>();
+		ms.add(new ContributorsOnline());
+		ms.add(new Issues());
+		ms.add(new FrontStats.Branches());
+		ms.add(new FrontStats.RoughCommits());
+		ms.add(new FrontStats.Issues());
+		ms.add(new FrontStats.Stars());
+		ms.add(new FrontStats.PullRequests());
+		ms.add(new FrontStats.Forks());
+		ms.add(new CodeFrequency());
+		ms.add(new Selectivity());
+		ms.add(new ProjectAge());
+		ms.add(new RecentCommits());
+
+		// Add more online metrics here!
+		// ms.add(new MyMetric());
+
+		Transform<OnlineMetric, String> metricToName = new Transform<OnlineMetric, String>() {
+			@Override
+			public String invoke(OnlineMetric m) {
+				return m.getName();
+			}
+		};
+		List<String> names = ListHelpers.map(metricToName, ms);
+		onlineMetrics = ListHelpers.zipMap(names, ms);
 	}
 
 	public static List<String> listAllMetrics() {
@@ -53,6 +80,10 @@ public class MetricsRegistry {
 		allMetrics.addAll(onlineMetrics.keySet());
 		allMetrics.addAll(offlineMetrics.keySet());
 		return allMetrics;
+	}
+
+	public static MetricType getTypeOfMetric(String metric) {
+		return onlineMetrics.containsKey(metric) ? MetricType.Online : MetricType.Offline;
 	}
 
 	public static float measureOnlineMetric(String metric, Project p) throws Exception {

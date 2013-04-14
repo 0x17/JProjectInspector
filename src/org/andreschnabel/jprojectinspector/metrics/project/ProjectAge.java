@@ -23,6 +23,11 @@ public class ProjectAge implements OnlineMetric {
 	}
 
 	@Override
+	public String getName() {
+		return "projectage";
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return getProjectAge(p);
 	}

@@ -56,6 +56,11 @@ public class TestContributors implements OfflineMetric {
 	}
 
 	@Override
+	public String getName() {
+		return "ntestcontribs";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return countNumTestContributors(repoRoot);
 	}

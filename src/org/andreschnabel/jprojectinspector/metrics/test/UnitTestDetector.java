@@ -145,6 +145,11 @@ public class UnitTestDetector implements OfflineMetric {
 	}
 
 	@Override
+	public String getName() {
+		return "containstest";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return containsTest(repoRoot) ? 1.0f : 0.0f;
 	}
