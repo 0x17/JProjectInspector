@@ -110,4 +110,9 @@ public class ListHelpers {
 		}
 		return mapping;
 	}
+
+	public static <T> void removeAll(Predicate<T> pred, List<T> lst) {
+		List<T> toRem = ListHelpers.filter(pred, lst);
+		lst.removeAll(toRem);
+	}
 }

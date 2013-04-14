@@ -69,4 +69,10 @@ public class UserScraper {
 		return RegexHelpers.batchMatchOneGroup(regex, htmlStr).get(0);
 	}
 
+	public static List<Project> scrapeProjectsOfUser(String user) throws Exception {
+		String reposHtml = Helpers.loadUrlIntoStr("https://github.com/" + user + "?tab=repositories");
+		List<Project> projs = scrapeProjects(reposHtml);
+		return projs;		
+	}
+
 }

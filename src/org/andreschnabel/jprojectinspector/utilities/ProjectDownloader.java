@@ -1,7 +1,5 @@
 package org.andreschnabel.jprojectinspector.utilities;
 
-import java.io.File;
-
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
@@ -9,6 +7,8 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
+
+import java.io.File;
 
 public final class ProjectDownloader {
 	
@@ -32,6 +32,16 @@ public final class ProjectDownloader {
 			return false;
 		}
 		return projHtml != null && !projHtml.contains("<title>Page not found &middot; GitHub</title>");
+	}
+	
+	public static boolean isUserOnline(String user) {
+		String userHtml;
+		try {
+			userHtml = Helpers.loadHTMLUrlIntoStr("https://github.com/"+user);
+		} catch(Exception e) {
+			return false;
+		}
+		return userHtml != null && !userHtml.contains("<title>Page not found &middot; GitHub</title>");
 	}
 
 	public static void deleteProject(Project p) throws Exception {
