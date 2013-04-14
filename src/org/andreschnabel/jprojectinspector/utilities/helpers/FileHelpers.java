@@ -1,26 +1,18 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.LinkedList;
-import java.util.List;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.Tautology;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.*;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.LinkedList;
+import java.util.List;
 
 public class FileHelpers {
 
@@ -43,17 +35,16 @@ public class FileHelpers {
 		return files;
 	}
 	
-	public static Class<?> loadClassFromFile(File f) {
+	public static Class<?> loadClassFromFile(File f, String classname) {
 		Class<?> cls = null;
 		try {
 		    URI uri = f.toURI();
 		    URL url = uri.toURL();
 		    URL[] urls = new URL[]{url};
 		    ClassLoader cl = new URLClassLoader(urls);
-		    String classname = f.getPath().replace("/", ".");
 			cls = cl.loadClass(classname);
-		} catch (MalformedURLException e) {
-		} catch (ClassNotFoundException e2) {
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		return cls;
 	}

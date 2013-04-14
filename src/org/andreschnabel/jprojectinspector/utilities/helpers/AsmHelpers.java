@@ -1,13 +1,13 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.andreschnabel.jprojectinspector.utilities.Transform;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
+
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
 public class AsmHelpers {
 	
@@ -58,7 +58,8 @@ public class AsmHelpers {
 		Transform<File, Class<?>> fileToClass = new Transform<File, Class<?>>() {
 			@Override
 			public Class<?> invoke(File f) {
-				return FileHelpers.loadClassFromFile(f);
+				String classname = f.getName().replace("/", ".");
+				return FileHelpers.loadClassFromFile(f, classname);
 			}
 		};
 		return ListHelpers.map(fileToClass, findClassFilesImplementingInterfaceInDir(dir, ifaceName));

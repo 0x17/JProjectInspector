@@ -48,14 +48,6 @@ public class ProjectTablePanel extends JPanel {
 		ListHelpers.addNoDups(projects, p);
 		queryStatsTask.execute();
 	}
-	
-	public void updateTable() {
-		projTable.updateUI();
-	}
-
-	public List<Project> getProjects() {
-		return projects;
-	}
 
 	public void removeOffline() {
 		AsyncTask<List<Project>> determineOfflineProjsTask = new AsyncTask<List<Project>>() {
@@ -77,6 +69,14 @@ public class ProjectTablePanel extends JPanel {
 			}
 		};
 		determineOfflineProjsTask.execute();
+	}
+
+	public void updateTable() {
+		projTable.updateUI();
+	}
+
+	public List<Project> getProjects() {
+		return projects;
 	}
 
 }
