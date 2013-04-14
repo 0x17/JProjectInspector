@@ -1,15 +1,10 @@
-package org.andreschnabel.jprojectinspector.gui;
-
-import java.awt.BorderLayout;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
+package org.andreschnabel.jprojectinspector.gui.windows;
 
 import org.andreschnabel.jprojectinspector.metrics.MetricsRegistry;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
 
 public class MetricsSelectionWindow extends JFrame {
 

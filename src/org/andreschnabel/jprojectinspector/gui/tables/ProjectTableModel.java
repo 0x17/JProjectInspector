@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.gui;
+package org.andreschnabel.jprojectinspector.gui.tables;
 
 import org.andreschnabel.jprojectinspector.metrics.project.FrontStats;
 import org.andreschnabel.jprojectinspector.model.Project;

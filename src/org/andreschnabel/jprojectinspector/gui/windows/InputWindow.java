@@ -1,5 +1,7 @@
-package org.andreschnabel.jprojectinspector.gui;
+package org.andreschnabel.jprojectinspector.gui.windows;
 
+import org.andreschnabel.jprojectinspector.gui.tables.ProjectTablePanel;
+import org.andreschnabel.jprojectinspector.gui.listeners.QuitOnEscapeKeyListener;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 import org.andreschnabel.jprojectinspector.utilities.AsyncTask;
@@ -25,6 +27,8 @@ public class InputWindow extends JFrame {
 	private final JTextField repoField = new JTextField(NCOLUMNS);
 	private KeyListener keyListener = new QuitOnEscapeKeyListener();
 	private DocumentListener docListener = new EmptyReposComboOnChange();
+	private SettingsWindow settingsWindow = new SettingsWindow();
+
 	private final class EmptyReposComboOnChange implements DocumentListener {
 		@Override
 		public void insertUpdate(DocumentEvent e) {
@@ -168,10 +172,23 @@ public class InputWindow extends JFrame {
 				projLstPanel.removeOffline();
 			}
 		});
-		JButton startBtn = new JButton("Start");		
+
+		JButton startBtn = new JButton("Start");
+
+		JButton configBtn = new JButton("Config");
+		configBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				settingsWindow.setVisible(true);
+			}
+		});
+
 		JPanel bottomPane = new JPanel(new FlowLayout());
+
+		bottomPane.add(configBtn);
 		bottomPane.add(remOfflineBtn);
 		bottomPane.add(startBtn);
+
 		add(bottomPane, BorderLayout.SOUTH);
 		addKeyListenerToPanel(bottomPane);
 	}
@@ -182,7 +199,7 @@ public class InputWindow extends JFrame {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		new InputWindow().setVisible(true);
 	}
 	

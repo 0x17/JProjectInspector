@@ -1,5 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
+import org.andreschnabel.jprojectinspector.model.CsvData;
+
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +12,6 @@ import java.util.List;
  * '([col11 col12 ... col1n] ... [colm1 colm2 ... colmn])
  */
 public class CsvHelpers {
-	
 	public static int countColumns(String line) {
 		int numColums = 1;
 		boolean escaped = false;
@@ -28,20 +29,16 @@ public class CsvHelpers {
 		return numColums;
 	}
 	
-	public static List<String[]> parseCsv(File f) throws Exception {
-		return parseCsv(FileHelpers.readEntireFile(f));
-	}
-	
-	public static String determineFirstLine(String content) {
+	public static String firstLineOfStr(String content) {
 		return content.contains("\n") ? content.substring(0, content.indexOf("\n")) : content;
 	}
-	
-	public static List<String[]> parseCsv(String content) throws Exception {
+
+	public static CsvData parseCsv(String content) throws Exception {
 		if(!content.endsWith("\n"))
 			content += "\n";
 		
 		List<String[]> rows = new LinkedList<String[]>();	
-		int numColumns = countColumns(determineFirstLine(content));
+		int numColumns = countColumns(firstLineOfStr(content));
 		
 		String[] curRow = new String[numColumns];
 		int curColumn = 0;
@@ -79,7 +76,10 @@ public class CsvHelpers {
 			}
 		}
 		
-		return rows;
+		return new CsvData(rows);
 	}
-	
+
+	public static CsvData parseCsv(File file) throws Exception {
+		return parseCsv(FileHelpers.readEntireFile(file));
+	}
 }
