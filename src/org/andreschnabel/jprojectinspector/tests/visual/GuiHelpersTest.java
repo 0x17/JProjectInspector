@@ -5,6 +5,7 @@ import org.andreschnabel.jprojectinspector.utilities.TestCallback;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GuiHelpersTest extends VisualTest {
 	@Override
@@ -24,6 +25,38 @@ public class GuiHelpersTest extends VisualTest {
 						frm.add(new JButton("Test"));
 						waitForFrameToClose(frm);
 						UIManager.setLookAndFeel(laf);
+					}
+				},
+				new TestCallback() {
+					@Override
+					public String getDescription() {
+						return "fillHorizontalConstraints";
+					}
+
+					@Override
+					public void invoke() throws Exception {
+						JFrame frm = getTestFrame();
+						frm.setLayout(new GridBagLayout());
+						JPanel pane = new JPanel();
+						pane.setBackground(Color.RED);
+						frm.add(pane, GuiHelpers.fillHorizontalConstraints());
+						waitForFrameToClose(frm);
+					}
+				},
+				new TestCallback() {
+					@Override
+					public String getDescription() {
+						return "fillBothConstraints";
+					}
+
+					@Override
+					public void invoke() throws Exception {
+						JFrame frm = getTestFrame();
+						frm.setLayout(new GridBagLayout());
+						JPanel pane = new JPanel();
+						pane.setBackground(Color.RED);
+						frm.add(pane, GuiHelpers.fillBothConstraints());
+						waitForFrameToClose(frm);
 					}
 				}
 		};

@@ -54,6 +54,9 @@ public abstract class VisualTest {
 	}
 
 	protected static void waitForFrameToClose(final JFrame frame) throws Exception {
+		frame.invalidate();
+		frame.validate();
+		frame.repaint();
 		Runnable waitRunner = new Runnable() {
 			@Override
 			public void run() {
