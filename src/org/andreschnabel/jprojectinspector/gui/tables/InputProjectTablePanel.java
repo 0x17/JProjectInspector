@@ -8,6 +8,7 @@ import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class InputProjectTablePanel extends JPanel {
 	private final JTable projTable = new JTable(tableModel);
 
 	public InputProjectTablePanel() {
+		setLayout(new GridLayout(1,1));
 		JScrollPane scrollPane = new JScrollPane(projTable);
 		add(scrollPane);
 	}

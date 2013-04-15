@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.gui.windows;
+package org.andreschnabel.jprojectinspector.gui.tables;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 

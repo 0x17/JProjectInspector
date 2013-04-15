@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.windows;
 
+import org.andreschnabel.jprojectinspector.gui.tables.MetricResultTableModel;
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
 import org.andreschnabel.jprojectinspector.metrics.MetricsRegistry;
 import org.andreschnabel.jprojectinspector.model.Project;
