@@ -23,16 +23,15 @@ public class MetricsRegistry {
 	public static Map<String, OnlineMetric> onlineMetrics;
 
 	static {
-		initOfflineMetrics();
-		initOnlineMetrics();
-		/*try {
-			initMetricsWithAsm(new File("bin/org/andreschnabel/jprojectinspector/metrics"));
-		} catch (Exception e) {
+		try {
+			initOfflineMetrics();
+			initOnlineMetrics();
+		} catch(Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
 
-	private static void initOfflineMetrics() {
+	private static void initOfflineMetrics() throws Exception {
 		List<OfflineMetric> ms = new LinkedList<OfflineMetric>();
 		ms.add(new Cloc());
 		ms.add(new TestLinesOfCode());
@@ -45,6 +44,8 @@ public class MetricsRegistry {
 
 		// Add more offline metrics here!
 		// ms.add(new MyMetric());
+
+		ms.addAll(MetricPlugins.loadOfflineMetricPlugins(new File("plugins")));
 
 		Transform<OfflineMetric, String> metricToName = new Transform<OfflineMetric, String>() {
 			@Override
@@ -79,7 +80,7 @@ public class MetricsRegistry {
 		ms.add(new SimpleJavaTestCoverage());
 	}
 
-	private static void initOnlineMetrics() {
+	private static void initOnlineMetrics() throws Exception {
 		List<OnlineMetric> ms = new LinkedList<OnlineMetric>();
 		ms.add(new ContributorsOnline());
 		ms.add(new Issues());
@@ -96,6 +97,8 @@ public class MetricsRegistry {
 
 		// Add more online metrics here!
 		// ms.add(new MyMetric());
+
+		ms.addAll(MetricPlugins.loadOnlineMetricPlugins(new File("plugins")));
 
 		Transform<OnlineMetric, String> metricToName = new Transform<OnlineMetric, String>() {
 			@Override

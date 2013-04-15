@@ -76,6 +76,11 @@ public class RoughFunctionCoverage implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Number of called methods divided by number of declared methods for JavaScript, Java, Ruby, Python. Otherweise TLOC/LOC.";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		Map<String, Float> coverages = approxFunctionCoverage(repoRoot);
 		String firstKey = null;
