@@ -31,6 +31,7 @@ public class MetricsSelectionWindow extends JFrame {
 		measureBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
 				MetricResultsWindow metricResultsWindow = new MetricResultsWindow(projLstPanel.getProjects(), getSelectedMetrics());
 				metricResultsWindow.setVisible(true);
 			}
@@ -40,6 +41,7 @@ public class MetricsSelectionWindow extends JFrame {
 		setSize(400, 300);
 		setResizable(false);
 		setLocationRelativeTo(null);
+		setAlwaysOnTop(true);
 	}
 
 	public List<String> getSelectedMetrics() {

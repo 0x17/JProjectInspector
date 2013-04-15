@@ -6,7 +6,9 @@ import org.andreschnabel.jprojectinspector.metrics.MetricsRegistry;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.AsyncTaskBatch;
+import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
+import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +18,7 @@ import java.util.List;
 public class MetricResultsWindow extends JFrame {
 
 	private AsyncTaskBatch<Float[]> batch;
+	private JTable resultTable;
 
 	public MetricResultsWindow(List<Project> projects, final List<String> metricNames) {
 		super("Metric results");
@@ -30,13 +33,14 @@ public class MetricResultsWindow extends JFrame {
 		setLocationRelativeTo(null);
 
 		initAndExecTaskBatch(projects, metricNames, mrtm);
+		setAlwaysOnTop(true);
 	}
 
 	private void initAndAddTable(MetricResultTableModel mrtm) {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = gbc.weighty = 1;
-		JTable resultTable = new JTable(mrtm);
+		resultTable = new JTable(mrtm);
 		add(new JScrollPane(resultTable), gbc);
 	}
 
@@ -47,15 +51,26 @@ public class MetricResultsWindow extends JFrame {
 				@Override
 				public void onFinished(Float[] results) {
 					mrtm.addResultTupleToCache(p, results);
+					resultTable.updateUI();
 				}
 
 				@Override
 				public Float[] doInBackground() {
 					Float[] results = new Float[metricNames.size()];
 
+					Predicate<String> isOfflineMetric = new Predicate<String>() {
+						@Override
+						public boolean invoke(String metricName) {
+							return MetricsRegistry.getTypeOfMetric(metricName) == MetricType.Offline;
+						}
+					};
+					boolean hasOfflineMetric = ListHelpers.contains(isOfflineMetric, metricNames);
+
 					File repoPath = null;
 					try {
-						repoPath = ProjectDownloader.loadProject(p);
+						if(hasOfflineMetric) {
+							repoPath = ProjectDownloader.loadProject(p);
+						}
 					} catch(Exception e)  {
 						e.printStackTrace();
 					}
@@ -69,11 +84,11 @@ public class MetricResultsWindow extends JFrame {
 							switch(type) {
 								case Offline:
 									if(repoPath != null) {
-										MetricsRegistry.measureOfflineMetric(metricName, repoPath);
+										result = MetricsRegistry.measureOfflineMetric(metricName, repoPath);
 									}
 									break;
 								case Online:
-									MetricsRegistry.measureOnlineMetric(metricName, p);
+									result = MetricsRegistry.measureOnlineMetric(metricName, p);
 									break;
 							}
 						} catch(Exception e) {
@@ -91,7 +106,7 @@ public class MetricResultsWindow extends JFrame {
 						}
 					}
 
-					return new Float[0];
+					return results;
 				}
 			});
 		}

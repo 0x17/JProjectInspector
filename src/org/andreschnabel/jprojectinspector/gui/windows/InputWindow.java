@@ -199,7 +199,9 @@ public class InputWindow extends JFrame {
 		startBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				metricsSelectionWindow.setVisible(true);
+				if(!projLstPanel.getProjects().isEmpty()) {
+					metricsSelectionWindow.setVisible(true);
+				}
 			}
 		});
 
@@ -212,6 +214,9 @@ public class InputWindow extends JFrame {
 		});
 
 		JPanel bottomPane = new JPanel(new FlowLayout());
+
+		bottomPane.add(new JButton("Import"));
+		bottomPane.add(new JButton("Export"));
 
 		bottomPane.add(configBtn);
 		bottomPane.add(remOfflineBtn);

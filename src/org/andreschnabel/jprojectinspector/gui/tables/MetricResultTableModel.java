@@ -53,19 +53,18 @@ public class MetricResultTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Project p = projects.get(rowIndex);
 
-		float result;
-		if(resultsCache.containsKey(p)) {
-			result = resultsCache.get(p)[columnIndex-2];
-		} else {
-			result = 0.0f;
-		}
-
 		switch(columnIndex) {
 			case 0:
 				return p.owner;
 			case 1:
 				return p.repoName;
 			default:
+				float result;
+				if(resultsCache.containsKey(p)) {
+					result = resultsCache.get(p)[columnIndex-2];
+				} else {
+					result = 0.0f;
+				}
 				return String.valueOf(result);
 		}
 	}
