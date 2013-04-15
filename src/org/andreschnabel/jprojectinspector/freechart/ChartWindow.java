@@ -1,11 +1,10 @@
 package org.andreschnabel.jprojectinspector.freechart;
 
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
-
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class ChartWindow extends JFrame {
 
@@ -18,6 +17,7 @@ public class ChartWindow extends JFrame {
 		cp.setPreferredSize(dim);
 		setContentPane(cp);
 		pack();
+		setLocationRelativeTo(null);
 	}
 
 }
