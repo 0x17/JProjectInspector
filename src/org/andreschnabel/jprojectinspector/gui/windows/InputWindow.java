@@ -1,11 +1,12 @@
 package org.andreschnabel.jprojectinspector.gui.windows;
 
-import org.andreschnabel.jprojectinspector.gui.tables.InputProjectTablePanel;
 import org.andreschnabel.jprojectinspector.gui.listeners.QuitOnEscapeKeyListener;
+import org.andreschnabel.jprojectinspector.gui.tables.InputProjectTablePanel;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 import org.andreschnabel.jprojectinspector.utilities.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
+import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -18,7 +19,7 @@ public class InputWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private final InputProjectTablePanel projLstPanel;
+	private InputProjectTablePanel projLstPanel;
 	
 	private JLabel ownerLbl, repoLbl;
 	
@@ -62,13 +63,10 @@ public class InputWindow extends JFrame {
 	public InputWindow() {
 		super("Inputs");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new BorderLayout(0,0));
+		setLayout(new GridBagLayout());
 		
 		initTopPane();
-
-		projLstPanel = new InputProjectTablePanel();
-		add(projLstPanel, BorderLayout.CENTER);
-		
+		initMiddlePane();
 		initBottomPane();
 		
 		setSize(750, 540);
@@ -80,14 +78,14 @@ public class InputWindow extends JFrame {
 	private void initTopPane() {
 		JPanel topPane = new JPanel();
 		topPane.setLayout(new FlowLayout());
-		
+
 		ownerLbl = new JLabel("owner:");
 		topPane.add(ownerLbl);
 		topPane.add(ownerField);
 		ownerField.getDocument().addDocumentListener(docListener);
-		
-		repoLbl = new JLabel("repo:");		
-		
+
+		repoLbl = new JLabel("repo:");
+
 		topPane.add(repoLbl);
 		topPane.add(repoField);
 
@@ -96,8 +94,62 @@ public class InputWindow extends JFrame {
 		initUserReposCombo(topPane);
 		initAddAllButton(topPane);
 
-		add(topPane, BorderLayout.NORTH);
+		add(topPane, GuiHelpers.fillHorizontalConstraints());
 		addKeyListenerToPanel(topPane);
+	}
+
+	private void initAddButton(JPanel topPane) {
+		JButton addBtn = new JButton("Add");
+		addBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				String owner = ownerField.getText();
+				String repo = repoField.getText();
+				if(owner != null && !owner.isEmpty() && repo != null && !repo.isEmpty()) {
+					projLstPanel.addProject(new Project(owner, repo));
+				}
+			}
+		});
+		topPane.add(addBtn);
+	}
+
+	private void initQueryProjsButton(JPanel topPane) {
+		JButton queryProjsBtn = new JButton("Query");
+		queryProjsBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				final String owner = ownerField.getText();
+				if(owner == null || owner.isEmpty()) return;
+				userReposCombo.removeAll();
+				AsyncTask<List<Project>> scrapeProjectsTask = new AsyncTask<List<Project>>() {
+					@Override
+					public List<Project> doInBackground() {
+						List<Project> scrapedProjs = null;
+						if(ProjectDownloader.isUserOnline(owner)) {
+							try {
+								scrapedProjs = UserScraper.scrapeProjectsOfUser(owner);
+							} catch(Exception e) {
+								e.printStackTrace();
+							}
+						}
+						return scrapedProjs;
+					}
+
+					@Override
+					public void onFinished(List<Project> scrapedProjs) {
+						if(scrapedProjs != null) {
+							for(Project p : scrapedProjs) {
+								userReposCombo.addItem(p.repoName);
+							}
+							userReposCombo.setVisible(true);
+							addAllBtn.setVisible(true);
+						}
+					}
+				};
+				scrapeProjectsTask.execute();
+			}
+		});
+		topPane.add(queryProjsBtn);
 	}
 
 	private void initUserReposCombo(JPanel topPane) {
@@ -107,7 +159,7 @@ public class InputWindow extends JFrame {
 		userReposCombo.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent ie) {
-				String repoName = (String)ie.getItem();
+				String repoName = (String) ie.getItem();
 				if(repoName != null && !repoName.isEmpty()) {
 					repoField.setText(repoName);
 				}
@@ -130,57 +182,9 @@ public class InputWindow extends JFrame {
 		topPane.add(addAllBtn);
 	}
 
-	private void initQueryProjsButton(JPanel topPane) {
-		JButton queryProjsBtn = new JButton("Query");
-		queryProjsBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-				final String owner = ownerField.getText();
-				if(owner == null || owner.isEmpty()) return;
-				userReposCombo.removeAll();
-				AsyncTask<List<Project>> scrapeProjectsTask = new AsyncTask<List<Project>>() {
-					@Override
-					public List<Project> doInBackground() {
-						List<Project> scrapedProjs = null;
-						if(ProjectDownloader.isUserOnline(owner)) {
-							try {
-								scrapedProjs = UserScraper.scrapeProjectsOfUser(owner);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-						return scrapedProjs;
-					}
-					@Override
-					public void onFinished(List< Project > scrapedProjs) {
-						if(scrapedProjs != null) {
-							for(Project p : scrapedProjs) {
-								userReposCombo.addItem(p.repoName);
-							}
-							userReposCombo.setVisible(true);
-							addAllBtn.setVisible(true);
-						}
-					}
-				};
-				scrapeProjectsTask.execute();
-			}
-		});
-		topPane.add(queryProjsBtn);
-	}
-
-	private void initAddButton(JPanel topPane) {
-		JButton addBtn = new JButton("Add");
-		addBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-				String owner = ownerField.getText();
-				String repo = repoField.getText();
-				if(owner != null && !owner.isEmpty() && repo != null && !repo.isEmpty()) {
-					projLstPanel.addProject(new Project(owner, repo));
-				}
-			}
-		});
-		topPane.add(addBtn);
+	private void initMiddlePane() {
+		projLstPanel = new InputProjectTablePanel();
+		add(projLstPanel, GuiHelpers.fillBothConstraints());
 	}
 
 	private void initBottomPane() {
@@ -214,7 +218,7 @@ public class InputWindow extends JFrame {
 		bottomPane.add(remOfflineBtn);
 		bottomPane.add(startBtn);
 
-		add(bottomPane, BorderLayout.SOUTH);
+		add(bottomPane, GuiHelpers.fillHorizontalConstraints());
 		addKeyListenerToPanel(bottomPane);
 	}
 	
