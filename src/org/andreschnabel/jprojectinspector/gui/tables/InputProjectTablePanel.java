@@ -48,6 +48,7 @@ public class InputProjectTablePanel extends JPanel {
 			}
 		};
 		ListHelpers.addNoDups(projects, p);
+		updateTable();
 		queryStatsTask.execute();
 	}
 

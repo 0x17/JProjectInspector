@@ -218,6 +218,8 @@ public class InputWindow extends JFrame {
 		bottomPane.add(new JButton("Import"));
 		bottomPane.add(new JButton("Export"));
 
+		bottomPane.add(new JButton("Tap Timeline"));
+
 		bottomPane.add(configBtn);
 		bottomPane.add(remOfflineBtn);
 		bottomPane.add(startBtn);
