@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.gui.windows;
 
 import org.andreschnabel.jprojectinspector.gui.listeners.QuitOnEscapeKeyListener;
-import org.andreschnabel.jprojectinspector.gui.tables.InputProjectTablePanel;
+import org.andreschnabel.jprojectinspector.gui.panels.InputProjectTablePanel;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 import org.andreschnabel.jprojectinspector.utilities.AsyncTask;

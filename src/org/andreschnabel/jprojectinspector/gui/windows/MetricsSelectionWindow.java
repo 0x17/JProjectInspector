@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.windows;
 
-import org.andreschnabel.jprojectinspector.gui.tables.InputProjectTablePanel;
+import org.andreschnabel.jprojectinspector.gui.panels.InputProjectTablePanel;
 import org.andreschnabel.jprojectinspector.metrics.MetricsRegistry;
 
 import javax.swing.*;

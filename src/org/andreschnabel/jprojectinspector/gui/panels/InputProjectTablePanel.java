@@ -1,5 +1,6 @@
-package org.andreschnabel.jprojectinspector.gui.tables;
+package org.andreschnabel.jprojectinspector.gui.panels;
 
+import org.andreschnabel.jprojectinspector.gui.tables.InputProjectTableModel;
 import org.andreschnabel.jprojectinspector.metrics.project.FrontStats;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.AsyncTask;
