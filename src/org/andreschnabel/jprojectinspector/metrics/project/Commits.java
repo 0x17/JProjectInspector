@@ -12,6 +12,12 @@ public class Commits implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Total number of commits in git repository.\n" +
+				"Calculated as line count of output from \"git rev-list --no-merges master\".";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return GitHelpers.numCommits(repoRoot);
 	}

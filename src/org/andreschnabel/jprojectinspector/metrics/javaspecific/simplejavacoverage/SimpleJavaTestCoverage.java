@@ -39,6 +39,11 @@ public class SimpleJavaTestCoverage implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Java-specific version of method coverage approximation. Counts declared and called methods using regular expressions.";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return determineMethodCoverage(repoRoot);
 	}

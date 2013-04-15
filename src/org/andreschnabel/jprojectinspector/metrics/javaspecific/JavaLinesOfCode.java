@@ -88,6 +88,11 @@ public class JavaLinesOfCode implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Java specific line of code implementation. Independent of cloc. Much simpler.";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return countLocOfDir(repoRoot);
 	}

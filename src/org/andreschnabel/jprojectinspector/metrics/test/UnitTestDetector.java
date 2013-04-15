@@ -150,6 +150,11 @@ public class UnitTestDetector implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Use heuristic to determine if a projects (probably) contains a test (or not). 1.0f iff. (at least one) test. 0.0f otherwise.";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return containsTest(repoRoot) ? 1.0f : 0.0f;
 	}

@@ -18,6 +18,11 @@ public class Cloc implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Lines of code using 'cloc'. Code lines. More info on http://cloc.sourceforge.net/";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return ClocResult.accumResults(determineLinesOfCode(repoRoot)).codeLines;
 	}

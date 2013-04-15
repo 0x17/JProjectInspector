@@ -29,6 +29,11 @@ public class CodeFrequency implements OnlineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Lines added minus lines removed last week.";
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return countCodeFrequencyForProj(p);
 	}

@@ -79,6 +79,11 @@ public class JavaClassCoupling implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Approximated class coupling.";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return getAverageCoupling(repoRoot);
 	}

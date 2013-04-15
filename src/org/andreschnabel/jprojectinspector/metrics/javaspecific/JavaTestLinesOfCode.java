@@ -26,6 +26,11 @@ public class JavaTestLinesOfCode implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Java-specific version of total number of LOC for test files. Test files detected using heuristic.";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return countJavaTestLocOfDir(repoRoot);
 	}

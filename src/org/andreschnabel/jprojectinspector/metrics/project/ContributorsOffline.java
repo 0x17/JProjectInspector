@@ -12,6 +12,12 @@ public class ContributorsOffline implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Total number of contributors of git repostiory.\n"
+		 + "Calculated as line count of output from \"git log --all --format=%aN\".";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return GitHelpers.numContribs(repoRoot);
 	}

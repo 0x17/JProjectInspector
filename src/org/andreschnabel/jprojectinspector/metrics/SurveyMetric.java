@@ -7,6 +7,9 @@ import java.io.File;
 
 public interface SurveyMetric {
 
+	public String getName();
+	public String getDescription();
+
 	public Estimation measure(File data, Project p);
 
 }

@@ -50,6 +50,11 @@ public class JavaTestFrameworkDetector implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Java-specific test framework detection. -1 iff. None or unknown, 0 iff. JUnit, 1 iff. TestNG, 2. iff. Mockito, 3. iff SureAssert.";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return checkForFramework(repoRoot);
 	}

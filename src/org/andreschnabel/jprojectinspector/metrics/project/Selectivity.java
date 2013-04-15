@@ -60,6 +60,11 @@ public class Selectivity implements OnlineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Number of merged (accepted) pull requests divided by number of closed pull requests.";
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return getSelectivity(p);
 	}

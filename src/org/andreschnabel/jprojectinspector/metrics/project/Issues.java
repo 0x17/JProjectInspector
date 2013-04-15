@@ -41,6 +41,11 @@ public class Issues implements OnlineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Total number of issues in issue tracker of project. Scraped from the project profile.";
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return getNumberOfIssues(p);
 	}

@@ -16,6 +16,11 @@ public class FrontStats {
 		}
 
 		@Override
+		public String getDescription() {
+			return "Number of commits from project profile. Values >1000 get mapped to 1000 unfortunately.";
+		}
+
+		@Override
 		public float measure(Project p) throws Exception {
 			return statsForProject(p).ncommits;
 		}
@@ -28,16 +33,25 @@ public class FrontStats {
 		}
 
 		@Override
+		public String getDescription() {
+			return "Number of branches from project profile.";
+		}
+
+		@Override
 		public float measure(Project p) throws Exception {
 			return statsForProject(p).nbranches;
 		}
 	}
 
 	public static class Forks implements OnlineMetric {
-
 		@Override
 		public String getName() {
 			return "nforks";
+		}
+
+		@Override
+		public String getDescription() {
+			return "Number of forks from project profile.";
 		}
 
 		@Override
@@ -53,6 +67,11 @@ public class FrontStats {
 		}
 
 		@Override
+		public String getDescription() {
+			return "Number of stars from project profile.";
+		}
+
+		@Override
 		public float measure(Project p) throws Exception {
 			return statsForProject(p).nstars;
 		}
@@ -65,6 +84,11 @@ public class FrontStats {
 		}
 
 		@Override
+		public String getDescription() {
+			return "Number of issues from project profile.";
+		}
+
+		@Override
 		public float measure(Project p) throws Exception {
 			return statsForProject(p).nissues;
 		}
@@ -74,6 +98,11 @@ public class FrontStats {
 		@Override
 		public String getName() {
 			return "npullrequests";
+		}
+
+		@Override
+		public String getDescription() {
+			return "Number of pull requests from project profile.";
 		}
 
 		@Override

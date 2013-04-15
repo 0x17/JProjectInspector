@@ -28,6 +28,11 @@ public class ProjectAge implements OnlineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Get age of project in milliseconds.";
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return getProjectAge(p);
 	}

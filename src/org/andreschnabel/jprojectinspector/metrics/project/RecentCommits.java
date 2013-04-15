@@ -34,6 +34,11 @@ public class RecentCommits implements OnlineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Number of recent commits. Scraped from \"https://github.com/owner/repoName/graphs/commit-activity-data\"";
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return getNumOfRecentCommits(p);
 	}

@@ -26,6 +26,12 @@ public class TestLinesOfCode implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Total lines of code in modules (probably) containing test (according to heuristic).\n"+
+				"Lines of code per module is calculated using cloc.";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return countTestLocHeuristic(repoRoot);
 	}

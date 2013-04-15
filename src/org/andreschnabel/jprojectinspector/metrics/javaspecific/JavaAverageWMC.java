@@ -22,6 +22,11 @@ public class JavaAverageWMC implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Average weighted methods per class.";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return determineAverageWMC(repoRoot);
 	}

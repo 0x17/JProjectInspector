@@ -40,6 +40,11 @@ public final class JavaTestContributors implements OfflineMetric {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Java specific number of contributors that have committed to probable test files (according to heuristic).";
+	}
+
+	@Override
 	public float measure(File repoRoot) throws Exception {
 		return numTestContribs(repoRoot);
 	}

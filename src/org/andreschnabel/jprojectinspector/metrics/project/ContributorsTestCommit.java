@@ -12,7 +12,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TestContributors implements OfflineMetric {
+public class ContributorsTestCommit implements OfflineMetric {
 
 	public static int countNumTestContributors(File root) throws Exception {
 		if(!root.exists())
@@ -57,7 +57,12 @@ public class TestContributors implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "ntestcontribs";
+		return "ncontribstestcommit";
+	}
+
+	@Override
+	public String getDescription() {
+		return "Number of contributors that have commit comments containing substring 'test'.";
 	}
 
 	@Override
