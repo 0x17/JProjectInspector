@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.utilities;
+package org.andreschnabel.jprojectinspector.obsolete;
 
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaAverageWMC;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaClassCoupling;

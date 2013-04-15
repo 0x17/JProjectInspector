@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.utilities;
+package org.andreschnabel.jprojectinspector.scrapers;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;

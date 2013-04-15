@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.TimelineTapper;
+import org.andreschnabel.jprojectinspector.scrapers.TimelineTapper;
 import org.junit.Test;
 
 public class TimelineTapperTest {

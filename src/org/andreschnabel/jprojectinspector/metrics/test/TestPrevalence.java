@@ -3,7 +3,7 @@ package org.andreschnabel.jprojectinspector.metrics.test;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.model.metrics.TestPrevalenceSummary;
-import org.andreschnabel.jprojectinspector.utilities.ProjectCollector;
+import org.andreschnabel.jprojectinspector.utilities.githubapi.ProjectCollector;
 import org.eclipse.egit.github.core.client.GitHubClient;
 
 import java.util.HashMap;

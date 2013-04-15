@@ -9,7 +9,7 @@ import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.model.metrics.ProjectStats;
 import org.andreschnabel.jprojectinspector.model.metrics.ProjectStatsList;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.utilities.ProjectStatsMeasurer;
+import org.andreschnabel.jprojectinspector.obsolete.ProjectStatsMeasurer;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
-import org.andreschnabel.jprojectinspector.utilities.TimelineTapper;
+import org.andreschnabel.jprojectinspector.scrapers.TimelineTapper;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 import com.google.gson.Gson;

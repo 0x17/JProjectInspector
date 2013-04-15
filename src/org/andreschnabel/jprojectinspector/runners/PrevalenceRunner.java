@@ -6,7 +6,7 @@ import org.andreschnabel.jprojectinspector.metrics.test.TestPrevalence;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.model.metrics.TestPrevalenceSummary;
-import org.andreschnabel.jprojectinspector.utilities.ProjectCollector;
+import org.andreschnabel.jprojectinspector.utilities.githubapi.ProjectCollector;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;

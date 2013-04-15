@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
-import org.andreschnabel.jprojectinspector.utilities.OfflineProjectStripper;
+import org.andreschnabel.jprojectinspector.scrapers.OfflineProjectStripper;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Test;
