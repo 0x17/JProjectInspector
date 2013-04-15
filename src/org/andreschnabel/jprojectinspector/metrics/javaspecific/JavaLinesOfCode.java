@@ -16,6 +16,7 @@ public class JavaLinesOfCode implements OfflineMetric {
 
 	public static int countLocOfSrcFile(File srcFile) throws Exception {
 		if(!srcFile.exists()) return 0;
+		if(!FileHelpers.extension(srcFile).equals("java")) return 0;
 		String srcStr = FileHelpers.readEntireFile(srcFile);
 		return countLocOfSrcStr(srcStr);
 	}
@@ -94,6 +95,8 @@ public class JavaLinesOfCode implements OfflineMetric {
 
 	@Override
 	public float measure(File repoRoot) throws Exception {
-		return countLocOfDir(repoRoot);
+		int loc = countLocOfDir(repoRoot);
+		if(loc == 0) return Float.NaN;
+		else return (float)loc;
 	}
 }

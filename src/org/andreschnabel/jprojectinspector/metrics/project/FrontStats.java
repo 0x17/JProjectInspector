@@ -9,27 +9,15 @@ import java.util.regex.Pattern;
 
 public class FrontStats {
 
-	public static class RoughCommits implements OnlineMetric {
-		@Override
-		public String getName() {
-			return "nroughcommits";
-		}
-
-		@Override
-		public String getDescription() {
-			return "Number of commits from project profile. Values >1000 get mapped to 1000 unfortunately.";
-		}
-
-		@Override
-		public float measure(Project p) throws Exception {
-			return statsForProject(p).ncommits;
-		}
-	}
-
 	public static class Branches implements OnlineMetric {
 		@Override
 		public String getName() {
 			return "nbranches";
+		}
+
+		@Override
+		public Category getCategory() {
+			return Category.Scraping;
 		}
 
 		@Override
@@ -47,6 +35,11 @@ public class FrontStats {
 		@Override
 		public String getName() {
 			return "nforks";
+		}
+
+		@Override
+		public Category getCategory() {
+			return Category.Scraping;
 		}
 
 		@Override
@@ -72,6 +65,11 @@ public class FrontStats {
 		}
 
 		@Override
+		public Category getCategory() {
+			return Category.Scraping;
+		}
+
+		@Override
 		public float measure(Project p) throws Exception {
 			return statsForProject(p).nstars;
 		}
@@ -89,6 +87,11 @@ public class FrontStats {
 		}
 
 		@Override
+		public Category getCategory() {
+			return Category.Scraping;
+		}
+
+		@Override
 		public float measure(Project p) throws Exception {
 			return statsForProject(p).nissues;
 		}
@@ -103,6 +106,11 @@ public class FrontStats {
 		@Override
 		public String getDescription() {
 			return "Number of pull requests from project profile.";
+		}
+
+		@Override
+		public Category getCategory() {
+			return Category.Scraping;
 		}
 
 		@Override

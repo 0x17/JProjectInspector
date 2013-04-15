@@ -46,6 +46,11 @@ public class Issues implements OnlineMetric {
 	}
 
 	@Override
+	public Category getCategory() {
+		return Category.Scraping;
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return getNumberOfIssues(p);
 	}

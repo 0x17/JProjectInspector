@@ -4,6 +4,7 @@ import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.*;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage.SimpleJavaTestCoverage;
 import org.andreschnabel.jprojectinspector.metrics.project.*;
+import org.andreschnabel.jprojectinspector.metrics.test.TestContributors;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.RoughFunctionCoverage;
@@ -74,7 +75,7 @@ public class MetricsRegistry {
 		ms.add(new JavaAverageWMC());
 		ms.add(new JavaClassCoupling());
 		ms.add(new JavaLinesOfCode());
-		ms.add(new JavaTestContributors());
+		ms.add(new TestContributors());
 		ms.add(new JavaTestFrameworkDetector());
 		ms.add(new JavaTestLinesOfCode());
 		ms.add(new SimpleJavaTestCoverage());
@@ -85,7 +86,6 @@ public class MetricsRegistry {
 		ms.add(new ContributorsOnline());
 		ms.add(new Issues());
 		ms.add(new FrontStats.Branches());
-		ms.add(new FrontStats.RoughCommits());
 		ms.add(new FrontStats.Issues());
 		ms.add(new FrontStats.Stars());
 		ms.add(new FrontStats.PullRequests());

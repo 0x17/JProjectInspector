@@ -2,7 +2,9 @@ package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
+import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 import java.io.File;
 
@@ -16,7 +18,7 @@ public class JavaTestLinesOfCode implements OfflineMetric {
 			}
 			return sum;
 		} else {
-			return root.getName().endsWith(".java") && UnitTestDetector.isJavaSrcTest(FileHelpers.readEntireFile(root), root.getName()) ? JavaLinesOfCode.countLocOfSrcFile(root) : 0;
+			return FileHelpers.extension(root).equals("java") && UnitTestDetector.isJavaSrcTest(FileHelpers.readEntireFile(root), root.getName()) ? JavaLinesOfCode.countLocOfSrcFile(root) : 0;
 		}
 	}
 
@@ -32,6 +34,15 @@ public class JavaTestLinesOfCode implements OfflineMetric {
 
 	@Override
 	public float measure(File repoRoot) throws Exception {
+		Predicate<File> isJava = new Predicate<File>() {
+			@Override
+			public boolean invoke(File f) {
+				return FileHelpers.extension(f).equals("java");
+			}
+		};
+
+		if(!ListHelpers.contains(isJava, FileHelpers.filesInTree(repoRoot))) return Float.NaN;
+
 		return countJavaTestLocOfDir(repoRoot);
 	}
 }

@@ -78,7 +78,7 @@ public class MetricResultsWindow extends JFrame {
 					for(int i = 0; i < metricNames.size(); i++) {
 						String metricName = metricNames.get(i);
 						MetricType type = MetricsRegistry.getTypeOfMetric(metricName);
-						float result = 0.0f;
+						float result = Float.NaN;
 
 						try {
 							switch(type) {

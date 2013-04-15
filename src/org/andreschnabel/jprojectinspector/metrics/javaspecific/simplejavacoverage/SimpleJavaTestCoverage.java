@@ -28,7 +28,7 @@ public class SimpleJavaTestCoverage implements OfflineMetric {
 		testedMethodNames.removeAll(unknownMethodNames);
 
 		int numTestRefMethods = testedMethodNames.size();
-		if(numProjMethods == 0) return 0;
+		if(numProjMethods == 0) return Float.NaN;
 		return (float) numTestRefMethods / numProjMethods;
 	}
 

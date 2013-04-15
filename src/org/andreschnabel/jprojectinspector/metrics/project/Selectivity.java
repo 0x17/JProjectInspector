@@ -65,6 +65,11 @@ public class Selectivity implements OnlineMetric {
 	}
 
 	@Override
+	public Category getCategory() {
+		return Category.GitHubApi;
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return getSelectivity(p);
 	}

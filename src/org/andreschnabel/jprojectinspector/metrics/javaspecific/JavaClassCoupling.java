@@ -23,7 +23,9 @@ public class JavaClassCoupling implements OfflineMetric {
 		for(String className : classNames) {
 			couplingCount += referencedClasses(className, classInFile).size();
 		}
-		return (float) couplingCount / classCount;
+		if(classCount == 0)
+			return Float.NaN;
+		else return (float) couplingCount / classCount;
 	}
 
 	public List<String> listClassNamesInFile(File f, Map<String, File> classInFile) throws Exception {

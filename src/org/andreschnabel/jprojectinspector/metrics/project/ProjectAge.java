@@ -33,6 +33,11 @@ public class ProjectAge implements OnlineMetric {
 	}
 
 	@Override
+	public Category getCategory() {
+		return Category.GitHubApi;
+	}
+
+	@Override
 	public float measure(Project p) throws Exception {
 		return getProjectAge(p);
 	}

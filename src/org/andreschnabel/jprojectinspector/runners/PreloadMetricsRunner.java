@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.runners;
 
-import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestContributors;
+import org.andreschnabel.jprojectinspector.metrics.test.TestContributors;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestFrameworkDetector;
 import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOnline;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
@@ -28,7 +28,7 @@ public class PreloadMetricsRunner {
 		int contribsTotal = 0;
 		
 		for(File pf : preloadPaths) {
-			int ncontribs = JavaTestContributors.numTestContribs(pf);
+			int ncontribs = TestContributors.numTestContribs(pf);
 			contribsTotal += ncontribs;
 			Helpers.log(pf.getName() + " has " + ncontribs + " test contributors! (" + (ctr++) + "/" + nprojects + ")");			
 		}

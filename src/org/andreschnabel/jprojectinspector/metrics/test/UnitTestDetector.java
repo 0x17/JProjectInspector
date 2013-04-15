@@ -2,12 +2,13 @@ package org.andreschnabel.jprojectinspector.metrics.test;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.File;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,16 +17,24 @@ public class UnitTestDetector implements OfflineMetric {
 
 	private final static String[] supportedLangs = new String[]{"Java", "Ruby", "C++", "C#", "JavaScript", "Python"};
 
+	private static class IsTestPredicate implements Predicate<File> {
+		@Override
+		public boolean invoke(File f) {
+			try {
+				return isTest(f);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+	}
+
 	public static String[] getSupportedLangs() {
 		return supportedLangs;
 	}
 
-	public static boolean containsTest(File pf) throws Exception {
-		return traverseForTest(pf);
-	}
-	
-	public static int countTestFiles(File pf) throws Exception {
-		return getTestFiles(pf).size();
+	public static boolean containsTest(File root) throws Exception {
+		return ListHelpers.contains(new IsTestPredicate(), FileHelpers.filesInTree(root));
 	}
 
 	public static boolean isTest(File f) throws Exception {
@@ -51,62 +60,7 @@ public class UnitTestDetector implements OfflineMetric {
 	}
 
 	public static List<File> getTestFiles(File root) throws Exception {
-		List<File> testFiles = new LinkedList<File>();
-		if(root.isDirectory()) {
-			for(File entry : root.listFiles()) {
-				testFiles.addAll(getTestFiles(entry));
-			}
-			return testFiles;
-		} else {
-			String filename = root.getName();
-			if(StringHelpers.strEndsWithOneOf(filename, ".java", ".rb", ".py", ".js", ".cpp", ".cs")) {
-				String srcStr;
-				try {
-					srcStr = FileHelpers.readEntireFile(root);
-				} catch(Exception e) {
-					return testFiles;
-				}
-
-				if((filename.endsWith(".java") && isJavaSrcTest(srcStr, filename))
-						|| (filename.endsWith(".rb") && isRubySrcTest(srcStr, filename))
-						|| (filename.endsWith(".py") && isPythonSrcTest(srcStr, filename))
-						|| (filename.endsWith(".js") && isJavaScriptSrcTest(srcStr, filename))
-						|| (filename.endsWith(".cpp") && isCppSrcTest(srcStr, filename))
-						|| (filename.endsWith(".cs") && isCsharpSrcTest(srcStr, filename))) {
-					testFiles.add(root);
-				}
-			}
-			return testFiles;
-		}
-	}
-
-	private static boolean traverseForTest(File root) throws Exception {
-		boolean found = false;
-		if(root.isDirectory()) {
-			for(File entry : root.listFiles()) {
-				if(found) break;
-				found |= traverseForTest(entry);
-			}
-			return found;
-		} else {
-			String filename = root.getName();
-			if(StringHelpers.strEndsWithOneOf(filename, ".java", ".rb", ".py", ".js", ".cpp", ".cs")) {
-				String srcStr;
-				try {
-					srcStr = FileHelpers.readEntireFile(root);
-				} catch(Exception e) {
-					return false;
-				}
-
-				if(filename.endsWith(".java")) return isJavaSrcTest(srcStr, filename);
-				else if(filename.endsWith(".rb")) return isRubySrcTest(srcStr, filename);
-				else if(filename.endsWith(".py")) return isPythonSrcTest(srcStr, filename);
-				else if(filename.endsWith(".js")) return isJavaScriptSrcTest(srcStr, filename);
-				else if(filename.endsWith(".cpp")) return isCppSrcTest(srcStr, filename);
-				else if(filename.endsWith(".cs")) return isCsharpSrcTest(srcStr, filename);
-			}
-			return false;
-		}
+		return ListHelpers.filter(new IsTestPredicate(), FileHelpers.filesInTree(root));
 	}
 
 	public static boolean isCsharpSrcTest(String srcStr, String filename) {
@@ -138,9 +92,15 @@ public class UnitTestDetector implements OfflineMetric {
 	}
 
 	public static boolean containsTestAndLoad(Project project) throws Exception {
-		File f = ProjectDownloader.loadProject(project);
-		boolean result = (f == null) ? false : containsTest(f);
-		ProjectDownloader.deleteProject(project);
+		boolean result = false;
+		try {
+			File f = ProjectDownloader.loadProject(project);
+			result = (f == null) ? false : containsTest(f);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			ProjectDownloader.deleteProject(project);
+		}
 		return result;
 	}
 

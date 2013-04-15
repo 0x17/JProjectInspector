@@ -63,9 +63,10 @@ public class MetricResultTableModel extends AbstractTableModel {
 				if(resultsCache.containsKey(p)) {
 					result = resultsCache.get(p)[columnIndex-2];
 				} else {
-					result = 0.0f;
+					result = Float.NaN;
 				}
-				return String.valueOf(result);
+
+				return Float.isNaN(result) ? "N/A" : String.valueOf(result);
 		}
 	}
 }
