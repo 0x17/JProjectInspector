@@ -12,7 +12,7 @@ public class CsvTableModel extends AbstractTableModel {
 	private final List<String[]> rows;
 
 	public CsvTableModel(CsvData data) {
-		this.rows = data.rowList;
+		this.rows = data.getRows();
 	}
 
 	@Override

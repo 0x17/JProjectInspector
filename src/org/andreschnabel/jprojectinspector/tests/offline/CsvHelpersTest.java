@@ -21,8 +21,8 @@ public class CsvHelpersTest {
 	@Test
 	public void testParseCsvFile() throws Exception {
 		CsvData data = CsvHelpers.parseCsv(new File("data/responses500.csv"));
-		List<String[]> rows = data.rowList;
-		Assert.assertTrue(rows.size() > 0);
+		Assert.assertTrue(data.rowCount() > 0);
+		Assert.assertTrue(data.columnCount() > 0);
 	}
 
 	@Test
@@ -31,9 +31,9 @@ public class CsvHelpersTest {
 		String[] cols = new String[] {"Name", "\"Age\"", "date of birth"};
 		
 		CsvData data = CsvHelpers.parseCsv(csvLine);
-		Assert.assertEquals(1, data.rowList.size());
+		Assert.assertEquals(1, data.rowCount());
 		
-		String[] firstRow = data.rowList.get(0);
+		String[] firstRow = data.getRow(0);
 		AssertHelpers.arrayEqualsArrayOrderSensitive(cols, firstRow);
 	}
 	
@@ -47,7 +47,7 @@ public class CsvHelpersTest {
 
 		CsvData data = CsvHelpers.parseCsv(csvLines);
 
-		List<String[]> rows = data.rowList;
+		List<String[]> rows = data.getRows();
 		Assert.assertEquals(3, rows.size());
 		
 		AssertHelpers.arrayEqualsArrayOrderSensitive(row1, rows.get(0));		

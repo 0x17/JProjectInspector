@@ -29,7 +29,7 @@ public class CsvHelpers {
 		return numColums;
 	}
 	
-	public static String firstLineOfStr(String content) {
+	public static String headerLine(String content) {
 		return content.contains("\n") ? content.substring(0, content.indexOf("\n")) : content;
 	}
 
@@ -38,7 +38,7 @@ public class CsvHelpers {
 			content += "\n";
 		
 		List<String[]> rows = new LinkedList<String[]>();	
-		int numColumns = countColumns(firstLineOfStr(content));
+		int numColumns = countColumns(headerLine(content));
 		
 		String[] curRow = new String[numColumns];
 		int curColumn = 0;
