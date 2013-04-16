@@ -1,24 +1,16 @@
 package org.andreschnabel.jprojectinspector.tests.online;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
-import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.metrics.project.CodeFrequency;
-import org.junit.Before;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.junit.Test;
 
 public class CodeFrequencyTest {
 
-	private CodeFrequency cf;
-
-	@Before
-	public void setUp() throws Exception {
-		this.cf = new CodeFrequency();
-	}
-
 	@Test
 	public void testCountCodeFrequencyForProj() throws Exception {
-		int cfVal = cf.countCodeFrequencyForProj(TestCommon.THIS_PROJECT);
+		int cfVal = CodeFrequency.countCodeFrequencyForProj(TestCommon.THIS_PROJECT);
 		assertFalse(0 == cfVal);
 	}
 

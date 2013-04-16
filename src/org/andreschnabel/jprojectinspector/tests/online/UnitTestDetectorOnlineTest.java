@@ -9,7 +9,7 @@ public class UnitTestDetectorOnlineTest {
 	@Test
 	public void testContainsTestAndLoad() throws Exception {
 		Assert.assertTrue(UnitTestDetector.containsTestAndLoad(new Project("skeeto", "sample-java-project")));
-		Assert.assertTrue(UnitTestDetector.containsTestAndLoad(new Project("0x17", "ProjectInspector")));
+		Assert.assertTrue(UnitTestDetector.containsTestAndLoad(new Project("0x17", "KCImageCollector")));
 		Assert.assertFalse(UnitTestDetector.containsTestAndLoad(new Project("0x17", "DeathJam")));
 	}
 }

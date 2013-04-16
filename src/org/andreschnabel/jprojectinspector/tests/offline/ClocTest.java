@@ -2,6 +2,7 @@ package org.andreschnabel.jprojectinspector.tests.offline;
 
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,8 +13,8 @@ import java.util.List;
 public class ClocTest {
 	@Test
 	public void testDetermineLinesOfCode() throws Exception {
-		List<Cloc.ClocResult> results = Cloc.determineLinesOfCode(new File("."));
-		Assert.assertFalse(results.isEmpty());
+		List<Cloc.ClocResult> results = Cloc.determineLinesOfCode(new File("."), "testdata");
+		AssertHelpers.listNotEmpty(results);
 
 		Assert.assertTrue(ListHelpers.contains(new Predicate<Cloc.ClocResult>() {
 			@Override

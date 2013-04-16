@@ -22,7 +22,7 @@ public class FrontStatsOnlineTest {
 		FrontStats stats = FrontStats.statsForProject(new Project("jlnr", "gosu"));
 		Assert.assertTrue(2 <= stats.nbranches);
 		Assert.assertTrue(1000 <= stats.ncommits);
-		Assert.assertTrue(37 <= stats.nissues);
+		Assert.assertTrue(36 <= stats.nissues);
 		Assert.assertTrue(47 <= stats.nforks);
 		Assert.assertTrue(396 <= stats.nstars);
 		Assert.assertTrue(2 <= stats.npullreqs);

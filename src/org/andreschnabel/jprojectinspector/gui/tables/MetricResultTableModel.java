@@ -8,10 +8,15 @@ import java.util.List;
 import java.util.Map;
 
 public class MetricResultTableModel extends AbstractTableModel {
+	private static final long serialVersionUID = 1L;
 	private final List<Project> projects;
 	private final List<String> metricNames;
 
 	private final Map<Project, Float[]> resultsCache = new HashMap<Project, Float[]>();
+
+	public Map<Project, Float[]> getResults() {
+		return resultsCache;
+	}
 
 	public MetricResultTableModel(List<Project> projects, List<String> metricNames) {
 		this.projects = projects;

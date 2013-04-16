@@ -9,7 +9,7 @@ import java.io.File;
 
 import static org.junit.Assert.assertEquals;
 
-public class LinesOfCodeTest {
+public class JavaLinesOfCodeTest {
 	@Test
 	public void testCountLocOfSrcStr() throws Exception {
 		assertEquals(0, JavaLinesOfCode.countLocOfSrcStr("//blabla"));

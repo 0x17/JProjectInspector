@@ -19,12 +19,16 @@ public class CsvData {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for(String[] strings : rowList) {
-			for(String string : strings) {
-				sb.append(string + ",");
+		for(int i = 0; i < rowList.size(); i++) {
+			String[] row = rowList.get(i);
+			for(int j = 0; j < row.length; j++) {
+				String cell = row[j];
+				sb.append(cell);
+				if(j+1<row.length)
+					sb.append(',');
 			}
-			sb.append(";;");
+			sb.append('\n');
 		}
-		return "CsvData"+title+"{" + sb + '}';
+		return sb.toString();
 	}
 }

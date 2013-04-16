@@ -1,22 +1,34 @@
 package org.andreschnabel.jprojectinspector.metrics;
 
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
-import org.andreschnabel.jprojectinspector.metrics.javaspecific.*;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaAverageWMC;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaClassCoupling;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaLinesOfCode;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestFrameworkDetector;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaTestLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage.SimpleJavaTestCoverage;
-import org.andreschnabel.jprojectinspector.metrics.project.*;
+import org.andreschnabel.jprojectinspector.metrics.project.CodeFrequency;
+import org.andreschnabel.jprojectinspector.metrics.project.Commits;
+import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOffline;
+import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOnline;
+import org.andreschnabel.jprojectinspector.metrics.project.ContributorsTestCommit;
+import org.andreschnabel.jprojectinspector.metrics.project.FrontStats;
+import org.andreschnabel.jprojectinspector.metrics.project.Issues;
+import org.andreschnabel.jprojectinspector.metrics.project.ProjectAge;
+import org.andreschnabel.jprojectinspector.metrics.project.RecentCommits;
+import org.andreschnabel.jprojectinspector.metrics.project.Selectivity;
 import org.andreschnabel.jprojectinspector.metrics.test.TestContributors;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.RoughFunctionCoverage;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.AsmHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
-
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 public class MetricsRegistry {
 
@@ -56,19 +68,6 @@ public class MetricsRegistry {
 		};
 		List<String> names = ListHelpers.map(metricToName, ms);
 		offlineMetrics = ListHelpers.zipMap(names, ms);
-	}
-
-	private static void initMetricsWithAsm(File path) throws Exception {
-		List<Class<?>> offmx = AsmHelpers.findClassesImplementingInterfaceInDir(path, "OfflineMetric");
-		for(Class<?> c : offmx) {
-			OfflineMetric om = (OfflineMetric)c.newInstance();
-			offlineMetrics.put(om.getName(), om);
-		}
-		List<Class<?>> onmx = AsmHelpers.findClassesImplementingInterfaceInDir(path, "OnlineMetric");
-		for(Class<?> c : onmx) {
-			OnlineMetric om = (OnlineMetric)c.newInstance();
-			onlineMetrics.put(om.getName(), om);
-		}
 	}
 
 	private static void initJavaSpecificOfflineMetrics(List<OfflineMetric> ms) {

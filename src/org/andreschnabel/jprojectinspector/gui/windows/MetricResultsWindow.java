@@ -8,15 +8,20 @@ import org.andreschnabel.jprojectinspector.utilities.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.AsyncTaskBatch;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
+import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 public class MetricResultsWindow extends JFrame {
-
+	
+	private static final long serialVersionUID = 1L;
 	private AsyncTaskBatch<Float[]> batch;
 	private JTable resultTable;
 
@@ -28,12 +33,50 @@ public class MetricResultsWindow extends JFrame {
 		final MetricResultTableModel mrtm = new MetricResultTableModel(projects, metricNames);
 
 		initAndAddTable(mrtm);
+		initAndAddBottomPane(mrtm);
 
 		setSize(640, 480);
 		setLocationRelativeTo(null);
 
 		initAndExecTaskBatch(projects, metricNames, mrtm);
 		setAlwaysOnTop(true);
+	}
+
+	private void initAndAddBottomPane(final MetricResultTableModel mrtm) {
+		JPanel bottomPane = new JPanel(new FlowLayout());
+
+		JButton exportBtn = new JButton("Export");
+		exportBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				Map<Project, Float[]> results = mrtm.getResults();
+				StringBuilder sb = new StringBuilder();
+				for(Project p : results.keySet()) {
+					sb.append(p.owner + "," + p.repoName + ",");
+					Float[] result = results.get(p);
+					for(int i=0; i<result.length; i++) {
+						sb.append(result[i]);
+						if(i+1<result.length)
+							sb.append(",");
+					}
+					sb.append("\n");
+				}
+				try {
+					GuiHelpers.saveStringWithFileDialog(sb.toString(), new File("."), "csv");
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		bottomPane.add(exportBtn);
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1;
+		gbc.weighty = 0;
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		add(bottomPane);
 	}
 
 	private void initAndAddTable(MetricResultTableModel mrtm) {

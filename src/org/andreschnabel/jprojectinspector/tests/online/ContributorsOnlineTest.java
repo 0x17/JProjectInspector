@@ -11,7 +11,7 @@ public class ContributorsOnlineTest {
 
 	@Test
 	public void testCountNumContributors() throws Exception {
-		assertEquals(93, ContributorsOnline.countNumContributors(new Project("mono", "MonoGame")));
+		assertEquals(11, ContributorsOnline.countNumContributors(Project.fromString("jlnr/gosu")));
 		assertEquals(1, ContributorsOnline.countNumContributors(TestCommon.THIS_PROJECT));
 	}
 

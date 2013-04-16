@@ -214,4 +214,12 @@ public class FileHelpers {
 	public static String trimExtension(File f) {
 		return f.getName().substring(0, f.getName().lastIndexOf("."));
 	}
+
+	public static void writeStrToFile(String str, File outFile) throws Exception {
+		FileWriter fw = new FileWriter(outFile);
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(str);
+		bw.close();
+		fw.close();
+	}
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CodeFrequency implements OnlineMetric {
 
-	public int countCodeFrequencyForProj(Project project) throws Exception {
+	public static int countCodeFrequencyForProj(Project project) throws Exception {
 		String cfdStr = Helpers.loadUrlIntoStr("https://github.com/" + project.owner + "/" + project.repoName + "/graphs/code-frequency-data");
 		List<RegexHelpers.StringTriple> triples = RegexHelpers.batchMatchThreeGroups("\\[([0-9]*),([0-9]*),(-[0-9]*)\\]", cfdStr);
 

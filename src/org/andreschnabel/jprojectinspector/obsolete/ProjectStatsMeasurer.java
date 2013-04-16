@@ -1,5 +1,7 @@
 package org.andreschnabel.jprojectinspector.obsolete;
 
+import java.io.File;
+
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaAverageWMC;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaClassCoupling;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaLinesOfCode;
@@ -12,8 +14,6 @@ import org.andreschnabel.jprojectinspector.metrics.project.ProjectAge;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.metrics.ProjectStats;
-
-import java.io.File;
 
 public final class ProjectStatsMeasurer {
 	
@@ -32,8 +32,7 @@ public final class ProjectStatsMeasurer {
 
 		stats.linesOfCode = JavaLinesOfCode.countLocForProj(project);
 
-		CodeFrequency cf = new CodeFrequency();
-		stats.codeFrequency = cf.countCodeFrequencyForProj(project);
+		stats.codeFrequency = CodeFrequency.countCodeFrequencyForProj(project);
 
 		stats.numContributors = ContributorsOnline.countNumContributors(project);
 		//stats.numTestContributors = contribs.countNumTestContributors(projectRoot);
