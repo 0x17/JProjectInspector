@@ -12,7 +12,7 @@ public final class OfflineProjectStripper {
 	private OfflineProjectStripper() {}
 	
 	public static void stripOfflineProjs(String projLstFilename) throws Exception {
-		ProjectList projLst = ProjectList.fromFile(projLstFilename);
+		ProjectList projLst = ProjectList.fromJson(projLstFilename);
 		ProjectList outLst = new ProjectList(projLst.keyword, new LinkedList<Project>());
 		for(Project p : projLst.projects) {			
 			boolean online = !isOffline(p);

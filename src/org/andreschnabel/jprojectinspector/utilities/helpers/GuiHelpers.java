@@ -1,5 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
+import org.andreschnabel.jprojectinspector.model.CsvData;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
@@ -36,7 +38,48 @@ public class GuiHelpers {
 		return gbc;
 	}
 
+	public static void saveStringWithFileDialog(String str, File path, final String... extensions) throws Exception {
+		File selectedFile = saveFileDialog(path, extensions);
+		if(selectedFile != null) {
+			FileHelpers.writeStrToFile(str, selectedFile);
+		}
+	}
+
+	public static void showError(String msg) {
+		JOptionPane.showMessageDialog(null, msg, "Error", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public static void saveCsvDialog(File path, CsvData csvData) throws Exception {
+		saveStringWithFileDialog(csvData.toString(), path, "csv");
+	}
+
+	public static CsvData loadCsvDialog(File path) throws Exception {
+		String s = loadStringWithFileDialog(path, "csv");
+		return (s != null) ? CsvHelpers.parseCsv(s) : null;
+	}
+
+	private static String loadStringWithFileDialog(File path, final String... extensions) throws Exception {
+		File selectedFile = loadFileDialog(path, extensions);
+		if(selectedFile != null) {
+			return FileHelpers.readEntireFile(selectedFile);
+		}
+		return null;
+	}
+
+	private static File loadFileDialog(File path, String... extensions) {
+		return fileDialogCommon(DialogType.Load, path, extensions);
+	}
+
 	public static File saveFileDialog(File path, final String... extensions) {
+		return fileDialogCommon(DialogType.Save, path, extensions);
+	}
+
+	public static enum DialogType {
+		Load,
+		Save
+	}
+
+	public static File fileDialogCommon(DialogType dt, File path, final String... extensions) {
 		JFileChooser chooser = new JFileChooser(path);
 		for(final String extension : extensions) {
 			chooser.addChoosableFileFilter(new FileFilter() {
@@ -51,7 +94,20 @@ public class GuiHelpers {
 				}
 			});
 		}
-		int state = chooser.showSaveDialog(null);
+
+		int state;
+		switch(dt) {
+			case Load:
+				state = chooser.showOpenDialog(null);
+				break;
+			case Save:
+				state = chooser.showSaveDialog(null);
+				break;
+			default:
+				state = JFileChooser.ERROR_OPTION;
+				break;
+		}
+
 		switch(state) {
 			case JFileChooser.APPROVE_OPTION:
 				File file = chooser.getSelectedFile();
@@ -63,13 +119,6 @@ public class GuiHelpers {
 			case JFileChooser.ERROR_OPTION:
 			default:
 				return null;
-		}
-	}
-
-	public static void saveStringWithFileDialog(String str, File path, final String... extensions) throws Exception {
-		File selectedFile = saveFileDialog(path, extensions);
-		if(selectedFile != null) {
-			FileHelpers.writeStrToFile(str, selectedFile);
 		}
 	}
 }

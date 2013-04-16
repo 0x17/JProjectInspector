@@ -3,36 +3,34 @@ package org.andreschnabel.jprojectinspector.gui.tables;
 import org.andreschnabel.jprojectinspector.model.CsvData;
 
 import javax.swing.table.AbstractTableModel;
-import java.util.List;
 
 public class CsvTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
-	
-	private final List<String[]> rows;
+	private final CsvData data;
 
 	public CsvTableModel(CsvData data) {
-		this.rows = data.getRows();
+		this.data = data;
 	}
 
 	@Override
 	public int getRowCount() {
-		return rows.size()-1;
+		return data.rowCount();
 	}
 
 	@Override
 	public int getColumnCount() {
-		return rows.get(0).length;
+		return data.columnCount();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return rows.get(rowIndex+1)[columnIndex];
+		return data.getCellAt(rowIndex, columnIndex);
 	}
 
 	@Override
 	public String getColumnName(int column) {
-		return rows.get(0)[column];
+		return data.columnName(column);
 	}
 
 	@Override

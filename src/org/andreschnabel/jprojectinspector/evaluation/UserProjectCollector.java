@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.evaluation;
 
-import org.andreschnabel.jprojectinspector.model.survey.UserProject;
+import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import java.util.LinkedList;
@@ -12,16 +12,16 @@ public class UserProjectCollector {
 	
 	private UserProjectCollector() {}
 	
-	public static List<UserProject> userProjectsForUsers(List<String> users) {
-		List<UserProject> userProjects = new LinkedList<UserProject>();
+	public static List<Project> userProjectsForUsers(List<String> users) {
+		List<Project> userProjects = new LinkedList<Project>();
 		for(String user : users) {
 			userProjects.addAll(userProjectsForUser(user));
 		}
 		return userProjects;
 	}
 	
-	public static List<UserProject> userProjectsForUser(String user) {
-		List<UserProject> projs = new LinkedList<UserProject>();
+	public static List<Project> userProjectsForUser(String user) {
+		List<Project> projs = new LinkedList<Project>();
 		String profile;
 		try {
 			profile = Helpers.loadHTMLUrlIntoStr("https://github.com/" + user + "?tab=repositories");
@@ -41,7 +41,7 @@ public class UserProjectCollector {
 			Matcher projNameSubPatternMatcher = projNameSubPattern.matcher(projStr);
 			if(projNameSubPatternMatcher.find()) {
 				String nrepo = projNameSubPatternMatcher.group(1);
-				UserProject nproj = new UserProject(user, nrepo);
+				Project nproj = new Project(user, nrepo);
 				projs.add(nproj);
 				Helpers.log(nproj.toString());
 			}

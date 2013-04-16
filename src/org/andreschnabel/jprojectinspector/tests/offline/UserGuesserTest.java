@@ -1,10 +1,9 @@
 package org.andreschnabel.jprojectinspector.tests.offline;
 
 import junit.framework.Assert;
-import org.andreschnabel.jprojectinspector.model.survey.UserProject;
-import org.andreschnabel.jprojectinspector.model.survey.UserProjects;
-import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.evaluation.survey.UserGuesser;
+import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,13 +13,12 @@ public class UserGuesserTest {
 
 	@Test
 	public void testGuessUserWithProjects() {
-		List<UserProject> usrProjsLst = new ArrayList<UserProject>();
-		usrProjsLst.add(new UserProject("Hans", "a"));
-		usrProjsLst.add(new UserProject("Hans", "b"));
-		usrProjsLst.add(new UserProject("Peter", "b"));
-		UserProjects projs = new UserProjects(usrProjsLst);
+		List<Project> usrProjsLst = new ArrayList<Project>();
+		usrProjsLst.add(new Project("Hans", "a"));
+		usrProjsLst.add(new Project("Hans", "b"));
+		usrProjsLst.add(new Project("Peter", "b"));
 		ResponseProjects rp = new ResponseProjects("a", "b", "c", "d");
-		Assert.assertEquals("Hans", UserGuesser.guessUserWithProjects(rp, projs.usrProjs));
+		Assert.assertEquals("Hans", UserGuesser.guessUserWithProjects(rp, usrProjsLst));
 	}
 
 }

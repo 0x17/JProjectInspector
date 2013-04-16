@@ -20,7 +20,7 @@ public class OfflineProjectStripperTest {
 		FileHelpers.writeObjToJsonFile(pl, pltestfname);
 		OfflineProjectStripper.stripOfflineProjs(pltestfname);
 		FileHelpers.deleteFile(pltestfname);
-		ProjectList pl2 = ProjectList.fromFile("STRIPPED"+pltestfname);
+		ProjectList pl2 = ProjectList.fromJson("STRIPPED" + pltestfname);
 		AssertHelpers.arrayEqualsLstOrderSensitive(new Project[] {Project.fromString("0x17/JProjectInspector")}, pl2.projects);
 		FileHelpers.deleteFile("STRIPPED"+pltestfname);		
 	}

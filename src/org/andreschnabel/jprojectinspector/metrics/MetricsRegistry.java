@@ -15,6 +15,7 @@ import org.andreschnabel.jprojectinspector.utilities.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -101,6 +102,7 @@ public class MetricsRegistry {
 	}
 
 	private static void initSurveyMetrics() {
+		surveyMetrics = new HashMap<String, SurveyMetric>();
 		surveyMetrics.put("bugcountestimate", new BugCountEstimation());
 		surveyMetrics.put("testeffortestimate", new TestEffortEstimation());
 	}

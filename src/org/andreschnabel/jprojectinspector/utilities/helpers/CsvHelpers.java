@@ -82,4 +82,8 @@ public class CsvHelpers {
 	public static CsvData parseCsv(File file) throws Exception {
 		return parseCsv(FileHelpers.readEntireFile(file));
 	}
+
+	public static String escapeIfComma(String str) {
+		return str.contains(",") ? "\"" + str + "\"" : str;
+	}
 }

@@ -1,11 +1,12 @@
 package org.andreschnabel.jprojectinspector.runners.evaluation;
 
-import org.andreschnabel.jprojectinspector.model.survey.UserProjects;
-import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.evaluation.survey.SurveyProjectExtractor;
 import org.andreschnabel.jprojectinspector.evaluation.survey.UserGuesser;
+import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
+import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.helpers.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.XmlHelpers;
 
@@ -20,10 +21,10 @@ public class ConnectProjsWithUsersRunner {
 
 	public static void connectProjectsWithUsers() throws Exception {
 		List<ResponseProjects> results = SurveyProjectExtractor.extractProjectsFromResults(new File("data/responses500.csv"));
-		UserProjects projs = (UserProjects) XmlHelpers.deserializeFromXml(UserProjects.class, new File("data/userprojects500.xml"));
+		List<Project> projs = Project.projectListFromCsv(CsvHelpers.parseCsv(new File("data/userprojects500.csv")));
 
 		for(ResponseProjects rp : results) {
-			rp.user = UserGuesser.guessUserWithProjects(rp, projs.usrProjs);
+			rp.user = UserGuesser.guessUserWithProjects(rp, projs);
 		}
 
 		XmlHelpers.serializeToXml(new ResponseProjectsLst(results), new File("data/responses500.xml"));

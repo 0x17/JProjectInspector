@@ -4,8 +4,8 @@ import org.andreschnabel.jprojectinspector.evaluation.UserProjectCollector;
 import org.andreschnabel.jprojectinspector.metrics.survey.BugCountEstimation;
 import org.andreschnabel.jprojectinspector.metrics.survey.TestEffortEstimation;
 import org.andreschnabel.jprojectinspector.model.CsvData;
+import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.model.survey.UserProject;
 import org.andreschnabel.jprojectinspector.utilities.helpers.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
@@ -21,7 +21,7 @@ public class UserGuesser {
 		CsvData responseData = CsvHelpers.parseCsv(responseCsv);
 		String[] headers = responseData.getHeaders();
 		if(!ListHelpers.fromArray(headers).contains("user")) {
-			List<UserProject> userProjects = UserProjectCollector.userProjectsForUsers(users);
+			List<Project> userProjects = UserProjectCollector.userProjectsForUsers(users);
 
 			responseData.addColumn("user");
 
@@ -37,7 +37,7 @@ public class UserGuesser {
 		return responseData;
 	}
 	
-	public static String guessUserWithProjects(ResponseProjects rp, List<UserProject> usrProjs) {
+	public static String guessUserWithProjects(ResponseProjects rp, List<Project> usrProjs) {
 		List<String> projNames = new ArrayList<String>();
 		ListHelpers.addNoDups(projNames, rp.highestBugCount);
 		ListHelpers.addNoDups(projNames, rp.lowestBugCount);
@@ -46,12 +46,12 @@ public class UserGuesser {
 		
 		Map<String, Integer> userHits = new HashMap<String, Integer>();
 
-		for(UserProject up : usrProjs) {
-			if(projNames.contains(up.name)) {
-				if(userHits.containsKey(up.user)) {
-					userHits.put(up.user, userHits.get(up.user)+1);
+		for(Project up : usrProjs) {
+			if(projNames.contains(up.repoName)) {
+				if(userHits.containsKey(up.owner)) {
+					userHits.put(up.owner, userHits.get(up.owner)+1);
 				} else {
-					userHits.put(up.user, 1);
+					userHits.put(up.owner, 1);
 				}
 			}
 		}

@@ -2,6 +2,7 @@ package org.andreschnabel.jprojectinspector.model.survey;
 
 import org.andreschnabel.jprojectinspector.model.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.Transform;
+import org.andreschnabel.jprojectinspector.utilities.helpers.CsvHelpers;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -26,7 +27,7 @@ public class CandidateLst {
 		Transform<Candidate, String[]> candidateToRow = new Transform<Candidate, String[]>() {
 			@Override
 			public String[] invoke(Candidate c) {
-				return new String[] {c.login, c.name, c.email};
+				return new String[] {CsvHelpers.escapeIfComma(c.login), CsvHelpers.escapeIfComma(c.name), CsvHelpers.escapeIfComma(c.email) };
 			}
 		};
 		return CsvData.fromList(headers, candidateToRow, candidates);

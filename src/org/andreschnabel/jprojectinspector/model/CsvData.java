@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.model;
 
 import org.andreschnabel.jprojectinspector.utilities.Transform;
+import org.andreschnabel.jprojectinspector.utilities.helpers.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
@@ -87,11 +88,35 @@ public class CsvData {
 		FileHelpers.writeStrToFile(toString(), file);
 	}
 
-	public List<String[]> getRows() {
-		return rowList;
+	public List<String> getColumn(String header) {
+		final int columnIndex = columnWithHeader(header);
+		Transform<String[], String> cellForColumn = new Transform<String[], String>() {
+			@Override
+			public String invoke(String[] row) {
+				return row[columnIndex];
+			}
+		};
+		return ListHelpers.map(cellForColumn, rowList);
+	}
+
+	public static <T> List<T> toList(Transform<String[], T> rowToElem, File f) throws Exception {
+		CsvData data = CsvHelpers.parseCsv(f);
+		return toList(rowToElem, data);
+	}
+
+	public static <T> List<T> toList(Transform<String[], T> rowToElem, CsvData data) throws Exception {
+		List<T> lst = new ArrayList<T>(data.rowCount()-1);
+		for(int row = 1; row<data.rowCount(); row++) {
+			lst.add(rowToElem.invoke(data.rowList.get(row)));
+		}
+		return lst;
 	}
 
 	public String[] getRow(int row) {
-		return rowList.get(row);
+		return rowList.get(row+1);
+	}
+
+	public String columnName(int column) {
+		return getHeaders()[column];
 	}
 }

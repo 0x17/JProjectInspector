@@ -49,7 +49,7 @@ public final class ProjectStatsRunner {
 		List<ProjectStats> stats = new LinkedList<ProjectStats>();
 		ProjectStatsList psl = new ProjectStatsList(stats);
 
-		ProjectList plist = ProjectList.fromFile(lstFilename);
+		ProjectList plist = ProjectList.fromJson(lstFilename);
 
 		int i = 1;
 		int nprojects = plist.projects.size();

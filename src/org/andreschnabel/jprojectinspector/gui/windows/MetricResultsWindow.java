@@ -5,11 +5,9 @@ import org.andreschnabel.jprojectinspector.freechart.MetricBarChart;
 import org.andreschnabel.jprojectinspector.gui.tables.MetricResultTableModel;
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
 import org.andreschnabel.jprojectinspector.metrics.MetricsRegistry;
+import org.andreschnabel.jprojectinspector.model.CsvData;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.AsyncTask;
-import org.andreschnabel.jprojectinspector.utilities.AsyncTaskBatch;
-import org.andreschnabel.jprojectinspector.utilities.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
+import org.andreschnabel.jprojectinspector.utilities.*;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 import org.jfree.chart.JFreeChart;
@@ -19,6 +17,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,19 +52,39 @@ public class MetricResultsWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				Map<Project, Float[]> results = mrtm.getResults();
-				StringBuilder sb = new StringBuilder();
-				for(Project p : results.keySet()) {
-					sb.append(p.owner + "," + p.repoName + ",");
-					Float[] result = results.get(p);
-					for(int i=0; i<result.length; i++) {
-						sb.append(result[i]);
-						if(i+1<result.length)
-							sb.append(",");
-					}
-					sb.append("\n");
+
+				List<String[]> ownerRepoMetricsRows = new ArrayList<String[]>(results.keySet().size());
+
+				int ncols = metricNames.size()+2;
+
+				String[] headers = new String[ncols];
+				headers[0] = "owner";
+				headers[1] = "repo";
+				for(int i1 = 0; i1 < metricNames.size(); i1++) {
+					String metricName = metricNames.get(i1);
+					headers[2+i1] = metricName;
 				}
+				ownerRepoMetricsRows.add(headers);
+
+				for(Project p : results.keySet()) {
+					Float[] result = results.get(p);
+
+					String[] row = new String[ncols];
+
+					row[0] = p.owner;
+					row[1] = p.repoName;
+
+					for(int i=0; i<result.length; i++) {
+						row[2+i] = ""+result[i];
+					}
+
+					ownerRepoMetricsRows.add(row);
+				}
+
+				CsvData csvData = new CsvData(ownerRepoMetricsRows);
+
 				try {
-					GuiHelpers.saveStringWithFileDialog(sb.toString(), new File("."), "csv");
+					GuiHelpers.saveCsvDialog(new File("."), csvData);
 				} catch(Exception e) {
 					e.printStackTrace();
 				}

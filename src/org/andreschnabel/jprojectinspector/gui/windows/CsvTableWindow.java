@@ -38,7 +38,7 @@ public class CsvTableWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
-					GuiHelpers.saveStringWithFileDialog(data.toString(), new File("."), "csv");
+					GuiHelpers.saveCsvDialog(new File("."), data);
 				} catch(Exception e) {
 					e.printStackTrace();
 				}

@@ -2,16 +2,19 @@ package org.andreschnabel.jprojectinspector.gui.windows;
 
 import org.andreschnabel.jprojectinspector.gui.listeners.QuitOnEscapeKeyListener;
 import org.andreschnabel.jprojectinspector.gui.panels.InputProjectTablePanel;
+import org.andreschnabel.jprojectinspector.model.CsvData;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 import org.andreschnabel.jprojectinspector.utilities.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
+import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.List;
 
 public class InputWindow extends JFrame {
@@ -201,6 +204,8 @@ public class InputWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(!projLstPanel.getProjects().isEmpty()) {
 					metricsSelectionWindow.setVisible(true);
+				} else {
+					GuiHelpers.showError("Can't start. Project list is empty.");
 				}
 			}
 		});
@@ -215,8 +220,36 @@ public class InputWindow extends JFrame {
 
 		JPanel bottomPane = new JPanel(new FlowLayout());
 
-		bottomPane.add(new JButton("Import"));
-		bottomPane.add(new JButton("Export"));
+		JButton importBtn = new JButton("Import");
+		importBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					CsvData data = GuiHelpers.loadCsvDialog(new File("."));
+					if(data != null) {
+						for(Project p : Project.projectListFromCsv(data)) {
+							projLstPanel.addProject(p);
+						}
+					}
+				} catch(Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		bottomPane.add(importBtn);
+
+		JButton exportBtn = new JButton("Export");
+		exportBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					GuiHelpers.saveCsvDialog(new File("."), Project.projectListToCsv(projLstPanel.getProjects()));
+				} catch(Exception ee) {
+					ee.printStackTrace();
+				}
+			}
+		});
+		bottomPane.add(exportBtn);
 
 		bottomPane.add(new JButton("Tap Timeline"));
 

@@ -7,7 +7,6 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.CsvHelpers;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.List;
 
 public class CsvHelpersTest {
 
@@ -33,7 +32,7 @@ public class CsvHelpersTest {
 		CsvData data = CsvHelpers.parseCsv(csvLine);
 		Assert.assertEquals(1, data.rowCount());
 		
-		String[] firstRow = data.getRow(0);
+		String[] firstRow = data.getHeaders();
 		AssertHelpers.arrayEqualsArrayOrderSensitive(cols, firstRow);
 	}
 	
@@ -47,12 +46,11 @@ public class CsvHelpersTest {
 
 		CsvData data = CsvHelpers.parseCsv(csvLines);
 
-		List<String[]> rows = data.getRows();
-		Assert.assertEquals(3, rows.size());
+		Assert.assertEquals(2, data.rowCount());
 		
-		AssertHelpers.arrayEqualsArrayOrderSensitive(row1, rows.get(0));		
-		AssertHelpers.arrayEqualsArrayOrderSensitive(row2, rows.get(1));
-		AssertHelpers.arrayEqualsArrayOrderSensitive(row3, rows.get(2));
+		AssertHelpers.arrayEqualsArrayOrderSensitive(row1, data.getHeaders());
+		AssertHelpers.arrayEqualsArrayOrderSensitive(row2, data.getRow(0));
+		AssertHelpers.arrayEqualsArrayOrderSensitive(row3, data.getRow(1));
 	}
 
 }

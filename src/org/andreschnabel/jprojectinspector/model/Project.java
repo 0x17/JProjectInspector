@@ -1,5 +1,9 @@
 package org.andreschnabel.jprojectinspector.model;
 
+import org.andreschnabel.jprojectinspector.utilities.Transform;
+
+import java.util.List;
+
 public class Project {
 	public String owner;
 	public String repoName;
@@ -55,4 +59,23 @@ public class Project {
 		return new Project(parts[0], parts[1]);
 	}
 
+	public static CsvData projectListToCsv(List<Project> projs) {
+		Transform<Project, String[]> projToRow = new Transform<Project, String[]>() {
+			@Override
+			public String[] invoke(Project p) {
+				return new String[] {p.owner, p.repoName};
+			}
+		};
+		return CsvData.fromList(new String[]{"owner,repo"}, projToRow, projs);
+	}
+
+	public static List<Project> projectListFromCsv(CsvData data) throws Exception {
+		Transform<String[], Project> rowToProj = new Transform<String[], Project>() {
+			@Override
+			public Project invoke(String[] row) {
+				return new Project(row[0], row[1]);
+			}
+		};
+		return CsvData.toList(rowToProj, data);
+	}
 }
