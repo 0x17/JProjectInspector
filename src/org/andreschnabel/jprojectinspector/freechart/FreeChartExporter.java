@@ -4,21 +4,27 @@ import com.lowagie.text.pdf.DefaultFontMapper;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 
-public class FreeChartPdfExporter {
+public class FreeChartExporter {
+
+	public static void saveChartToPNG(JFreeChart chart, File f, int width, int height) throws Exception {
+		ChartUtilities.saveChartAsPNG(f, chart, width, height);
+	}
 
 	// Source: http://www.jfree.org/phpBB2/viewtopic.php?t=616
-	public static void saveChartToPDF(JFreeChart chart, String fileName, int width, int height) throws Exception {
+	public static void saveChartToPDF(JFreeChart chart, File f, int width, int height) throws Exception {
 		if(chart != null) {
 			BufferedOutputStream out = null;
 			try {
-				out = new BufferedOutputStream(new FileOutputStream(fileName));
+				out = new BufferedOutputStream(new FileOutputStream(f));
 
 				com.lowagie.text.Rectangle pagesize = new com.lowagie.text.Rectangle(width, height);
 				com.lowagie.text.Document document = new com.lowagie.text.Document(pagesize, 50, 50, 50, 50);

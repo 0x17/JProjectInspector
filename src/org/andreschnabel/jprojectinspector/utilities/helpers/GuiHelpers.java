@@ -38,30 +38,27 @@ public class GuiHelpers {
 
 	public static File saveFileDialog(File path, final String... extensions) {
 		JFileChooser chooser = new JFileChooser(path);
-		chooser.addChoosableFileFilter(new FileFilter() {
-			@Override
-			public boolean accept(File file) {
-				String ext = FileHelpers.extension(file);
-				for(String allowedExt : extensions) {
-					if(ext.equals(allowedExt))
-						return true;
+		for(final String extension : extensions) {
+			chooser.addChoosableFileFilter(new FileFilter() {
+				@Override
+				public boolean accept(File file) {
+					return FileHelpers.extension(file).equals(extension);
 				}
-				return false;
-			}
 
-			@Override
-			public String getDescription() {
-				StringBuilder sb = new StringBuilder();
-				for(String ext : extensions) {
-					sb.append(ext + ",");
+				@Override
+				public String getDescription() {
+					return extension;
 				}
-				return sb.toString();
-			}
-		});
+			});
+		}
 		int state = chooser.showSaveDialog(null);
 		switch(state) {
 			case JFileChooser.APPROVE_OPTION:
-				return chooser.getSelectedFile();
+				File file = chooser.getSelectedFile();
+				if(extensions.length == 1 && FileHelpers.extension(file) != extensions[0]) {
+					file = new File(file.getPath() + "." + extensions[0]);
+				}
+				return file;
 			case JFileChooser.CANCEL_OPTION:
 			case JFileChooser.ERROR_OPTION:
 			default:
@@ -71,6 +68,8 @@ public class GuiHelpers {
 
 	public static void saveStringWithFileDialog(String str, File path, final String... extensions) throws Exception {
 		File selectedFile = saveFileDialog(path, extensions);
-		FileHelpers.writeStrToFile(str, selectedFile);
+		if(selectedFile != null) {
+			FileHelpers.writeStrToFile(str, selectedFile);
+		}
 	}
 }

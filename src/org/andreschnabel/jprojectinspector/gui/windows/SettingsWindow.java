@@ -12,7 +12,7 @@ public class SettingsWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final JTextField[] fields;
 
-	private static final String[] settingNames = new String[] { "Base folder", "Base url" };
+	private static final String[] settingNames = new String[] { "Base folder", "Base url", "Git executable path", "Cloc executable path" };
 
 	public SettingsWindow() {
 		super("Settings");

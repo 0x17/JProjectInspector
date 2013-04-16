@@ -2,6 +2,7 @@ package org.andreschnabel.jprojectinspector.gui.windows;
 
 import org.andreschnabel.jprojectinspector.gui.tables.CsvTableModel;
 import org.andreschnabel.jprojectinspector.model.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.helpers.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 
 import javax.swing.*;
@@ -23,11 +24,14 @@ public class CsvTableWindow extends JFrame {
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
+		gbc.gridwidth = 3;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		add(new JScrollPane(csvTbl), gbc);
 
-		JPanel bottomPane = new JPanel(new FlowLayout());
+		JPanel topPane = new JPanel(new FlowLayout());
 
 		JButton exportBtn = new JButton("Export");
 		exportBtn.addActionListener(new ActionListener() {
@@ -40,18 +44,22 @@ public class CsvTableWindow extends JFrame {
 				}
 			}
 		});
-		bottomPane.add(exportBtn);
+		topPane.add(exportBtn);
 
 		gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1;
 		gbc.weighty = 0;
 		gbc.gridx = 1;
-		gbc.gridy = 2;
-		add(bottomPane);
+		gbc.gridy = 0;
+		add(topPane);
 
 		setSize(640, 480);
 		setLocationRelativeTo(null);
+	}
+
+	public static void main(String[] args) throws Exception {
+		new CsvTableWindow(CsvHelpers.parseCsv(new File("data/responses500.csv"))).setVisible(true);
 	}
 
 }

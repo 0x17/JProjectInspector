@@ -15,7 +15,7 @@ public class FreeChartTest extends VisualTest {
 
 	private static JFreeChart createBarChart() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.setValue(3, "test", "test");
+		dataset.setValue(3, "test1", "test1");
 		dataset.setValue(4, "test2", "test2");
 		JFreeChart chart = ChartFactory.createBarChart("Testchart", "CategoryAxisLAbel", "ValueAxisLabel", dataset, PlotOrientation.HORIZONTAL, true, true, true);
 	 	CategoryPlot plot = (CategoryPlot) chart.getPlot();
@@ -40,7 +40,7 @@ public class FreeChartTest extends VisualTest {
 						frm.add(cp);
 						frm.pack();
 						waitForFrameToClose(frm);
-						//FreeChartPdfExporter.saveChartToPDF(createBarChart(), "testfreechart.pdf", dim.width, dim.height);
+						//FreeChartExporter.saveChartToPDF(createBarChart(), "testfreechart.pdf", dim.width, dim.height);
 					}
 				}
 		};

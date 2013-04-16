@@ -1,5 +1,7 @@
 package org.andreschnabel.jprojectinspector.gui.windows;
 
+import org.andreschnabel.jprojectinspector.freechart.ChartWindow;
+import org.andreschnabel.jprojectinspector.freechart.MetricBarChart;
 import org.andreschnabel.jprojectinspector.gui.tables.MetricResultTableModel;
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
 import org.andreschnabel.jprojectinspector.metrics.MetricsRegistry;
@@ -10,6 +12,7 @@ import org.andreschnabel.jprojectinspector.utilities.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+import org.jfree.chart.JFreeChart;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +36,7 @@ public class MetricResultsWindow extends JFrame {
 		final MetricResultTableModel mrtm = new MetricResultTableModel(projects, metricNames);
 
 		initAndAddTable(mrtm);
-		initAndAddBottomPane(mrtm);
+		initAndAddTopPane(mrtm, metricNames);
 
 		setSize(640, 480);
 		setLocationRelativeTo(null);
@@ -42,8 +45,8 @@ public class MetricResultsWindow extends JFrame {
 		setAlwaysOnTop(true);
 	}
 
-	private void initAndAddBottomPane(final MetricResultTableModel mrtm) {
-		JPanel bottomPane = new JPanel(new FlowLayout());
+	private void initAndAddTopPane(final MetricResultTableModel mrtm, final List<String> metricNames) {
+		JPanel topPane = new JPanel(new FlowLayout());
 
 		JButton exportBtn = new JButton("Export");
 		exportBtn.addActionListener(new ActionListener() {
@@ -68,21 +71,39 @@ public class MetricResultsWindow extends JFrame {
 				}
 			}
 		});
-		bottomPane.add(exportBtn);
+		topPane.add(exportBtn);
+
+		for(int col=0; col<metricNames.size(); col++) {
+			JButton visualizeBtn = new JButton("Visualize " + metricNames.get(col));
+			final int finalCol = col;
+			visualizeBtn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent actionEvent) {
+					String title = metricNames.get(finalCol);
+					JFreeChart mbc = MetricBarChart.newInstance(title, mrtm.getResults(), finalCol);
+					ChartWindow cw = new ChartWindow(title, mbc, new Dimension(640, 480));
+					cw.setVisible(true);
+				}
+			});
+			topPane.add(visualizeBtn);
+		}
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1;
 		gbc.weighty = 0;
 		gbc.gridx = 1;
-		gbc.gridy = 2;
-		add(bottomPane);
+		gbc.gridy = 0;
+		add(topPane);
 	}
 
 	private void initAndAddTable(MetricResultTableModel mrtm) {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = gbc.weighty = 1;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = 3;
 		resultTable = new JTable(mrtm);
 		add(new JScrollPane(resultTable), gbc);
 	}
