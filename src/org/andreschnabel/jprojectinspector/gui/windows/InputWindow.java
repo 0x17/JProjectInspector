@@ -10,9 +10,16 @@ public class InputWindow extends AbstractWindow<InputPanel> {
 
 	public InputWindow() {
 		super("Inputs", 750, 540, JFrame.EXIT_ON_CLOSE, new InputPanel());
+		disposeOnClose();
 	}
 
 	public static void main(String[] args) {
 		new InputWindow().setVisible(true);
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		panel.dispose();
 	}
 }

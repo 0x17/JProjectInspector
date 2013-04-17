@@ -11,9 +11,12 @@ public final class FuncInPlace {
 		lst.removeAll(toRem);
 	}
 
-	public static <T> void addNoDups(List<T> lst, T o) {
+	public static <T> boolean addNoDups(List<T> lst, T o) {
 		if(!lst.contains(o)) {
 			lst.add(o);
+			return true;
+		} else {
+			return false;
 		}
 	}
 

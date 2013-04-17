@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SettingsPanel extends JPanel {
+public class SettingsPanel extends PanelWithParent {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -33,7 +33,7 @@ public class SettingsPanel extends JPanel {
 		hideBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
+				parentFrame.setVisible(false);
 			}
 		});
 		add(hideBtn);

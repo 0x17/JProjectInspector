@@ -56,8 +56,16 @@ public class GuiHelpers {
 	}
 
 	public static CsvData loadCsvDialog(File path) throws Exception {
-		String s = loadStringWithFileDialog(path, "csv");
-		return (s != null) ? CsvHelpers.parseCsv(s) : null;
+		File selectedFile = loadFileDialog(path, "csv");
+		if(selectedFile != null) {
+			String s = FileHelpers.readEntireFile(selectedFile);
+			CsvData data = (s != null) ? CsvHelpers.parseCsv(s) : null;
+			if(data != null) {
+				data.title = selectedFile.getName();
+			}
+			return data;
+		}
+		return null;
 	}
 
 	private static String loadStringWithFileDialog(File path, final String... extensions) throws Exception {

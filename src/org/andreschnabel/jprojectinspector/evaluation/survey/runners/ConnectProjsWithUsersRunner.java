@@ -40,11 +40,11 @@ public class ConnectProjsWithUsersRunner {
 		Transform<ResponseProjects, String[]> respProjToRow = new Transform<ResponseProjects, String[]>() {
 			@Override
 			public String[] invoke(ResponseProjects rp) {
-				return new String[] {rp.user,
-						CsvHelpers.escapeIfComma(rp.leastTested),
-						CsvHelpers.escapeIfComma(rp.mostTested),
-						CsvHelpers.escapeIfComma(rp.lowestBugCount),
-						CsvHelpers.escapeIfComma(rp.highestBugCount)};
+				return new String[] {rp.user == null ? "null" : rp.user,
+						rp.leastTested,
+						rp.mostTested,
+						rp.lowestBugCount,
+						rp.highestBugCount};
 			}
 		};
 		CsvData respProjs = CsvData.fromList(headers, respProjToRow, results);

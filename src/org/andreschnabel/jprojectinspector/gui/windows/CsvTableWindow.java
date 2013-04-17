@@ -12,7 +12,7 @@ public class CsvTableWindow extends AbstractWindow<CsvTablePanel> {
 	private static final long serialVersionUID = 1L;
 
 	public CsvTableWindow(final CsvData data) {
-		super(data.title, 640, 480, JFrame.EXIT_ON_CLOSE, new CsvTablePanel(data));
+		super(data.title, 640, 480, JFrame.DISPOSE_ON_CLOSE, new CsvTablePanel(data));
 	}
 
 	public static void main(String[] args) throws Exception {

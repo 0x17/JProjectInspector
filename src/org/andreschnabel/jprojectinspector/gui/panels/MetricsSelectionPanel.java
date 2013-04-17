@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
-import org.andreschnabel.jprojectinspector.gui.MetricListModel;
+import org.andreschnabel.jprojectinspector.gui.lists.MetricListModel;
 import org.andreschnabel.jprojectinspector.gui.windows.MetricResultsWindow;
 import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class MetricsSelectionPanel extends JPanel {
+public class MetricsSelectionPanel extends PanelWithParent {
 
 	private static final long serialVersionUID = 1L;
 
@@ -122,7 +122,7 @@ public class MetricsSelectionPanel extends JPanel {
 					GuiHelpers.showError("No metric selected for measurement!");
 					return;
 				}
-				setVisible(false);
+				parentFrame.setVisible(false);
 				MetricResultsWindow metricResultsWindow = new MetricResultsWindow(projLstPanel.getProjects(), getSelectedMetrics());
 				metricResultsWindow.setVisible(true);
 			}

@@ -1,23 +1,16 @@
 package org.andreschnabel.jprojectinspector.tests.online.githubapi;
 
-import static org.junit.Assert.assertTrue;
+import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.scrapers.TimelineTapper;
+import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
+import org.junit.Test;
 
 import java.util.List;
 
-import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.scrapers.TimelineTapper;
-import org.junit.Test;
-
 public class TimelineTapperTest {
 	@Test
-	public void testTapUniqueProject() throws Exception {
-		List<Project> ups = TimelineTapper.tapUniqueProjects("Java", 1);
-		assertTrue(ups.size() >= 1);
-	}
-	
-	@Test
-	public void testTapUniqueProjectsAtLeastFour() throws Exception {
-		List<Project> ups = TimelineTapper.tapUniqueProjects("Java", 4);
-		assertTrue(ups.size() >= 4);
+	public void testTapProjects() throws Exception {
+		List<Project> projs = TimelineTapper.tapProjects();
+		AssertHelpers.listNotEmpty(projs);
 	}
 }

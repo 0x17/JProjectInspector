@@ -1,8 +1,7 @@
 package org.andreschnabel.jprojectinspector.model.survey;
 
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -22,12 +21,12 @@ public class CandidateLst {
 
 	public CandidateLst() {}
 
-	public CsvData toCsv() {
+	public CsvData toCsv() throws Exception {
 		String[] headers = new String[]{"login", "name", "email"};
 		Transform<Candidate, String[]> candidateToRow = new Transform<Candidate, String[]>() {
 			@Override
 			public String[] invoke(Candidate c) {
-				return new String[] {CsvHelpers.escapeIfComma(c.login), CsvHelpers.escapeIfComma(c.name), CsvHelpers.escapeIfComma(c.email) };
+				return new String[] {c.login, c.name, c.email };
 			}
 		};
 		return CsvData.fromList(headers, candidateToRow, candidates);

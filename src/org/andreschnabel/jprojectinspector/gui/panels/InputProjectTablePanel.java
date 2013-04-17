@@ -8,6 +8,7 @@ import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
 import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTaskBatch;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,7 @@ public class InputProjectTablePanel extends JPanel {
 	private List<Project> projects = new ArrayList<Project>();
 	private final InputProjectTableModel tableModel = new InputProjectTableModel(projects);
 	private final JTable projTable = new JTable(tableModel);
+	private AsyncTaskBatch<FrontStats> queryStatsTaskBatch;
 
 	public InputProjectTablePanel() {
 		setLayout(new GridLayout(1,1));
@@ -30,28 +32,50 @@ public class InputProjectTablePanel extends JPanel {
 	}
 	
 	public void addProject(final Project p) {
-		AsyncTask<FrontStats> queryStatsTask = new AsyncTask<FrontStats>() {
-			@Override
-			public void onFinished(FrontStats stats) {
-				if(stats != null) {
-					tableModel.putInCache(p, stats);
-					updateTable();
+		if(FuncInPlace.addNoDups(projects, p)) {
+			AsyncTask<FrontStats> queryStatsTask = queryTaskForProject(p);
+			updateTable();
+			queryStatsTask.execute();
+		}
+	}
+
+	private AsyncTask<FrontStats> queryTaskForProject(final Project p) {
+		return new AsyncTask<FrontStats>() {
+				@Override
+				public void onFinished(FrontStats stats) {
+					if(stats != null) {
+						tableModel.putInCache(p, stats);
+						updateTable();
+					}
+				}
+				@Override
+				public FrontStats doInBackground() {
+					FrontStats stats = null;
+					try {
+						stats = FrontStats.statsForProject(p);
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+					return stats;
+				}
+			};
+	}
+
+	public void addProjects(List<Project> projs) {
+		if(queryStatsTaskBatch == null) {
+			queryStatsTaskBatch = new AsyncTaskBatch<FrontStats>(projs.size());
+			int nadded = 0;
+			for(Project p : projs) {
+				if(FuncInPlace.addNoDups(projects, p)) {
+					queryStatsTaskBatch.add(queryTaskForProject(p));
+					nadded++;
 				}
 			}
-			@Override
-			public FrontStats doInBackground() {
-				FrontStats stats = null;
-				try {
-					stats = FrontStats.statsForProject(p);
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-				return stats;
+			if(nadded > 0) {
+				updateTable();
+				queryStatsTaskBatch.execute();
 			}
-		};
-		FuncInPlace.addNoDups(projects, p);
-		updateTable();
-		queryStatsTask.execute();
+		}
 	}
 
 	public void removeOffline() {
@@ -87,5 +111,12 @@ public class InputProjectTablePanel extends JPanel {
 	public void clear() {
 		projects.clear();
 		projTable.updateUI();
+	}
+
+	public void dipose() {
+		if(queryStatsTaskBatch != null) {
+			queryStatsTaskBatch.dipose();
+			queryStatsTaskBatch = null;
+		}
 	}
 }

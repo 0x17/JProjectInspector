@@ -12,7 +12,7 @@ import java.util.List;
 public class CsvData {
 
 	private List<String[]> rowList;
-	public final String title;
+	public String title;
 
 	public CsvData(List<String[]> rowList) {
 		this("untitled", rowList);
@@ -78,11 +78,20 @@ public class CsvData {
 		rowList.get(0)[columnCount()-1] = header;
 	}
 
-	public static <T> CsvData fromList(String[] headers, Transform<T, String[]> elemToRow, List<T> lst) {
+	public static <T> CsvData fromList(String[] headers, Transform<T, String[]> elemToRow, List<T> lst) throws Exception {
 		List<String[]> rows = new ArrayList<String[]>(lst.size()+1);
 		rows.add(headers);
 		for(T elem : lst) {
-			rows.add(elemToRow.invoke(elem));
+			String[] row = elemToRow.invoke(elem);
+
+			if(row.length != headers.length) {
+				throw new Exception("Row length is " + row.length + " but header count is " + headers.length);
+			}
+
+			for(int i=0; i<row.length; i++) {
+				row[i] = CsvHelpers.escapeIfComma(row[i]);
+			}
+			rows.add(row);
 		}
 		return new CsvData(rows);
 	}

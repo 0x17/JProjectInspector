@@ -11,6 +11,7 @@ public class MetricsSelectionWindow extends AbstractWindow<MetricsSelectionPanel
 
 	public MetricsSelectionWindow(final InputProjectTablePanel projLstPanel) {
 		super("Metrics Selection", 800, 600, JFrame.HIDE_ON_CLOSE, new MetricsSelectionPanel(projLstPanel));
+		panel.setParentFrame(this);
 	}
 
 	public static void main(String[] args) {

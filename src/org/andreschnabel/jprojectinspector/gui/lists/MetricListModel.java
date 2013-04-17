@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.gui;
+package org.andreschnabel.jprojectinspector.gui.lists;
 
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
 import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;

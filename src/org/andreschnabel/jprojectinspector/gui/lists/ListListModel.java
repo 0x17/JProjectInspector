@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.gui;
+package org.andreschnabel.jprojectinspector.gui.lists;
 
 import javax.swing.*;
 import java.util.List;

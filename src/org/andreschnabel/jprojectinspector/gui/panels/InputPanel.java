@@ -1,14 +1,17 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.gui.constraints.ThreeRowGridBagConstraints;
+import org.andreschnabel.jprojectinspector.gui.windows.CsvTableWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.MetricsSelectionWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.SettingsWindow;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.scrapers.TimelineTapper;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
+import org.andreschnabel.jprojectinspector.utilities.threading.ContinuousTask;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -19,10 +22,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
 public class InputPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
+	private ContinuousTask<java.util.List<Project>> tapTimelineTask;
 
 	public InputPanel() {
 		setLayout(new GridBagLayout());
@@ -47,6 +53,13 @@ public class InputPanel extends JPanel {
 
 	private SettingsWindow settingsWindow = new SettingsWindow();
 	private final MetricsSelectionWindow metricsSelectionWindow;
+
+	public void dispose() {
+		if(tapTimelineTask != null) {
+			tapTimelineTask.dipose();
+		}
+		projLstPanel.dipose();
+	}
 
 	private final class EmptyReposComboOnChange implements DocumentListener {
 		@Override
@@ -74,7 +87,7 @@ public class InputPanel extends JPanel {
 	@SuppressWarnings("rawtypes")
 	private final JComboBox userReposCombo = new JComboBox();
 
-	private JButton addAllBtn = new JButton("+All");
+	private JButton addAllBtn;
 
 	private void initTopPane() {
 		JPanel topPane = new JPanel();
@@ -169,14 +182,17 @@ public class InputPanel extends JPanel {
 	}
 
 	private void initAddAllButton(JPanel topPane) {
+		addAllBtn = new JButton("+All");
 		addAllBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String owner = ownerField.getText();
+				java.util.List<Project> projs = new LinkedList<Project>();
 				for(int i=0; i<userReposCombo.getItemCount(); i++) {
 					String repo = (String)userReposCombo.getItemAt(i);
-					projLstPanel.addProject(new Project(owner, repo));
+					projs.add(new Project(owner, repo));
 				}
+				projLstPanel.addProjects(projs);
 			}
 		});
 		addAllBtn.setVisible(false);
@@ -189,6 +205,22 @@ public class InputPanel extends JPanel {
 	}
 
 	private void initBottomPane() {
+		JButton viewCsvBtn = new JButton("View CSV");
+		viewCsvBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					CsvData csvData = GuiHelpers.loadCsvDialog(new File("."));
+					if(csvData != null) {
+						CsvTableWindow ctw = new CsvTableWindow(csvData);
+						ctw.setVisible(true);
+					}
+				} catch(Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+
 		JButton remOfflineBtn = new JButton("Remove offline");
 		remOfflineBtn.addActionListener(new ActionListener() {
 			@Override
@@ -235,7 +267,6 @@ public class InputPanel extends JPanel {
 				}
 			}
 		});
-		bottomPane.add(importBtn);
 
 		JButton exportBtn = new JButton("Export");
 		exportBtn.addActionListener(new ActionListener() {
@@ -248,16 +279,39 @@ public class InputPanel extends JPanel {
 				}
 			}
 		});
-		bottomPane.add(exportBtn);
 
-		JButton tapTimelineBtn = new JButton("Tap Timeline");
+		final JButton tapTimelineBtn = new JButton("Tap Timeline");
 		tapTimelineBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(tapTimelineTask == null) {
+					tapTimelineTask = new ContinuousTask<List<Project>>() {
+						@Override
+						public void onSuccess(List<Project> result) {
+							for(Project p : result) {
+								projLstPanel.addProject(p);
+							}
+						}
 
+						@Override
+						public List<Project> iterateInBackground() {
+							try {
+								return TimelineTapper.tapProjects();
+							} catch(Exception e1) {
+								e1.printStackTrace();
+							}
+							return null;
+						}
+					};
+					tapTimelineTask.execute();
+					tapTimelineBtn.setText("Stop Tap Timeline");
+				} else {
+					tapTimelineTask.dipose();
+					tapTimelineTask = null;
+					tapTimelineBtn.setText("Tap Timeline");
+				}
 			}
 		});
-		bottomPane.add(tapTimelineBtn);
 
 		JButton clearBtn = new JButton("Clear");
 		clearBtn.addActionListener(new ActionListener() {
@@ -266,8 +320,12 @@ public class InputPanel extends JPanel {
 				projLstPanel.clear();
 			}
 		});
-		bottomPane.add(clearBtn);
 
+		bottomPane.add(viewCsvBtn);
+		bottomPane.add(importBtn);
+		bottomPane.add(exportBtn);
+		bottomPane.add(tapTimelineBtn);
+		bottomPane.add(clearBtn);
 		bottomPane.add(configBtn);
 		bottomPane.add(remOfflineBtn);
 		bottomPane.add(startBtn);
