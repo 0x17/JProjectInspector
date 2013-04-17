@@ -46,14 +46,19 @@ public class CsvHelpers {
 		StringBuffer buf = new StringBuffer();
 		
 		boolean escaped = false;
+
+		int curLineNum = 0;
 		
 		for(int i=0; i<content.length(); i++) {			
 			char c = content.charAt(i);
 			
-			if(c == '"') escaped = !escaped;
+			if(c == '"') {
+				escaped = !escaped;
+			}
 			
 			switch(c) {
 			case '\n':
+				curLineNum++;
 				if(curColumn == numColumns-1) {					
 					curRow[curColumn++] = buf.toString();
 					buf = new StringBuffer();
@@ -65,6 +70,9 @@ public class CsvHelpers {
 				
 			case ',':
 				if(!escaped) {
+					if(curColumn == numColumns) {
+						throw new Exception("Line malformed with too many columns: " + content.split("\n")[curLineNum]);
+					}
 					curRow[curColumn++] = buf.toString();
 					buf = new StringBuffer();
 				}

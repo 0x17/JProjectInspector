@@ -80,4 +80,7 @@ public final class StringHelpers {
 		}
 	}
 
+	public static String removeQuotes(String s) {
+		return s.replaceAll("\"", "");
+	}
 }

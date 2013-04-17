@@ -9,6 +9,7 @@ public class AsyncTaskBatch<T> {
 
 	private final List<AsyncTask<T>> tasks;
 	private volatile boolean disposed;
+	private volatile boolean done;
 
 	public AsyncTaskBatch(int size) {
 		tasks = new ArrayList<AsyncTask<T>>(size);
@@ -16,6 +17,10 @@ public class AsyncTaskBatch<T> {
 
 	public synchronized void dipose() {
 		disposed = true;
+	}
+
+	public synchronized boolean isDone() {
+		return done;
 	}
 
 	public void add(AsyncTask<T> task) {
@@ -33,7 +38,7 @@ public class AsyncTaskBatch<T> {
 					}
 					task.onFinished(task.doInBackground());
 				}
-
+				done = true;
 			}
 		};
 

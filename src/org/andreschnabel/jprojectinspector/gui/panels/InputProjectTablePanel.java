@@ -62,7 +62,7 @@ public class InputProjectTablePanel extends JPanel {
 	}
 
 	public void addProjects(List<Project> projs) {
-		if(queryStatsTaskBatch == null) {
+		if(queryStatsTaskBatch == null || queryStatsTaskBatch.isDone()) {
 			queryStatsTaskBatch = new AsyncTaskBatch<FrontStats>(projs.size());
 			int nadded = 0;
 			for(Project p : projs) {

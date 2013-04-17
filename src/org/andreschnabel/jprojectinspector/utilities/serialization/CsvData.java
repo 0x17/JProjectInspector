@@ -3,6 +3,7 @@ package org.andreschnabel.jprojectinspector.utilities.serialization;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class CsvData {
 			}
 
 			for(int i=0; i<row.length; i++) {
-				row[i] = CsvHelpers.escapeIfComma(row[i]);
+				row[i] = CsvHelpers.escapeIfComma(StringHelpers.removeQuotes(row[i]));
 			}
 			rows.add(row);
 		}

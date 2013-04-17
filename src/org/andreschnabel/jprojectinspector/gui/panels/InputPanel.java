@@ -217,6 +217,7 @@ public class InputPanel extends JPanel {
 					}
 				} catch(Exception e1) {
 					e1.printStackTrace();
+					GuiHelpers.showError(e1.getMessage());
 				}
 			}
 		});
@@ -256,7 +257,8 @@ public class InputPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					CsvData data = GuiHelpers.loadCsvDialog(new File("."));
+					String[] expectedHeaders = Project.csvHeaders;
+					CsvData data = GuiHelpers.loadCsvDialog(new File("."), expectedHeaders);
 					if(data != null) {
 						for(Project p : Project.projectListFromCsv(data)) {
 							projLstPanel.addProject(p);
@@ -264,6 +266,7 @@ public class InputPanel extends JPanel {
 					}
 				} catch(Exception e1) {
 					e1.printStackTrace();
+					GuiHelpers.showError(e1.getMessage());
 				}
 			}
 		});
@@ -276,6 +279,7 @@ public class InputPanel extends JPanel {
 					GuiHelpers.saveCsvDialog(new File("."), Project.projectListToCsv(projLstPanel.getProjects()));
 				} catch(Exception ee) {
 					ee.printStackTrace();
+					GuiHelpers.showError(ee.getMessage());
 				}
 			}
 		});
@@ -299,6 +303,7 @@ public class InputPanel extends JPanel {
 								return TimelineTapper.tapProjects();
 							} catch(Exception e1) {
 								e1.printStackTrace();
+								GuiHelpers.showError(e1.getMessage());
 							}
 							return null;
 						}

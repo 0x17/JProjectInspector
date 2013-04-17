@@ -1,5 +1,7 @@
 package org.andreschnabel.jprojectinspector.gui.windows;
 
+import org.andreschnabel.jprojectinspector.gui.panels.PanelWithParent;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -11,21 +13,26 @@ public abstract class AbstractWindow<T extends JPanel> extends JFrame {
 	
 	protected T panel;
 
-	public AbstractWindow(String title, int width, int height, int closeOperation, T panel) {
-		this(title, width, height, closeOperation, panel, false);
-	}
-
-	public AbstractWindow(String title, int width, int height, int closeOperation, T panel, boolean doPack) {
+	public AbstractWindow(String title, int closeOperation, T panel) {
 		super("JProjectInspector :: " + title);
 		setLayout(new GridLayout(1,1));
 		setDefaultCloseOperation(closeOperation);
+
 		add(panel);
-		setSize(width, height);
-		if(doPack) {
-			pack();
-		}
-		setLocationRelativeTo(null);
 		this.panel = panel;
+
+		pack();
+		setLocationRelativeTo(null);
+
+		if(panel instanceof PanelWithParent) {
+			((PanelWithParent) panel).setParentFrame(this);
+		}
+	}
+
+	public AbstractWindow(String title, int width, int height, int closeOperation, T panel) {
+		this(title, closeOperation, panel);
+		setSize(width, height);
+		setLocationRelativeTo(null);
 	}
 
 	protected void disposeOnClose() {

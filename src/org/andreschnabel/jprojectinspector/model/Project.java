@@ -60,6 +60,8 @@ public class Project {
 		return new Project(parts[0], parts[1]);
 	}
 
+	public final static String[] csvHeaders = new String[]{"owner","repo"};
+
 	public static CsvData projectListToCsv(List<Project> projs) throws Exception {
 		Transform<Project, String[]> projToRow = new Transform<Project, String[]>() {
 			@Override
@@ -67,7 +69,7 @@ public class Project {
 				return new String[] {p.owner, p.repoName};
 			}
 		};
-		return CsvData.fromList(new String[]{"owner","repo"}, projToRow, projs);
+		return CsvData.fromList(csvHeaders, projToRow, projs);
 	}
 
 	public static List<Project> projectListFromCsv(CsvData data) throws Exception {

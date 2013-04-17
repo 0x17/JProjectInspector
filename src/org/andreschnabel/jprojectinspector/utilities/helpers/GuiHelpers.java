@@ -1,6 +1,8 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
 import org.andreschnabel.jprojectinspector.gui.listeners.QuitOnEscapeKeyListener;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.StringConcatenationOp;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 
@@ -84,6 +86,48 @@ public class GuiHelpers {
 		return fileDialogCommon(DialogType.Save, path, extensions);
 	}
 
+	public static void showPdf(File file) {
+		if(!Helpers.runningOnUnix()) {
+			try {
+				String call = "rundll32 SHELL32.DLL,ShellExec_RunDLL "+file.getAbsolutePath();
+				Runtime.getRuntime().exec(call);
+			} catch (Exception e1) {
+				showError("Unable to open " + file.getName() + "!");
+			}
+		}
+	}
+
+	public static CsvData loadCsvDialog(File path, String[] expectedHeaders) throws Exception {
+		String str = loadStringWithFileDialog(path, "csv");
+		if(str == null) {
+			return null;
+		}
+		validateHeaders(expectedHeaders, CsvHelpers.parseCsv(StringHelpers.firstLine(str)).getHeaders());
+		CsvData data = CsvHelpers.parseCsv(str);
+		return data;
+	}
+
+	private static void validateHeaders(String[] expectedHeaders, String[] headers) throws Exception {
+		String failMsg = null;
+
+		if(expectedHeaders.length != headers.length) {
+			failMsg = "Wrong number of columns.";
+		}
+
+		for(int i=0; i<expectedHeaders.length; i++) {
+			if(!headers[i].equals(expectedHeaders[i])) {
+				failMsg = "Headers don't match at column " + (i+1) + ": " + headers[i] + " should be " + expectedHeaders[i];
+				break;
+			}
+		}
+
+		if(failMsg != null) {
+			String expHeadersStr = Func.reduce(new StringConcatenationOp(","), "", expectedHeaders).substring(1);
+			String actualHeadersStr = Func.reduce(new StringConcatenationOp(","), "", headers).substring(1);
+			throw new Exception(failMsg + "\nExpected \"" + expHeadersStr + "\" but got \"" + actualHeadersStr + "\"");
+		}
+	}
+
 	public static enum DialogType {
 		Load,
 		Save
@@ -95,7 +139,7 @@ public class GuiHelpers {
 			chooser.addChoosableFileFilter(new FileFilter() {
 				@Override
 				public boolean accept(File file) {
-					return FileHelpers.extension(file).equals(extension);
+					return FileHelpers.extension(file).equals(extension) || file.isDirectory();
 				}
 
 				@Override
@@ -104,6 +148,8 @@ public class GuiHelpers {
 				}
 			});
 		}
+
+		chooser.setFileFilter(chooser.getChoosableFileFilters()[1]);
 
 		int state;
 		switch(dt) {
