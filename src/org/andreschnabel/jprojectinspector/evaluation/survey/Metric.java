@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.metrics;
+package org.andreschnabel.jprojectinspector.evaluation.survey;
 
 public enum Metric {
 	LOC,

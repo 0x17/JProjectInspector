@@ -4,7 +4,7 @@ import org.andreschnabel.jprojectinspector.gui.freechart.ChartWindow;
 import org.andreschnabel.jprojectinspector.gui.freechart.MetricBarChart;
 import org.andreschnabel.jprojectinspector.gui.tables.MetricResultTableModel;
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
-import org.andreschnabel.jprojectinspector.metrics.MetricsRegistry;
+import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.*;

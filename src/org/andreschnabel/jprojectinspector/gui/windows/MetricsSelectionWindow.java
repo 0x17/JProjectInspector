@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.gui.windows;
 
 import org.andreschnabel.jprojectinspector.gui.panels.InputProjectTablePanel;
-import org.andreschnabel.jprojectinspector.metrics.MetricsRegistry;
+import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 
 import javax.swing.*;
 import java.awt.*;
