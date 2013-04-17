@@ -62,6 +62,10 @@ public class CsvData {
 	public String getCellAt(int row, String header) {
 		return rowList.get(row+1)[columnWithHeader(header)];
 	}
+	
+	public void setCellAt(int row, String header, String content) {
+		rowList.get(row+1)[columnWithHeader(header)] = content;
+	}
 
 	public void addColumn(String header) {
 		Transform<String[], String[]> addColumnToRow = new Transform<String[], String[]>() {

@@ -61,7 +61,12 @@ public class AsmHelpers {
 			@Override
 			public Class<?> invoke(File f) {
 				String classname = f.getName().replace("/", ".");
-				return FileHelpers.loadClassFromFile(f, classname);
+				try {
+					return FileHelpers.loadClassFromFile(f, classname);
+				} catch(Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		};
 		return Func.map(fileToClass, findClassFilesImplementingInterfaceInDir(dir, ifaceName));

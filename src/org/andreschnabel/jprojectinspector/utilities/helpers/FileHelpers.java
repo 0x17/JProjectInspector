@@ -36,16 +36,19 @@ public class FileHelpers {
 		return files;
 	}
 	
-	public static Class<?> loadClassFromFile(File f, String classname) {
+	public static Class<?> loadClassFromFile(File f, String classname) throws Exception {
 		Class<?> cls = null;
+		URLClassLoader cl = null;
 		try {
 		    URI uri = f.toURI();
 		    URL url = uri.toURL();
 		    URL[] urls = new URL[]{url};
-		    ClassLoader cl = new URLClassLoader(urls);
-			cls = cl.loadClass(classname);
-		} catch(Exception e) {
-			e.printStackTrace();
+		    cl = new URLClassLoader(urls);
+		    cls = cl.loadClass(classname);
+		} finally {
+			if(cl != null) {
+				cl.close();
+			}
 		}
 		return cls;
 	}

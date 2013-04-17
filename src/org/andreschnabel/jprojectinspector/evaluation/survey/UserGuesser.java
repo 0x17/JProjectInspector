@@ -33,6 +33,7 @@ public class UserGuesser {
 				rp.leastTested = responseData.getCellAt(row, TestEffortEstimation.LEAST_TESTED_HEADER);
 				rp.mostTested = responseData.getCellAt(row, TestEffortEstimation.MOST_TESTED_HEADER);
 				String user = UserGuesser.guessUserWithProjects(rp, userProjects);
+				responseData.setCellAt(row, "user", user);
 			}
 		}
 		return responseData;

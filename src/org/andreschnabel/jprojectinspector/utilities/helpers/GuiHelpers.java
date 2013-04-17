@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
+import org.andreschnabel.jprojectinspector.gui.listeners.QuitOnEscapeKeyListener;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 
@@ -120,6 +121,13 @@ public class GuiHelpers {
 			case JFileChooser.ERROR_OPTION:
 			default:
 				return null;
+		}
+	}
+
+	public static void addKeyListenerToPanel(JPanel p) {
+		QuitOnEscapeKeyListener keyListener = new QuitOnEscapeKeyListener();
+		for(Component c : p.getComponents()) {
+			c.addKeyListener(keyListener);
 		}
 	}
 }
