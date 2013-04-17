@@ -46,9 +46,9 @@ public class FileHelpers {
 		    cl = new URLClassLoader(urls);
 		    cls = cl.loadClass(classname);
 		} finally {
-			if(cl != null) {
+			/*if(cl != null) {
 				cl.close();
-			}
+			}*/
 		}
 		return cls;
 	}

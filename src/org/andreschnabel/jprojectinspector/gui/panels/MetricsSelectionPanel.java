@@ -1,8 +1,9 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
-import org.andreschnabel.jprojectinspector.gui.ListListModel;
+import org.andreschnabel.jprojectinspector.gui.MetricListModel;
 import org.andreschnabel.jprojectinspector.gui.windows.MetricResultsWindow;
 import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
+import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -17,7 +18,7 @@ import java.util.List;
 public class MetricsSelectionPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@SuppressWarnings("rawtypes")
 	private JList availableMetricNamesLst;
 	private JList selectedMetricNamesLst;
@@ -42,7 +43,7 @@ public class MetricsSelectionPanel extends JPanel {
 		leftPanel.add(headerLbl, BorderLayout.NORTH);
 
 		availableMetricNames.addAll(MetricsRegistry.listAllMetrics());
-		availableMetricNamesLst = new JList(new ListListModel(availableMetricNames));
+		availableMetricNamesLst = new JList(new MetricListModel(availableMetricNames));
 		availableMetricNamesLst.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -61,7 +62,7 @@ public class MetricsSelectionPanel extends JPanel {
 		headerLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		rightPanel.add(headerLbl, BorderLayout.NORTH);
 
-		selectedMetricNamesLst = new JList(new ListListModel(selectedMetricNames));
+		selectedMetricNamesLst = new JList(new MetricListModel(selectedMetricNames));
 		selectedMetricNamesLst.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -117,6 +118,10 @@ public class MetricsSelectionPanel extends JPanel {
 		measureBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(selectedMetricNames.isEmpty()) {
+					GuiHelpers.showError("No metric selected for measurement!");
+					return;
+				}
 				setVisible(false);
 				MetricResultsWindow metricResultsWindow = new MetricResultsWindow(projLstPanel.getProjects(), getSelectedMetrics());
 				metricResultsWindow.setVisible(true);

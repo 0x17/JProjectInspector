@@ -1,14 +1,14 @@
 package org.andreschnabel.jprojectinspector.metrics.plugins;
 
-import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.List;
-
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.List;
 
 public class MetricPlugins {
 
@@ -24,7 +24,7 @@ public class MetricPlugins {
 		};
 		
 		List<OfflineMetric> plugins = Func.map(classFileToOfflineMetric, classFiles);
-		classLoader.close();
+		//classLoader.close();
 		return plugins;		
 	}
 	
@@ -40,7 +40,7 @@ public class MetricPlugins {
 		};
 		
 		List<OnlineMetric> plugins = Func.map(classFileToOnlineMetric, classFiles);
-		classLoader.close();
+		//classLoader.close();
 		return plugins;
 	}
 	

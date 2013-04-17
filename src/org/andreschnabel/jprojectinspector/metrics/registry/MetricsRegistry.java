@@ -73,4 +73,10 @@ public class MetricsRegistry {
 		else
 			return null;
 	}
+
+	public static OnlineMetric.Category getOnlineCategoryOfMetric(String metric) {
+		if(onlineMetrics.containsKey(metric))
+			return onlineMetrics.get(metric).getCategory();
+		return null;
+	}
 }
