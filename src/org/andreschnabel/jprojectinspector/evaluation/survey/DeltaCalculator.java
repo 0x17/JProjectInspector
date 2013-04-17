@@ -1,13 +1,13 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
-import java.util.List;
-
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.utilities.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.Transform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+
+import java.util.List;
 
 public class DeltaCalculator {
 	
@@ -39,7 +39,7 @@ public class DeltaCalculator {
 				return obj.project.equals(p);
 			}
 		};
-		return ListHelpers.find(isProj, pml);
+		return Func.find(isProj, pml);
 	}
 
 	public static List<Deltas> calculateDeltas(List<ResponseProjects> rpl, final List<ProjectMetrics> pml) {
@@ -76,7 +76,7 @@ public class DeltaCalculator {
 				return d;
 			}
 		};
-		return ListHelpers.map(responseProjToDeltas, rpl);
+		return Func.map(responseProjToDeltas, rpl);
 	}
 
 }

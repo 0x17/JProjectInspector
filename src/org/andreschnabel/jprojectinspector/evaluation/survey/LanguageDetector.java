@@ -1,13 +1,13 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
+import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 public class LanguageDetector {
 	
@@ -21,7 +21,7 @@ public class LanguageDetector {
 			Pattern langPat = Pattern.compile("<span class=\"lang\">([^<]+)</span>");
 			Matcher m = langPat.matcher(html);
 			while(m.find()) {
-				ListHelpers.addNoDups(langs, m.group(1));
+				FuncInPlace.addNoDups(langs, m.group(1));
 			}
 			Helpers.log(p + " uses languages " + langs);
 			

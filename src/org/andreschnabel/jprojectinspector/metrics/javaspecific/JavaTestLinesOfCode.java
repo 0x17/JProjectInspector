@@ -2,9 +2,9 @@ package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
-import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 import java.io.File;
 
@@ -41,7 +41,7 @@ public class JavaTestLinesOfCode implements OfflineMetric {
 			}
 		};
 
-		if(!ListHelpers.contains(isJava, FileHelpers.filesInTree(repoRoot))) return Float.NaN;
+		if(!Func.contains(isJava, FileHelpers.filesInTree(repoRoot))) return Float.NaN;
 
 		return countJavaTestLocOfDir(repoRoot);
 	}

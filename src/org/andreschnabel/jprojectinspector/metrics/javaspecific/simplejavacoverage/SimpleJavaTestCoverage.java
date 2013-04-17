@@ -12,12 +12,10 @@ public class SimpleJavaTestCoverage implements OfflineMetric {
 		List<String> projectMethodNames = new LinkedList<String>();
 		List<String> testedMethodNames = new LinkedList<String>();
 
-		UniqueMethodCounter umc = new UniqueMethodCounter();
-		umc.determineUniqueMethodsInProject(root, projectMethodNames);
+		UniqueMethodCounter.determineUniqueMethodsInProject(root, projectMethodNames);
 		int numProjMethods = projectMethodNames.size();
 
-		TestMethodReferenceCounter tmrc = new TestMethodReferenceCounter();
-		tmrc.determineUniqueMethodsReferencedInTests(root, testedMethodNames);
+		TestMethodReferenceCounter.determineUniqueMethodsReferencedInTests(root, testedMethodNames);
 
 		// remove methods called in tests but not found in project code
 		List<String> unknownMethodNames = new LinkedList<String>();

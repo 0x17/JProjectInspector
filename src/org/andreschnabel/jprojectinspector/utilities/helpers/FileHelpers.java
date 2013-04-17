@@ -3,9 +3,10 @@ package org.andreschnabel.jprojectinspector.utilities.helpers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.andreschnabel.jprojectinspector.Config;
-import org.andreschnabel.jprojectinspector.utilities.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.Tautology;
-import org.andreschnabel.jprojectinspector.utilities.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.Tautology;
+import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 
 import java.io.*;
 import java.net.URI;
@@ -196,7 +197,7 @@ public class FileHelpers {
 				return f.getName();
 			}
 		};
-		return ListHelpers.map(fileToName, FileHelpers.recursiveCollectJavaSrcFiles(dir));
+		return Func.map(fileToName, FileHelpers.recursiveCollectJavaSrcFiles(dir));
 	}
 
 	public static List<File> filesInTree(File root) throws Exception {

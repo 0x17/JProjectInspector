@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.tests.visual;
 
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
-import org.andreschnabel.jprojectinspector.utilities.TestCallback;
+import org.andreschnabel.jprojectinspector.utilities.functional.TestCallback;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;

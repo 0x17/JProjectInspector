@@ -4,10 +4,10 @@ import org.andreschnabel.jprojectinspector.metrics.Metric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.utilities.BinaryOperator;
-import org.andreschnabel.jprojectinspector.utilities.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.Transform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+import org.andreschnabel.jprojectinspector.utilities.functional.BinaryOperator;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,13 +26,13 @@ public class ResultVisualizerJS {
 				return rp != null;
 			}
 		};
-		List<ResponseProjects> rpl = ListHelpers.filter(notNull, rplorig);
+		List<ResponseProjects> rpl = Func.filter(notNull, rplorig);
 
-		List<Integer> xs = ListHelpers.countUpTo(rpl.size());
+		List<Integer> xs = Func.countUpTo(rpl.size());
 
 		List<List<Integer>> ys = new LinkedList<List<Integer>>();
 		for(int i=0; i<4; i++) {
-			ys.add(ListHelpers.map(transformForType(i, pml, m), rpl));
+			ys.add(Func.map(transformForType(i, pml, m), rpl));
 		}
 
 		//normalizeYs(ys);
@@ -79,7 +79,7 @@ public class ResultVisualizerJS {
 				return a.isEmpty() ? String.valueOf(b) : (a + ", " + b);
 			}
 		};
-		return ListHelpers.reduce(binOp, "", nums);
+		return Func.reduce(binOp, "", nums);
 	}
 
 	public static Transform<ResponseProjects, Integer> transformForType(final int type, final List<ProjectMetrics> pml, final Metric m) {
@@ -109,7 +109,7 @@ public class ResultVisualizerJS {
 						return obj.project.equals(p);
 					}
 				};
-				ProjectMetrics pm = ListHelpers.find(isProj, pml);
+				ProjectMetrics pm = Func.find(isProj, pml);
 				if(pm != null) {
 					switch(m) {
 					case Commits:

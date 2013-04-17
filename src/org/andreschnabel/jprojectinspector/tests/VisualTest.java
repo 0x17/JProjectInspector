@@ -1,16 +1,14 @@
 package org.andreschnabel.jprojectinspector.tests;
 
-import java.awt.FlowLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
-import org.andreschnabel.jprojectinspector.utilities.TestCallback;
+import org.andreschnabel.jprojectinspector.utilities.functional.TestCallback;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.junit.Assert;
 import org.junit.Test;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public abstract class VisualTest {
 

@@ -54,10 +54,10 @@ public class UserScraper {
 		List<Project> projects = new LinkedList<Project>();
 
 		String regex = "<a href=\"/([a-zA-Z0-9\\-\\_]+)/([a-zA-Z0-9\\-\\_]+)/network\"";
-		List<RegexHelpers.StringPair> projNames = RegexHelpers.batchMatchTwoGroups(regex, htmlStr);
+		List<String[]> projNames = RegexHelpers.batchMatch(regex, htmlStr);
 
-		for(RegexHelpers.StringPair projName : projNames) {
-			projects.add(new Project(projName.first, projName.second));
+		for(String[] projName : projNames) {
+			projects.add(new Project(projName[0], projName[1]));
 		}
 
 		return projects;

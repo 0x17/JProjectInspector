@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -66,11 +65,6 @@ public class Helpers {
 			char[] pw = c.readPassword();
 			return new String(pw);
 		}
-	}
-
-	public static <T> void addToLstNoDups(List<T> lst, T obj) {
-		if(!lst.contains(obj))
-			lst.add(obj);
 	}
 
 	public static void log(String msg) {

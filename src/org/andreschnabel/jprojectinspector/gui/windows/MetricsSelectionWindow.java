@@ -54,4 +54,8 @@ public class MetricsSelectionWindow extends JFrame {
 		return mxNames;
 	}
 
+	public static void main(String[] args) {
+		new MetricsSelectionWindow(null).setVisible(true);
+	}
+
 }

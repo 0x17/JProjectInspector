@@ -11,6 +11,63 @@ import java.util.regex.Pattern;
 public final class TimelineTapper {
 	
 	private TimelineTapper() {}
+
+	public static interface ProjectCallback {
+		public void foundProj(Project p);
+	}
+
+	public static void tapUniqueProjectsWithCallback(ProjectCallback pcallback) throws Exception {
+		List<Project> projs = new LinkedList<Project>();
+		List<String> projNames = new LinkedList<String>();
+
+		Pattern p = Pattern.compile("\\{.*?\\}");
+		Pattern q = Pattern.compile("\"owner\":\"([\\w-]+)\"");
+		Pattern r = Pattern.compile("\"name\":\"([\\w-]+)\"");
+
+		String lastTimeline = null;
+
+		boolean done = false;
+
+		do {
+			Helpers.log("Fetching timeline...");
+			String timeline = Helpers.loadUrlIntoStr("https://github.com/timeline.json");
+
+			if(lastTimeline != null && lastTimeline.equals(timeline)) {
+				Thread.sleep(1000);
+				Helpers.log("No change... repeat!");
+				continue;
+			}
+
+			Matcher m = p.matcher(timeline);
+			while(m.find()) {
+				if(m.groupCount() == 1) {
+					String repoStr = m.group(1);
+					try {
+						Matcher n = q.matcher(repoStr);
+						n.find();
+						String owner = n.group(1);
+
+						n = r.matcher(repoStr);
+						n.find();
+						String repoName = n.group(1);
+
+						Project proj = new Project(owner, repoName);
+						if(!projNames.contains(repoName)) {
+							projNames.add(repoName);
+							projs.add(proj);
+						}
+
+						pcallback.foundProj(proj);
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			lastTimeline = timeline;
+
+		} while(!done);
+	}
 	
 	public static List<Project> tapUniqueProjects(String lang, int upToNum) throws Exception {
 		List<Project> projs = new LinkedList<Project>();

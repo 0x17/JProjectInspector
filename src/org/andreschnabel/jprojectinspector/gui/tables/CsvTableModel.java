@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.tables;
 
-import org.andreschnabel.jprojectinspector.model.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
 import javax.swing.table.AbstractTableModel;
 

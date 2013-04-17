@@ -9,12 +9,12 @@ import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
 import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetricsLst;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
-import org.andreschnabel.jprojectinspector.utilities.IndexedTransform;
-import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.IndexedTransform;
+import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GitHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -71,12 +71,12 @@ public class MetricsCollector {
 			}
 		};
 
-		return ListHelpers.filter(new Predicate<ProjectMetrics>() {
+		return Func.filter(new Predicate<ProjectMetrics>() {
 			@Override
 			public boolean invoke(ProjectMetrics pm) {
 				return pm != null;
 			}
-		}, ListHelpers.mapi(projToMetrics, rp.toProjectList()));
+		}, Func.mapi(projToMetrics, rp.toProjectList()));
 	}
 
 }

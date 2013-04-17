@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GitHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 public final class TestContributors implements OfflineMetric {
 	
@@ -16,7 +16,7 @@ public final class TestContributors implements OfflineMetric {
 		for(File testFile : testFiles) {
 			contribNames.addAll(GitHelpers.contribNamesForFile(testFile));
 		}
-		return ListHelpers.remDups(contribNames).size();
+		return Func.remDups(contribNames).size();
 	}
 
 	@Override

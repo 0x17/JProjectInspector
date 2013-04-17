@@ -1,15 +1,18 @@
 package org.andreschnabel.jprojectinspector.gui.windows;
 
-import org.andreschnabel.jprojectinspector.freechart.ChartWindow;
-import org.andreschnabel.jprojectinspector.freechart.MetricBarChart;
+import org.andreschnabel.jprojectinspector.gui.freechart.ChartWindow;
+import org.andreschnabel.jprojectinspector.gui.freechart.MetricBarChart;
 import org.andreschnabel.jprojectinspector.gui.tables.MetricResultTableModel;
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
 import org.andreschnabel.jprojectinspector.metrics.MetricsRegistry;
-import org.andreschnabel.jprojectinspector.model.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.*;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
+import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTaskBatch;
 import org.jfree.chart.JFreeChart;
 
 import javax.swing.*;
@@ -147,7 +150,7 @@ public class MetricResultsWindow extends JFrame {
 							return MetricsRegistry.getTypeOfMetric(metricName) == MetricType.Offline;
 						}
 					};
-					boolean hasOfflineMetric = ListHelpers.contains(isOfflineMetric, metricNames);
+					boolean hasOfflineMetric = Func.contains(isOfflineMetric, metricNames);
 
 					File repoPath = null;
 					try {
@@ -172,6 +175,9 @@ public class MetricResultsWindow extends JFrame {
 									break;
 								case Online:
 									result = MetricsRegistry.measureOnlineMetric(metricName, p);
+									break;
+								case Survey:
+									result = MetricsRegistry.measureSurveyMetric(metricName, p);
 									break;
 							}
 						} catch(Exception e) {

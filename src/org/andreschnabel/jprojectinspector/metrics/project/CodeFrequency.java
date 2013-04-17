@@ -11,14 +11,14 @@ public class CodeFrequency implements OnlineMetric {
 
 	public static int countCodeFrequencyForProj(Project project) throws Exception {
 		String cfdStr = Helpers.loadUrlIntoStr("https://github.com/" + project.owner + "/" + project.repoName + "/graphs/code-frequency-data");
-		List<RegexHelpers.StringTriple> triples = RegexHelpers.batchMatchThreeGroups("\\[([0-9]*),([0-9]*),(-[0-9]*)\\]", cfdStr);
+		List<String[]> triples = RegexHelpers.batchMatch("\\[([0-9]*),([0-9]*),(-[0-9]*)\\]", cfdStr);
 
 		if(triples.size() == 0) return 0;
 
-		RegexHelpers.StringTriple last = triples.get(triples.size() - 1);
+		String[] last = triples.get(triples.size() - 1);
 
-		int linesAdded = Integer.valueOf(last.second);
-		int linesRemoved = Integer.valueOf(last.third);
+		int linesAdded = Integer.valueOf(last[1]);
+		int linesRemoved = Integer.valueOf(last[2]);
 
 		return linesAdded - linesRemoved;
 	}

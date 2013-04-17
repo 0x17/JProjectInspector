@@ -3,10 +3,10 @@ package org.andreschnabel.jprojectinspector.evaluation.survey;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.utilities.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 
 import java.util.List;
 
@@ -130,7 +130,7 @@ public class Benchmark {
 				}
 			}
 		};
-		return ListHelpers.map(bcPred, projs);
+		return Func.map(bcPred, projs);
 	}
 
 	public static boolean skipInvalidProjects(final List<ProjectMetrics> pml, List<Project> projs) {
@@ -140,7 +140,7 @@ public class Benchmark {
 				return metricsForProject(p, pml) == null;
 			}
 		};
-		return ListHelpers.contains(isInvalid, projs);
+		return Func.contains(isInvalid, projs);
 	}
 
 	public static ProjectMetrics metricsForProject(final Project p, List<ProjectMetrics> pml) {
@@ -150,7 +150,7 @@ public class Benchmark {
 				return obj.project.equals(p);
 			}
 		};
-		return ListHelpers.find(isProj, pml);
+		return Func.find(isProj, pml);
 	}
 
 	public static class Quality {

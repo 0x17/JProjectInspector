@@ -2,9 +2,8 @@ package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.JavaSourceHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.SourceHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.File;
 import java.util.HashMap;
@@ -30,7 +29,7 @@ public class JavaClassCoupling implements OfflineMetric {
 
 	public List<String> listClassNamesInFile(File f, Map<String, File> classInFile) throws Exception {
 		String srcStr = FileHelpers.readEntireFile(f);
-		List<String> clsNames = RegexHelpers.batchMatchOneGroup("class\\s+(\\w+)", StringHelpers.removeCommentsAndStrings(srcStr));
+		List<String> clsNames = RegexHelpers.batchMatchOneGroup("class\\s+(\\w+)", JavaSourceHelpers.removeCommentsAndStrings(srcStr));
 
 		for(String className : clsNames) {
 			if(!classInFile.containsKey(className))
@@ -72,7 +71,7 @@ public class JavaClassCoupling implements OfflineMetric {
 
 		File f = classInFile.get(className);
 
-		return SourceHelpers.getCodeOfClassInFile(className, f);
+		return JavaSourceHelpers.getCodeOfClassInFile(className, f);
 	}
 
 	@Override

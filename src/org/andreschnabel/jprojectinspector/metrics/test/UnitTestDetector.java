@@ -2,10 +2,10 @@ package org.andreschnabel.jprojectinspector.metrics.test;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.File;
@@ -34,7 +34,7 @@ public class UnitTestDetector implements OfflineMetric {
 	}
 
 	public static boolean containsTest(File root) throws Exception {
-		return ListHelpers.contains(new IsTestPredicate(), FileHelpers.filesInTree(root));
+		return Func.contains(new IsTestPredicate(), FileHelpers.filesInTree(root));
 	}
 
 	public static boolean isTest(File f) throws Exception {
@@ -60,7 +60,7 @@ public class UnitTestDetector implements OfflineMetric {
 	}
 
 	public static List<File> getTestFiles(File root) throws Exception {
-		return ListHelpers.filter(new IsTestPredicate(), FileHelpers.filesInTree(root));
+		return Func.filter(new IsTestPredicate(), FileHelpers.filesInTree(root));
 	}
 
 	public static boolean isCsharpSrcTest(String srcStr, String filename) {

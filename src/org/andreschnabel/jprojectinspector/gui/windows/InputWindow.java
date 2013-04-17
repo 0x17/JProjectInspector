@@ -2,10 +2,10 @@ package org.andreschnabel.jprojectinspector.gui.windows;
 
 import org.andreschnabel.jprojectinspector.gui.listeners.QuitOnEscapeKeyListener;
 import org.andreschnabel.jprojectinspector.gui.panels.InputProjectTablePanel;
-import org.andreschnabel.jprojectinspector.model.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
-import org.andreschnabel.jprojectinspector.utilities.AsyncTask;
+import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 
@@ -251,7 +251,23 @@ public class InputWindow extends JFrame {
 		});
 		bottomPane.add(exportBtn);
 
-		bottomPane.add(new JButton("Tap Timeline"));
+		JButton tapTimelineBtn = new JButton("Tap Timeline");
+		tapTimelineBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		bottomPane.add(tapTimelineBtn);
+
+		JButton clearBtn = new JButton("Clear");
+		clearBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				projLstPanel.clear();
+			}
+		});
+		bottomPane.add(clearBtn);
 
 		bottomPane.add(configBtn);
 		bottomPane.add(remOfflineBtn);

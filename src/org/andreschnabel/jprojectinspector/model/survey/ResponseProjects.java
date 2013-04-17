@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.model.survey;
 
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.LinkedList;
@@ -29,10 +29,10 @@ public class ResponseProjects {
 	
 	public List<Project> toProjectList() {
 		List<Project> projs = new LinkedList<Project>();
-		ListHelpers.addNoDups(projs, new Project(user, leastTested));		
-		ListHelpers.addNoDups(projs, new Project(user, mostTested));
-		ListHelpers.addNoDups(projs, new Project(user, lowestBugCount));
-		ListHelpers.addNoDups(projs, new Project(user, highestBugCount));
+		FuncInPlace.addNoDups(projs, new Project(user, leastTested));
+		FuncInPlace.addNoDups(projs, new Project(user, mostTested));
+		FuncInPlace.addNoDups(projs, new Project(user, lowestBugCount));
+		FuncInPlace.addNoDups(projs, new Project(user, highestBugCount));
 		return projs;
 	}
 

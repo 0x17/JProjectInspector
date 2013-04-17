@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.gui.windows;
 
 import org.andreschnabel.jprojectinspector.gui.tables.CsvTableModel;
-import org.andreschnabel.jprojectinspector.model.CsvData;
-import org.andreschnabel.jprojectinspector.utilities.helpers.CsvHelpers;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 
 import javax.swing.*;

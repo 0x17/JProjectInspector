@@ -1,7 +1,8 @@
 package org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers;
 
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.FunctionIndexer;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 import java.util.LinkedList;
@@ -19,7 +20,7 @@ public class JavaIndexer implements FunctionIndexer {
 		while(m.find()) {
 			if(m.groupCount() == 3) {
 				String funcName = m.group(3);
-				ListHelpers.addNoDups(funcNames, funcName);
+				FuncInPlace.addNoDups(funcNames, funcName);
 			}
 		}
 		return funcNames;
@@ -29,9 +30,10 @@ public class JavaIndexer implements FunctionIndexer {
 	public List<String> listFunctionCalls(String src) {
 		List<String> calledMethods = null;
 		try {
-			calledMethods = ListHelpers.remDups(RegexHelpers.batchMatchOneGroup("\\w+\\.(\\w+)\\(.*\\)", src));
-			calledMethods.addAll(ListHelpers.remDups(RegexHelpers.batchMatchOneGroup("new ([^<]+?)\\(", src)));
-			calledMethods.addAll(ListHelpers.remDups(RegexHelpers.batchMatchOneGroup("new (.+?)<.+?>\\(", src)));
+
+			calledMethods = Func.remDups(RegexHelpers.batchMatchOneGroup("\\w+\\.(\\w+)\\(.*\\)", src));
+			calledMethods.addAll(Func.remDups(RegexHelpers.batchMatchOneGroup("new ([^<]+?)\\(", src)));
+			calledMethods.addAll(Func.remDups(RegexHelpers.batchMatchOneGroup("new (.+?)<.+?>\\(", src)));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

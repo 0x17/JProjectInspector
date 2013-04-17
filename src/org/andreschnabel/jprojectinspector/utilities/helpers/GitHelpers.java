@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import org.andreschnabel.jprojectinspector.utilities.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class GitHelpers {
 				return p.matcher(shortStat);
 			}
 		};
-		List<Matcher> matchers = ListHelpers.map(matcherFromPattern, ListHelpers.fromArray(pats));
+		List<Matcher> matchers = Func.map(matcherFromPattern, Func.fromArray(pats));
 
 		for(int i=0; i<pats.length; i++) {
 			Matcher m = matchers.get(i);

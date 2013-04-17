@@ -135,6 +135,8 @@ public class FrontStats {
 		String html;
 		try {
 			html = Helpers.loadUrlIntoStr("https://github.com/" + p.owner + "/" + p.repoName);
+			if(html.contains("<title>Page not found &middot; GitHub</title>"))
+				return null;
 		} catch(Exception e) {
 			return stats;
 		}

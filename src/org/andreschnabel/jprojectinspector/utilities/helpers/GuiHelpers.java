@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import org.andreschnabel.jprojectinspector.model.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -111,7 +112,7 @@ public class GuiHelpers {
 		switch(state) {
 			case JFileChooser.APPROVE_OPTION:
 				File file = chooser.getSelectedFile();
-				if(extensions.length == 1 && FileHelpers.extension(file) != extensions[0]) {
+				if(extensions.length == 1 && !FileHelpers.extension(file).equals(extensions[0])) {
 					file = new File(file.getPath() + "." + extensions[0]);
 				}
 				return file;

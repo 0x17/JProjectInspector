@@ -3,16 +3,18 @@ package org.andreschnabel.jprojectinspector.metrics;
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.*;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage.SimpleJavaTestCoverage;
+import org.andreschnabel.jprojectinspector.metrics.plugins.MetricPlugins;
 import org.andreschnabel.jprojectinspector.metrics.project.*;
 import org.andreschnabel.jprojectinspector.metrics.survey.BugCountEstimation;
+import org.andreschnabel.jprojectinspector.metrics.survey.Estimation;
 import org.andreschnabel.jprojectinspector.metrics.survey.TestEffortEstimation;
 import org.andreschnabel.jprojectinspector.metrics.test.TestContributors;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.RoughFunctionCoverage;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.Transform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 
 import java.io.File;
 import java.util.HashMap;
@@ -58,8 +60,8 @@ public class MetricsRegistry {
 				return m.getName();
 			}
 		};
-		List<String> names = ListHelpers.map(metricToName, ms);
-		offlineMetrics = ListHelpers.zipMap(names, ms);
+		List<String> names = Func.map(metricToName, ms);
+		offlineMetrics = Func.zipMap(names, ms);
 	}
 
 	private static void initJavaSpecificOfflineMetrics(List<OfflineMetric> ms) {
@@ -97,8 +99,8 @@ public class MetricsRegistry {
 				return m.getName();
 			}
 		};
-		List<String> names = ListHelpers.map(metricToName, ms);
-		onlineMetrics = ListHelpers.zipMap(names, ms);
+		List<String> names = Func.map(metricToName, ms);
+		onlineMetrics = Func.zipMap(names, ms);
 	}
 
 	private static void initSurveyMetrics() {
@@ -111,11 +113,13 @@ public class MetricsRegistry {
 		List<String> allMetrics = new LinkedList<String>();
 		allMetrics.addAll(onlineMetrics.keySet());
 		allMetrics.addAll(offlineMetrics.keySet());
+		allMetrics.addAll(surveyMetrics.keySet());
 		return allMetrics;
 	}
 
 	public static MetricType getTypeOfMetric(String metric) {
-		return onlineMetrics.containsKey(metric) ? MetricType.Online : MetricType.Offline;
+		return onlineMetrics.containsKey(metric) ? MetricType.Online :
+				offlineMetrics.containsKey(metric) ? MetricType.Offline : MetricType.Survey;
 	}
 
 	public static float measureOnlineMetric(String metric, Project p) throws Exception {
@@ -127,4 +131,16 @@ public class MetricsRegistry {
 	}
 
 
+	public static float measureSurveyMetric(String metric, Project p) {
+		Estimation est = surveyMetrics.get(metric).measure(p);
+		switch(est) {
+			case None:
+			default:
+				return Float.NaN;
+			case Lowest:
+				return -1.0f;
+			case Highest:
+				return 1.0f;
+		}
+	}
 }

@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.model;
 
-import org.andreschnabel.jprojectinspector.utilities.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.model.survey;
 
-import org.andreschnabel.jprojectinspector.model.CsvData;
-import org.andreschnabel.jprojectinspector.utilities.Transform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.CsvHelpers;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;

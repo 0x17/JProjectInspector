@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers;
 
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.FunctionIndexer;
-import org.andreschnabel.jprojectinspector.utilities.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class JavaScriptIndexer implements FunctionIndexer {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		return ListHelpers.remDups(funcIdentifiers);
+		return Func.remDups(funcIdentifiers);
 	}
 
 	@Override
@@ -35,6 +35,6 @@ public class JavaScriptIndexer implements FunctionIndexer {
 				return !declaredFuncs.contains(s) && !src.contains("new " + s);
 			}
 		};
-		return ListHelpers.remDups(ListHelpers.filter(notDeclaredAndNotConstructor, funcIdentifiers));
+		return Func.remDups(Func.filter(notDeclaredAndNotConstructor, funcIdentifiers));
 	}
 }

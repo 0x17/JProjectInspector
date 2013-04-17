@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.metrics.project;
 
 import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GitHubHelpers;
+import org.andreschnabel.jprojectinspector.githubapi.GitHubHelpers;
 import org.eclipse.egit.github.core.PullRequest;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.client.GitHubClient;

@@ -7,7 +7,7 @@ import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 
 public class ExampleOnlineMetric implements OnlineMetric {
 
-	public String getName() { return "exoffmetric"; }
+	public String getName() { return "exonmetric"; }
 	public String getDescription() { return "Number of followers of user maintaining project. Example metric implemented as plugin."; }
 
 	public float measure(Project p) throws Exception {

@@ -3,11 +3,12 @@ package org.andreschnabel.jprojectinspector.evaluation.survey;
 import org.andreschnabel.jprojectinspector.evaluation.UserProjectCollector;
 import org.andreschnabel.jprojectinspector.metrics.survey.BugCountEstimation;
 import org.andreschnabel.jprojectinspector.metrics.survey.TestEffortEstimation;
-import org.andreschnabel.jprojectinspector.model.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.utilities.helpers.CsvHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class UserGuesser {
 	public static CsvData assureHasUser(File responseCsv, List<String> users) throws Exception {
 		CsvData responseData = CsvHelpers.parseCsv(responseCsv);
 		String[] headers = responseData.getHeaders();
-		if(!ListHelpers.fromArray(headers).contains("user")) {
+		if(!Func.fromArray(headers).contains("user")) {
 			List<Project> userProjects = UserProjectCollector.userProjectsForUsers(users);
 
 			responseData.addColumn("user");
@@ -39,10 +40,10 @@ public class UserGuesser {
 	
 	public static String guessUserWithProjects(ResponseProjects rp, List<Project> usrProjs) {
 		List<String> projNames = new ArrayList<String>();
-		ListHelpers.addNoDups(projNames, rp.highestBugCount);
-		ListHelpers.addNoDups(projNames, rp.lowestBugCount);
-		ListHelpers.addNoDups(projNames, rp.leastTested);
-		ListHelpers.addNoDups(projNames, rp.mostTested);
+		FuncInPlace.addNoDups(projNames, rp.highestBugCount);
+		FuncInPlace.addNoDups(projNames, rp.lowestBugCount);
+		FuncInPlace.addNoDups(projNames, rp.leastTested);
+		FuncInPlace.addNoDups(projNames, rp.mostTested);
 		
 		Map<String, Integer> userHits = new HashMap<String, Integer>();
 

@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.tests.visual;
 
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
-import org.andreschnabel.jprojectinspector.utilities.TestCallback;
+import org.andreschnabel.jprojectinspector.utilities.functional.TestCallback;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 
 import javax.swing.*;

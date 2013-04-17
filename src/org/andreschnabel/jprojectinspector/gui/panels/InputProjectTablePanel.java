@@ -3,10 +3,11 @@ package org.andreschnabel.jprojectinspector.gui.panels;
 import org.andreschnabel.jprojectinspector.gui.tables.InputProjectTableModel;
 import org.andreschnabel.jprojectinspector.metrics.project.FrontStats;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.AsyncTask;
-import org.andreschnabel.jprojectinspector.utilities.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ListHelpers;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
+import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +49,7 @@ public class InputProjectTablePanel extends JPanel {
 				return stats;
 			}
 		};
-		ListHelpers.addNoDups(projects, p);
+		FuncInPlace.addNoDups(projects, p);
 		updateTable();
 		queryStatsTask.execute();
 	}
@@ -68,14 +69,14 @@ public class InputProjectTablePanel extends JPanel {
 						return !ProjectDownloader.isProjectOnline(p);
 					}
 				};
-				List<Project> toRem = ListHelpers.filter(isOffline, projects);
+				List<Project> toRem = Func.filter(isOffline, projects);
 				return toRem;
 			}
 		};
 		determineOfflineProjsTask.execute();
 	}
 
-	public void updateTable() {
+	public synchronized void updateTable() {
 		projTable.updateUI();
 	}
 
@@ -83,4 +84,8 @@ public class InputProjectTablePanel extends JPanel {
 		return projects;
 	}
 
+	public void clear() {
+		projects.clear();
+		projTable.updateUI();
+	}
 }
