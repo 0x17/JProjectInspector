@@ -1,10 +1,10 @@
-package org.andreschnabel.jprojectinspector.gui;
+package org.andreschnabel.jprojectinspector.gui.constraints;
 
 import java.awt.*;
 
-public final class ThreeRowGridBagLayout {
+public final class ThreeRowGridBagConstraints {
 
-	private ThreeRowGridBagLayout() {}
+	private ThreeRowGridBagConstraints() {}
 
 	public static GridBagConstraints topPaneConstraints() {
 		GridBagConstraints gbc = new GridBagConstraints();

@@ -10,7 +10,7 @@ public class MetricsSelectionWindow extends AbstractWindow<MetricsSelectionPanel
 	private static final long serialVersionUID = 1L;
 
 	public MetricsSelectionWindow(final InputProjectTablePanel projLstPanel) {
-		super("Metrics Selection", 400, 300, JFrame.HIDE_ON_CLOSE, new MetricsSelectionPanel(projLstPanel));
+		super("Metrics Selection", 800, 600, JFrame.HIDE_ON_CLOSE, new MetricsSelectionPanel(projLstPanel));
 		setAlwaysOnTop(true);
 	}
 

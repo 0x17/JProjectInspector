@@ -62,4 +62,15 @@ public class MetricsRegistry {
 				return 1.0f;
 		}
 	}
+
+	public static String getDescriptionOfMetric(String metric) {
+		if(onlineMetrics.containsKey(metric))
+			return onlineMetrics.get(metric).getDescription();
+		else if(offlineMetrics.containsKey(metric))
+			return offlineMetrics.get(metric).getDescription();
+		else if(surveyMetrics.containsKey(metric))
+			return surveyMetrics.get(metric).getDescription();
+		else
+			return null;
+	}
 }

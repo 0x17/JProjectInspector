@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
-import org.andreschnabel.jprojectinspector.gui.ThreeRowGridBagLayout;
+import org.andreschnabel.jprojectinspector.gui.constraints.ThreeRowGridBagConstraints;
 import org.andreschnabel.jprojectinspector.gui.windows.MetricsSelectionWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.SettingsWindow;
 import org.andreschnabel.jprojectinspector.model.Project;
@@ -95,7 +95,7 @@ public class InputPanel extends JPanel {
 		initUserReposCombo(topPane);
 		initAddAllButton(topPane);
 
-		add(topPane, ThreeRowGridBagLayout.topPaneConstraints());
+		add(topPane, ThreeRowGridBagConstraints.topPaneConstraints());
 	}
 
 	private void initAddButton(JPanel topPane) {
@@ -185,7 +185,7 @@ public class InputPanel extends JPanel {
 
 	private void initMiddlePane() {
 		projLstPanel = new InputProjectTablePanel();
-		add(projLstPanel, ThreeRowGridBagLayout.middlePaneConstraints());
+		add(projLstPanel, ThreeRowGridBagConstraints.middlePaneConstraints());
 	}
 
 	private void initBottomPane() {
@@ -272,7 +272,7 @@ public class InputPanel extends JPanel {
 		bottomPane.add(remOfflineBtn);
 		bottomPane.add(startBtn);
 
-		add(bottomPane, ThreeRowGridBagLayout.bottomPaneConstraints());
+		add(bottomPane, ThreeRowGridBagConstraints.bottomPaneConstraints());
 	}
 
 
