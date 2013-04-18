@@ -27,27 +27,12 @@ public class GuiHelpers {
 		}
 	}
 
-	public static GridBagConstraints fillHorizontalConstraints() {
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1;
-		gbc.weighty = 0;
-		return gbc;
-	}
-
-	public static GridBagConstraints fillBothConstraints() {
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.weightx = 1;
-		gbc.weighty = 1;
-		return gbc;
-	}
-
-	public static void saveStringWithFileDialog(String str, File path, final String... extensions) throws Exception {
+	public static File saveStringWithFileDialog(String str, File path, final String... extensions) throws Exception {
 		File selectedFile = saveFileDialog(path, extensions);
 		if(selectedFile != null) {
 			FileHelpers.writeStrToFile(str, selectedFile);
 		}
+		return selectedFile;
 	}
 
 	public static void showError(String msg) {
