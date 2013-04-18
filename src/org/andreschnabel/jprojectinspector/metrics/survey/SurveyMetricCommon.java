@@ -8,9 +8,11 @@ import java.io.File;
 
 public class SurveyMetricCommon {
 
+	public static File estimationsFile = new File("data/benchmark/estimations.csv");
+
 	public static Estimation measureCommon(Project p, String minHeader, String maxHeader) {
 		try {
-			CsvData respWithUser = CsvHelpers.parseCsv(new File("data/benchmark/estimations.csv"));
+			CsvData respWithUser = CsvHelpers.parseCsv(estimationsFile);
 			for(int row=0; row<respWithUser.rowCount(); row++) {
 				String user = respWithUser.getCellAt(row, "user");
 				if(p.owner.equals(user)) {

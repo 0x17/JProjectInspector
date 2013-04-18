@@ -11,9 +11,13 @@ public class LauncherWindow extends AbstractWindow<LauncherPanel> {
 		super("Launcher", 300, 300, JFrame.EXIT_ON_CLOSE, new LauncherPanel());
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void launch() throws Exception {
 		GuiHelpers.setNativeLaf();
 		new LauncherWindow().setVisible(true);
+	}
+
+	public static void main(String[] args) throws Exception {
+		launch();
 	}
 
 }
