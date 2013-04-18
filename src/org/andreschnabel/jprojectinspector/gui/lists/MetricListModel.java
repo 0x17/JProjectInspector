@@ -6,7 +6,9 @@ import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 
 import java.util.List;
 
-public class MetricListModel extends ListListModel {
+public class MetricListModel extends ListListModel<String> {
+	private static final long serialVersionUID = 1L;
+
 	public MetricListModel(List<String> metricNames) {
 		super(metricNames);
 	}

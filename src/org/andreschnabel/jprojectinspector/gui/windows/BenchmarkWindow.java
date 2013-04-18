@@ -5,6 +5,7 @@ import org.andreschnabel.jprojectinspector.gui.panels.BenchmarkPanel;
 import javax.swing.*;
 
 public class BenchmarkWindow extends AbstractWindowWithParent<BenchmarkPanel> {
+	private static final long serialVersionUID = 1L;
 
 	public BenchmarkWindow(JFrame parentFrame) {
 		super("Benchmark Predictors", 800, 600, JFrame.DISPOSE_ON_CLOSE, new BenchmarkPanel(), parentFrame);

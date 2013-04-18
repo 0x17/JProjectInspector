@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 public class FreeChartPanel extends PanelWithParent {
+	private static final long serialVersionUID = 1L;
 
 	public FreeChartPanel(final JFreeChart chart, final Dimension dim) {
 		setLayout(new GridBagLayout());

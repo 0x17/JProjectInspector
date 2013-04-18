@@ -110,7 +110,7 @@ public class GitHelpersTest {
 		AssertHelpers.listNotEmpty(commitComments);
 		String last = commitComments.get(commitComments.size() - 1);
 		Assert.assertEquals("Added README.md and TODO.md", last);
-		Assert.assertEquals(2, commitComments.size());
+		Assert.assertEquals(3, commitComments.size());
 	}
 	
 	@Test

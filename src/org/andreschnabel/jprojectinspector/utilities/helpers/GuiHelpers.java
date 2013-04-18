@@ -73,13 +73,17 @@ public class GuiHelpers {
 	}
 
 	public static void showPdf(File file) {
+		String call;
 		if(!Helpers.runningOnUnix()) {
-			try {
-				String call = "rundll32 SHELL32.DLL,ShellExec_RunDLL "+file.getAbsolutePath();
-				Runtime.getRuntime().exec(call);
-			} catch (Exception e1) {
-				showError("Unable to open " + file.getName() + "!");
-			}
+			call = "rundll32 SHELL32.DLL,ShellExec_RunDLL ";
+		} else {
+			call = "open ";
+		}
+		
+		try {
+			Runtime.getRuntime().exec(call + file.getAbsolutePath());
+		} catch (Exception e1) {
+			showError("Unable to open " + file.getName() + "!");
 		}
 	}
 

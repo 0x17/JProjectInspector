@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BenchmarkPanel extends PanelWithParent {
+	private static final long serialVersionUID = 1L;
 
 	public BenchmarkPanel() {
 		initTopPane();

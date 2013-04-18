@@ -7,6 +7,8 @@ import javax.swing.*;
 
 public class LauncherWindow extends AbstractWindow<LauncherPanel> {
 
+	private static final long serialVersionUID = 1L;
+
 	public LauncherWindow() {
 		super("Launcher", 300, 300, JFrame.EXIT_ON_CLOSE, new LauncherPanel());
 	}

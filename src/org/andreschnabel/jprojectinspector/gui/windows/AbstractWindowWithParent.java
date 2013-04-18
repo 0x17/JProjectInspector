@@ -3,6 +3,7 @@ package org.andreschnabel.jprojectinspector.gui.windows;
 import javax.swing.*;
 
 public abstract class AbstractWindowWithParent<T extends JPanel> extends AbstractWindow<T> {
+	private static final long serialVersionUID = 1L;
 	private final JFrame parentFrame;
 
 	public AbstractWindowWithParent(String title, int closeOperation, T panel, JFrame parentFrame) {

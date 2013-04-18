@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.util.List;
 
 public class ListListModel<T> extends AbstractListModel {
-
+	private static final long serialVersionUID = 1L;
+	
 	private List<T> lst;
 
 	public ListListModel(List<T> lst) {

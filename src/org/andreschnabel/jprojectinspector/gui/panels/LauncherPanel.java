@@ -15,7 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class LauncherPanel extends PanelWithParent {
-
+	private static final long serialVersionUID = 1L;
+	
 	private static final String ABOUT_TEXT = "<html><h2>JProjectInspector</h2><br />" +
 			"Author: André Schnabel (andreschnabel@me.com)<br />" +
 			"License: BSD<br />" +
