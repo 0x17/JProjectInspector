@@ -1,31 +1,28 @@
 package org.andreschnabel.jprojectinspector.evaluation;
 
 import org.andreschnabel.jprojectinspector.model.survey.Candidate;
+import org.andreschnabel.jprojectinspector.model.survey.CandidateLst;
+import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
-import java.util.LinkedList;
+import java.io.File;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Tap GitHub timeline for candidates for our evaluation experiment.
- * @author André Schnabel
  */
 public class CandidateTapper {
 	
 	private CandidateTapper() {}
 	
-	public static List<Candidate> tapCandidates(final int upTo) throws Exception {
-		return tapCandidates(upTo, null);
-	}
-	
-	public static List<Candidate> tapCandidates(final int upTo, List<Candidate> oldCandidates) throws Exception {
+	public static List<Candidate> tapCandidates(final int upTo, List<Candidate> candidates, List<Candidate> oldCandidates) throws Exception {
 		final Pattern userPattern = Pattern.compile("\\{\"login\":\"([A-Za-z0-9-]+?)\",\"type\":\"User\",.+?\\}");
 		final Pattern emailPattern = Pattern.compile("\"email\":\"([A-Za-z0-9-\\.@]+?)\"");
 		final Pattern namePattern = Pattern.compile("\"name\":\"(.+?)\"");
-		
-		List<Candidate> candidates = new LinkedList<Candidate>();
+
+		List<Candidate> oldSurveyCandidates = CandidateLst.fromCsv(new File("data/candidates500.csv")).candidates;
 		
 		if(oldCandidates != null) {
 			candidates.addAll(oldCandidates);
@@ -66,10 +63,11 @@ public class CandidateTapper {
 					if(c.name != null && c.email != null && c.login != null && !candidateWithLogin(c.login, candidates)) {
 						addMostRecentRepoTriple(c);
 						if(c.repos[0] != null && c.repos[1] != null && c.repos[2] != null) {
-							candidates.add(c);
-							Helpers.log("Candidate: " + c + " " + candidates.size() + "/" + upTo);
-						} else {
-							Helpers.log(c + " not enough active repos!");
+							if(notInOldSurvey(c, oldSurveyCandidates)) {
+								if(FuncInPlace.addNoDups(candidates, c)) {
+									Helpers.log("Candidate: " + c + " " + candidates.size() + "/" + upTo);
+								}
+							}
 						}
 					}
 				}
@@ -79,6 +77,10 @@ public class CandidateTapper {
 		} while(candidates.size() < upTo);
 		
 		return candidates;
+	}
+
+	private static boolean notInOldSurvey(Candidate c, List<Candidate> oldSurveyCandidates) {
+		return !oldSurveyCandidates.contains(c);
 	}
 
 	private static boolean candidateWithLogin(String login, List<Candidate> candidates) {		
@@ -107,14 +109,13 @@ public class CandidateTapper {
 		while(projMatcher.find() && curProj < 3) {
 			String projStr = projMatcher.group(0);
 			String timeStr = projMatcher.group(1);
-			// Only include projects with activity from this year and written in Java.
-			if(timeStr.contains("2012")/* && projStr.contains("<li>Java</li>")*/) {
+
+			if(timeStr.contains("2012")) {
 				Matcher projNameSubPatternMatcher = projNameSubPattern.matcher(projStr);
 				if(projNameSubPatternMatcher.find()) {
 					String nrepo = projNameSubPatternMatcher.group(1);
 					if(!containsRepo(candidate.repos, nrepo)) {
 						candidate.repos[curProj++] = nrepo;
-						Helpers.log("Added active java project \""+ nrepo +"\" maintained by " + candidate.login);
 					}
 				}
 			}

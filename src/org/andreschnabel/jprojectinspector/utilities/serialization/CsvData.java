@@ -36,7 +36,7 @@ public class CsvData {
 			String[] row = rowList.get(i);
 			for(int j = 0; j < row.length; j++) {
 				String cell = row[j];
-				sb.append(cell);
+				sb.append(CsvHelpers.escapeIfComma(StringHelpers.removeQuotes(cell)));
 				if(j+1<row.length)
 					sb.append(',');
 			}
@@ -102,9 +102,6 @@ public class CsvData {
 				throw new Exception("Row length is " + row.length + " but header count is " + headers.length);
 			}
 
-			for(int i=0; i<row.length; i++) {
-				row[i] = CsvHelpers.escapeIfComma(StringHelpers.removeQuotes(row[i]));
-			}
 			rows.add(row);
 		}
 		return new CsvData(rows);

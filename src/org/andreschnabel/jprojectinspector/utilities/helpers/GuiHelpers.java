@@ -56,7 +56,7 @@ public class GuiHelpers {
 		return null;
 	}
 
-	private static String loadStringWithFileDialog(File path, final String... extensions) throws Exception {
+	public static String loadStringWithFileDialog(File path, final String... extensions) throws Exception {
 		File selectedFile = loadFileDialog(path, extensions);
 		if(selectedFile != null) {
 			return FileHelpers.readEntireFile(selectedFile);
@@ -64,7 +64,7 @@ public class GuiHelpers {
 		return null;
 	}
 
-	private static File loadFileDialog(File path, String... extensions) {
+	public static File loadFileDialog(File path, String... extensions) {
 		return fileDialogCommon(DialogType.Load, path, extensions);
 	}
 
@@ -137,6 +137,16 @@ public class GuiHelpers {
 		if(!Helpers.runningOnUnix()) {
 			setLaf("Windows");
 		}
+	}
+
+	public static File loadDirectoryDialog(File path) {
+		JFileChooser chooser = new JFileChooser(path);
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		int state = chooser.showOpenDialog(null);
+		if(state == JFileChooser.APPROVE_OPTION) {
+			return chooser.getSelectedFile();
+		}
+		return null;
 	}
 
 	public static enum DialogType {

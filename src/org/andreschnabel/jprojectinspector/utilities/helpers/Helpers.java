@@ -71,4 +71,8 @@ public class Helpers {
 		System.out.println(msg);
 		System.out.flush();
 	}
+
+	public static String executableExtension() {
+		return runningOnUnix() ? "" : ".exe";
+	}
 }

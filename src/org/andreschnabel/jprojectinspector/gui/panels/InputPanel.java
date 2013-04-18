@@ -25,7 +25,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-public class InputPanel extends JPanel {
+public class InputPanel extends JPanel implements LaunchSettings {
 	
 	private static final long serialVersionUID = 1L;
 	private ContinuousTask<java.util.List<Project>> tapTimelineTask;
@@ -354,16 +354,14 @@ public class InputPanel extends JPanel {
 	}
 
 	private SettingsWindow settingsWindow;
+	@Override
 	public void closeSettings() {
 		settingsWindow = null;
 	}
-
 	private void tryShowSettingsWindow() {
 		if(settingsWindow == null) {
 			settingsWindow = new SettingsWindow(this);
 			settingsWindow.setVisible(true);
 		}
 	}
-
-
 }

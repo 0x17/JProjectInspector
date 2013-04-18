@@ -3,6 +3,7 @@ package org.andreschnabel.jprojectinspector.gui.panels;
 import org.andreschnabel.jprojectinspector.gui.windows.BenchmarkWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.InputWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.MetricResultsWindow;
+import org.andreschnabel.jprojectinspector.gui.windows.SettingsWindow;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
@@ -14,7 +15,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-public class LauncherPanel extends PanelWithParent {
+public class LauncherPanel extends PanelWithParent implements LaunchSettings {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String ABOUT_TEXT = "<html><h2>JProjectInspector</h2><br />" +
@@ -111,6 +112,12 @@ public class LauncherPanel extends PanelWithParent {
 				parentFrame.setVisible(false);
 			}
 		}));
+		btns.add(new LauncherButton("Settings", "Set executable and temporary directory paths.", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tryShowSettingsWindow();
+			}
+		}));
 		btns.add(new LauncherButton("Documentation", "Show introductory documentation for this tool.", new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -140,6 +147,18 @@ public class LauncherPanel extends PanelWithParent {
 			}
 		}));
 		return btns;
+	}
+
+	private SettingsWindow settingsWindow;
+	@Override
+	public void closeSettings() {
+		settingsWindow = null;
+	}
+	private void tryShowSettingsWindow() {
+		if(settingsWindow == null) {
+			settingsWindow = new SettingsWindow(this);
+			settingsWindow.setVisible(true);
+		}
 	}
 
 }

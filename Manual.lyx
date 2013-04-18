@@ -72,8 +72,88 @@ Manual
 André Schnabel
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 Installation
+\end_layout
+
+\begin_layout Standard
+The tool requires a working installation of the git distributed version
+ control client and a Perl interpreter (or alternatively a binary version
+ of cloc, e.g.
+ cloc.exe).
+\end_layout
+
+\begin_layout Section
+Git
+\end_layout
+
+\begin_layout Standard
+Under Linux this can easily be installed using the package manager of the
+ distribution.
+ E.g.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+apt-get install git
+\begin_inset Quotes erd
+\end_inset
+
+ on Debian/Ubuntu.
+\end_layout
+
+\begin_layout Section
+Cloc
+\end_layout
+
+\begin_layout Standard
+Cloc is a Perl script that counts the actual code lines in source files
+ written in a variety of popular languages.
+ Again under Linux something like 
+\begin_inset Quotes eld
+\end_inset
+
+apt-get install cloc
+\begin_inset Quotes erd
+\end_inset
+
+ depending on the specific distribution should do the trick.
+\end_layout
+
+\begin_layout Section
+Configuring JProjectInspector
+\end_layout
+
+\begin_layout Standard
+JProjectInspector requires three settings to work correctly:
+\end_layout
+
+\begin_layout Enumerate
+Path to valid folder for temporary cloning of Git repositories from GitHub.
+ This is needed for offline metrics to work.
+\end_layout
+
+\begin_layout Enumerate
+Path to git executable.
+ This is also needed for offline metrics.
+\end_layout
+
+\begin_layout Enumerate
+Path to Perl interpreter and cloc.pl OR path to cloc-executable.
+ Required for loc metrics.
+\end_layout
+
+\begin_layout Chapter
+Overview of JProjectInspector
 \end_layout
 
 \begin_layout Chapter

@@ -20,6 +20,15 @@ public class CsvDataTest {
 		CsvData data = new CsvData(rows);
 		String str = data.toString();
 		Assert.assertEquals("A,B,C\n1,2,3\n", str);
+
+		rows.clear();
+		rows.add(new String[] {"name", "tag", "beschreibung"});
+		rows.add(new String[] {"Hans", "12.03.2010", "Dieser Text enthält ein Komma! , :)"});
+		rows.add(new String[] {"Hans,mit,Kommas", "01.01.2001", "Noch ein Text"});
+		data = new CsvData(rows);
+		str = data.toString();
+		String expectedStr = "name,tag,beschreibung\nHans,12.03.2010,\"Dieser Text enthält ein Komma! , :)\"\n\"Hans,mit,Kommas\",01.01.2001,Noch ein Text\n";
+		Assert.assertEquals(expectedStr, str);
 	}
 
 	@Test

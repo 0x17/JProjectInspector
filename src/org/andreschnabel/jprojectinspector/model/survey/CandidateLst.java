@@ -2,10 +2,12 @@ package org.andreschnabel.jprojectinspector.model.survey;
 
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.File;
 import java.util.List;
 
 @XmlRootElement
@@ -30,5 +32,19 @@ public class CandidateLst {
 			}
 		};
 		return CsvData.fromList(headers, candidateToRow, candidates);
+	}
+
+	public static CandidateLst fromCsv(File f) throws Exception {
+		return fromCsv(CsvHelpers.parseCsv(f));
+	}
+
+	public static CandidateLst fromCsv(CsvData data) throws Exception {
+		Transform<String[], Candidate> rowToCandidate = new Transform<String[], Candidate>() {
+			@Override
+			public Candidate invoke(String[] sa) {
+				return new Candidate(sa[0], sa[1], sa[2]);
+			}
+		};
+		return new CandidateLst(CsvData.toList(rowToCandidate, data));
 	}
 }
