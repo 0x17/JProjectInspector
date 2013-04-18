@@ -1,15 +1,16 @@
 package org.andreschnabel.jprojectinspector.tests.visual;
 
+import org.andreschnabel.jprojectinspector.gui.panels.FreeChartPanel;
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
 import org.andreschnabel.jprojectinspector.utilities.functional.TestCallback;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class FreeChartTest extends VisualTest {
 
@@ -36,8 +37,7 @@ public class FreeChartTest extends VisualTest {
 					public void invoke() throws Exception {
 						JFrame frm = getTestFrame();
 						JFreeChart chart = createBarChart();
-						ChartPanel cp = new ChartPanel(chart);
-						frm.add(cp);
+						frm.add(new FreeChartPanel(chart, new Dimension(640, 480)));
 						frm.pack();
 						waitForFrameToClose(frm);
 						//FreeChartExporter.saveChartToPDF(createBarChart(), "testfreechart.pdf", dim.width, dim.height);

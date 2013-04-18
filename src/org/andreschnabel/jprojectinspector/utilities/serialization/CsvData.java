@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CsvData {
 
-	private List<String[]> rowList;
+	protected List<String[]> rowList;
 	public String title;
 
 	public CsvData(List<String[]> rowList) {
@@ -22,6 +22,11 @@ public class CsvData {
 	public CsvData(String title, List<String[]> rowList) {
 		this.title = title;
 		this.rowList = rowList;
+	}
+
+	public CsvData(CsvData data) {
+		this.rowList = data.rowList;
+		this.title = data.title;
 	}
 
 	@Override
@@ -48,6 +53,10 @@ public class CsvData {
 		return Func.fromArray(getHeaders()).indexOf(header);
 	}
 
+	public boolean hasColumnWithHeader(String header) {
+		return Func.fromArray(getHeaders()).contains(header);
+	}
+
 	public int rowCount() {
 		return rowList.size()-1;
 	}
@@ -66,6 +75,10 @@ public class CsvData {
 	
 	public void setCellAt(int row, String header, String content) {
 		rowList.get(row+1)[columnWithHeader(header)] = content;
+	}
+
+	public void setCellAt(int row, int col, String content) {
+		rowList.get(row+1)[col] = content;
 	}
 
 	public void addColumn(String header) {
@@ -131,5 +144,14 @@ public class CsvData {
 
 	public String columnName(int column) {
 		return getHeaders()[column];
+	}
+
+	public void removeRow(int row) {
+		rowList.remove(row + 1);
+	}
+
+	public void addRow(int row) {
+		String[] nrow = new String[columnCount()];
+		rowList.add(row, nrow);
 	}
 }

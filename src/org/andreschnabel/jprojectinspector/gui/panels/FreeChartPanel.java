@@ -1,5 +1,6 @@
-package org.andreschnabel.jprojectinspector.gui.freechart;
+package org.andreschnabel.jprojectinspector.gui.panels;
 
+import org.andreschnabel.jprojectinspector.gui.freechart.FreeChartExporter;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.jfree.chart.ChartPanel;
@@ -11,14 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class ChartWindow extends JFrame {
+public class FreeChartPanel extends PanelWithParent {
 
-	private static final long serialVersionUID = 1L;
-
-	public ChartWindow(String title, final JFreeChart chart, final Dimension dim) {
-		super(title);
+	public FreeChartPanel(final JFreeChart chart, final Dimension dim) {
 		setLayout(new GridBagLayout());
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -57,9 +54,5 @@ public class ChartWindow extends JFrame {
 		gbc.gridy = 1;
 		gbc.weightx = gbc.weighty = 1;
 		add(cp, gbc);
-
-		pack();
-		setLocationRelativeTo(null);
 	}
-
 }

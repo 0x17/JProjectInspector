@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
-import org.andreschnabel.jprojectinspector.gui.freechart.ChartWindow;
+import org.andreschnabel.jprojectinspector.gui.windows.FreeChartWindow;
 import org.andreschnabel.jprojectinspector.gui.freechart.MetricBarChart;
 import org.andreschnabel.jprojectinspector.gui.tables.MetricResultTableModel;
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
@@ -131,7 +131,7 @@ public class MetricResultsPanel extends JPanel {
 				public void actionPerformed(ActionEvent actionEvent) {
 					String title = metricNames.get(finalCol);
 					JFreeChart mbc = MetricBarChart.newInstance(title, mrtm.getResults(), finalCol);
-					ChartWindow cw = new ChartWindow(title, mbc, new Dimension(640, 480));
+					FreeChartWindow cw = new FreeChartWindow(mbc, new Dimension(640, 480));
 					cw.setVisible(true);
 				}
 			});

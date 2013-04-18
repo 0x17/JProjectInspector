@@ -1,23 +1,33 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.gui.tables.CsvTableModel;
+import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.Tautology;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.serialization.FilteredCsvData;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.regex.Pattern;
 
 public class CsvTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private final JTextField filterExprField;
 
 	public CsvTablePanel(final CsvData data) {
 		setLayout(new GridBagLayout());
 
-		JTable csvTbl = new JTable(new CsvTableModel(data));
+		FilteredCsvData fdata = new FilteredCsvData(data);
+		CsvTableModel csvTableModel = new CsvTableModel(fdata);
+		final JTable csvTbl = new JTable(csvTableModel);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
@@ -43,6 +53,33 @@ public class CsvTablePanel extends JPanel {
 		});
 		topPane.add(exportBtn);
 
+		JLabel filterExprLbl = new JLabel("Filter RegEx:");
+		topPane.add(filterExprLbl);
+
+		filterExprField = new JTextField(30);
+		filterExprField.getDocument().addDocumentListener(new FilterIfRxIsValid(filterExprField, data, fdata, csvTbl));
+		topPane.add(filterExprField);
+
+		JButton addRowBtn = new JButton("Add row");
+		addRowBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				data.addRow(csvTbl.getSelectedRow());
+				csvTbl.updateUI();
+			}
+		});
+		topPane.add(addRowBtn);
+
+		JButton rmRowBtn = new JButton("Remove row");
+		rmRowBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				data.removeRow(csvTbl.getSelectedRow());
+				csvTbl.updateUI();
+			}
+		});
+		topPane.add(rmRowBtn);
+
 		gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1;
@@ -50,5 +87,61 @@ public class CsvTablePanel extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		add(topPane);
+	}
+
+	private static class FilterIfRxIsValid implements DocumentListener {
+		private final JTextField filterExprField;
+		private final CsvData data;
+		private final FilteredCsvData fdata;
+		private final JTable csvTbl;
+		public Predicate<String[]> pred;
+
+		public FilterIfRxIsValid(JTextField filterExprField, CsvData csvData, FilteredCsvData fdata, JTable csvTbl) {
+			this.filterExprField = filterExprField;
+			this.data = csvData;
+			this.fdata = fdata;
+			this.csvTbl = csvTbl;
+		}
+
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+			filterIfRxValid();
+		}
+
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			filterIfRxValid();
+		}
+
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			filterIfRxValid();
+		}
+
+		private void filterIfRxValid() {
+			try {
+				String text = filterExprField.getText();
+				if(StringHelpers.countOccurencesOfWord(text, "=") == 1) {
+					String[] parts = text.split("=");
+					final String colName = parts[0];
+					if(data.hasColumnWithHeader(colName)) {
+						final Pattern pattern = Pattern.compile(parts[1]);
+						pred = new Predicate<String[]>() {
+							@Override
+							public boolean invoke(String[] sa) {
+								int colIndex = data.columnWithHeader(colName);
+								return pattern.matcher(sa[colIndex]).matches();
+							}
+						};
+						fdata.filter(pred);
+						csvTbl.updateUI();
+					}
+				} else {
+					fdata.filter(new Tautology<String[]>());
+					csvTbl.updateUI();
+				}
+			} catch(Exception e) {
+			}
+		}
 	}
 }

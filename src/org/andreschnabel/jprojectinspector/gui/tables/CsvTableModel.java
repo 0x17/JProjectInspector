@@ -35,6 +35,12 @@ public class CsvTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
+		return true;
+	}
+
+	@Override
+	public void setValueAt(Object val, int rowIndex, int columnIndex) {
+		super.setValueAt(val, rowIndex, columnIndex);
+		data.setCellAt(rowIndex, columnIndex, (String)val);
 	}
 }

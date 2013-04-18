@@ -16,9 +16,13 @@ public class CsvTableWindow extends AbstractWindow<CsvTablePanel> {
 	}
 
 	public static void main(String[] args) throws Exception {
-		CsvTableWindow ctw = new CsvTableWindow(CsvHelpers.parseCsv(new File("data/responses500.csv")));
+		File f = new File("data/responses500.csv");
+		CsvData csv = CsvHelpers.parseCsv(f);
+		//CsvData csv = GuiHelpers.loadCsvDialog(new File("."));
+		CsvTableWindow ctw = new CsvTableWindow(csv);
 		ctw.setVisible(true);
 		ctw.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ctw.pack();
 	}
 
 }
