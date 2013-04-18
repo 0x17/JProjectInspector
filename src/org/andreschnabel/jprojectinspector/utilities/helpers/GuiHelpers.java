@@ -120,6 +120,21 @@ public class GuiHelpers {
 		}
 	}
 
+	public static void setLaf(String name) throws Exception {
+		for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+			if(name.equals(info.getName())) {
+				UIManager.setLookAndFeel(info.getClassName());
+				break;
+			}
+		}
+	}
+
+	public static void setNativeLaf() throws Exception {
+		if(!Helpers.runningOnUnix()) {
+			setLaf("Windows");
+		}
+	}
+
 	public static enum DialogType {
 		Load,
 		Save

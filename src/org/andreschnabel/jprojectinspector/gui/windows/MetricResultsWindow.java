@@ -7,16 +7,16 @@ import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import javax.swing.*;
 import java.util.List;
 
-public class MetricResultsWindow extends AbstractWindow<MetricResultsPanel> {
+public class MetricResultsWindow extends AbstractWindowWithParent<MetricResultsPanel> {
 	
 	private static final long serialVersionUID = 1L;
 
-	public MetricResultsWindow(CsvData results) throws Exception {
-		super("Metric Results :: " + results.title, 640, 480, JFrame.DISPOSE_ON_CLOSE, new MetricResultsPanel(results));
+	public MetricResultsWindow(CsvData results, JFrame parentFrame) throws Exception {
+		super("Metric Results :: " + results.title, 640, 480, JFrame.DISPOSE_ON_CLOSE, new MetricResultsPanel(results), parentFrame);
 	}
 
 	public MetricResultsWindow(List<Project> projects, final List<String> metricNames) {
-		super("Metric Results", 640, 480, JFrame.DISPOSE_ON_CLOSE, new MetricResultsPanel(projects, metricNames));
+		super("Metric Results", 640, 480, JFrame.DISPOSE_ON_CLOSE, new MetricResultsPanel(projects, metricNames), null);
 	}
 
 	@Override

@@ -5,18 +5,20 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 
 import javax.swing.*;
 
-public class InputWindow extends AbstractWindow<InputPanel> {
+public class InputWindow extends AbstractWindowWithParent<InputPanel> {
 
 	private static final long serialVersionUID = 1L;
 
-	public InputWindow() {
-		super("Inputs", 800, 600, JFrame.EXIT_ON_CLOSE, new InputPanel());
+	public InputWindow(JFrame parentFrame) {
+		super("Inputs", 800, 600, JFrame.DISPOSE_ON_CLOSE, new InputPanel(), parentFrame);
 		disposeOnClose();
 	}
 
 	public static void main(String[] args) {
 		try {
-			new InputWindow().setVisible(true);
+			InputWindow iw = new InputWindow(null);
+			iw.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			iw.setVisible(true);
 		} catch(Exception e) {
 			GuiHelpers.showError(e.getMessage());
 			e.printStackTrace();

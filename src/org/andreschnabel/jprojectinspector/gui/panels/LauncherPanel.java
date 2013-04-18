@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
+import org.andreschnabel.jprojectinspector.gui.windows.BenchmarkWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.InputWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.MetricResultsWindow;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
@@ -75,7 +76,7 @@ public class LauncherPanel extends PanelWithParent {
 		btns.add(new LauncherButton("New Measurement", "Select input projects and measure selected metrics for them.", new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InputWindow iw = new InputWindow();
+				InputWindow iw = new InputWindow(parentFrame);
 				iw.setVisible(true);
 				parentFrame.setVisible(false);
 			}
@@ -93,7 +94,7 @@ public class LauncherPanel extends PanelWithParent {
 					if(headers.length < 2 || !headers[0].equals("owner") || !headers[1].equals("repo")) {
 						throw new Exception("CSV format incorrect for metric results.");
 					}
-					MetricResultsWindow mrw = new MetricResultsWindow(results);
+					MetricResultsWindow mrw = new MetricResultsWindow(results, parentFrame);
 					mrw.setVisible(true);
 				} catch(Exception exception) {
 					exception.printStackTrace();
@@ -104,6 +105,9 @@ public class LauncherPanel extends PanelWithParent {
 		btns.add(new LauncherButton("Benchmark Predictors", "Evaluate quality of test effort / bug count estimation predictors using survey results.", new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				BenchmarkWindow bw = new BenchmarkWindow(parentFrame);
+				bw.setVisible(true);
+				parentFrame.setVisible(false);
 			}
 		}));
 		btns.add(new LauncherButton("Documentation", "Show introductory documentation for this tool.", new ActionListener() {
