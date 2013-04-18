@@ -28,29 +28,9 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.eclipse.jgit-2.1.0.201209190230-r.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/org.eclipse.jgit-2.1.0.201209190230-r.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/libs/org.eclipse.jgit-2.1.0.201209190230-r-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
       <library name="junit4">
         <CLASSES>
           <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/antlr-3.4-complete.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

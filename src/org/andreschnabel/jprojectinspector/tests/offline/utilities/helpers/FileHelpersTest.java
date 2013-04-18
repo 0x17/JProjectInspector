@@ -40,13 +40,26 @@ public class FileHelpersTest {
 	@Test
 	public void testReadEntireFile() throws Exception {
 		String content = FileHelpers.readEntireFile(new File("README.md"));
-		String expContent = "# JProjectInspector\n\n"
-				+ "Gather data from GitHub projects to determine factors influencing testing need.\n\n"
-				+ "## Dependencies\n"
-				+ "- [gson](http://code.google.com/p/google-gson/)\n"
-				+ "- [JGit](http://www.eclipse.org/jgit/)\n"
-				+ "- [egit-github](https://github.com/eclipse/egit-github/tree/master/org.eclipse.egit.github.core)\n"
-				+ "- [gitective](https://github.com/kevinsawicki/gitective)";
+		String expContent = "# JProjectInspector\n" +
+				"\n" +
+				"Gather data from GitHub projects to determine testing need.\n" +
+				"\n" +
+				"**License:** BSD\n" +
+				"\n" +
+				"## Dependencies\n" +
+				"**Third party libraries:**\n" +
+				"[ASM](http://asm.ow2.org/)\n" +
+				"[org.eclipse.egit.github.core](http://www.eclipse.org/egit/)\n" +
+				"[google-gson](https://code.google.com/p/google-gson/)\n" +
+				"[JCommon](http://www.jfree.org/jcommon/)\n" +
+				"[JFreeChart](http://www.jfree.org/jfreechart/)\n" +
+				"[iText](http://itextpdf.com/)\n" +
+				"\n" +
+				"**Third party tools:**\n" +
+				"[CLOC](http://cloc.sourceforge.net/)\n" +
+				"[git](http://git-scm.com/)\n" +
+				"\n" +
+				"*Omnia sub specie aeternitatis.*\n";
 		assertEquals(expContent, content);
 	}
 

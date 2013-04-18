@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.File;
+import java.net.URI;
 
 public class GuiHelpers {
 
@@ -125,6 +126,12 @@ public class GuiHelpers {
 			String expHeadersStr = Func.reduce(new StringConcatenationOp(","), "", expectedHeaders).substring(1);
 			String actualHeadersStr = Func.reduce(new StringConcatenationOp(","), "", headers).substring(1);
 			throw new Exception(failMsg + "\nExpected \"" + expHeadersStr + "\" but got \"" + actualHeadersStr + "\"");
+		}
+	}
+
+	public static void openUrl(String url) throws Exception {
+		if(Desktop.isDesktopSupported()) {
+			Desktop.getDesktop().browse(new URI(url));
 		}
 	}
 

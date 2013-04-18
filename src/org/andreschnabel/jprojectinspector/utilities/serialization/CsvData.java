@@ -119,8 +119,8 @@ public class CsvData {
 
 	public static <T> List<T> toList(Transform<String[], T> rowToElem, CsvData data) throws Exception {
 		List<T> lst = new ArrayList<T>(data.rowCount()-1);
-		for(int row = 1; row<data.rowCount(); row++) {
-			lst.add(rowToElem.invoke(data.rowList.get(row)));
+		for(int row = 0; row<data.rowCount(); row++) {
+			lst.add(rowToElem.invoke(data.getRow(row)));
 		}
 		return lst;
 	}

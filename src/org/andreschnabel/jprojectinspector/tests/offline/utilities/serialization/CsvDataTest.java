@@ -1,29 +1,92 @@
 package org.andreschnabel.jprojectinspector.tests.offline.utilities.serialization;
 
+import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 public class CsvDataTest {
-
-	private CsvData data;
-
-	@Before
-	public void setUp() throws Exception {
-		List<String[]> rows = new LinkedList<String[]>();
-		rows.add(new String[]{"A","B","C"});
-		rows.add(new String[]{"1","2","3"});
-		data = new CsvData(rows);
-	}
 
 	@Test
 	public void testToString() {
+		List<String[]> rows = new LinkedList<String[]>();
+		rows.add(new String[]{"A","B","C"});
+		rows.add(new String[]{"1","2","3"});
+		CsvData data = new CsvData(rows);
 		String str = data.toString();
 		Assert.assertEquals("A,B,C\n1,2,3\n", str);
 	}
 
+	@Test
+	public void testFromList() throws Exception {
+		Person[] personsArray = new Person[] {
+				new Person("Heinrich", 44),
+				new Person("Peter", 57),
+		};
+		Transform<Person, String[]> personToRow = new Transform<Person, String[]>() {
+			@Override
+			public String[] invoke(Person p) {
+				return new String[] {p.name, String.valueOf(p.age)};
+			}
+		};
+		CsvData data = CsvData.fromList(new String[]{"name", "age"}, personToRow, Arrays.asList(personsArray));
+		Assert.assertArrayEquals(new String[]{"name", "age"}, data.getHeaders());
+		Assert.assertArrayEquals(new String[]{"Heinrich", "44"}, data.getRow(0));
+		Assert.assertArrayEquals(new String[]{"Peter", "57"}, data.getRow(1));
+	}
+
+	@Test
+	public void testDataToList() throws Exception {
+		List<String[]> rows = new LinkedList<String[]>();
+		rows.add(new String[]{"name", "age"});
+		rows.add(new String[]{"Heinrich", "44"});
+		rows.add(new String[]{"Peter", "57"});
+		CsvData data = new CsvData(rows);
+		Transform<String[], Person> rowToPerson = new Transform<String[], Person>() {
+			@Override
+			public Person invoke(String[] sa) {
+				return new Person(sa[0], Integer.valueOf(sa[1]));
+			}
+		};
+		List<Person> persons = CsvData.toList(rowToPerson, data);
+		AssertHelpers.arrayEqualsLstOrderSensitive(new Person[] {
+				new Person("Heinrich", 44),
+				new Person("Peter", 57),
+		}, persons);
+	}
+
+	private static class Person {
+		public String name;
+		public int age;
+
+		private Person(String name, int age) {
+			this.name = name;
+			this.age = age;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if(this == o) return true;
+			if(o == null || getClass() != o.getClass()) return false;
+
+			Person person = (Person) o;
+
+			if(age != person.age) return false;
+			if(name != null ? !name.equals(person.name) : person.name != null) return false;
+
+			return true;
+		}
+
+		@Override
+		public int hashCode() {
+			int result = name != null ? name.hashCode() : 0;
+			result = 31 * result + age;
+			return result;
+		}
+	}
 }

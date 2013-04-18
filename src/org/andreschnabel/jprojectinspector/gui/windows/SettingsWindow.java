@@ -25,7 +25,9 @@ public class SettingsWindow extends AbstractWindow<SettingsPanel> {
 	}
 
 	public static void main(String[] args) {
-		new InputWindow().setVisible(true);
+		InputWindow iw = new InputWindow();
+		iw.setVisible(true);
+		iw.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 }

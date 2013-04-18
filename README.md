@@ -1,9 +1,20 @@
 # JProjectInspector
 
-Gather data from GitHub projects to determine factors influencing testing need.
+Gather data from GitHub projects to determine testing need.
+
+**License:** BSD
 
 ## Dependencies
-- [gson](http://code.google.com/p/google-gson/)
-- [JGit](http://www.eclipse.org/jgit/)
-- [egit-github](https://github.com/eclipse/egit-github/tree/master/org.eclipse.egit.github.core)
-- [gitective](https://github.com/kevinsawicki/gitective)
+**Third party libraries:**
+[ASM](http://asm.ow2.org/)
+[org.eclipse.egit.github.core](http://www.eclipse.org/egit/)
+[google-gson](https://code.google.com/p/google-gson/)
+[JCommon](http://www.jfree.org/jcommon/)
+[JFreeChart](http://www.jfree.org/jfreechart/)
+[iText](http://itextpdf.com/)
+
+**Third party tools:**
+[CLOC](http://cloc.sourceforge.net/)
+[git](http://git-scm.com/)
+
+*Omnia sub specie aeternitatis.*

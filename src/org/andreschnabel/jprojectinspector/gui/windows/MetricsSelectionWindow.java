@@ -14,7 +14,9 @@ public class MetricsSelectionWindow extends AbstractWindow<MetricsSelectionPanel
 	}
 
 	public static void main(String[] args) {
-		new MetricsSelectionWindow(null).setVisible(true);
+		JFrame msw = new MetricsSelectionWindow(null);
+		msw.setVisible(true);
+		msw.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 }

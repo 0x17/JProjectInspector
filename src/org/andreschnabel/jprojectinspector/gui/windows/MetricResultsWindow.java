@@ -2,6 +2,7 @@ package org.andreschnabel.jprojectinspector.gui.windows;
 
 import org.andreschnabel.jprojectinspector.gui.panels.MetricResultsPanel;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
 import javax.swing.*;
 import java.util.List;
@@ -10,13 +11,19 @@ public class MetricResultsWindow extends AbstractWindow<MetricResultsPanel> {
 	
 	private static final long serialVersionUID = 1L;
 
+	public MetricResultsWindow(CsvData results) throws Exception {
+		super("Metric Results :: " + results.title, 640, 480, JFrame.DISPOSE_ON_CLOSE, new MetricResultsPanel(results));
+	}
+
 	public MetricResultsWindow(List<Project> projects, final List<String> metricNames) {
 		super("Metric Results", 640, 480, JFrame.DISPOSE_ON_CLOSE, new MetricResultsPanel(projects, metricNames));
 	}
 
 	@Override
 	public void dispose() {
-		panel.getBatch().dipose();
+		if(panel.getBatch() != null) {
+			panel.getBatch().dipose();
+		}
 		super.dispose();
 	}
 }

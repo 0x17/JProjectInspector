@@ -32,7 +32,39 @@ public class MetricResultsPanel extends JPanel {
 
 	public AsyncTaskBatch<Float[]> getBatch() { return batch; }
 
+	public MetricResultsPanel(CsvData results) throws Exception {
+		List<Project> projects = Project.projectListFromCsv(results);
+		List<String> metricNames = metricNamesFromHeaders(results.getHeaders());
+		MetricResultTableModel mrtm = initCommon(projects, metricNames);
+		addResultsFromCsv(mrtm, results);
+		resultTable.updateUI();
+	}
+
+	private List<String> metricNamesFromHeaders(String[] headers) {
+		List<String> metricNames = new LinkedList<String>();
+		for(int i=2; i<headers.length; i++) {
+			metricNames.add(headers[i]);
+		}
+		return metricNames;
+	}
+
+	private void addResultsFromCsv(MetricResultTableModel mrtm, CsvData results) {
+		for(int i=0; i<results.rowCount(); i++) {
+			String[] row = results.getRow(i);
+			Float[] vals = new Float[results.columnCount()-2];
+			for(int j=0; j<vals.length; j++) {
+				vals[j] = Float.valueOf(row[j+2]);
+			}
+			mrtm.addResultTupleToCache(new Project(row[0], row[1]), vals);
+		}
+	}
+
 	public MetricResultsPanel(List<Project> projects, List<String> metricNames) {
+		MetricResultTableModel mrtm = initCommon(projects, metricNames);
+		initAndExecTaskBatch(projects, metricNames, mrtm);
+	}
+
+	private MetricResultTableModel initCommon(List<Project> projects, List<String> metricNames) {
 		setLayout(new GridBagLayout());
 
 		final MetricResultTableModel mrtm = new MetricResultTableModel(projects, metricNames);
@@ -40,7 +72,7 @@ public class MetricResultsPanel extends JPanel {
 		initAndAddTable(mrtm);
 		initAndAddTopPane(mrtm, metricNames);
 
-		initAndExecTaskBatch(projects, metricNames, mrtm);
+		return mrtm;
 	}
 
 	private void initAndAddTopPane(final MetricResultTableModel mrtm, final List<String> metricNames) {
