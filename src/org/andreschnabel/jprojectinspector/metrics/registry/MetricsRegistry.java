@@ -14,6 +14,9 @@ import java.util.Map;
 
 public class MetricsRegistry {
 
+	private static final String SCRAPING_WARNING = "<br /><br /><b>Important note:</b> This metric uses scraping to extract data from GitHub.<br />" +
+			"If GitHub changes the format of their website this metric might break.<br />" +
+			"In this case please get the newest version of this tool from GitHub '0x17/JProjectInspector'.</p>";
 	public static Map<String, OfflineMetric> offlineMetrics;
 	public static Map<String, OnlineMetric> onlineMetrics;
 	public static Map<String, SurveyMetric> surveyMetrics;
@@ -64,14 +67,20 @@ public class MetricsRegistry {
 	}
 
 	public static String getDescriptionOfMetric(String metric) {
-		if(onlineMetrics.containsKey(metric))
-			return onlineMetrics.get(metric).getDescription();
-		else if(offlineMetrics.containsKey(metric))
+		if(onlineMetrics.containsKey(metric)) {
+			String warning = "";
+			OnlineMetric metricObj = onlineMetrics.get(metric);
+			if(metricObj.getCategory() == OnlineMetric.Category.Scraping) {
+				warning = SCRAPING_WARNING;
+			}
+			return metricObj.getDescription() + warning;
+		} else if(offlineMetrics.containsKey(metric)) {
 			return offlineMetrics.get(metric).getDescription();
-		else if(surveyMetrics.containsKey(metric))
+		} else if(surveyMetrics.containsKey(metric)) {
 			return surveyMetrics.get(metric).getDescription();
-		else
+		} else {
 			return null;
+		}
 	}
 
 	public static OnlineMetric.Category getOnlineCategoryOfMetric(String metric) {

@@ -1,7 +1,5 @@
 package org.andreschnabel.jprojectinspector.utilities.threading;
 
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +31,6 @@ public class AsyncTaskBatch<T> {
 			public void run() {
 				for(AsyncTask<T> task : tasks) {
 					if(disposed) {
-						Helpers.log("Forced stop!");
 						return;
 					}
 					task.onFinished(task.doInBackground());

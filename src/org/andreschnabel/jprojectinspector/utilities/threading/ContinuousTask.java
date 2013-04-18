@@ -21,7 +21,6 @@ public abstract class ContinuousTask<T> {
 						onSuccess(result);
 					}
 				}
-
 			}
 		};
 

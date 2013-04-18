@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.Config;
+import org.andreschnabel.jprojectinspector.gui.windows.SettingsWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ public class SettingsPanel extends PanelWithParent {
 	private static final long serialVersionUID = 1L;
 	
 	private final JTextField[] fields;
-	private static final String[] settingNames = new String[] { "Base folder", "Base url", "Git executable path", "Cloc executable path" };
+	private static final String[] settingNames = new String[] { "Temp clone folder", "GitHub base url", "Git executable path", "Cloc executable path" };
 
 	public SettingsPanel() {
 		int nrows = settingNames.length;
@@ -27,13 +28,15 @@ public class SettingsPanel extends PanelWithParent {
 		}
 		fields[0].setText(Config.DEST_BASE);
 		fields[1].setText(Config.BASE_URL);
+		fields[2].setText(Config.GIT_PATH);
+		fields[3].setText(Config.CLOC_PATH);
 		setSize(400, 300);
 
-		JButton hideBtn = new JButton("Hide");
+		JButton hideBtn = new JButton("Cancel");
 		hideBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				parentFrame.setVisible(false);
+				close();
 			}
 		});
 		add(hideBtn);
@@ -43,13 +46,21 @@ public class SettingsPanel extends PanelWithParent {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				saveSettings();
+				close();
 			}
 		});
 		add(saveBtn);
 	}
 
+	private void close() {
+		((SettingsWindow)parentFrame).parentPanel.closeSettings();
+		parentFrame.dispose();
+	}
+
 	private void saveSettings() {
 		Config.DEST_BASE = fields[0].getText();
 		Config.BASE_URL = fields[1].getText();
+		Config.GIT_PATH = fields[2].getText();
+		Config.CLOC_PATH = fields[3].getText();
 	}
 }

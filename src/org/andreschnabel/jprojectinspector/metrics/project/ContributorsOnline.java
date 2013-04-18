@@ -21,7 +21,7 @@ public final class ContributorsOnline implements OnlineMetric {
 
 	@Override
 	public String getDescription() {
-		return "Scraped number of contributors from GitHub graph \"https://github.com/owner/repo/graphs/contributors-data\"";
+		return "Scraped number of contributors from GitHub graph.";
 	}
 
 	@Override

@@ -104,10 +104,12 @@ public class MetricsSelectionPanel extends PanelWithParent {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int selIndex = selectedMetricNamesLst.getSelectedIndex();
-				if(selIndex == -1) {
+				if(selIndex == -1 || selIndex >= selectedMetricNames.size()) {
 					return;
+				} else if(selIndex == selectedMetricNames.size()-1) {
+					selectedMetricNamesLst.setSelectedIndex(selectedMetricNames.size()-2);
 				}
-				availableMetricNames.add(availableMetricNames.get(selIndex));
+				availableMetricNames.add(selectedMetricNames.get(selIndex));
 				selectedMetricNames.remove(selIndex);
 				updateLists();
 			}
@@ -134,8 +136,10 @@ public class MetricsSelectionPanel extends PanelWithParent {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int selIndex = availableMetricNamesLst.getSelectedIndex();
-				if(selIndex == -1) {
+				if(selIndex == -1 || selIndex >= availableMetricNames.size()) {
 					return;
+				} else if(selIndex == availableMetricNames.size()-1) {
+					availableMetricNamesLst.setSelectedIndex(availableMetricNames.size()-2);
 				}
 				selectedMetricNames.add(availableMetricNames.get(selIndex));
 				availableMetricNames.remove(selIndex);

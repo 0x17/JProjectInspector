@@ -51,7 +51,6 @@ public class InputPanel extends JPanel {
 
 	private DocumentListener docListener = new EmptyReposComboOnChange();
 
-	private SettingsWindow settingsWindow = new SettingsWindow();
 	private final MetricsSelectionWindow metricsSelectionWindow;
 
 	public void dispose() {
@@ -113,6 +112,7 @@ public class InputPanel extends JPanel {
 
 	private void initAddButton(JPanel topPane) {
 		JButton addBtn = new JButton("Add");
+		addBtn.setToolTipText("Adds project with owner and repo from corresponding text fields.");
 		addBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -128,12 +128,13 @@ public class InputPanel extends JPanel {
 
 	private void initQueryProjsButton(JPanel topPane) {
 		JButton queryProjsBtn = new JButton("Query");
+		queryProjsBtn.setToolTipText("Queries all repositories this owner has on GitHub.");
 		queryProjsBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				final String owner = ownerField.getText();
 				if(owner == null || owner.isEmpty()) return;
-				userReposCombo.removeAll();
+				userReposCombo.removeAllItems();
 				AsyncTask<java.util.List<Project>> scrapeProjectsTask = new AsyncTask<java.util.List<Project>>() {
 					@Override
 					public java.util.List<Project> doInBackground() {
@@ -205,7 +206,10 @@ public class InputPanel extends JPanel {
 	}
 
 	private void initBottomPane() {
+		JPanel bottomPane = new JPanel(new GridLayout(2, 4));
+
 		JButton viewCsvBtn = new JButton("View CSV");
+		viewCsvBtn.setToolTipText("Preview content of CSV file in a visual table.");
 		viewCsvBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -222,7 +226,8 @@ public class InputPanel extends JPanel {
 			}
 		});
 
-		JButton remOfflineBtn = new JButton("Remove offline");
+		JButton remOfflineBtn = new JButton("Remove Offline");
+		remOfflineBtn.setToolTipText("Removes projects with \"404\" profile pages.");
 		remOfflineBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -230,7 +235,8 @@ public class InputPanel extends JPanel {
 			}
 		});
 
-		JButton startBtn = new JButton("Start");
+		JButton startBtn = new JButton("Start Measurements");
+		startBtn.setToolTipText("Open metrics selection dialog as next step before measuring.");
 		startBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -242,17 +248,17 @@ public class InputPanel extends JPanel {
 			}
 		});
 
-		JButton configBtn = new JButton("Config");
-		configBtn.addActionListener(new ActionListener() {
+		JButton settingsBtn = new JButton("Settings");
+		settingsBtn.setToolTipText("Configure paths containing binaries and used for temporary data.");
+		settingsBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				settingsWindow.setVisible(true);
+				tryShowSettingsWindow();
 			}
 		});
 
-		JPanel bottomPane = new JPanel(new FlowLayout());
-
-		JButton importBtn = new JButton("Import");
+		JButton importBtn = new JButton("Import from CSV");
+		importBtn.setToolTipText("Import project list from CSV file with \"owner,repo\" columns.");
 		importBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -271,7 +277,8 @@ public class InputPanel extends JPanel {
 			}
 		});
 
-		JButton exportBtn = new JButton("Export");
+		JButton exportBtn = new JButton("Export to CSV");
+		exportBtn.setToolTipText("Export project list to CSV file.");
 		exportBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -285,6 +292,7 @@ public class InputPanel extends JPanel {
 		});
 
 		final JButton tapTimelineBtn = new JButton("Tap Timeline");
+		tapTimelineBtn.setToolTipText("Grab projects from the GitHub event timeline.");
 		tapTimelineBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -292,9 +300,7 @@ public class InputPanel extends JPanel {
 					tapTimelineTask = new ContinuousTask<List<Project>>() {
 						@Override
 						public void onSuccess(List<Project> result) {
-							for(Project p : result) {
-								projLstPanel.addProject(p);
-							}
+							projLstPanel.addProjects(result);
 						}
 
 						@Override
@@ -319,23 +325,44 @@ public class InputPanel extends JPanel {
 		});
 
 		JButton clearBtn = new JButton("Clear");
+		clearBtn.setToolTipText("Remove all projects from this list.");
 		clearBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				projLstPanel.clear();
+				ownerField.setText("");
+				repoField.setText("");
+				userReposCombo.removeAllItems();
 			}
 		});
 
-		bottomPane.add(viewCsvBtn);
 		bottomPane.add(importBtn);
 		bottomPane.add(exportBtn);
+
 		bottomPane.add(tapTimelineBtn);
-		bottomPane.add(clearBtn);
-		bottomPane.add(configBtn);
+
+		bottomPane.add(viewCsvBtn);
+
 		bottomPane.add(remOfflineBtn);
+		bottomPane.add(clearBtn);
+
+		bottomPane.add(settingsBtn);
+
 		bottomPane.add(startBtn);
 
 		add(bottomPane, ThreeRowGridBagConstraints.bottomPaneConstraints());
+	}
+
+	private SettingsWindow settingsWindow;
+	public void closeSettings() {
+		settingsWindow = null;
+	}
+
+	private void tryShowSettingsWindow() {
+		if(settingsWindow == null) {
+			settingsWindow = new SettingsWindow(this);
+			settingsWindow.setVisible(true);
+		}
 	}
 
 
