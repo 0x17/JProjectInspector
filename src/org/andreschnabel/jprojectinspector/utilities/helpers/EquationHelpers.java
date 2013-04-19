@@ -31,6 +31,6 @@ public class EquationHelpers {
 			}
 		};
 		List<String> undefVars = Func.filter(notInVarNames, referencedVars);
-		return !undefVars.isEmpty();
+		return undefVars.isEmpty();
 	}
 }

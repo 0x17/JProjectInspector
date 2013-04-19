@@ -232,7 +232,7 @@ public class BenchmarkPanel extends PanelWithParent {
 				if(result != null) {
 					return (Double)result;
 				}
-				return 0;
+				return 0.0;
 			}
 
 			private Map<String, Object> resultsToBindings(ProjectWithResults m) {
@@ -246,7 +246,7 @@ public class BenchmarkPanel extends PanelWithParent {
 		};
 
 		try {
-			Benchmark.Quality q = Benchmark.countCorrectPredictions(predMethods, metricsData, respProjs);
+			Benchmark.Quality q = Benchmark.runBenchmark(predMethods, metricsData, respProjs);
 
 			int ncorr;
 			double wncorr;

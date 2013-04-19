@@ -21,7 +21,7 @@ public class Benchmark {
 		public double bugCountPredictionMeasure(ProjectWithResults m);
 	}
 
-	public static Quality countCorrectPredictions(final PredictionMethods predMethods, List<ProjectWithResults> pml, List<ResponseProjects> rpl) throws Exception {
+	public static Quality runBenchmark(final PredictionMethods predMethods, List<ProjectWithResults> pml, List<ResponseProjects> rpl) throws Exception {
 		int teCorrect = 0;
 		int bcCorrect = 0;
 		double teWeightedCorrect = 0.0f;

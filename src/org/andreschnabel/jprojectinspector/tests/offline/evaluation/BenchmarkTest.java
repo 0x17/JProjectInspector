@@ -57,15 +57,21 @@ public class BenchmarkTest {
 	}
 
 	@Test
-	public void testCountCorrectPredictions() throws Exception {
+	public void testRunBenchmark() throws Exception {
 		Benchmark.PredictionMethods predMethods = getTestPredictionMethods();
 		TestData testData = new TestData().invoke();
 		List<ProjectWithResults> pml = testData.getPml();
 		List<ResponseProjects> rpl = testData.getRpl();
 
-		Benchmark.Quality q = Benchmark.countCorrectPredictions(predMethods, pml, rpl);
+		Benchmark.Quality q = Benchmark.runBenchmark(predMethods, pml, rpl);
 		Assert.assertEquals(2, q.bcCorrect);
 		Assert.assertEquals(0, q.teCorrect);
+
+		Assert.assertEquals("repo1", q.bcPredictions.get(0)[0]);
+		Assert.assertEquals("repo2", q.bcPredictions.get(0)[1]);
+
+		Assert.assertEquals("repo1", q.tePredictions.get(0)[0]);
+		Assert.assertEquals("repo2", q.tePredictions.get(0)[1]);
 	}
 
 	private Benchmark.PredictionMethods getTestPredictionMethods() {
