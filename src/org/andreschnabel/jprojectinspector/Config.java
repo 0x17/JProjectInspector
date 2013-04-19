@@ -16,6 +16,14 @@ public final class Config {
 	public static String PERL_PATH;
 	public static String CLOC_PATH;
 
+	static {
+		try {
+			initializePaths();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static boolean initializePaths() throws Exception {
 		if(FileHelpers.exists(CONFIG_FILENAME)) {
 			loadSettingsFromDisk();
@@ -26,21 +34,23 @@ public final class Config {
 
 		Map<String, String>  envVars = System.getenv();
 
-		for(String key : envVars.keySet()) {
-			Helpers.log(key + "=>" +envVars.get(key));
-		}
-
-		String pathVar = envVars.get("Path");
-		String[] pathEntries = pathVar.split(";");
-		for(String entry : pathEntries) {
-			if(entry.toLowerCase().contains("git")) {
-				GIT_PATH = entry + File.separator + "git" + Helpers.executableExtension();
-			} else if(entry.toLowerCase().contains("perl")) {
-				PERL_PATH = entry + File.separator +"perl" + Helpers.executableExtension();
+		if(!Helpers.runningOnUnix()) {
+			String pathVar = envVars.get("Path");
+			String[] pathEntries = pathVar.split(";");
+			for(String entry : pathEntries) {
+				if(entry.toLowerCase().contains("git")) {
+					GIT_PATH = entry + File.separator + "git" + Helpers.executableExtension();
+				} else if(entry.toLowerCase().contains("perl")) {
+					PERL_PATH = entry + File.separator +"perl" + Helpers.executableExtension();
+				}
 			}
-		}
 
-		DEST_BASE = envVars.get("TMP");
+			DEST_BASE = envVars.get("TMP");
+		} else {
+			GIT_PATH = Helpers.unixType("git");
+			PERL_PATH = Helpers.unixType("perl");
+			DEST_BASE = "/tmp/";
+		}
 
 		return GIT_PATH == null || PERL_PATH == null || DEST_BASE == null;
 	}

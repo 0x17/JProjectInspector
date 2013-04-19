@@ -19,7 +19,7 @@ public final class ProjectDownloader {
 			return null;
 		}
 		String destPath = Config.DEST_BASE + p.repoName;
-		ProcessHelpers.system("git clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
+		ProcessHelpers.system(Config.GIT_PATH + " clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
 		File f = new File(destPath);
 		return f.exists() ? f : null;
 	}
@@ -60,7 +60,7 @@ public final class ProjectDownloader {
 				Helpers.log("Skipping...");
 				continue;
 			}
-			ProcessHelpers.system("git clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
+			ProcessHelpers.system(Config.GIT_PATH + " clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
 		}
 	}
 	

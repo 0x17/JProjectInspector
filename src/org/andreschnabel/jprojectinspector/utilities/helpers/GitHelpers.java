@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
+import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 
@@ -15,7 +16,7 @@ public class GitHelpers {
 	public static List<String> contribNamesForFile(File f) throws Exception {
 		List<String> result = new LinkedList<String>();
 
-		String out = ProcessHelpers.monitorProcess(f.getParentFile(), "git", "log", "--follow", "--pretty=format:%an", "--", f.getName());
+		String out = ProcessHelpers.monitorProcess(f.getParentFile(), Config.GIT_PATH, "log", "--follow", "--pretty=format:%an", "--", f.getName());
 		String[] names = out.split("\n");
 		for(String name : names) {
 			if(name != null && !name.isEmpty()) {
@@ -33,7 +34,7 @@ public class GitHelpers {
 	}
 
 	public static List<String> listAllContribs(File repoPath) throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, "git", "log", "--all", "--format=%aN");
+		String out = ProcessHelpers.monitorProcess(repoPath, Config.GIT_PATH, "log", "--all", "--format=%aN");
 		String[] lines = out.split("\n");
 		List<String> contribs = new LinkedList<String>();
 		for(String line : lines) {
@@ -48,7 +49,7 @@ public class GitHelpers {
 	}
 
 	public static String[] listAllCommits(File repoPath) throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--no-merges", "master");
+		String out = ProcessHelpers.monitorProcess(repoPath, Config.GIT_PATH, "rev-list", "--no-merges", "master");
 		return out.split("\n");
 	}
 
@@ -58,13 +59,13 @@ public class GitHelpers {
 
 	// Date format: YYYY-MM-DD
 	public static String[] listCommitsBetweenDates(File repoPath, String startDate, String endDate)  throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--since="+startDate, "--before="+endDate, "--no-merges", "master");
+		String out = ProcessHelpers.monitorProcess(repoPath, Config.GIT_PATH, "rev-list", "--since="+startDate, "--before="+endDate, "--no-merges", "master");
 		return out.split("\n");
 	}
 
 	// Date format: YYYY-MM-DD
 	public static String[] listCommitsUntilDate(File repoPath, String date) throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--before="+date, "--no-merges", "master");
+		String out = ProcessHelpers.monitorProcess(repoPath, Config.GIT_PATH, "rev-list", "--before="+date, "--no-merges", "master");
 		return out.split("\n");
 	}
 	
@@ -119,17 +120,17 @@ public class GitHelpers {
 	}
 
 	public static ChurnStats getChurnStatsForCommit(File repoPath, String commitSha1Hash) throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, "git", "show", "-w", "-C" ,"--shortstat", "--format=format:", commitSha1Hash);
+		String out = ProcessHelpers.monitorProcess(repoPath, Config.GIT_PATH, "show", "-w", "-C" ,"--shortstat", "--format=format:", commitSha1Hash);
 		return parseChurnStatsFromShortStat(out);
 	}
 
 	public static ChurnStats getChurnStatsBetweenCommits(File repoPath, String commitA, String commitB) throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, "git", "diff", "-w", "-C", "--shortstat", "--format=format:", commitA, commitB);
+		String out = ProcessHelpers.monitorProcess(repoPath, Config.GIT_PATH, "diff", "-w", "-C", "--shortstat", "--format=format:", commitA, commitB);
 		return parseChurnStatsFromShortStat(out);
 	}
 
 	public static List<String> listCommitComments(File repoPath, File f) throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, "git", "--no-pager", "log", "--pretty=oneline", f.getName());
+		String out = ProcessHelpers.monitorProcess(repoPath, Config.GIT_PATH, "--no-pager", "log", "--pretty=oneline", f.getName());
 		String[] comments = out.split("[0-9a-zA-Z]{40} ");
 		List<String> result = new ArrayList<String>(comments.length-1);
 		for(int i=1; i<comments.length; i++) {
@@ -140,7 +141,7 @@ public class GitHelpers {
 	
 public static void revertProjectToDate(File repoPath, String date) throws Exception {
 	String sha1 = latestCommitUntilDate(repoPath, date);
-	String out = ProcessHelpers.monitorProcess(repoPath, "git", "reset", "--hard", sha1);
+	String out = ProcessHelpers.monitorProcess(repoPath, Config.GIT_PATH, "reset", "--hard", sha1);
 	Helpers.log("Revert out = " + out);
 }
 }

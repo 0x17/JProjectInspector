@@ -1,19 +1,14 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
-import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOnline;
-import org.andreschnabel.jprojectinspector.metrics.project.Issues;
-import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
+import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
-import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetricsLst;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
+import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.IndexedTransform;
 import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GitHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import java.io.File;
@@ -22,22 +17,21 @@ import java.util.List;
 
 public class MetricsCollector {
 
-	public static ProjectMetricsLst collectMetricsForResponses(ResponseProjectsLst rpl) throws Exception {
-		List<ProjectMetrics> results = new LinkedList<ProjectMetrics>();
+	public static List<ProjectWithResults> collectMetricsForResponses(ResponseProjectsLst rpl) throws Exception {
+		List<ProjectWithResults> results = new LinkedList<ProjectWithResults>();
 
 		for(ResponseProjects responseProj : rpl.responseProjs) {
 			if(responseProj.user != null)
 				results.addAll(collectMetricsForResponse(responseProj));
 		}
 
-		ProjectMetricsLst rml = new ProjectMetricsLst(results);
-		return rml;
+		return results;
 	}
 
-	public static List<ProjectMetrics> collectMetricsForResponse(ResponseProjects rp) {
-		IndexedTransform<Project, ProjectMetrics> projToMetrics = new IndexedTransform<Project, ProjectMetrics>() {
+	public static List<ProjectWithResults> collectMetricsForResponse(ResponseProjects rp) {
+		IndexedTransform<Project, ProjectWithResults> projToMetrics = new IndexedTransform<Project, ProjectWithResults>() {
 			@Override
-			public ProjectMetrics invoke(int i, Project p) {
+			public ProjectWithResults invoke(int i, Project p) {
 				try {
 					File path = ProjectDownloader.loadProject(p);
 					if(path == null) {
@@ -50,13 +44,13 @@ public class MetricsCollector {
 						locSum += clocResult.codeLines;
 					}
 
-					ProjectMetrics pm = new ProjectMetrics();
-					pm.linesOfCode = locSum;
+					ProjectWithResults pm = new ProjectWithResults(null, null, null);
+					/*pm.linesOfCode = locSum;
 					pm.numCommits = GitHelpers.numCommits(path);
 					pm.numContribs = ContributorsOnline.countNumContributors(p);
 					pm.numIssues = Issues.getNumberOfIssues(p);
 					pm.project = p;
-					pm.testLinesOfCode = TestLinesOfCode.countTestLocHeuristic(path);
+					pm.testLinesOfCode = TestLinesOfCode.countTestLocHeuristic(path);*/
 
 					Helpers.log("Determined metrics for " + p + " result: " + pm + " :: " + (i+1));
 
@@ -71,9 +65,9 @@ public class MetricsCollector {
 			}
 		};
 
-		return Func.filter(new Predicate<ProjectMetrics>() {
+		return Func.filter(new Predicate<ProjectWithResults>() {
 			@Override
-			public boolean invoke(ProjectMetrics pm) {
+			public boolean invoke(ProjectWithResults pm) {
 				return pm != null;
 			}
 		}, Func.mapi(projToMetrics, rp.toProjectList()));

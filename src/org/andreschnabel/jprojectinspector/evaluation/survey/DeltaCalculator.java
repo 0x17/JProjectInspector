@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
+import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
@@ -32,24 +32,24 @@ public class DeltaCalculator {
 		}
 	}
 	
-	public static ProjectMetrics metricsForProject(final Project p, List<ProjectMetrics> pml) {
-		Predicate<ProjectMetrics> isProj = new Predicate<ProjectMetrics>() {
+	public static ProjectWithResults metricsForProject(final Project p, List<ProjectWithResults> pml) {
+		Predicate<ProjectWithResults> isProj = new Predicate<ProjectWithResults>() {
 			@Override
-			public boolean invoke(ProjectMetrics obj) {
+			public boolean invoke(ProjectWithResults obj) {
 				return obj.project.equals(p);
 			}
 		};
 		return Func.find(isProj, pml);
 	}
 
-	public static List<Deltas> calculateDeltas(List<ResponseProjects> rpl, final List<ProjectMetrics> pml) {
+	public static List<Deltas> calculateDeltas(List<ResponseProjects> rpl, final List<ProjectWithResults> pml) {
 		Transform<ResponseProjects, Deltas> responseProjToDeltas = new Transform<ResponseProjects, DeltaCalculator.Deltas>() {
 			@Override
 			public Deltas invoke(ResponseProjects rp) {
-				ProjectMetrics highBugMetrics = metricsForProject(new Project(rp.user, rp.highestBugCount), pml);
-				ProjectMetrics lowBugMetrics = metricsForProject(new Project(rp.user, rp.lowestBugCount), pml);
-				ProjectMetrics highTestMetrics = metricsForProject(new Project(rp.user, rp.mostTested), pml);
-				ProjectMetrics lowTestMetrics = metricsForProject(new Project(rp.user, rp.leastTested), pml);
+				ProjectWithResults highBugMetrics = metricsForProject(new Project(rp.user, rp.highestBugCount), pml);
+				ProjectWithResults lowBugMetrics = metricsForProject(new Project(rp.user, rp.lowestBugCount), pml);
+				ProjectWithResults highTestMetrics = metricsForProject(new Project(rp.user, rp.mostTested), pml);
+				ProjectWithResults lowTestMetrics = metricsForProject(new Project(rp.user, rp.leastTested), pml);
 				
 				Deltas d = new Deltas();
 				
@@ -57,20 +57,20 @@ public class DeltaCalculator {
 				
 				d.testing = new MetricsDeltas();
 				if(highTestMetrics != null && lowTestMetrics != null) {
-					d.testing.dcommits = highTestMetrics.numCommits - lowTestMetrics.numCommits;
+					/*d.testing.dcommits = highTestMetrics.numCommits - lowTestMetrics.numCommits;
 					d.testing.dcontribs = highTestMetrics.numContribs - lowTestMetrics.numContribs;
 					d.testing.dloc = highTestMetrics.linesOfCode - lowTestMetrics.linesOfCode;
 					d.testing.dtloc = highTestMetrics.testLinesOfCode - lowTestMetrics.testLinesOfCode;
-					d.testing.dissues = highTestMetrics.numIssues - lowTestMetrics.numIssues;
+					d.testing.dissues = highTestMetrics.numIssues - lowTestMetrics.numIssues;*/
 				}
 				
 				d.bugs = new MetricsDeltas();
 				if(highBugMetrics != null && lowBugMetrics != null) {
-					d.bugs.dcommits = highBugMetrics.numCommits - lowBugMetrics.numCommits;
+					/*d.bugs.dcommits = highBugMetrics.numCommits - lowBugMetrics.numCommits;
 					d.bugs.dcontribs = highBugMetrics.numContribs - lowBugMetrics.numContribs;
 					d.bugs.dloc = highBugMetrics.linesOfCode - lowBugMetrics.linesOfCode;
 					d.bugs.dtloc = highBugMetrics.testLinesOfCode - lowBugMetrics.testLinesOfCode;
-					d.bugs.dissues = highBugMetrics.numIssues - lowBugMetrics.numIssues;
+					d.bugs.dissues = highBugMetrics.numIssues - lowBugMetrics.numIssues;*/
 				}
 				
 				return d;

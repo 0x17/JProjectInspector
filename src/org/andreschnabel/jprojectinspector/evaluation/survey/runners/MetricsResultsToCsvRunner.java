@@ -1,23 +1,17 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey.runners;
 
-import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
-import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetricsLst;
-import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.XmlHelpers;
+import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 
-import java.io.File;
 import java.util.List;
 
 public class MetricsResultsToCsvRunner {
 
 	public static void main(String[] args) throws Exception {
-		metricsResultsToCsv(',');
+		//metricsResultsToCsv(',');
 	}
 
-	public static void metricsResultsToCsv(Character sep) throws Exception {
+	/*public static void metricsResultsToCsv(Character sep) throws Exception {
 		ProjectMetricsLst metrics = (ProjectMetricsLst) XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("data/metrics500.xml"));
 		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("data/responseswithuser500.xml"));
 		StringBuilder sb = new StringBuilder();
@@ -36,7 +30,7 @@ public class MetricsResultsToCsvRunner {
 				pm.numContribs + sep +
 				pm.numIssues + sep +
 				surveyResultForProject(pm.project, responseProjs) + "\n";
-	}
+	}*/
 
 	public static String surveyResultForProject(Project p, List<ResponseProjects> rps) {
 		for(ResponseProjects rp : rps) {

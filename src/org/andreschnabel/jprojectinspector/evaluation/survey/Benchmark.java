@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
+import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
@@ -34,8 +34,8 @@ public class Benchmark {
 
 	public interface PredictionMethods {
 		public String getName();
-		public float testEffortPredictionMeasure(ProjectMetrics m);
-		public float bugCountPredictionMeasure(ProjectMetrics m);
+		public float testEffortPredictionMeasure(ProjectWithResults m);
+		public float bugCountPredictionMeasure(ProjectWithResults m);
 	}
 
 	public enum PredictionTypes {
@@ -43,7 +43,7 @@ public class Benchmark {
 		TestEffort
 	}
 
-	public static Quality countCorrectPredictions(final PredictionMethods predMethods, List<ProjectMetrics> pml, List<ResponseProjects> rpl) throws Exception {
+	public static Quality countCorrectPredictions(final PredictionMethods predMethods, List<ProjectWithResults> pml, List<ResponseProjects> rpl) throws Exception {
 		int teCorrect = 0;
 		int bcCorrect = 0;
 		int total = 0;
@@ -83,12 +83,12 @@ public class Benchmark {
 				teCorrect++;
 		}
 
-		Helpers.log("Avg. num projs = " + numProjects/(float)numValidResponses);
+		/*Helpers.log("Avg. num projs = " + numProjects/(float)numValidResponses);
 		Helpers.log("Method = " + predMethods.getName());
 		float percentCorrect = teCorrect / (float)total * 100.0f;
 		Helpers.log("Correct test effort predictions = " + teCorrect + " of " + total + " -> " + percentCorrect + "%");
 		percentCorrect = bcCorrect / (float)total * 100.0f;
-		Helpers.log("Correct bug count predictions = " + bcCorrect + " of " + total + " -> " + percentCorrect + "%");
+		Helpers.log("Correct bug count predictions = " + bcCorrect + " of " + total + " -> " + percentCorrect + "%");*/
 
 		return new Quality(teCorrect, bcCorrect);
 	}
@@ -117,7 +117,7 @@ public class Benchmark {
 		return highestPredIx;
 	}
 
-	public static List<Float> calcPredictionValues(final PredictionMethods predMethods, final PredictionTypes predType, final List<ProjectMetrics> pml, List<Project> projs) {
+	public static List<Float> calcPredictionValues(final PredictionMethods predMethods, final PredictionTypes predType, final List<ProjectWithResults> pml, List<Project> projs) {
 		Transform<Project, Float> bcPred = new Transform<Project, Float>() {
 			@Override
 			public Float invoke(Project p) {
@@ -133,7 +133,7 @@ public class Benchmark {
 		return Func.map(bcPred, projs);
 	}
 
-	public static boolean skipInvalidProjects(final List<ProjectMetrics> pml, List<Project> projs) {
+	public static boolean skipInvalidProjects(final List<ProjectWithResults> pml, List<Project> projs) {
 		Predicate<Project> isInvalid = new Predicate<Project>() {
 			@Override
 			public boolean invoke(Project p) {
@@ -143,10 +143,10 @@ public class Benchmark {
 		return Func.contains(isInvalid, projs);
 	}
 
-	public static ProjectMetrics metricsForProject(final Project p, List<ProjectMetrics> pml) {
-		Predicate<ProjectMetrics> isProj = new Predicate<ProjectMetrics>() {
+	public static ProjectWithResults metricsForProject(final Project p, List<ProjectWithResults> pml) {
+		Predicate<ProjectWithResults> isProj = new Predicate<ProjectWithResults>() {
 			@Override
-			public boolean invoke(ProjectMetrics obj) {
+			public boolean invoke(ProjectWithResults obj) {
 				return obj.project.equals(p);
 			}
 		};

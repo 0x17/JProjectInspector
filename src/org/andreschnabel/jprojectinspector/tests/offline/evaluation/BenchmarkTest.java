@@ -2,9 +2,9 @@ package org.andreschnabel.jprojectinspector.tests.offline.evaluation;
 
 import junit.framework.Assert;
 import org.andreschnabel.jprojectinspector.evaluation.survey.Benchmark;
-import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
-import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
+import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 import org.junit.Test;
@@ -58,7 +58,7 @@ public class BenchmarkTest {
 	public void testCountCorrectPredictions() throws Exception {
 		Benchmark.PredictionMethods predMethods = getTestPredictionMethods();
 		TestData testData = new TestData().invoke();
-		List<ProjectMetrics> pml = testData.getPml();
+		List<ProjectWithResults> pml = testData.getPml();
 		List<ResponseProjects> rpl = testData.getRpl();
 
 		Benchmark.Quality q = Benchmark.countCorrectPredictions(predMethods, pml, rpl);
@@ -74,13 +74,13 @@ public class BenchmarkTest {
 				}
 
 				@Override
-				public float testEffortPredictionMeasure(ProjectMetrics m) {
-					return m.testLinesOfCode;
+				public float testEffortPredictionMeasure(ProjectWithResults m) {
+					return m.get("testloc");
 				}
 
 				@Override
-				public float bugCountPredictionMeasure(ProjectMetrics m) {
-					return m.linesOfCode;
+				public float bugCountPredictionMeasure(ProjectWithResults m) {
+					return m.get("loc");
 				}
 			};
 	}
@@ -89,7 +89,7 @@ public class BenchmarkTest {
 	public void testCalcPredictionValues() throws Exception {
 		Benchmark.PredictionMethods predMethods = getTestPredictionMethods();
 		TestData testData = new TestData().invoke();
-		List<ProjectMetrics> pml = testData.getPml();
+		List<ProjectWithResults> pml = testData.getPml();
 		List<ResponseProjects> rpl = testData.getRpl();
 		Benchmark.PredictionTypes type = Benchmark.PredictionTypes.BugCount;
 		List<Float> vals = Benchmark.calcPredictionValues(predMethods, type, pml, rpl.get(0).toProjectList());
@@ -106,10 +106,10 @@ public class BenchmarkTest {
 	}
 
 	private class TestData {
-		private List<ProjectMetrics> pml;
+		private List<ProjectWithResults> pml;
 		private List<ResponseProjects> rpl;
 
-		public List<ProjectMetrics> getPml() {
+		public List<ProjectWithResults> getPml() {
 			return pml;
 		}
 
@@ -118,21 +118,21 @@ public class BenchmarkTest {
 		}
 
 		public TestData invoke() {
-			pml = new LinkedList<ProjectMetrics>();
+			pml = new LinkedList<ProjectWithResults>();
 
 			Project p1 = new Project("owner", "repo1");
 			Project p2 = new Project("owner", "repo2");
 
-			ProjectMetrics pm1 = new ProjectMetrics();
-			pm1.linesOfCode = 400;
-			pm1.testLinesOfCode = 200;
-			pm1.project = p1;
+			ProjectWithResults pm1 = new ProjectWithResults(null, null, null);
+			//pm1.linesOfCode = 400;
+			//pm1.testLinesOfCode = 200;
+			//pm1.project = p1;
 			pml.add(pm1);
 
-			ProjectMetrics pm2 = new ProjectMetrics();
-			pm2.linesOfCode = 1000;
-			pm2.testLinesOfCode = 400;
-			pm2.project = p2;
+			ProjectWithResults pm2 = new ProjectWithResults(null, null, null);
+			//pm2.linesOfCode = 1000;
+			//pm2.testLinesOfCode = 400;
+			//pm2.project = p2;
 			pml.add(pm2);
 
 			rpl = new LinkedList<ResponseProjects>();

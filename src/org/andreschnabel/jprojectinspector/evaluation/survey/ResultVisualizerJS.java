@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
+import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.functional.BinaryOperator;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
@@ -18,7 +18,7 @@ public class ResultVisualizerJS {
 	public final static int MIN_BUGS = 2;
 	public final static int MAX_BUGS = 3;
 
-	public static String resultsToJsArrays(final List<ResponseProjects> rplorig, final List<ProjectMetrics> pml, Metric m) {
+	public static String resultsToJsArrays(final List<ResponseProjects> rplorig, final List<ProjectWithResults> pml, Metric m) {
 		Predicate<ResponseProjects> notNull = new Predicate<ResponseProjects>() {
 			@Override
 			public boolean invoke(ResponseProjects rp) {
@@ -81,7 +81,7 @@ public class ResultVisualizerJS {
 		return Func.reduce(binOp, "", nums);
 	}
 
-	public static Transform<ResponseProjects, Integer> transformForType(final int type, final List<ProjectMetrics> pml, final Metric m) {
+	public static Transform<ResponseProjects, Integer> transformForType(final int type, final List<ProjectWithResults> pml, final Metric m) {
 		return new Transform<ResponseProjects, Integer>() {
 			@Override
 			public Integer invoke(ResponseProjects rp) {
@@ -102,14 +102,14 @@ public class ResultVisualizerJS {
 				}
 
 				final Project p = new Project(rp.user, projName);
-				Predicate<ProjectMetrics> isProj = new Predicate<ProjectMetrics>() {
+				Predicate<ProjectWithResults> isProj = new Predicate<ProjectWithResults>() {
 					@Override
-					public boolean invoke(ProjectMetrics obj) {
+					public boolean invoke(ProjectWithResults obj) {
 						return obj.project.equals(p);
 					}
 				};
-				ProjectMetrics pm = Func.find(isProj, pml);
-				if(pm != null) {
+				ProjectWithResults pm = Func.find(isProj, pml);
+				/*if(pm != null) {
 					switch(m) {
 					case Commits:
 						return pm.numCommits;
@@ -123,8 +123,9 @@ public class ResultVisualizerJS {
 						return pm.testLinesOfCode;
 					default:
 						return 0;
-					}
-				} else return 0;
+					}*/
+				//} else return 0;
+				return 0;
 			}
 		};
 	}

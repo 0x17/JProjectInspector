@@ -40,7 +40,9 @@ public class SettingsPanel extends PanelWithParent {
 						} else {
 							sf = GuiHelpers.loadFileDialog(new File(path), extension);
 						}
-						field.setText(sf.getAbsolutePath());
+						if(sf != null) {
+							field.setText(sf.getAbsolutePath());
+						}
 					}
 				});
 				add(browseBtn);

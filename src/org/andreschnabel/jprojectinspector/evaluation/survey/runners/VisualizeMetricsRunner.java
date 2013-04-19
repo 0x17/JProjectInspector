@@ -1,12 +1,12 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey.runners;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.*;
+import org.andreschnabel.jprojectinspector.evaluation.survey.Benchmark;
+import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetrics;
-import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetricsLst;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.XmlHelpers;
 
 import java.io.File;
@@ -15,9 +15,10 @@ import java.util.List;
 public class VisualizeMetricsRunner {
 
 	public static void main(String[] args) throws Exception {
-		ProjectMetricsLst metrics = (ProjectMetricsLst)XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("data/metrics500.xml"));
+		//ProjectMetricsLst metrics = (ProjectMetricsLst)XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("data/metrics500.xml"));
 		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("data/responseswithuser500.xml"));
-		String out = visualizeMetrics(rpl.responseProjs, metrics.projectMetrics);
+		final List<ProjectWithResults> pms = ProjectWithResults.fromCsv(CsvHelpers.parseCsv(new File("data/benchmark/metrics500.csv")));
+		String out = visualizeMetrics(rpl.responseProjs, pms);
 		FileHelpers.writeStrToFile(out, "data/vis500.csv");
 	}
 
@@ -31,7 +32,7 @@ public class VisualizeMetricsRunner {
 		return sb.toString();
 	}
 
-	public static String visualizeMetrics(List<ResponseProjects> rpl, List<ProjectMetrics> pml) {
+	public static String visualizeMetrics(List<ResponseProjects> rpl, List<ProjectWithResults> pml) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getCsvHeader() + "\n");
 		for(ResponseProjects rp : rpl) {
@@ -44,7 +45,7 @@ public class VisualizeMetricsRunner {
 
 			for(int i = 0; i < plist.size(); i++) {
 				Project p = plist.get(i);
-				ProjectMetrics metrics = Benchmark.metricsForProject(p, pml);
+				ProjectWithResults metrics = Benchmark.metricsForProject(p, pml);
 				userRow.append(toCsvRow(metrics, ',') + ((i+1==plist.size()) ? "" : ","));
 			}
 
@@ -54,8 +55,8 @@ public class VisualizeMetricsRunner {
 		return sb.toString();
 	}
 
-	private static String toCsvRow(ProjectMetrics m, Character sep) {
-		return "" + m.linesOfCode + sep + m.testLinesOfCode + sep + m.numCommits + sep + m.numContribs + sep + m.numIssues;
+	private static String toCsvRow(ProjectWithResults m, Character sep) {
+		return "" + m.get("loc") + sep + m.get("testloc") + sep + m.get("numcommits") + sep + m.get("numcontribs") + sep + m.get("numissues");
 	}
 
 }

@@ -1,12 +1,13 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey.runners;
 
 import org.andreschnabel.jprojectinspector.evaluation.survey.DeltaCalculator;
-import org.andreschnabel.jprojectinspector.model.metrics.ProjectMetricsLst;
+import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.XmlHelpers;
 
 import java.io.File;
@@ -19,10 +20,12 @@ public class CalcDeltasRunner {
 	}
 
 	public static List<DeltaCalculator.Deltas> calcDeltas() throws Exception {
-		ProjectMetricsLst metrics = (ProjectMetricsLst) XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("data/metrics500.xml"));
+		//ProjectMetricsLst metrics = (ProjectMetricsLst) XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("data/metrics500.xml"));
 		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("data/responseswithuser500.xml"));
 
-		List<DeltaCalculator.Deltas> deltasLst = DeltaCalculator.calculateDeltas(rpl.responseProjs, metrics.projectMetrics);
+		final List<ProjectWithResults> pms = ProjectWithResults.fromCsv(CsvHelpers.parseCsv(new File("data/benchmark/metrics500.csv")));
+
+		List<DeltaCalculator.Deltas> deltasLst = DeltaCalculator.calculateDeltas(rpl.responseProjs, pms);
 
 		Predicate<DeltaCalculator.Deltas> nonNull = new Predicate<DeltaCalculator.Deltas>() {
 			@Override

@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.code;
 
+import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
@@ -62,9 +63,9 @@ public class Cloc implements OfflineMetric {
 
 		String out;
 		if(Helpers.runningOnUnix()) {
-			out = ProcessHelpers.monitorProcess(rootPath, "/usr/local/bin/cloc", "-xml", targetName);
+			out = ProcessHelpers.monitorProcess(rootPath, Config.CLOC_PATH, "-xml", targetName);
 		} else {
-			out = ProcessHelpers.monitorProcess(rootPath, "perl", "E:\\cloc.pl", "-xml", targetName);
+			out = ProcessHelpers.monitorProcess(rootPath, Config.PERL_PATH, Config.CLOC_PATH, "-xml", targetName);
 		}
 
 		Pattern langLine = Pattern.compile("<language name=\"([^\"]+)\" files_count=\"(\\d+?)\" blank=\"(\\d+?)\" comment=\"(\\d+?)\" code=\"(\\d+?)\" />");
