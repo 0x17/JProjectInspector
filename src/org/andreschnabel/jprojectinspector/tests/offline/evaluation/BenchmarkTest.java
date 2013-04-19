@@ -120,19 +120,17 @@ public class BenchmarkTest {
 		public TestData invoke() {
 			pml = new LinkedList<ProjectWithResults>();
 
-			Project p1 = new Project("owner", "repo1");
-			Project p2 = new Project("owner", "repo2");
+			String[] resultHeaders = new String[] {"loc", "testloc"};
 
-			ProjectWithResults pm1 = new ProjectWithResults(null, null, null);
-			//pm1.linesOfCode = 400;
-			//pm1.testLinesOfCode = 200;
-			//pm1.project = p1;
+			Project p1 = new Project("owner", "repo1");
+
+			Float[] results = new Float[] {400.0f, 200.0f};
+			ProjectWithResults pm1 = new ProjectWithResults(p1, resultHeaders, results);
 			pml.add(pm1);
 
-			ProjectWithResults pm2 = new ProjectWithResults(null, null, null);
-			//pm2.linesOfCode = 1000;
-			//pm2.testLinesOfCode = 400;
-			//pm2.project = p2;
+			results = new Float[] {1000.0f, 400.0f};
+			Project p2 = new Project("owner", "repo2");
+			ProjectWithResults pm2 = new ProjectWithResults(p2, resultHeaders, results);
 			pml.add(pm2);
 
 			rpl = new LinkedList<ResponseProjects>();

@@ -8,7 +8,7 @@ import java.io.File;
 
 public class SurveyMetricCommon {
 
-	public static File estimationsFile = new File("data/benchmark/estimations.csv");
+	public static File estimationsFile = new File("data/benchmark/WeightedEstimates.csv");
 
 	public static Estimation measureCommon(Project p, String minHeader, String maxHeader) {
 		try {

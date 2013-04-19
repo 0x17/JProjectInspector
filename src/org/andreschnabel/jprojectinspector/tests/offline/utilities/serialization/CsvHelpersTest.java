@@ -18,7 +18,7 @@ public class CsvHelpersTest {
 
 	@Test
 	public void testParseCsvFile() throws Exception {
-		CsvData data = CsvHelpers.parseCsv(new File("data/responses500.csv"));
+		CsvData data = CsvHelpers.parseCsv(new File("data/KandidatenProjekteUmfrage1.csv"));
 		Assert.assertTrue(data.rowCount() > 0);
 		Assert.assertTrue(data.columnCount() > 0);
 	}
