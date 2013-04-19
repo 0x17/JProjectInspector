@@ -55,11 +55,15 @@ public class BenchmarkTableModel extends AbstractTableModel {
 				}
 			case 3:
 				if(predictions != null) {
-					return predictions.get(rowIndex)[0];
+					String pred = predictions.get(rowIndex)[0];
+					String state = getValueAt(rowIndex, columnIndex-2).equals(pred) ? " (OK)" : " (FAIL)";
+					return pred + state;
 				} else return "N/A";
 			case 4:
 				if(predictions != null) {
-					return predictions.get(rowIndex)[1];
+					String pred = predictions.get(rowIndex)[1];
+					String state = getValueAt(rowIndex, columnIndex-2).equals(pred) ? " (OK)" : " (FAIL)";
+					return pred + state;
 				} else return "N/A";
 			case 5:
 				return rps.weight;

@@ -23,7 +23,8 @@ public class EquationHelpers {
 	}
 
 	public static boolean validateEquation(final List<String> varNames, String equation) {
-		List<String> referencedVars = RegexHelpers.batchMatchOneGroup("(\\w+)", equation);
+		if(equation.isEmpty()) { return false; }
+		List<String> referencedVars = RegexHelpers.batchMatchOneGroup("([A-Za-z]\\w*)", equation);
 		Predicate<String> notInVarNames = new Predicate<String>() {
 			@Override
 			public boolean invoke(String s) {
@@ -31,6 +32,7 @@ public class EquationHelpers {
 			}
 		};
 		List<String> undefVars = Func.filter(notInVarNames, referencedVars);
-		return undefVars.isEmpty();
+		boolean parenCountMatches = StringHelpers.countOccurencesOfWord(equation, "(") == StringHelpers.countOccurencesOfWord(equation, ")");
+		return undefVars.isEmpty() && parenCountMatches;
 	}
 }

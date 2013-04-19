@@ -3,6 +3,7 @@ package org.andreschnabel.jprojectinspector.gui.panels;
 import org.andreschnabel.jprojectinspector.evaluation.Benchmark;
 import org.andreschnabel.jprojectinspector.evaluation.PredictionType;
 import org.andreschnabel.jprojectinspector.evaluation.SurveyFormat;
+import org.andreschnabel.jprojectinspector.gui.tables.BenchmarkTableCellRenderer;
 import org.andreschnabel.jprojectinspector.gui.tables.BenchmarkTableModel;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
@@ -76,9 +77,25 @@ public class BenchmarkPanel extends PanelWithParent {
 		topPane.add(modeCombo);
 
 		topPane.add(new JLabel("Prediction equation:"));
+
+		JPanel equationPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
 		equationField = new JTextField("0");
+		equationField.setColumns(50);
 		equationField.getDocument().addDocumentListener(new EquationChangeListener());
-		topPane.add(equationField);
+		equationPanel.add(equationField);
+
+		JButton computeBtn = new JButton("Compute");
+		computeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				eqtnChanged();
+			}
+		});
+		equationPanel.add(computeBtn);
+
+		//topPane.add(equationField);
+		topPane.add(equationPanel);
 
 		topPane.add(new JLabel("# Correct predictions:"));
 		numCorrLbl = new JLabel("0");
@@ -183,23 +200,24 @@ public class BenchmarkPanel extends PanelWithParent {
 	private void initTablePane() {
 		JPanel tablePane = new JPanel(new GridLayout(1,1));
 		tablePane.add(new JScrollPane(benchmarkTable));
+		benchmarkTable.setDefaultRenderer(Object.class, new BenchmarkTableCellRenderer());
 		add(tablePane, BorderLayout.CENTER);
 	}
 
 	private class EquationChangeListener implements DocumentListener {
 		@Override
 		public void insertUpdate(DocumentEvent e) {
-			eqtnChanged();
+			//eqtnChanged();
 		}
 
 		@Override
 		public void removeUpdate(DocumentEvent e) {
-			eqtnChanged();
+			//eqtnChanged();
 		}
 
 		@Override
 		public void changedUpdate(DocumentEvent e) {
-			eqtnChanged();
+			//eqtnChanged();
 		}
 	}
 
@@ -270,9 +288,9 @@ public class BenchmarkPanel extends PanelWithParent {
 					break;
 			}
 
-			numCorrLbl.setText(""+ncorr);
+			numCorrLbl.setText("" + ncorr);
 			weightedNumCorrLbl.setText(""+wncorr);
-			percCorrLbl.setText("" + ncorr/(double)(respProjs.size()*2) + "%");
+			percCorrLbl.setText(String.format("%.2f", (ncorr/(double)(respProjs.size()*2))*100.0) + "%");
 
 			updateTable(q);
 
