@@ -1,11 +1,10 @@
 package org.andreschnabel.jprojectinspector.metrics.survey;
 
+import org.andreschnabel.jprojectinspector.evaluation.survey.SurveyFormat;
 import org.andreschnabel.jprojectinspector.metrics.SurveyMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 
 public class TestEffortEstimation implements SurveyMetric {
-	public static final String LEAST_TESTED_HEADER = "Which of your GitHub projects was tested the least?";
-	public static final String MOST_TESTED_HEADER = "Which of your GitHub projects was tested the most?";
 
 	@Override
 	public String getName() {
@@ -19,6 +18,6 @@ public class TestEffortEstimation implements SurveyMetric {
 
 	@Override
 	public Estimation measure(Project p) {
-		return SurveyMetricCommon.measureCommon(p, LEAST_TESTED_HEADER, MOST_TESTED_HEADER);
+		return SurveyMetricCommon.measureCommon(p, SurveyFormat.LEAST_TESTED_HEADER, SurveyFormat.MOST_TESTED_HEADER);
 	}
 }

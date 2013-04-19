@@ -1,13 +1,17 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
+import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
+import org.andreschnabel.jprojectinspector.scrapers.LanguageDetector;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-
+/**
+ * Determine distribution of programming languages for projects named by users in a survey (response projects).
+ */
 public class LanguageDistribution {
 	
 	public static Map<String, Integer> determineLanguageDistribution(List<Project> projects) throws Exception {

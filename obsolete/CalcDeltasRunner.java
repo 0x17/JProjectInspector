@@ -19,7 +19,7 @@ public class CalcDeltasRunner {
 		calcDeltas();
 	}
 
-	public static List<DeltaCalculator.Deltas> calcDeltas() throws Exception {
+	public static List<Float[]> calcDeltas() throws Exception {
 		//ProjectMetricsLst metrics = (ProjectMetricsLst) XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("data/metrics500.xml"));
 		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("data/responseswithuser500.xml"));
 

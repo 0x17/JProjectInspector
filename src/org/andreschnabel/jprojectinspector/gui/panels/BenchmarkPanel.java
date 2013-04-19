@@ -204,7 +204,7 @@ public class BenchmarkPanel extends PanelWithParent {
 
 			private Map<String, Object> resultsToBindings(ProjectWithResults m) {
 				Map<String, Object> bindings = new HashMap<String, Object>();
-				String[] headers = m.getHeaders();
+				String[] headers = m.getResultHeaders();
 				for(int i=0; i<m.results.length; i++) {
 					bindings.put(headers[i+2], m.results[i]);
 				}

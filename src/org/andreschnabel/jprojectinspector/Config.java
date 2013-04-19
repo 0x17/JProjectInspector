@@ -47,6 +47,7 @@ public final class Config {
 
 			DEST_BASE = envVars.get("TMP");
 		} else {
+			CLOC_PATH = "/usr/local/bin/cloc";
 			GIT_PATH = Helpers.unixType("git");
 			PERL_PATH = Helpers.unixType("perl");
 			DEST_BASE = "/tmp/";

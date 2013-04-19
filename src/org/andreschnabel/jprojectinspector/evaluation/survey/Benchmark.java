@@ -1,36 +1,18 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
-import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import java.util.List;
 
+/**
+ * Assess quality of test effort estimation resp. bug count estimation prediction equation.
+ */
 public class Benchmark {
-
-	public static void printWinner(List<Quality> q) {
-		int maxTestEffortIx = 0;
-		int maxBugCountIx = 0;
-		int maxTestEffortCorrect = 0;
-		int maxBugCountCorrect = 0;
-		for(int i=0; i<q.size(); i++) {
-			if(q.get(i).bcCorrect > maxBugCountCorrect) {
-				maxBugCountCorrect = q.get(i).bcCorrect;
-				maxBugCountIx = i;
-			}
-			if(q.get(i).teCorrect > maxTestEffortCorrect) {
-				maxTestEffortCorrect = q.get(i).teCorrect;
-				maxTestEffortIx = i;
-			}
-		}
-
-		Helpers.log("Bug count: Winning method no. " + (maxBugCountIx + 1));
-		Helpers.log("Test effort: Winning method no. " + (maxTestEffortIx+1));
-	}
 
 	public interface PredictionMethods {
 		public String getName();
@@ -46,10 +28,6 @@ public class Benchmark {
 	public static Quality countCorrectPredictions(final PredictionMethods predMethods, List<ProjectWithResults> pml, List<ResponseProjects> rpl) throws Exception {
 		int teCorrect = 0;
 		int bcCorrect = 0;
-		int total = 0;
-
-		int numValidResponses = 0;
-		int numProjects = 0;
 
 		for(ResponseProjects rp : rpl) {
 			if(rp.user == null) continue;
@@ -57,10 +35,6 @@ public class Benchmark {
 			List<Project> projs = rp.toProjectList();
 
 			if(skipInvalidProjects(pml, projs)) continue;
-
-			total += 2;
-			numValidResponses++;
-			numProjects += projs.size();
 
 			List<Float> bcPredVals = calcPredictionValues(predMethods, PredictionTypes.BugCount, pml, projs);
 
@@ -82,13 +56,6 @@ public class Benchmark {
 			if(rp.leastTested.equals(projs.get(lowestPredIx).repoName))
 				teCorrect++;
 		}
-
-		/*Helpers.log("Avg. num projs = " + numProjects/(float)numValidResponses);
-		Helpers.log("Method = " + predMethods.getName());
-		float percentCorrect = teCorrect / (float)total * 100.0f;
-		Helpers.log("Correct test effort predictions = " + teCorrect + " of " + total + " -> " + percentCorrect + "%");
-		percentCorrect = bcCorrect / (float)total * 100.0f;
-		Helpers.log("Correct bug count predictions = " + bcCorrect + " of " + total + " -> " + percentCorrect + "%");*/
 
 		return new Quality(teCorrect, bcCorrect);
 	}

@@ -6,6 +6,7 @@ import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.XmlHelpers;
 
@@ -15,11 +16,11 @@ import java.util.List;
 public class BenchmarkRunner {
 
 	public static void main(String[] args) throws Exception {
-		checkCandidates();
+		List<Benchmark.Quality> qualities = checkCandidates();
+		Helpers.log(""+qualities);
 	}
 
-	public static void checkCandidates() throws Exception {
-		//final ProjectMetricsLst metrics = (ProjectMetricsLst) XmlHelpers.deserializeFromXml(ProjectMetricsLst.class, new File("data/metrics500.xml"));
+	public static List<Benchmark.Quality> checkCandidates() throws Exception {
 		final ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("data/responseswithuser500.xml"));
 
 		final List<ProjectWithResults> pms = ProjectWithResults.fromCsv(CsvHelpers.parseCsv(new File("data/benchmark/metrics500.csv")));
@@ -36,8 +37,8 @@ public class BenchmarkRunner {
 				}
 			}
 		};
-		List<Benchmark.Quality> qualities = Func.map(candToQuality, candidates);
-		Benchmark.printWinner(qualities);
+
+		return Func.map(candToQuality, candidates);
 	}
 
 }

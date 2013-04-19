@@ -2,6 +2,7 @@ package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.gui.lists.MetricListModel;
 import org.andreschnabel.jprojectinspector.gui.windows.MetricResultsWindow;
+import org.andreschnabel.jprojectinspector.metrics.MetricType;
 import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 
@@ -47,7 +48,8 @@ public class MetricsSelectionPanel extends PanelWithParent {
 		availableMetricNamesLst.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				setCurDescription(MetricsRegistry.getDescriptionOfMetric(availableMetricNames.get(availableMetricNamesLst.getSelectedIndex())));
+				String metricName = availableMetricNames.get(availableMetricNamesLst.getSelectedIndex());
+				setCurDescription(MetricsRegistry.getDescriptionOfMetric(metricName), MetricsRegistry.getTypeOfMetric(metricName));
 			}
 		});
 		leftPanel.add(new JScrollPane(availableMetricNamesLst), BorderLayout.CENTER);
@@ -66,7 +68,8 @@ public class MetricsSelectionPanel extends PanelWithParent {
 		selectedMetricNamesLst.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				setCurDescription(MetricsRegistry.getDescriptionOfMetric(selectedMetricNames.get(selectedMetricNamesLst.getSelectedIndex())));
+				String metricName = selectedMetricNames.get(selectedMetricNamesLst.getSelectedIndex());
+				setCurDescription(MetricsRegistry.getDescriptionOfMetric(metricName), MetricsRegistry.getTypeOfMetric(metricName));
 			}
 		});
 
@@ -75,8 +78,24 @@ public class MetricsSelectionPanel extends PanelWithParent {
 		add(rightPanel);
 	}
 
-	private void setCurDescription(String description) {
+	private void setCurDescription(String description, MetricType typeOfMetric) {
 		if(descriptionLbl != null) {
+			String typeNote;
+			switch(typeOfMetric) {
+				case Offline:
+					typeNote = "Measuring an offline metrics requires cloning of the project's repository. Slow for big projects.";
+					break;
+				case Online:
+					typeNote = "Measuring an online metric doesn't require cloning. Performance invariant of project size.";
+					break;
+				case Survey:
+					typeNote = "Survey metrics require survey result CSV with entry for project to work.";
+					break;
+				default:
+					typeNote = "";
+					break;
+			}
+			description += ("<br /><br />" + typeNote);
 			float lblWidth = descriptionLbl.getWidth()/2.0f;
 			String htmlFormatStr = "<html><div style=\"width:%.2fpx;\">%s</div><html>";
 			String lblText = String.format(htmlFormatStr, lblWidth, description.replace("\n", "<br />"));

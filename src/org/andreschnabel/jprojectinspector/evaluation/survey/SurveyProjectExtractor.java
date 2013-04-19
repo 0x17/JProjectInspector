@@ -1,13 +1,13 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
+import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 public class SurveyProjectExtractor {
 	
@@ -38,7 +38,7 @@ public class SurveyProjectExtractor {
 		String testedLeast = prefixMatcher.group(4);
 		String mostBugs = prefixMatcher.group(5);
 		String leastBugs = prefixMatcher.group(6);
-		return new ResponseProjects(testedLeast, mostTested, leastBugs, mostBugs);
+		return new ResponseProjects(null, testedLeast, mostTested, leastBugs, mostBugs, Float.NaN);
 	}
 
 	public static boolean beginsWithDate(String line) {

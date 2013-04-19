@@ -1,76 +1,74 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
-import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
-import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
+import org.andreschnabel.jprojectinspector.metrics.MetricType;
+import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.IndexedTransform;
 import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import java.io.File;
-import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Collects specified metrics for a project.
+ */
 public class MetricsCollector {
 
-	public static List<ProjectWithResults> collectMetricsForResponses(ResponseProjectsLst rpl) throws Exception {
-		List<ProjectWithResults> results = new LinkedList<ProjectWithResults>();
+	public static Float[] gatherMetricsForProject(List<String> metricNames, Project p) {
+		Float[] results = new Float[metricNames.size()];
 
-		for(ResponseProjects responseProj : rpl.responseProjs) {
-			if(responseProj.user != null)
-				results.addAll(collectMetricsForResponse(responseProj));
+		Predicate<String> isOfflineMetric = new Predicate<String>() {
+			@Override
+			public boolean invoke(String metricName) {
+				return MetricsRegistry.getTypeOfMetric(metricName) == MetricType.Offline;
+			}
+		};
+		boolean hasOfflineMetric = Func.contains(isOfflineMetric, metricNames);
+
+		File repoPath = null;
+		try {
+			if(hasOfflineMetric) {
+				repoPath = ProjectDownloader.loadProject(p);
+			}
+		} catch(Exception e)  {
+			e.printStackTrace();
+		}
+
+		for(int i = 0; i < metricNames.size(); i++) {
+			String metricName = metricNames.get(i);
+			MetricType type = MetricsRegistry.getTypeOfMetric(metricName);
+			float result = Float.NaN;
+
+			try {
+				switch(type) {
+					case Offline:
+						if(repoPath != null) {
+							result = MetricsRegistry.measureOfflineMetric(metricName, repoPath);
+						}
+						break;
+					case Online:
+						result = MetricsRegistry.measureOnlineMetric(metricName, p);
+						break;
+					case Survey:
+						result = MetricsRegistry.measureSurveyMetric(metricName, p);
+						break;
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+
+			results[i] = result;
+		}
+
+		if(repoPath != null) {
+			try {
+				ProjectDownloader.deleteProject(p);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return results;
 	}
-
-	public static List<ProjectWithResults> collectMetricsForResponse(ResponseProjects rp) {
-		IndexedTransform<Project, ProjectWithResults> projToMetrics = new IndexedTransform<Project, ProjectWithResults>() {
-			@Override
-			public ProjectWithResults invoke(int i, Project p) {
-				try {
-					File path = ProjectDownloader.loadProject(p);
-					if(path == null) {
-						throw new Exception("Download of "+p+" failed. Skip!");
-					}
-
-					List<Cloc.ClocResult> clocResults = Cloc.determineLinesOfCode(path);
-					int locSum = 0;
-					for(Cloc.ClocResult clocResult : clocResults) {
-						locSum += clocResult.codeLines;
-					}
-
-					ProjectWithResults pm = new ProjectWithResults(null, null, null);
-					/*pm.linesOfCode = locSum;
-					pm.numCommits = GitHelpers.numCommits(path);
-					pm.numContribs = ContributorsOnline.countNumContributors(p);
-					pm.numIssues = Issues.getNumberOfIssues(p);
-					pm.project = p;
-					pm.testLinesOfCode = TestLinesOfCode.countTestLocHeuristic(path);*/
-
-					Helpers.log("Determined metrics for " + p + " result: " + pm + " :: " + (i+1));
-
-					ProjectDownloader.deleteProject(p);
-
-					return pm;
-
-				} catch(Exception e) {
-					e.printStackTrace();
-					return null;
-				}
-			}
-		};
-
-		return Func.filter(new Predicate<ProjectWithResults>() {
-			@Override
-			public boolean invoke(ProjectWithResults pm) {
-				return pm != null;
-			}
-		}, Func.mapi(projToMetrics, rp.toProjectList()));
-	}
-
 }

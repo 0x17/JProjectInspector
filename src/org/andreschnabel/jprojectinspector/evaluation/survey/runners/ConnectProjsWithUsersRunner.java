@@ -1,16 +1,13 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey.runners;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.SurveyProjectExtractor;
 import org.andreschnabel.jprojectinspector.evaluation.survey.UserGuesser;
-import org.andreschnabel.jprojectinspector.metrics.survey.BugCountEstimation;
-import org.andreschnabel.jprojectinspector.metrics.survey.TestEffortEstimation;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
+import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.XmlHelpers;
 
@@ -24,32 +21,31 @@ public class ConnectProjsWithUsersRunner {
 	}
 
 	public static void connectProjectsWithUsers() throws Exception {
-		final List<ResponseProjects> results = SurveyProjectExtractor.extractProjectsFromResults(new File("data/responses500.csv"));
+		List<ResponseProjects> responseProjectsList = ResponseProjects.fromCsvFile(new File("data/responses500.csv"));
 		List<Project> projs = Project.projectListFromCsv(CsvHelpers.parseCsv(new File("data/userprojects500.csv")));
 
-		for(ResponseProjects rp : results) {
+		for(ResponseProjects rp : responseProjectsList) {
 			rp.user = UserGuesser.guessUserWithProjects(rp, projs);
 		}
 
-		//XmlHelpers.serializeToXml(new ResponseProjectsLst(results), new File("data/responseswithuser500.xml"));
-		String[] headers = new String[] {"user",
-				TestEffortEstimation.LEAST_TESTED_HEADER,
-				TestEffortEstimation.MOST_TESTED_HEADER,
-				BugCountEstimation.LOWEST_BUG_COUNT_HEADER,
-				BugCountEstimation.HIGHEST_BUG_COUNT_HEADER};
-		Transform<ResponseProjects, String[]> respProjToRow = new Transform<ResponseProjects, String[]>() {
+		responseProjectsList = Func.filter(new Predicate<ResponseProjects>() {
 			@Override
-			public String[] invoke(ResponseProjects rp) {
-				return new String[] {rp.user == null ? "null" : rp.user,
-						rp.leastTested,
-						rp.mostTested,
-						rp.lowestBugCount,
-						rp.highestBugCount};
+			public boolean invoke(ResponseProjects rps) {
+				for(Project p : rps.toProjectList()) {
+					if(!ProjectDownloader.isProjectOnline(p))
+						return false;
+				}
+				return rps.user != null && !Float.isNaN(rps.weight) && rps.weight != 0.0f;
 			}
-		};
-		CsvData respProjs = CsvData.fromList(headers, respProjToRow, results);
-		respProjs.save(new File("data/userrespprojs.csv"));
+		}, responseProjectsList);
 
+		CsvData respProjs = ResponseProjects.toCsv(responseProjectsList);
+		respProjs.save(new File("data/userEstimates.csv"));
+
+		saveListOfProjectsWithResponse(responseProjectsList, projs);
+	}
+
+	private static void saveListOfProjectsWithResponse(final List<ResponseProjects> results, List<Project> projs) throws Exception {
 		Predicate<Project> hasResponse = new Predicate<Project>() {
 			@Override
 			public boolean invoke(final Project p) {

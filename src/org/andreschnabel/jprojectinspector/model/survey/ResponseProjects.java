@@ -1,9 +1,15 @@
 package org.andreschnabel.jprojectinspector.model.survey;
 
+import org.andreschnabel.jprojectinspector.evaluation.survey.SurveyFormat;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
+import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,12 +23,20 @@ public class ResponseProjects {
 	
 	public String lowestBugCount;
 	public String highestBugCount;
-	
+
+	public float weight;
+
 	public ResponseProjects(String leastTested, String mostTested, String lowestBugCount, String highestBugCount) {
+		this(null, leastTested, mostTested, lowestBugCount, highestBugCount, Float.NaN);
+	}
+	
+	public ResponseProjects(String user, String leastTested, String mostTested, String lowestBugCount, String highestBugCount, float weight) {
+		this.user = user;
 		this.leastTested = leastTested;
 		this.mostTested = mostTested;
 		this.lowestBugCount = lowestBugCount;
 		this.highestBugCount = highestBugCount;
+		this.weight = weight;
 	}
 	
 	public ResponseProjects() {}
@@ -79,11 +93,60 @@ public class ResponseProjects {
 
 	@Override
 	public String toString() {
-		return "ResponseProjects [user=" + user + ", leastTested=" + leastTested + ", mostTested=" + mostTested
-			+ ", lowestBugCount=" + lowestBugCount + ", highestBugCount=" + highestBugCount + "]";
+		return "ResponseProjects{" +
+				"user='" + user + '\'' +
+				", leastTested='" + leastTested + '\'' +
+				", mostTested='" + mostTested + '\'' +
+				", lowestBugCount='" + lowestBugCount + '\'' +
+				", highestBugCount='" + highestBugCount + '\'' +
+				", weight=" + weight +
+				'}';
 	}
-	
-	
 
-	
+	public static List<ResponseProjects> fromCsvFile(File f) throws Exception {
+		final CsvData data = CsvHelpers.parseCsv(f);
+		Transform<String[], ResponseProjects> rowToRespProjs = new Transform<String[], ResponseProjects>() {
+			@Override
+			public ResponseProjects invoke(String[] row) {
+				ResponseProjects rps = new ResponseProjects();
+				rps.user = null;
+
+				rps.leastTested = row[data.columnWithHeader(SurveyFormat.LEAST_TESTED_HEADER)];
+				rps.mostTested = row[data.columnWithHeader(SurveyFormat.MOST_TESTED_HEADER)];
+				rps.lowestBugCount = row[data.columnWithHeader(SurveyFormat.LOWEST_BUG_COUNT_HEADER)];
+				rps.highestBugCount = row[data.columnWithHeader(SurveyFormat.HIGHEST_BUG_COUNT_HEADER)];
+
+				if(row[data.columnWithHeader(SurveyFormat.RESPONSIBLE_FOR_QA)].equals("No")) {
+					rps.weight = 0.0f;
+				} else {
+					String buzzwords = row[data.columnWithHeader(SurveyFormat.BUZZWORDS)];
+					int nwords = StringHelpers.countOccurencesOfWords(buzzwords, SurveyFormat.BUZZWORD_ARRAY);
+					rps.weight = (float)nwords / SurveyFormat.BUZZWORD_ARRAY.length;
+				}
+				return rps;
+			}
+		};
+		return CsvData.toList(rowToRespProjs, data);
+	}
+
+	public static CsvData toCsv(List<ResponseProjects> rps) throws Exception {
+		String[] headers = new String[] {"user",
+				SurveyFormat.LEAST_TESTED_HEADER,
+				SurveyFormat.MOST_TESTED_HEADER,
+				SurveyFormat.LOWEST_BUG_COUNT_HEADER,
+				SurveyFormat.HIGHEST_BUG_COUNT_HEADER,
+				"weight"};
+		Transform<ResponseProjects, String[]> respProjToRow = new Transform<ResponseProjects, String[]>() {
+			@Override
+			public String[] invoke(ResponseProjects rp) {
+				return new String[] {rp.user == null ? "null" : rp.user,
+						rp.leastTested,
+						rp.mostTested,
+						rp.lowestBugCount,
+						rp.highestBugCount,
+						String.valueOf(rp.weight)};
+			}
+		};
+		return CsvData.fromList(headers, respProjToRow, rps);
+	}
 }

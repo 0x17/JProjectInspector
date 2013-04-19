@@ -1,8 +1,6 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey;
 
 import org.andreschnabel.jprojectinspector.evaluation.UserProjectCollector;
-import org.andreschnabel.jprojectinspector.metrics.survey.BugCountEstimation;
-import org.andreschnabel.jprojectinspector.metrics.survey.TestEffortEstimation;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
@@ -28,10 +26,10 @@ public class UserGuesser {
 
 			for(int row=0; row<responseData.rowCount(); row++) {
 				ResponseProjects rp = new ResponseProjects();
-				rp.lowestBugCount = responseData.getCellAt(row, BugCountEstimation.LOWEST_BUG_COUNT_HEADER);
-				rp.highestBugCount = responseData.getCellAt(row, BugCountEstimation.HIGHEST_BUG_COUNT_HEADER);
-				rp.leastTested = responseData.getCellAt(row, TestEffortEstimation.LEAST_TESTED_HEADER);
-				rp.mostTested = responseData.getCellAt(row, TestEffortEstimation.MOST_TESTED_HEADER);
+				rp.lowestBugCount = responseData.getCellAt(row, SurveyFormat.LOWEST_BUG_COUNT_HEADER);
+				rp.highestBugCount = responseData.getCellAt(row, SurveyFormat.HIGHEST_BUG_COUNT_HEADER);
+				rp.leastTested = responseData.getCellAt(row, SurveyFormat.LEAST_TESTED_HEADER);
+				rp.mostTested = responseData.getCellAt(row, SurveyFormat.MOST_TESTED_HEADER);
 				String user = UserGuesser.guessUserWithProjects(rp, userProjects);
 				responseData.setCellAt(row, "user", user);
 			}

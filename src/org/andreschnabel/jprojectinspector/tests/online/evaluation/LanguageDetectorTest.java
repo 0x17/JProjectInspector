@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.tests.online.evaluation;
 
 import java.util.List;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.LanguageDetector;
+import org.andreschnabel.jprojectinspector.scrapers.LanguageDetector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.junit.Test;

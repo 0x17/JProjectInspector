@@ -12,7 +12,7 @@ import java.util.List;
 public final class TapCandidatesRunner {
 
 	public static void main(String[] args) throws Exception {
-		List<Candidate> oldCandidates = CandidateLst.fromCsv(new File("data/FIRSTcandidates2000.csv")).candidates;
+		List<Candidate> oldCandidates = CandidateLst.fromCsv(new File("candidates2000.csv")).candidates;
 		List< Candidate > candidates = new LinkedList<Candidate>();
 		CandidateLst cl = new CandidateLst(candidates);
 		try {

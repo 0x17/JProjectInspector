@@ -14,10 +14,14 @@ public class UserGuesserTest {
 	@Test
 	public void testGuessUserWithProjects() {
 		List<Project> usrProjsLst = new ArrayList<Project>();
+
 		usrProjsLst.add(new Project("Hans", "a"));
 		usrProjsLst.add(new Project("Hans", "b"));
+
 		usrProjsLst.add(new Project("Peter", "b"));
+
 		ResponseProjects rp = new ResponseProjects("a", "b", "c", "d");
+
 		Assert.assertEquals("Hans", UserGuesser.guessUserWithProjects(rp, usrProjsLst));
 	}
 
