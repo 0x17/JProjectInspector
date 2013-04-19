@@ -26,7 +26,7 @@ public class FrontStats {
 		}
 
 		@Override
-		public float measure(Project p) throws Exception {
+		public double measure(Project p) throws Exception {
 			return statsForProject(p).nbranches;
 		}
 	}
@@ -48,7 +48,7 @@ public class FrontStats {
 		}
 
 		@Override
-		public float measure(Project p) throws Exception {
+		public double measure(Project p) throws Exception {
 			return statsForProject(p).nforks;
 		}
 	}
@@ -70,7 +70,7 @@ public class FrontStats {
 		}
 
 		@Override
-		public float measure(Project p) throws Exception {
+		public double measure(Project p) throws Exception {
 			return statsForProject(p).nstars;
 		}
 	}
@@ -92,7 +92,7 @@ public class FrontStats {
 		}
 
 		@Override
-		public float measure(Project p) throws Exception {
+		public double measure(Project p) throws Exception {
 			return statsForProject(p).nissues;
 		}
 	}
@@ -114,7 +114,7 @@ public class FrontStats {
 		}
 
 		@Override
-		public float measure(Project p) throws Exception {
+		public double measure(Project p) throws Exception {
 			return statsForProject(p).npullreqs;
 		}
 	}

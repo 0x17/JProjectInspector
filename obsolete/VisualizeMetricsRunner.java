@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey.runners;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.Benchmark;
+import org.andreschnabel.jprojectinspector.evaluation.Benchmark;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;

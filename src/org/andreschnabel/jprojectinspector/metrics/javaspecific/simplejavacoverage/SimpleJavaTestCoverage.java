@@ -8,7 +8,7 @@ import java.util.List;
 
 public class SimpleJavaTestCoverage implements OfflineMetric {
 
-	public static float determineMethodCoverage(File root) throws Exception {
+	public static Double determineMethodCoverage(File root) throws Exception {
 		List<String> projectMethodNames = new LinkedList<String>();
 		List<String> testedMethodNames = new LinkedList<String>();
 
@@ -26,8 +26,8 @@ public class SimpleJavaTestCoverage implements OfflineMetric {
 		testedMethodNames.removeAll(unknownMethodNames);
 
 		int numTestRefMethods = testedMethodNames.size();
-		if(numProjMethods == 0) return Float.NaN;
-		return (float) numTestRefMethods / numProjMethods;
+		if(numProjMethods == 0) return Double.NaN;
+		return (double) numTestRefMethods / numProjMethods;
 	}
 
 
@@ -42,7 +42,7 @@ public class SimpleJavaTestCoverage implements OfflineMetric {
 	}
 
 	@Override
-	public float measure(File repoRoot) throws Exception {
+	public double measure(File repoRoot) throws Exception {
 		return determineMethodCoverage(repoRoot);
 	}
 }

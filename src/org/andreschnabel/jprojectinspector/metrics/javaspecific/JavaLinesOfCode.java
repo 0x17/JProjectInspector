@@ -94,9 +94,9 @@ public class JavaLinesOfCode implements OfflineMetric {
 	}
 
 	@Override
-	public float measure(File repoRoot) throws Exception {
+	public double measure(File repoRoot) throws Exception {
 		int loc = countLocOfDir(repoRoot);
-		if(loc == 0) return Float.NaN;
-		else return (float)loc;
+		if(loc == 0) return Double.NaN;
+		else return (double)loc;
 	}
 }

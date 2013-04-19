@@ -8,30 +8,30 @@ import java.util.List;
 public class ProjectWithResults {
 	private final String[] resultHeaders;
 	public Project project;
-	public Float[] results;
-	public ProjectWithResults(Project project, String[] resultHeaders, Float[] results) {
+	public Double[] results;
+	public ProjectWithResults(Project project, String[] resultHeaders, Double[] results) {
 		this.resultHeaders = resultHeaders;
 		this.project = project;
 		this.results = results;
 	}
 
-	public float get(String metric) {
+	public Double get(String metric) {
 		for(int i=0; i< resultHeaders.length; i++) {
 			if(resultHeaders[i].equals(metric)) {
 				return results[i];
 			}
 		}
-		return Float.NaN;
+		return Double.NaN;
 	}
 
 	public static List<ProjectWithResults> fromCsv(final CsvData data) throws Exception {
 		Transform<String[], ProjectWithResults> rowToProjWithResults = new Transform<String[], ProjectWithResults>() {
 			@Override
 			public ProjectWithResults invoke(String[] sa) {
-				Float[] results = new Float[sa.length-2];
+				Double[] results = new Double[sa.length-2];
 				String[] resultHeaders = new String[results.length];
 				for(int i=0; i<results.length; i++) {
-					results[i] = Float.valueOf(sa[i+2]);
+					results[i] = Double.valueOf(sa[i+2]);
 					resultHeaders[i] = data.getHeaders()[i+2];
 				}
 				return new ProjectWithResults(new Project(sa[0], sa[1]), resultHeaders, results);

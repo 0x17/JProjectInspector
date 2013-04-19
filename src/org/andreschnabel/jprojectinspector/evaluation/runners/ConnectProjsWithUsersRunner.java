@@ -1,6 +1,6 @@
-package org.andreschnabel.jprojectinspector.evaluation.survey.runners;
+package org.andreschnabel.jprojectinspector.evaluation.runners;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.UserGuesser;
+import org.andreschnabel.jprojectinspector.evaluation.UserGuesser;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
@@ -35,7 +35,7 @@ public class ConnectProjsWithUsersRunner {
 					if(!ProjectDownloader.isProjectOnline(p))
 						return false;
 				}
-				return rps.user != null && !Float.isNaN(rps.weight) && rps.weight != 0.0f;
+				return rps.user != null && !Double.isNaN(rps.weight) && rps.weight != 0.0f;
 			}
 		}, responseProjectsList);
 

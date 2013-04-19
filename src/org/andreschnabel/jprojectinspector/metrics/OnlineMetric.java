@@ -14,6 +14,6 @@ public interface OnlineMetric {
 
 	public Category getCategory();
 
-	public float measure(Project p) throws Exception;
+	public double measure(Project p) throws Exception;
 
 }

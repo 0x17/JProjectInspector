@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.metrics.plugins;
+package org.andreschnabel.jprojectinspector.utilities.helpers;
 
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;

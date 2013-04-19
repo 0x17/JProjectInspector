@@ -12,9 +12,9 @@ public class MetricResultTableModel extends AbstractTableModel {
 	private final List<Project> projects;
 	private final List<String> metricNames;
 
-	private final Map<Project, Float[]> resultsCache = new HashMap<Project, Float[]>();
+	private final Map<Project, Double[]> resultsCache = new HashMap<Project, Double[]>();
 
-	public Map<Project, Float[]> getResults() {
+	public Map<Project, Double[]> getResults() {
 		return resultsCache;
 	}
 
@@ -23,7 +23,7 @@ public class MetricResultTableModel extends AbstractTableModel {
 		this.metricNames = metricNames;
 	}
 
-	public void addResultTupleToCache(Project p, Float[] resultTuple) {
+	public void addResultTupleToCache(Project p, Double[] resultTuple) {
 		resultsCache.put(p, resultTuple);
 	}
 
@@ -64,14 +64,14 @@ public class MetricResultTableModel extends AbstractTableModel {
 			case 1:
 				return p.repoName;
 			default:
-				float result;
+				Double result;
 				if(resultsCache.containsKey(p)) {
 					result = resultsCache.get(p)[columnIndex-2];
 				} else {
-					result = Float.NaN;
+					result = Double.NaN;
 				}
 
-				return Float.isNaN(result) ? "N/A" : String.valueOf(result);
+				return Double.isNaN(result) ? "N/A" : String.valueOf(result);
 		}
 	}
 }

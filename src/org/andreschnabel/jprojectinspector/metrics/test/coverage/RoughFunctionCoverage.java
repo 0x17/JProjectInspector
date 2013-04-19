@@ -2,6 +2,7 @@ package org.andreschnabel.jprojectinspector.metrics.test.coverage;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
+import org.andreschnabel.jprojectinspector.metrics.code.ClocResult;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers.IndexerRegistry;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
@@ -17,7 +18,7 @@ import java.util.Map;
 
 public class RoughFunctionCoverage implements OfflineMetric {
 
-	public static Map<String, Float> approxFunctionCoverage(File rootPath) throws Exception {
+	public static Map<String, Double> approxFunctionCoverage(File rootPath) throws Exception {
 		final Map<String, FunctionIndexer> indexerForExtension = IndexerRegistry.indexerForExtension;
 
 		final List<File> files = FileHelpers.filesInTree(rootPath);
@@ -26,7 +27,7 @@ public class RoughFunctionCoverage implements OfflineMetric {
 		List<List<String>> funcDeclsForKnownLangs = determineFunctionsForKnownLanguages(Mode.FunctionDeclarations, indexerForExtension, files, knownLangs);
 		List<List<String>> funcCallsForKnownLangs = determineFunctionsForKnownLanguages(Mode.FunctionCalls, indexerForExtension, files, knownLangs);
 
-		Map<String, Float> coverages = new HashMap<String, Float>();
+		Map<String, Double> coverages = new HashMap<String, Double>();
 
 		for(int i=0; i<knownLangs.size(); i++) {
 			String lang = knownLangs.get(i);
@@ -40,7 +41,7 @@ public class RoughFunctionCoverage implements OfflineMetric {
 			};
 			List<String> calledFuncs = Func.filter(wasCalled, funcDecls);
 
-			coverages.put(lang, funcDecls.isEmpty() ? 0.0f : (float)calledFuncs.size() / (float)funcDecls.size());
+			coverages.put(lang, funcDecls.isEmpty() ? 0.0f : (double)calledFuncs.size() / (double)funcDecls.size());
 		}
 
 		Predicate<File> unknownLang = new Predicate<File>() {
@@ -55,8 +56,8 @@ public class RoughFunctionCoverage implements OfflineMetric {
 
 		List<File> unknownLangFiles = FileHelpers.filesWithPredicateInTree(rootPath, unknownLang);
 		for(File f : unknownLangFiles) {
-			List<Cloc.ClocResult> res = Cloc.determineLinesOfCode(f.getParentFile(), f.getName());
-			int loc = Cloc.ClocResult.accumResults(res).codeLines;
+			List<ClocResult> res = Cloc.determineLinesOfCode(f.getParentFile(), f.getName());
+			int loc = ClocResult.accumResults(res).codeLines;
 
 			if(UnitTestDetector.isTest(f)) {
 				unknownLangTloc += loc;
@@ -65,7 +66,7 @@ public class RoughFunctionCoverage implements OfflineMetric {
 			}
 		}
 
-		coverages.put("unknown", unknownLangLoc == 0 ? 0.0f : unknownLangTloc / (float)unknownLangLoc);
+		coverages.put("unknown", unknownLangLoc == 0 ? 0.0f : unknownLangTloc / (double)unknownLangLoc);
 
 		return coverages;
 	}
@@ -81,8 +82,8 @@ public class RoughFunctionCoverage implements OfflineMetric {
 	}
 
 	@Override
-	public float measure(File repoRoot) throws Exception {
-		Map<String, Float> coverages = approxFunctionCoverage(repoRoot);
+	public double measure(File repoRoot) throws Exception {
+		Map<String, Double> coverages = approxFunctionCoverage(repoRoot);
 		String firstKey = null;
 		for(String key : coverages.keySet()) {
 			firstKey = key;

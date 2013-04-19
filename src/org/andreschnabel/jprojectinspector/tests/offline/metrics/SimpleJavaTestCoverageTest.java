@@ -12,7 +12,7 @@ public class SimpleJavaTestCoverageTest {
 
 	@Test
 	public void testDetermineMethodCoverage() throws Exception {
-		float coverage = SimpleJavaTestCoverage.determineMethodCoverage(new File(TestCommon.TEST_SRC_DIRECTORY));
+		Double coverage = SimpleJavaTestCoverage.determineMethodCoverage(new File(TestCommon.TEST_SRC_DIRECTORY));
 		assertEquals(0.4f, coverage, TestCommon.DELTA);
 	}
 

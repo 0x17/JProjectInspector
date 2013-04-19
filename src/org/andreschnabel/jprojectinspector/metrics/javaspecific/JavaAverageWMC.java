@@ -27,7 +27,7 @@ public class JavaAverageWMC implements OfflineMetric {
 	}
 
 	@Override
-	public float measure(File repoRoot) throws Exception {
+	public double measure(File repoRoot) throws Exception {
 		return determineAverageWMC(repoRoot);
 	}
 
@@ -36,10 +36,10 @@ public class JavaAverageWMC implements OfflineMetric {
 		int count;
 	}
 
-	public float determineAverageWMC(File root) throws Exception {
+	public Double determineAverageWMC(File root) throws Exception {
 		Aux a = new Aux();
 		determineAverageWMCforDir(root, a);
-		return (float) a.ccSum / a.count;
+		return (double) a.ccSum / a.count;
 	}
 
 	private void determineAverageWMCforDir(File root, Aux a) throws Exception {

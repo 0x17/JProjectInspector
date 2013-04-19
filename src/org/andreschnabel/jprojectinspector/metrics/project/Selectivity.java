@@ -70,7 +70,7 @@ public class Selectivity implements OnlineMetric {
 	}
 
 	@Override
-	public float measure(Project p) throws Exception {
+	public double measure(Project p) throws Exception {
 		return getSelectivity(p);
 	}
 }

@@ -13,18 +13,18 @@ import java.util.Map;
 
 public class JavaClassCoupling implements OfflineMetric {
 
-	public float getAverageCoupling(File root) throws Exception {
+	public double getAverageCoupling(File root) throws Exception {
 		Map<String, File> classInFile = new HashMap<String, File>();
 		List<String> classNames = listClassNamesInProject(root, classInFile);
-		if(classNames == null) return 0.0f;
+		if(classNames == null) return 0.0;
 		int classCount = classNames.size();
 		int couplingCount = 0;
 		for(String className : classNames) {
 			couplingCount += referencedClasses(className, classInFile).size();
 		}
 		if(classCount == 0)
-			return Float.NaN;
-		else return (float) couplingCount / classCount;
+			return Double.NaN;
+		else return (double) couplingCount / classCount;
 	}
 
 	public List<String> listClassNamesInFile(File f, Map<String, File> classInFile) throws Exception {
@@ -85,7 +85,7 @@ public class JavaClassCoupling implements OfflineMetric {
 	}
 
 	@Override
-	public float measure(File repoRoot) throws Exception {
+	public double measure(File repoRoot) throws Exception {
 		return getAverageCoupling(repoRoot);
 	}
 }

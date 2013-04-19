@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class MetricBarChart {
 
-	public static JFreeChart newInstance(String title, Map<Project, Float[]> results, int col) {
+	public static JFreeChart newInstance(String title, Map<Project, Double[]> results, int col) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for(Project p : results.keySet()) {
 			dataset.setValue(results.get(p)[col], p.toString(), p.toString());

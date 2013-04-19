@@ -2,6 +2,7 @@ package org.andreschnabel.jprojectinspector.metrics.test;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
+import org.andreschnabel.jprojectinspector.metrics.code.ClocResult;
 import org.andreschnabel.jprojectinspector.utilities.functional.BinaryOperator;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 
@@ -16,9 +17,9 @@ public class TestLinesOfCode implements OfflineMetric {
 			@Override
 			public Integer invoke(Integer accum, File testfile) {
 				try {
-					List<Cloc.ClocResult> results = Cloc.determineLinesOfCode(testfile.getParentFile(), testfile.getName());
+					List<ClocResult> results = Cloc.determineLinesOfCode(testfile.getParentFile(), testfile.getName());
 					if(results.size() >= 1) {
-						accum += Cloc.ClocResult.accumResults(results).codeLines;
+						accum += ClocResult.accumResults(results).codeLines;
 					}
 				} catch(Exception e) {
 					e.printStackTrace();
@@ -40,7 +41,7 @@ public class TestLinesOfCode implements OfflineMetric {
 	}
 
 	@Override
-	public float measure(File repoRoot) throws Exception {
+	public double measure(File repoRoot) throws Exception {
 		return countTestLocHeuristic(repoRoot);
 	}
 }

@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.evaluation.survey.runners;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.DeltaCalculator;
+import org.andreschnabel.jprojectinspector.evaluation.DeltaCalculator;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;

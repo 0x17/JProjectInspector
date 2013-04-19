@@ -30,7 +30,7 @@ public final class ContributorsOnline implements OnlineMetric {
 	}
 
 	@Override
-	public float measure(Project p) throws Exception {
+	public double measure(Project p) throws Exception {
 		return countNumContributors(p);
 	}
 }

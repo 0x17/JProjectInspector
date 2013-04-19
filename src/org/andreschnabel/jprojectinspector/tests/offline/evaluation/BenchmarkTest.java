@@ -1,10 +1,11 @@
 package org.andreschnabel.jprojectinspector.tests.offline.evaluation;
 
 import junit.framework.Assert;
-import org.andreschnabel.jprojectinspector.evaluation.survey.Benchmark;
-import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
+import org.andreschnabel.jprojectinspector.evaluation.Benchmark;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 import org.junit.Test;
@@ -23,13 +24,13 @@ public class BenchmarkTest {
 			}
 		};
 		List<Project> projs = Func.map(numToProj, Func.countUpTo(4));
-		Transform<Integer, Float> tofloat = new Transform<Integer, Float>() {
+		Transform<Integer, Double> toDouble = new Transform<Integer, Double>() {
 			@Override
-			public Float invoke(Integer i) {
-				return Float.valueOf(i);
+			public Double invoke(Integer i) {
+				return Double.valueOf(i);
 			}
 		};
-		List<Float> predVals = Func.map(tofloat, Func.countUpTo(4));
+		List<Double> predVals = Func.map(toDouble, Func.countUpTo(4));
 		int lpi = Benchmark.getLowestPredictionIndex(projs, predVals);
 		Assert.assertEquals(0, lpi);
 	}
@@ -43,13 +44,13 @@ public class BenchmarkTest {
 			}
 		};
 		List<Project> projs = Func.map(numToProj, Func.countUpTo(4));
-		Transform<Integer, Float> tofloat = new Transform<Integer, Float>() {
+		Transform<Integer, Double> toDouble = new Transform<Integer, Double>() {
 			@Override
-			public Float invoke(Integer i) {
-				return Float.valueOf(i);
+			public Double invoke(Integer i) {
+				return Double.valueOf(i);
 			}
 		};
-		List<Float> predVals = Func.map(tofloat, Func.countUpTo(4));
+		List<Double> predVals = Func.map(toDouble, Func.countUpTo(4));
 		int hpi = Benchmark.getHighestPredIndex(projs, predVals);
 		Assert.assertEquals(3, hpi);
 	}
@@ -74,12 +75,12 @@ public class BenchmarkTest {
 				}
 
 				@Override
-				public float testEffortPredictionMeasure(ProjectWithResults m) {
+				public double testEffortPredictionMeasure(ProjectWithResults m) {
 					return m.get("testloc");
 				}
 
 				@Override
-				public float bugCountPredictionMeasure(ProjectWithResults m) {
+				public double bugCountPredictionMeasure(ProjectWithResults m) {
 					return m.get("loc");
 				}
 			};
@@ -92,9 +93,9 @@ public class BenchmarkTest {
 		List<ProjectWithResults> pml = testData.getPml();
 		List<ResponseProjects> rpl = testData.getRpl();
 		Benchmark.PredictionTypes type = Benchmark.PredictionTypes.BugCount;
-		List<Float> vals = Benchmark.calcPredictionValues(predMethods, type, pml, rpl.get(0).toProjectList());
-		Assert.assertEquals(1000.0f, vals.get(0));
-		Assert.assertEquals(400.0f, vals.get(1));
+		List<Double> vals = Benchmark.calcPredictionValues(predMethods, type, pml, rpl.get(0).toProjectList());
+		Assert.assertEquals(1000.0, vals.get(0), TestCommon.DELTA);
+		Assert.assertEquals(400.0, vals.get(1), TestCommon.DELTA);
 	}
 
 	@Test
@@ -124,11 +125,11 @@ public class BenchmarkTest {
 
 			Project p1 = new Project("owner", "repo1");
 
-			Float[] results = new Float[] {400.0f, 200.0f};
+			Double[] results = new Double[] {400.0, 200.0};
 			ProjectWithResults pm1 = new ProjectWithResults(p1, resultHeaders, results);
 			pml.add(pm1);
 
-			results = new Float[] {1000.0f, 400.0f};
+			results = new Double[] {1000.0, 400.0};
 			Project p2 = new Project("owner", "repo2");
 			ProjectWithResults pm2 = new ProjectWithResults(p2, resultHeaders, results);
 			pml.add(pm2);

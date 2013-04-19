@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.evaluation.survey;
+package org.andreschnabel.jprojectinspector.evaluation;
 
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
 import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class MetricsCollector {
 
-	public static Float[] gatherMetricsForProject(List<String> metricNames, Project p) {
-		Float[] results = new Float[metricNames.size()];
+	public static Double[] gatherMetricsForProject(List<String> metricNames, Project p) {
+		Double[] results = new Double[metricNames.size()];
 
 		Predicate<String> isOfflineMetric = new Predicate<String>() {
 			@Override
@@ -38,7 +38,7 @@ public class MetricsCollector {
 		for(int i = 0; i < metricNames.size(); i++) {
 			String metricName = metricNames.get(i);
 			MetricType type = MetricsRegistry.getTypeOfMetric(metricName);
-			float result = Float.NaN;
+			Double result = Double.NaN;
 
 			try {
 				switch(type) {

@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.evaluation.survey.runners;
+package org.andreschnabel.jprojectinspector.evaluation.runners;
 
 import org.andreschnabel.jprojectinspector.evaluation.UserProjectCollector;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;

@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.Benchmark;
+import org.andreschnabel.jprojectinspector.evaluation.Benchmark;
+import org.andreschnabel.jprojectinspector.evaluation.SurveyFormat;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
@@ -14,6 +15,8 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +25,7 @@ import java.util.Map;
 
 public class BenchmarkPanel extends PanelWithParent {
 	private static final long serialVersionUID = 1L;
+
 	private JTextField equationField;
 	private JLabel estimationsLbl;
 	private JLabel metricResultsLbl;
@@ -33,6 +37,14 @@ public class BenchmarkPanel extends PanelWithParent {
 	private JLabel numEstimationsLbl;
 	private JLabel numCorrLbl;
 	private JLabel percCorrLbl;
+	private JComboBox modeCombo;
+	private BenchmarkMode mode;
+	private JLabel weightedNumCorrLbl;
+
+	private static enum BenchmarkMode {
+		TestEffort,
+		BugCount
+	}
 
 	public BenchmarkPanel() {
 		initTopPane();
@@ -41,7 +53,7 @@ public class BenchmarkPanel extends PanelWithParent {
 
 	private void initTopPane() {
 		setLayout(new BorderLayout());
-		JPanel topPane = new JPanel(new GridLayout(8, 2));
+		JPanel topPane = new JPanel(new GridLayout(9, 2));
 
 		initResultSelectionPanel(topPane);
 		initEstimationsSelectionPanel(topPane);
@@ -49,6 +61,16 @@ public class BenchmarkPanel extends PanelWithParent {
 		topPane.add(new JLabel("Variables:"));
 		variablesLbl = new JLabel();
 		topPane.add(variablesLbl);
+
+		topPane.add(new JLabel("Mode: "));
+		modeCombo = new JComboBox(new String[]{"Test effort estimation", "Bug count estimation"});
+		modeCombo.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent itemEvent) {
+				mode = modeCombo.getSelectedIndex() == 0 ? BenchmarkMode.TestEffort : BenchmarkMode.BugCount;
+			}
+		});
+		topPane.add(modeCombo);
 
 		topPane.add(new JLabel("Prediction equation:"));
 		equationField = new JTextField("0");
@@ -59,9 +81,9 @@ public class BenchmarkPanel extends PanelWithParent {
 		numCorrLbl = new JLabel("0");
 		topPane.add(numCorrLbl);
 
-
 		topPane.add(new JLabel("Weighted:"));
-		topPane.add(new JLabel("0"));
+		weightedNumCorrLbl = new JLabel("0");
+		topPane.add(weightedNumCorrLbl);
 
 		topPane.add(new JLabel("Total number of estimations:"));
 		numEstimationsLbl = new JLabel("0");
@@ -74,20 +96,24 @@ public class BenchmarkPanel extends PanelWithParent {
 		add(topPane, BorderLayout.NORTH);
 	}
 
+	private static String selectCsvMessage(String colNames, int width) {
+		return "<html><div style=\"width:"+width+"px;\">Select CSV file with column headers: " + colNames +"</div></html>";
+	}
+
 	private void initEstimationsSelectionPanel(JPanel topPane) {
 		topPane.add(new JLabel("Estimations:"));
-		JPanel esp = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel esp = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		topPane.add(esp);
-		estimationsLbl = new JLabel("Select file!");
+		estimationsLbl = new JLabel(selectCsvMessage(SurveyFormat.ESTIMATION_COLUMN_HEADERS, (int) (topPane.getWidth()/2.0f)));
 		esp.add(estimationsLbl);
 		esp.add(getBrowseButton(BenchInputType.Estimations));
 	}
 
 	private void initResultSelectionPanel(JPanel topPane) {
 		topPane.add(new JLabel("Metric results:"));
-		JPanel mrp = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel mrp = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		topPane.add(mrp);
-		metricResultsLbl = new JLabel("Select file!");
+		metricResultsLbl = new JLabel(selectCsvMessage(SurveyFormat.METRIC_RESULTS_COLUMN_HEADERS, (int) (topPane.getWidth()/2.0f)));
 		mrp.add(metricResultsLbl);
 		mrp.add(getBrowseButton(BenchInputType.MetricResults));
 	}
@@ -103,7 +129,7 @@ public class BenchmarkPanel extends PanelWithParent {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				try {
-					final CsvData data = GuiHelpers.loadCsvDialog(new File("."));
+					final CsvData data = GuiHelpers.loadCsvDialog(new File("data/benchmark"));
 					if(data == null) {
 						return;
 					}
@@ -150,6 +176,9 @@ public class BenchmarkPanel extends PanelWithParent {
 	}
 
 	private void initTablePane() {
+		// Je nach modus (testeffort/bugcount)
+		// Jeder Nutzer eine Reihe
+		// nutzername, least, most, leastpred, mostpred <- pred jeweils rot falls falsch und grün, falls richtig.
 		JPanel tablePane = new JPanel();
 		tablePane.add(new JTable());
 		add(tablePane, BorderLayout.CENTER);
@@ -177,6 +206,10 @@ public class BenchmarkPanel extends PanelWithParent {
 			return;
 		}
 
+		if(!EquationHelpers.validateEquation(variablesLst, equationField.getText())) {
+			return;
+		}
+
 		Benchmark.PredictionMethods predMethods = new Benchmark.PredictionMethods() {
 			@Override
 			public String getName() {
@@ -184,20 +217,20 @@ public class BenchmarkPanel extends PanelWithParent {
 			}
 
 			@Override
-			public float testEffortPredictionMeasure(ProjectWithResults m) {
+			public double testEffortPredictionMeasure(ProjectWithResults m) {
 				return common(m);
 			}
 
 			@Override
-			public float bugCountPredictionMeasure(ProjectWithResults m) {
+			public double bugCountPredictionMeasure(ProjectWithResults m) {
 				return common(m);
 			}
 
-			private float common(ProjectWithResults m) {
+			private double common(ProjectWithResults m) {
 				Map<String, Object> bindings = resultsToBindings(m);
 				Object result = EquationHelpers.parseEquation(bindings, equationField.getText());
 				if(result != null) {
-					return (Float)result;
+					return (Double)result;
 				}
 				return 0;
 			}
@@ -206,15 +239,31 @@ public class BenchmarkPanel extends PanelWithParent {
 				Map<String, Object> bindings = new HashMap<String, Object>();
 				String[] headers = m.getResultHeaders();
 				for(int i=0; i<m.results.length; i++) {
-					bindings.put(headers[i+2], m.results[i]);
+					bindings.put(headers[i], m.results[i]);
 				}
 				return bindings;
 			}
 		};
 		try {
 			Benchmark.Quality q = Benchmark.countCorrectPredictions(predMethods, metricsData, respProjs);
-			numCorrLbl.setText(""+q.bcCorrect);
-			percCorrLbl.setText("" + q.bcCorrect/(float)(respProjs.size()*2) + "%");
+
+			int ncorr;
+			double wncorr;
+			switch(mode) {
+				default:
+				case TestEffort:
+					ncorr = q.teCorrect;
+					wncorr = q.teWeightedCorrect;
+					break;
+				case BugCount:
+					ncorr = q.bcCorrect;
+					wncorr = q.bcWeightedCorrect;
+					break;
+			}
+
+			numCorrLbl.setText(""+ncorr);
+			weightedNumCorrLbl.setText(""+wncorr);
+			percCorrLbl.setText("" + ncorr/(double)(respProjs.size()*2) + "%");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

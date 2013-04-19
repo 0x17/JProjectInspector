@@ -1,6 +1,6 @@
-package org.andreschnabel.jprojectinspector.evaluation.survey.runners;
+package org.andreschnabel.jprojectinspector.evaluation.runners;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.LanguageDistribution;
+import org.andreschnabel.jprojectinspector.evaluation.LanguageDistribution;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.model.Project;

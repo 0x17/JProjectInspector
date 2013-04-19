@@ -44,25 +44,25 @@ public class MetricsRegistry {
 				offlineMetrics.containsKey(metric) ? MetricType.Offline : MetricType.Survey;
 	}
 
-	public static float measureOnlineMetric(String metric, Project p) throws Exception {
+	public static Double measureOnlineMetric(String metric, Project p) throws Exception {
 		return onlineMetrics.get(metric).measure(p);
 	}
 
-	public static float measureOfflineMetric(String metric, File repoPath) throws Exception {
+	public static Double measureOfflineMetric(String metric, File repoPath) throws Exception {
 		return offlineMetrics.get(metric).measure(repoPath);
 	}
 
 
-	public static float measureSurveyMetric(String metric, Project p) {
+	public static double measureSurveyMetric(String metric, Project p) {
 		Estimation est = surveyMetrics.get(metric).measure(p);
 		switch(est) {
 			case None:
 			default:
-				return Float.NaN;
+				return Double.NaN;
 			case Lowest:
-				return -1.0f;
+				return -1.0;
 			case Highest:
-				return 1.0f;
+				return 1.0;
 		}
 	}
 

@@ -33,7 +33,7 @@ public class JavaTestLinesOfCode implements OfflineMetric {
 	}
 
 	@Override
-	public float measure(File repoRoot) throws Exception {
+	public double measure(File repoRoot) throws Exception {
 		Predicate<File> isJava = new Predicate<File>() {
 			@Override
 			public boolean invoke(File f) {
@@ -41,7 +41,7 @@ public class JavaTestLinesOfCode implements OfflineMetric {
 			}
 		};
 
-		if(!Func.contains(isJava, FileHelpers.filesInTree(repoRoot))) return Float.NaN;
+		if(!Func.contains(isJava, FileHelpers.filesInTree(repoRoot))) return Double.NaN;
 
 		return countJavaTestLocOfDir(repoRoot);
 	}

@@ -1,6 +1,13 @@
 package org.andreschnabel.jprojectinspector.tests.offline.metrics;
 
-import static org.junit.Assert.assertEquals;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaClassCoupling;
+import org.andreschnabel.jprojectinspector.tests.TestCommon;
+import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.JavaSourceHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.util.HashMap;
@@ -8,14 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.andreschnabel.jprojectinspector.tests.TestCommon;
-import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaClassCoupling;
-import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.JavaSourceHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class ClassCouplingTest {
 
@@ -58,8 +58,8 @@ public class ClassCouplingTest {
 
 	@Test
 	public void testGetAverageCoupling() throws Exception {
-		float actualAvgCoupling = cc.getAverageCoupling(new File(TestCommon.TEST_SRC_DIRECTORY));
-		float expectedAvgCoupling = 3.0f / 5.0f;
+		Double actualAvgCoupling = cc.getAverageCoupling(new File(TestCommon.TEST_SRC_DIRECTORY));
+		Double expectedAvgCoupling = 3.0 / 5.0;
 		assertEquals(expectedAvgCoupling, actualAvgCoupling, TestCommon.DELTA);
 	}
 }

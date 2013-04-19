@@ -4,6 +4,7 @@ import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.helpers.AsmHelpers;
 
 import java.io.File;
 import java.net.URL;

@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.model.survey;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.SurveyFormat;
+import org.andreschnabel.jprojectinspector.evaluation.SurveyFormat;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
@@ -24,13 +24,13 @@ public class ResponseProjects {
 	public String lowestBugCount;
 	public String highestBugCount;
 
-	public float weight;
+	public Double weight;
 
 	public ResponseProjects(String leastTested, String mostTested, String lowestBugCount, String highestBugCount) {
-		this(null, leastTested, mostTested, lowestBugCount, highestBugCount, Float.NaN);
+		this(null, leastTested, mostTested, lowestBugCount, highestBugCount, Double.NaN);
 	}
 	
-	public ResponseProjects(String user, String leastTested, String mostTested, String lowestBugCount, String highestBugCount, float weight) {
+	public ResponseProjects(String user, String leastTested, String mostTested, String lowestBugCount, String highestBugCount, Double weight) {
 		this.user = user;
 		this.leastTested = leastTested;
 		this.mostTested = mostTested;
@@ -117,11 +117,11 @@ public class ResponseProjects {
 				rps.highestBugCount = row[data.columnWithHeader(SurveyFormat.HIGHEST_BUG_COUNT_HEADER)];
 
 				if(row[data.columnWithHeader(SurveyFormat.RESPONSIBLE_FOR_QA)].equals("No")) {
-					rps.weight = 0.0f;
+					rps.weight = 0.0;
 				} else {
 					String buzzwords = row[data.columnWithHeader(SurveyFormat.BUZZWORDS)];
 					int nwords = StringHelpers.countOccurencesOfWords(buzzwords, SurveyFormat.BUZZWORD_ARRAY);
-					rps.weight = (float)nwords / SurveyFormat.BUZZWORD_ARRAY.length;
+					rps.weight = (double)nwords / SurveyFormat.BUZZWORD_ARRAY.length;
 				}
 				return rps;
 			}

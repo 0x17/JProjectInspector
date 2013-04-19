@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.evaluation.survey;
+package org.andreschnabel.jprojectinspector.evaluation;
 
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.Project;
@@ -25,16 +25,16 @@ public class DeltaCalculator {
 		return Func.find(isProj, pml);
 	}
 
-	public static List<Float[]> calculateDeltas(List<ResponseProjects> rpl, final List<ProjectWithResults> pml) {
-		Transform<ResponseProjects, Float[]> responseProjToDeltas = new Transform<ResponseProjects, Float[]>() {
+	public static List<Double[]> calculateDeltas(List<ResponseProjects> rpl, final List<ProjectWithResults> pml) {
+		Transform<ResponseProjects, Double[]> responseProjToDeltas = new Transform<ResponseProjects, Double[]>() {
 			@Override
-			public Float[] invoke(ResponseProjects rp) {
+			public Double[] invoke(ResponseProjects rp) {
 				ProjectWithResults highBugMetrics = metricsForProject(new Project(rp.user, rp.highestBugCount), pml);
 				ProjectWithResults lowBugMetrics = metricsForProject(new Project(rp.user, rp.lowestBugCount), pml);
 				ProjectWithResults highTestMetrics = metricsForProject(new Project(rp.user, rp.mostTested), pml);
 				ProjectWithResults lowTestMetrics = metricsForProject(new Project(rp.user, rp.leastTested), pml);
 
-				Float[] deltas = new Float[highBugMetrics.results.length];
+				Double[] deltas = new Double[highBugMetrics.results.length];
 
 				if(highTestMetrics != null && lowTestMetrics != null) {
 					for(int i=0; i<deltas.length; i++) {

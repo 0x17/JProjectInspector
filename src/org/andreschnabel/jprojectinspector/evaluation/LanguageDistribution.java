@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.evaluation.survey;
+package org.andreschnabel.jprojectinspector.evaluation;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;

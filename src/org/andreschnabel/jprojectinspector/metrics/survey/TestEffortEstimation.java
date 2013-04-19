@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.survey;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.SurveyFormat;
+import org.andreschnabel.jprojectinspector.evaluation.SurveyFormat;
 import org.andreschnabel.jprojectinspector.metrics.SurveyMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 

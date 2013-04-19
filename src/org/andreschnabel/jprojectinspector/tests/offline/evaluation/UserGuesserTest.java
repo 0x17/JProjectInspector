@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.tests.offline.evaluation;
 
 import junit.framework.Assert;
-import org.andreschnabel.jprojectinspector.evaluation.survey.UserGuesser;
+import org.andreschnabel.jprojectinspector.evaluation.UserGuesser;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.junit.Test;

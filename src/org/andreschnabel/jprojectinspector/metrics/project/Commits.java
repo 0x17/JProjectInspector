@@ -18,7 +18,7 @@ public class Commits implements OfflineMetric {
 	}
 
 	@Override
-	public float measure(File repoRoot) throws Exception {
+	public double measure(File repoRoot) throws Exception {
 		return GitHelpers.numCommits(repoRoot);
 	}
 }

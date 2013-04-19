@@ -1,7 +1,7 @@
-package org.andreschnabel.jprojectinspector.evaluation.survey.runners;
+package org.andreschnabel.jprojectinspector.evaluation.runners;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.Benchmark;
-import org.andreschnabel.jprojectinspector.evaluation.survey.PredictionCandidates;
+import org.andreschnabel.jprojectinspector.evaluation.Benchmark;
+import org.andreschnabel.jprojectinspector.evaluation.PredictionCandidates;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;

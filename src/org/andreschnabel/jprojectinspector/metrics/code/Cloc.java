@@ -24,38 +24,12 @@ public class Cloc implements OfflineMetric {
 	}
 
 	@Override
-	public float measure(File repoRoot) throws Exception {
+	public double measure(File repoRoot) throws Exception {
 		return ClocResult.accumResults(determineLinesOfCode(repoRoot)).codeLines;
 	}
 
 	public static List<ClocResult> determineLinesOfCode(File path) throws Exception {
 		return determineLinesOfCode(path, path.getPath());
-	}
-
-	public static class ClocResult {		
-		public String language;
-		public int fileCount;
-		public int blankLines;
-		public int commentLines;
-		public int codeLines;
-
-		@Override
-		public String toString() {
-			return "ClocResult [language=" + language + ", fileCount=" + fileCount + ", blankLines=" + blankLines
-				+ ", commentLines=" + commentLines + ", codeLines=" + codeLines + "]";
-		}
-
-		public static ClocResult accumResults(List<ClocResult> results) {
-			ClocResult accum = new ClocResult();
-			accum.language = "All";
-			for(ClocResult result : results) {
-				accum.codeLines += result.codeLines;
-				accum.blankLines += result.blankLines;
-				accum.commentLines += result.commentLines;
-				accum.fileCount += result.fileCount;
-			}
-			return accum;
-		}
 	}
 
 	public static List<ClocResult> determineLinesOfCode(File rootPath, String targetName) throws Exception {

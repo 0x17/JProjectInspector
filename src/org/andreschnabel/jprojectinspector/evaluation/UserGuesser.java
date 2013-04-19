@@ -1,6 +1,5 @@
-package org.andreschnabel.jprojectinspector.evaluation.survey;
+package org.andreschnabel.jprojectinspector.evaluation;
 
-import org.andreschnabel.jprojectinspector.evaluation.UserProjectCollector;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;

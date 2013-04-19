@@ -1,6 +1,6 @@
-package org.andreschnabel.jprojectinspector.evaluation.survey.runners;
+package org.andreschnabel.jprojectinspector.evaluation.runners;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.MetricsCollector;
+import org.andreschnabel.jprojectinspector.evaluation.MetricsCollector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
@@ -22,15 +22,15 @@ public class CollectMetricsForProjectsInResponsesRunner {
 	public static List<ProjectWithResults> collectMetrics(final List<String> metricNames) throws Exception {
 		final String[] metricNamesArray = metricNames.toArray(new String[]{});
 		final List<Project> projects = Project.projectListFromCsv(CsvHelpers.parseCsv("data/KandidatenProjekteUmfrage1.csv"));
-		List<Float[]> resultsList = Func.map(new Transform<Project, Float[]>() {
+		List<Double[]> resultsList = Func.map(new Transform<Project, Double[]>() {
 			@Override
-			public Float[] invoke(Project p) {
+			public Double[] invoke(Project p) {
 				return MetricsCollector.gatherMetricsForProject(metricNames, p);
 			}
 		},projects);
-		List<ProjectWithResults> projectWithResultsList = Func.mapi(new IndexedTransform<Float[], ProjectWithResults>() {
+		List<ProjectWithResults> projectWithResultsList = Func.mapi(new IndexedTransform<Double[], ProjectWithResults>() {
 			@Override
-			public ProjectWithResults invoke(int i, Float[] results) {
+			public ProjectWithResults invoke(int i, Double[] results) {
 				return new ProjectWithResults(projects.get(i), metricNamesArray, results);
 			}
 		}, resultsList);

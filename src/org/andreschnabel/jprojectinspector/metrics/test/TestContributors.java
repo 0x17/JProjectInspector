@@ -30,7 +30,7 @@ public final class TestContributors implements OfflineMetric {
 	}
 
 	@Override
-	public float measure(File repoRoot) throws Exception {
+	public double measure(File repoRoot) throws Exception {
 		return numTestContribs(repoRoot);
 	}
 }

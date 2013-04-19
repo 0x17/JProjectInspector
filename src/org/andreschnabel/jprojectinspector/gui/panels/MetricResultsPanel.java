@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
-import org.andreschnabel.jprojectinspector.evaluation.survey.MetricsCollector;
+import org.andreschnabel.jprojectinspector.evaluation.MetricsCollector;
 import org.andreschnabel.jprojectinspector.gui.windows.FreeChartWindow;
 import org.andreschnabel.jprojectinspector.gui.freechart.MetricBarChart;
 import org.andreschnabel.jprojectinspector.gui.tables.MetricResultTableModel;
@@ -23,10 +23,10 @@ public class MetricResultsPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private AsyncTaskBatch<Float[]> batch;
+	private AsyncTaskBatch<Double[]> batch;
 	private JTable resultTable;
 
-	public AsyncTaskBatch<Float[]> getBatch() { return batch; }
+	public AsyncTaskBatch<Double[]> getBatch() { return batch; }
 
 	public MetricResultsPanel(CsvData results) throws Exception {
 		List<Project> projects = Project.projectListFromCsv(results);
@@ -47,9 +47,9 @@ public class MetricResultsPanel extends JPanel {
 	private void addResultsFromCsv(MetricResultTableModel mrtm, CsvData results) {
 		for(int i=0; i<results.rowCount(); i++) {
 			String[] row = results.getRow(i);
-			Float[] vals = new Float[results.columnCount()-2];
+			Double[] vals = new Double[results.columnCount()-2];
 			for(int j=0; j<vals.length; j++) {
-				vals[j] = Float.valueOf(row[j+2]);
+				vals[j] = Double.valueOf(row[j+2]);
 			}
 			mrtm.addResultTupleToCache(new Project(row[0], row[1]), vals);
 		}
@@ -78,7 +78,7 @@ public class MetricResultsPanel extends JPanel {
 		exportBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				Map<Project, Float[]> results = mrtm.getResults();
+				Map<Project, Double[]> results = mrtm.getResults();
 
 				List<String[]> ownerRepoMetricsRows = new ArrayList<String[]>(results.keySet().size());
 
@@ -94,7 +94,7 @@ public class MetricResultsPanel extends JPanel {
 				ownerRepoMetricsRows.add(headers);
 
 				for(Project p : results.keySet()) {
-					Float[] result = results.get(p);
+					Double[] result = results.get(p);
 
 					String[] row = new String[ncols];
 
@@ -155,17 +155,17 @@ public class MetricResultsPanel extends JPanel {
 	}
 
 	private void initAndExecTaskBatch(List<Project> projects, final List<String> metricNames, final MetricResultTableModel mrtm) {
-		batch = new AsyncTaskBatch<Float[]>(projects.size());
+		batch = new AsyncTaskBatch<Double[]>(projects.size());
 		for(final Project p : projects) {
-			batch.add(new AsyncTask<Float[]>() {
+			batch.add(new AsyncTask<Double[]>() {
 				@Override
-				public void onFinished(Float[] results) {
+				public void onFinished(Double[] results) {
 					mrtm.addResultTupleToCache(p, results);
 					resultTable.updateUI();
 				}
 
 				@Override
-				public Float[] doInBackground() {
+				public Double[] doInBackground() {
 					return MetricsCollector.gatherMetricsForProject(metricNames, p);
 				}
 			});
