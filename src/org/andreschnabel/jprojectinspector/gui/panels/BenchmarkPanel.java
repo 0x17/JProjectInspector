@@ -45,6 +45,8 @@ public class BenchmarkPanel extends PanelWithParent {
 	private BenchmarkTableModel benchmarkTableModel = new BenchmarkTableModel();
 	private JTable benchmarkTable = new JTable(benchmarkTableModel);
 
+	private volatile boolean updating;
+
 	public BenchmarkPanel() {
 		initTopPane();
 		initTablePane();
@@ -202,6 +204,10 @@ public class BenchmarkPanel extends PanelWithParent {
 	}
 
 	private void eqtnChanged() {
+		if(updating) {
+			return;
+		}
+
 		if(respProjs == null || metricsData == null) {
 			return;
 		}
@@ -209,6 +215,8 @@ public class BenchmarkPanel extends PanelWithParent {
 		if(!EquationHelpers.validateEquation(variablesLst, equationField.getText())) {
 			return;
 		}
+
+		updating = true;
 
 		Benchmark.PredictionMethods predMethods = new Benchmark.PredictionMethods() {
 			@Override
@@ -271,6 +279,8 @@ public class BenchmarkPanel extends PanelWithParent {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+
+		updating = false;
 	}
 
 	private void updateTable(Benchmark.Quality q) {

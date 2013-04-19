@@ -30,11 +30,19 @@ public class Benchmark {
 		List<String[]> bcPredictions = new LinkedList<String[]>();
 
 		for(ResponseProjects rp : rpl) {
-			if(rp.user == null) continue;
+			if(rp.user == null) {
+				tePredictions.add(new String[] {"N/A", "N/A"});
+				bcPredictions.add(new String[] {"N/A", "N/A"});
+				continue;
+			}
 
 			List<Project> projs = rp.toProjectList();
 
-			if(skipInvalidProjects(pml, projs)) continue;
+			if(skipInvalidProjects(pml, projs)) {
+				tePredictions.add(new String[] {"N/A", "N/A"});
+				bcPredictions.add(new String[] {"N/A", "N/A"});
+				continue;
+			}
 
 			List<Double> bcPredVals = calcPredictionValues(predMethods, PredictionType.BugCount, pml, projs);
 
