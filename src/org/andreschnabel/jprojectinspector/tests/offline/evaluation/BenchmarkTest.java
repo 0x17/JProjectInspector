@@ -2,6 +2,7 @@ package org.andreschnabel.jprojectinspector.tests.offline.evaluation;
 
 import junit.framework.Assert;
 import org.andreschnabel.jprojectinspector.evaluation.Benchmark;
+import org.andreschnabel.jprojectinspector.evaluation.PredictionType;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
@@ -92,7 +93,7 @@ public class BenchmarkTest {
 		TestData testData = new TestData().invoke();
 		List<ProjectWithResults> pml = testData.getPml();
 		List<ResponseProjects> rpl = testData.getRpl();
-		Benchmark.PredictionTypes type = Benchmark.PredictionTypes.BugCount;
+		PredictionType type = PredictionType.BugCount;
 		List<Double> vals = Benchmark.calcPredictionValues(predMethods, type, pml, rpl.get(0).toProjectList());
 		Assert.assertEquals(1000.0, vals.get(0), TestCommon.DELTA);
 		Assert.assertEquals(400.0, vals.get(1), TestCommon.DELTA);
@@ -142,6 +143,7 @@ public class BenchmarkTest {
 			rp.leastTested = p2.repoName;
 			rp.highestBugCount = p2.repoName;
 			rp.lowestBugCount = p1.repoName;
+			rp.weight = 1.0;
 			rpl.add(rp);
 			return this;
 		}

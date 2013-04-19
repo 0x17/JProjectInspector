@@ -7,6 +7,7 @@ import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,16 +21,13 @@ public class Benchmark {
 		public double bugCountPredictionMeasure(ProjectWithResults m);
 	}
 
-	public enum PredictionTypes {
-		BugCount,
-		TestEffort
-	}
-
 	public static Quality countCorrectPredictions(final PredictionMethods predMethods, List<ProjectWithResults> pml, List<ResponseProjects> rpl) throws Exception {
 		int teCorrect = 0;
 		int bcCorrect = 0;
 		double teWeightedCorrect = 0.0f;
 		double bcWeightedCorrect = 0.0f;
+		List<String[]> tePredictions = new LinkedList<String[]>();
+		List<String[]> bcPredictions = new LinkedList<String[]>();
 
 		for(ResponseProjects rp : rpl) {
 			if(rp.user == null) continue;
@@ -38,36 +36,43 @@ public class Benchmark {
 
 			if(skipInvalidProjects(pml, projs)) continue;
 
-			List<Double> bcPredVals = calcPredictionValues(predMethods, PredictionTypes.BugCount, pml, projs);
+			List<Double> bcPredVals = calcPredictionValues(predMethods, PredictionType.BugCount, pml, projs);
 
 			int highestPredIx = getHighestPredIndex(projs, bcPredVals);
-			if(rp.highestBugCount.equals(projs.get(highestPredIx).repoName)) {
+			String hiRepo = projs.get(highestPredIx).repoName;
+			if(rp.highestBugCount.equals(hiRepo)) {
 				bcCorrect++;
 				bcWeightedCorrect += rp.weight;
 			}
 
 			int lowestPredIx = getLowestPredictionIndex(projs, bcPredVals);
-			if(rp.lowestBugCount.equals(projs.get(lowestPredIx).repoName)) {
+			String loRepo = projs.get(lowestPredIx).repoName;
+			if(rp.lowestBugCount.equals(loRepo)) {
 				bcCorrect++;
 				bcWeightedCorrect += rp.weight;
 			}
 
-			List<Double> tePredVals = calcPredictionValues(predMethods, PredictionTypes.TestEffort, pml, projs);
+			bcPredictions.add(new String[] {loRepo, hiRepo});
+
+			List<Double> tePredVals = calcPredictionValues(predMethods, PredictionType.TestEffort, pml, projs);
 
 			highestPredIx = getHighestPredIndex(projs, tePredVals);
-			if(rp.mostTested.equals(projs.get(highestPredIx).repoName)) {
+			hiRepo = projs.get(highestPredIx).repoName;
+			if(rp.mostTested.equals(hiRepo)) {
 				teCorrect++;
 				teWeightedCorrect += rp.weight;
 			}
 
 			lowestPredIx = getLowestPredictionIndex(projs, tePredVals);
-			if(rp.leastTested.equals(projs.get(lowestPredIx).repoName)) {
+			loRepo = projs.get(lowestPredIx).repoName;
+			if(rp.leastTested.equals(loRepo)) {
 				teCorrect++;
 				teWeightedCorrect += rp.weight;
 			}
-		}
 
-		return new Quality(teCorrect, bcCorrect, teWeightedCorrect, bcWeightedCorrect);
+			tePredictions.add(new String[] {loRepo, hiRepo});
+		}
+		return new Quality(teCorrect, bcCorrect, teWeightedCorrect, bcWeightedCorrect, tePredictions, bcPredictions);
 	}
 
 	public static int getLowestPredictionIndex(List<Project> projs, List<Double> predVals) {
@@ -94,20 +99,9 @@ public class Benchmark {
 		return highestPredIx;
 	}
 
-	public static List<Double> calcPredictionValues(final PredictionMethods predMethods, final PredictionTypes predType, final List<ProjectWithResults> pml, List<Project> projs) {
-		Transform<Project, Double> bcPred = new Transform<Project, Double>() {
-			@Override
-			public Double invoke(Project p) {
-				switch(predType) {
-					case BugCount:
-						return predMethods.bugCountPredictionMeasure(metricsForProject(p, pml));
-					default:
-					case TestEffort:
-						return predMethods.testEffortPredictionMeasure(metricsForProject(p, pml));
-				}
-			}
-		};
-		return Func.map(bcPred, projs);
+	public static List<Double> calcPredictionValues(final PredictionMethods predMethods, final PredictionType predType, final List<ProjectWithResults> pml, List<Project> projectList) {
+		Transform<Project, Double> projectToMeasureResult = new ProjectToMeasureResultTransform(predType, predMethods, pml);
+		return Func.map(projectToMeasureResult, projectList);
 	}
 
 	public static boolean skipInvalidProjects(final List<ProjectWithResults> pml, List<Project> projs) {
@@ -135,12 +129,39 @@ public class Benchmark {
 		public final int bcCorrect;
 		public final double teWeightedCorrect;
 		public final double bcWeightedCorrect;
+		public final List<String[]> tePredictions;
+		public final List<String[]> bcPredictions;
 
-		public Quality(int teCorrect, int bcCorrect, double teWeightedCorrect, double bcWeightedCorrect) {
+		public Quality(int teCorrect, int bcCorrect, double teWeightedCorrect, double bcWeightedCorrect, List<String[]> tePredictions, List<String[]> bcPredictions) {
 			this.teCorrect = teCorrect;
 			this.bcCorrect = bcCorrect;
 			this.teWeightedCorrect = teWeightedCorrect;
 			this.bcWeightedCorrect = bcWeightedCorrect;
+			this.tePredictions = tePredictions;
+			this.bcPredictions = bcPredictions;
+		}
+	}
+
+	public static class ProjectToMeasureResultTransform implements Transform<Project, Double> {
+		private final PredictionType predType;
+		private final PredictionMethods predMethods;
+		private final List<ProjectWithResults> pml;
+
+		public ProjectToMeasureResultTransform(PredictionType predType, PredictionMethods predMethods, List<ProjectWithResults> pml) {
+			this.predType = predType;
+			this.predMethods = predMethods;
+			this.pml = pml;
+		}
+
+		@Override
+		public Double invoke(Project p) {
+			switch(predType) {
+				case BugCount:
+					return predMethods.bugCountPredictionMeasure(metricsForProject(p, pml));
+				default:
+				case TestEffort:
+					return predMethods.testEffortPredictionMeasure(metricsForProject(p, pml));
+			}
 		}
 	}
 }

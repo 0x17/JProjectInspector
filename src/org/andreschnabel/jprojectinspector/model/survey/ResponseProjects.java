@@ -24,7 +24,7 @@ public class ResponseProjects {
 	public String lowestBugCount;
 	public String highestBugCount;
 
-	public Double weight;
+	public double weight;
 
 	public ResponseProjects(String leastTested, String mostTested, String lowestBugCount, String highestBugCount) {
 		this(null, leastTested, mostTested, lowestBugCount, highestBugCount, Double.NaN);

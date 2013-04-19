@@ -1,7 +1,9 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.evaluation.Benchmark;
+import org.andreschnabel.jprojectinspector.evaluation.PredictionType;
 import org.andreschnabel.jprojectinspector.evaluation.SurveyFormat;
+import org.andreschnabel.jprojectinspector.gui.tables.BenchmarkTableModel;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
@@ -38,13 +40,10 @@ public class BenchmarkPanel extends PanelWithParent {
 	private JLabel numCorrLbl;
 	private JLabel percCorrLbl;
 	private JComboBox modeCombo;
-	private BenchmarkMode mode;
+	private PredictionType mode = PredictionType.TestEffort;
 	private JLabel weightedNumCorrLbl;
-
-	private static enum BenchmarkMode {
-		TestEffort,
-		BugCount
-	}
+	private BenchmarkTableModel benchmarkTableModel = new BenchmarkTableModel();
+	private JTable benchmarkTable = new JTable(benchmarkTableModel);
 
 	public BenchmarkPanel() {
 		initTopPane();
@@ -67,7 +66,9 @@ public class BenchmarkPanel extends PanelWithParent {
 		modeCombo.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent itemEvent) {
-				mode = modeCombo.getSelectedIndex() == 0 ? BenchmarkMode.TestEffort : BenchmarkMode.BugCount;
+				mode = modeCombo.getSelectedIndex() == 0 ? PredictionType.TestEffort : PredictionType.BugCount;
+				benchmarkTableModel.setMode(mode);
+				benchmarkTable.updateUI();
 			}
 		});
 		topPane.add(modeCombo);
@@ -145,10 +146,12 @@ public class BenchmarkPanel extends PanelWithParent {
 									rps.mostTested = sa[2];
 									rps.lowestBugCount = sa[3];
 									rps.highestBugCount = sa[4];
+									rps.weight = Double.valueOf(sa[5]);
 									return rps;
 								}
 							};
 							respProjs = CsvData.toList(rowToRespProjs, data);
+							benchmarkTableModel.setRespProjs(respProjs);
 							numEstimationsLbl.setText(""+respProjs.size()*2);
 							break;
 						case MetricResults:
@@ -176,11 +179,8 @@ public class BenchmarkPanel extends PanelWithParent {
 	}
 
 	private void initTablePane() {
-		// Je nach modus (testeffort/bugcount)
-		// Jeder Nutzer eine Reihe
-		// nutzername, least, most, leastpred, mostpred <- pred jeweils rot falls falsch und grün, falls richtig.
-		JPanel tablePane = new JPanel();
-		tablePane.add(new JTable());
+		JPanel tablePane = new JPanel(new GridLayout(1,1));
+		tablePane.add(new JScrollPane(benchmarkTable));
 		add(tablePane, BorderLayout.CENTER);
 	}
 
@@ -244,6 +244,7 @@ public class BenchmarkPanel extends PanelWithParent {
 				return bindings;
 			}
 		};
+
 		try {
 			Benchmark.Quality q = Benchmark.countCorrectPredictions(predMethods, metricsData, respProjs);
 
@@ -264,9 +265,17 @@ public class BenchmarkPanel extends PanelWithParent {
 			numCorrLbl.setText(""+ncorr);
 			weightedNumCorrLbl.setText(""+wncorr);
 			percCorrLbl.setText("" + ncorr/(double)(respProjs.size()*2) + "%");
+
+			updateTable(q);
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void updateTable(Benchmark.Quality q) {
+		benchmarkTableModel.setPredictions(mode == PredictionType.BugCount ? q.bcPredictions : q.tePredictions);
+		benchmarkTable.updateUI();
 	}
 
 }
