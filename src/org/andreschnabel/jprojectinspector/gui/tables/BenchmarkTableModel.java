@@ -8,6 +8,8 @@ import java.util.List;
 
 public class BenchmarkTableModel extends AbstractTableModel {
 
+	private static final long serialVersionUID = 1L;
+
 	private final static String[] columnNames = new String[] {"owner", "min", "max", "min-predicted", "max-predicted", "weight"};
 
 	private List<ResponseProjects> respProjs;

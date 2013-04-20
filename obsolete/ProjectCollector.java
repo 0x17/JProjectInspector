@@ -17,7 +17,7 @@ public final class ProjectCollector {
 	private final GitHubClient ghc;
 	public static final boolean USE_EGIT = true;
 
-	@SuppressWarnings("unused")
+
 	private class Repository {
 		public String type, owner, username, created, created_at, description, pushed, name, language;
 		public int followers, forks, size, watchers;

@@ -39,7 +39,7 @@ public class Cloc implements OfflineMetric {
 		if(Helpers.runningOnUnix()) {
 			out = ProcessHelpers.monitorProcess(rootPath, Config.CLOC_PATH, "-xml", targetName);
 		} else {
-			out = ProcessHelpers.monitorProcess(rootPath, Config.PERL_PATH, Config.CLOC_PATH, "-xml", targetName);
+			out = ProcessHelpers.monitorProcess(rootPath, Config.PERL_PATH, Config.absoluteClocPath(), "-xml", targetName);
 		}
 
 		Pattern langLine = Pattern.compile("<language name=\"([^\"]+)\" files_count=\"(\\d+?)\" blank=\"(\\d+?)\" comment=\"(\\d+?)\" code=\"(\\d+?)\" />");

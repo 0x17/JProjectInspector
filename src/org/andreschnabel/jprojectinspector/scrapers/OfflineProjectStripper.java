@@ -2,8 +2,8 @@ package org.andreschnabel.jprojectinspector.scrapers;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.JsonHelpers;
 
 import java.util.LinkedList;
 
@@ -21,7 +21,7 @@ public final class OfflineProjectStripper {
 			}
 			Helpers.log("Checked: " + p + " " + (online? "online" : "offline"));
 		}
-		FileHelpers.writeObjToJsonFile(outLst, "STRIPPED" + projLstFilename);
+		JsonHelpers.writeObjToJsonFile(outLst, "STRIPPED" + projLstFilename);
 	}
 
 	public static boolean isOffline(Project p) throws Exception {

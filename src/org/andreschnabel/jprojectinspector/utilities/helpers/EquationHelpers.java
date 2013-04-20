@@ -22,7 +22,7 @@ public class EquationHelpers {
 		}
 	}
 
-	public static boolean validateEquation(final List<String> varNames, String equation) {
+	public static boolean validateEquationSuccess(final List<String> varNames, String equation) {
 		if(equation.isEmpty()) { return false; }
 		List<String> referencedVars = RegexHelpers.batchMatchOneGroup("([A-Za-z]\\w*)", equation);
 		Predicate<String> notInVarNames = new Predicate<String>() {

@@ -7,6 +7,7 @@ import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.scrapers.OfflineProjectStripper;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.JsonHelpers;
 import org.junit.Test;
 
 public class OfflineProjectStripperTest {
@@ -17,7 +18,7 @@ public class OfflineProjectStripperTest {
 		pl.projects.add(Project.fromString("0x17/JProjectInspector"));
 		pl.projects.add(Project.fromString("SteveSanderson/John"));
 		final String pltestfname = "testtestplist.txt";
-		FileHelpers.writeObjToJsonFile(pl, pltestfname);
+		JsonHelpers.writeObjToJsonFile(pl, pltestfname);
 		OfflineProjectStripper.stripOfflineProjs(pltestfname);
 		FileHelpers.deleteFile(pltestfname);
 		ProjectList pl2 = ProjectList.fromJson("STRIPPED" + pltestfname);

@@ -20,7 +20,6 @@ public class MetricsSelectionPanel extends PanelWithParent {
 
 	private static final long serialVersionUID = 1L;
 
-	@SuppressWarnings("rawtypes")
 	private JList availableMetricNamesLst;
 	private JList selectedMetricNamesLst;
 
@@ -28,7 +27,6 @@ public class MetricsSelectionPanel extends PanelWithParent {
 	private List<String> selectedMetricNames = new LinkedList<String>();
 	private JLabel descriptionLbl;
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
 	public MetricsSelectionPanel(final InputProjectTablePanel projLstPanel) {
 		setLayout(new GridLayout(1, 3));
 		initLeftPanel();

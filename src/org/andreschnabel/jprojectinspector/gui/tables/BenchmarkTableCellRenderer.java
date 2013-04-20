@@ -6,6 +6,8 @@ import java.awt.*;
 
 public class BenchmarkTableCellRenderer extends DefaultTableCellRenderer {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Color okColor = new Color(0.0f, 0.6f, 0.0f);
 	private Color failColor = new Color(0.6f, 0.0f, 0.0f);
 

@@ -1,19 +1,23 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.andreschnabel.jprojectinspector.Config;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.functional.Tautology;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
-
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.andreschnabel.jprojectinspector.Config;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.Tautology;
+import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 
 public class FileHelpers {
 
@@ -46,6 +50,7 @@ public class FileHelpers {
 		    cl = new URLClassLoader(urls);
 		    cls = cl.loadClass(classname);
 		} finally {
+			// close is missing in Java 6 and OS X still ships with that.
 			/*if(cl != null) {
 				cl.close();
 			}*/
@@ -120,12 +125,6 @@ public class FileHelpers {
 		} else {
 			return rootDir.getName().endsWith(extension) ? 1 : 0;
 		}
-	}
-
-	public static <T> void writeObjToJsonFile(T obj, String outFilename) throws IOException {
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		String jsonStr = gson.toJson(obj);
-		writeStrToFile(jsonStr, outFilename);
 	}
 
 	public static List<File> recursiveCollectJavaSrcFiles(File dir) throws Exception {

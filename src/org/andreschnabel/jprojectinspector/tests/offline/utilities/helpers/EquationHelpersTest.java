@@ -24,10 +24,10 @@ public class EquationHelpersTest {
 	@Test
 	public void testValidateEquation() throws Exception {
 		List<String> varNames = Arrays.asList(new String[] {"x", "y", "mass", "velocity"});
-		Assert.assertTrue(EquationHelpers.validateEquation(varNames, "x+y"));
-		Assert.assertTrue(EquationHelpers.validateEquation(varNames, "(x+y)/(mass*velocity)"));
+		Assert.assertTrue(EquationHelpers.validateEquationSuccess(varNames, "x+y"));
+		Assert.assertTrue(EquationHelpers.validateEquationSuccess(varNames, "(x+y)/(mass*velocity)"));
 
-		Assert.assertFalse(EquationHelpers.validateEquation(varNames, "x+y+z"));
-		Assert.assertFalse(EquationHelpers.validateEquation(varNames, "(x+y)/(mass*velocityz)"));
+		Assert.assertFalse(EquationHelpers.validateEquationSuccess(varNames, "x+y+z"));
+		Assert.assertFalse(EquationHelpers.validateEquationSuccess(varNames, "(x+y)/(mass*velocityz)"));
 	}
 }

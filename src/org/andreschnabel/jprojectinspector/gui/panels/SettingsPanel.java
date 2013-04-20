@@ -1,16 +1,20 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.gui.windows.SettingsWindow;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
 public class SettingsPanel extends PanelWithParent {
 
@@ -19,6 +23,9 @@ public class SettingsPanel extends PanelWithParent {
 	private final PathPanel[] fields;
 
 	private static class PathPanel extends JPanel {
+
+		private static final long serialVersionUID = 1L;
+		
 		private JTextField field;
 		private JButton browseBtn;
 
@@ -118,7 +125,7 @@ public class SettingsPanel extends PanelWithParent {
 		parentFrame.dispose();
 	}
 
-	private void saveSettings() throws IOException {
+	private void saveSettings() throws Exception {
 		Config.DEST_BASE = fields[0].getText();
 		Config.BASE_URL = fields[1].getText();
 		Config.GIT_PATH = fields[2].getText();

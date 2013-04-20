@@ -83,7 +83,6 @@ public class InputPanel extends JPanel implements LaunchSettings {
 		}
 	}
 	
-	@SuppressWarnings("rawtypes")
 	private final JComboBox userReposCombo = new JComboBox();
 
 	private JButton addAllBtn;
@@ -149,7 +148,6 @@ public class InputPanel extends JPanel implements LaunchSettings {
 						return scrapedProjs;
 					}
 
-					@SuppressWarnings("unchecked")
 					@Override
 					public void onFinished(java.util.List<Project> scrapedProjs) {
 						if(scrapedProjs != null) {

@@ -1,6 +1,15 @@
 package org.andreschnabel.jprojectinspector.tests.offline.utilities.helpers;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+
 import junit.framework.Assert;
+
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
@@ -8,12 +17,6 @@ import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Test;
-
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class FileHelpersTest {
 
@@ -78,29 +81,6 @@ public class FileHelpersTest {
 		assertEquals(2, FileHelpers.recursivelyCountFilesWithExtension(new File("testdata"), "java"));
 	}
 	
-	@SuppressWarnings("unused")
-	private class MiniClass {	
-		public String name;
-		public int number;
-	}
-
-	@Test
-	public void testWriteObjToJsonFile() throws Exception {
-		MiniClass obj = new MiniClass();
-		obj.name = "Test";
-		obj.number = 23;
-		FileHelpers.writeObjToJsonFile(obj, "obj.json");
-		File f = new File("obj.json");
-		assertTrue(f.exists());
-		String json = FileHelpers.readEntireFile(f);
-		assertEquals("{\n"
-			+"  \"name\": \"Test\",\n"
-			+"  \"number\": 23\n"
-			+"}", json);
-		
-		f.delete();
-	}
-
 	@Test
 	public void testListSourceFiles() throws Exception {
 		List<String> out = FileHelpers.listJavaSourceFiles(new File(TestCommon.TEST_SRC_DIRECTORY));

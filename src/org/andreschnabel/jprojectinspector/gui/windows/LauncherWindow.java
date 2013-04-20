@@ -20,7 +20,7 @@ public class LauncherWindow extends AbstractWindow<LauncherPanel> {
 		GuiHelpers.setNativeLaf();
 		final LauncherWindow lw = new LauncherWindow();
 
-		if(Config.initializePaths()) {
+		if(Config.initializePathsFailed()) {
 			final SettingsWindow sw = new SettingsWindow(null);
 			sw.addWindowListener(new WindowAdapter() {
 				@Override

@@ -230,7 +230,7 @@ public class BenchmarkPanel extends PanelWithParent {
 			return;
 		}
 
-		if(!EquationHelpers.validateEquation(variablesLst, equationField.getText())) {
+		if(!EquationHelpers.validateEquationSuccess(variablesLst, equationField.getText())) {
 			return;
 		}
 

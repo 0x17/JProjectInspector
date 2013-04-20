@@ -4,7 +4,6 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
 public final class Config {
@@ -18,13 +17,13 @@ public final class Config {
 
 	static {
 		try {
-			initializePaths();
+			initializePathsFailed();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static boolean initializePaths() throws Exception {
+	public static boolean initializePathsFailed() throws Exception {
 		if(FileHelpers.exists(CONFIG_FILENAME)) {
 			loadSettingsFromDisk();
 			return false;
@@ -64,8 +63,16 @@ public final class Config {
 		PERL_PATH = lines[3];
 		CLOC_PATH = lines[4];
 	}
+	
+	public static void persist() throws Exception {
+		persist(new File(Config.CONFIG_FILENAME));
+	}
 
-	public static void persist() throws IOException {
-		FileHelpers.writeStrToFile(BASE_URL+"\n"+DEST_BASE+"\n"+GIT_PATH+"\n"+PERL_PATH+"\n"+CLOC_PATH, CONFIG_FILENAME);
+	public static void persist(File cfgFile) throws Exception {
+		FileHelpers.writeStrToFile(BASE_URL+"\n"+DEST_BASE+"\n"+GIT_PATH+"\n"+PERL_PATH+"\n"+CLOC_PATH, cfgFile);
+	}
+
+	public static String absoluteClocPath() {
+		return new File(CLOC_PATH).getAbsolutePath();
 	}
 }
