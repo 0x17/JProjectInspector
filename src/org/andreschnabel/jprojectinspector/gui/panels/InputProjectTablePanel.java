@@ -119,4 +119,12 @@ public class InputProjectTablePanel extends JPanel {
 			queryStatsTaskBatch = null;
 		}
 	}
+
+	public void removeSelectedRow() {
+		int selRowIndex = projTable.getSelectedRow();
+		if(selRowIndex != -1) {
+			projects.remove(selRowIndex);
+			projTable.updateUI();
+		}
+	}
 }

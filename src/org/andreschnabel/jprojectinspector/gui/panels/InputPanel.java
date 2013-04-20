@@ -5,9 +5,11 @@ import org.andreschnabel.jprojectinspector.gui.windows.CsvTableWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.MetricsSelectionWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.SettingsWindow;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.scrapers.TimelineTapper;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
+import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
@@ -202,7 +204,7 @@ public class InputPanel extends JPanel implements LaunchSettings {
 	}
 
 	private void initBottomPane() {
-		JPanel bottomPane = new JPanel(new GridLayout(2, 4));
+		JPanel bottomPane = new JPanel(new GridLayout(2, 5));
 
 		JButton viewCsvBtn = new JButton("View CSV");
 		viewCsvBtn.setToolTipText("Preview content of CSV file in a visual table.");
@@ -287,6 +289,48 @@ public class InputPanel extends JPanel implements LaunchSettings {
 			}
 		});
 
+		JButton removeProjectBtn = new JButton("Remove project");
+		removeProjectBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				projLstPanel.removeSelectedRow();
+			}
+		});
+
+		JButton importSurveyProjsBtn = new JButton("Import survey projects");
+		importSurveyProjsBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					CsvData data = GuiHelpers.loadCsvDialog(new File("data/benchmark"));
+					if(data == null) {
+						return;
+					}
+					Transform<String[], ResponseProjects> rowToRespProjs = new Transform<String[], ResponseProjects>() {
+						@Override
+						public ResponseProjects invoke(String[] sa) {
+							ResponseProjects rps = new ResponseProjects();
+							rps.user = sa[0];
+							rps.leastTested = sa[1];
+							rps.mostTested = sa[2];
+							rps.lowestBugCount = sa[3];
+							rps.highestBugCount = sa[4];
+							rps.weight = Double.valueOf(sa[5]);
+							return rps;
+					   }
+					};
+					List<ResponseProjects> respProjs = CsvData.toList(rowToRespProjs, data);
+					List<Project> projs = new LinkedList<Project>();
+					for(ResponseProjects rps : respProjs) {
+						projs.addAll(rps.toProjectList());
+					}
+					projLstPanel.addProjects(projs);
+				} catch(Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+
 		final JButton tapTimelineBtn = new JButton("Tap Timeline");
 		tapTimelineBtn.setToolTipText("Grab projects from the GitHub event timeline.");
 		tapTimelineBtn.addActionListener(new ActionListener() {
@@ -334,16 +378,13 @@ public class InputPanel extends JPanel implements LaunchSettings {
 
 		bottomPane.add(importBtn);
 		bottomPane.add(exportBtn);
-
-		bottomPane.add(tapTimelineBtn);
-
-		bottomPane.add(viewCsvBtn);
-
+		bottomPane.add(removeProjectBtn);
 		bottomPane.add(remOfflineBtn);
+		bottomPane.add(viewCsvBtn);
+		bottomPane.add(importSurveyProjsBtn);
+		bottomPane.add(tapTimelineBtn);
 		bottomPane.add(clearBtn);
-
 		bottomPane.add(settingsBtn);
-
 		bottomPane.add(startBtn);
 
 		add(bottomPane, ThreeRowGridBagConstraints.bottomPaneConstraints());
