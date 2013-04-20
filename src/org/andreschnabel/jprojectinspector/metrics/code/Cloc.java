@@ -2,6 +2,8 @@ package org.andreschnabel.jprojectinspector.metrics.code;
 
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.utilities.functional.BinaryOperator;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
 
@@ -26,6 +28,23 @@ public class Cloc implements OfflineMetric {
 	@Override
 	public double measure(File repoRoot) throws Exception {
 		return ClocResult.accumResults(determineLinesOfCode(repoRoot)).codeLines;
+	}
+
+	public static int sumOfLinesOfCodeForFiles(List<File> files) {
+		return Func.reduce(new BinaryOperator<File, Integer>() {
+			@Override
+			public Integer invoke(Integer accum, File srcFile) {
+				try {
+					List<ClocResult> results = Cloc.determineLinesOfCode(srcFile.getParentFile(), srcFile.getName());
+					if(results.size() >= 1) {
+						accum += ClocResult.accumResults(results).codeLines;
+					}
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				return accum;
+			}
+		}, 0, files);
 	}
 
 	public static List<ClocResult> determineLinesOfCode(File path) throws Exception {

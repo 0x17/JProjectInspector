@@ -10,7 +10,7 @@ public class InputWindow extends AbstractWindowWithParent<InputPanel> {
 	private static final long serialVersionUID = 1L;
 
 	public InputWindow(JFrame parentFrame) {
-		super("Inputs", 800, 600, JFrame.DISPOSE_ON_CLOSE, new InputPanel(), parentFrame);
+		super("Inputs", 900, 600, JFrame.DISPOSE_ON_CLOSE, new InputPanel(), parentFrame);
 		disposeOnClose();
 	}
 

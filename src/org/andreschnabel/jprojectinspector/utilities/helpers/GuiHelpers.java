@@ -93,8 +93,7 @@ public class GuiHelpers {
 			return null;
 		}
 		validateHeaders(expectedHeaders, CsvHelpers.parseCsv(StringHelpers.firstLine(str)).getHeaders());
-		CsvData data = CsvHelpers.parseCsv(str);
-		return data;
+		return CsvHelpers.parseCsv(str);
 	}
 
 	private static void validateHeaders(String[] expectedHeaders, String[] headers) throws Exception {

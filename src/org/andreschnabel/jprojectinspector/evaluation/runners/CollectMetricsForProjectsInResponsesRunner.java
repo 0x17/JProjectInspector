@@ -28,13 +28,12 @@ public class CollectMetricsForProjectsInResponsesRunner {
 				return MetricsCollector.gatherMetricsForProject(metricNames, p);
 			}
 		},projects);
-		List<ProjectWithResults> projectWithResultsList = Func.mapi(new IndexedTransform<Double[], ProjectWithResults>() {
+		return Func.mapi(new IndexedTransform<Double[], ProjectWithResults>() {
 			@Override
 			public ProjectWithResults invoke(int i, Double[] results) {
 				return new ProjectWithResults(projects.get(i), metricNamesArray, results);
 			}
 		}, resultsList);
-		return projectWithResultsList;
 	}
 
 }

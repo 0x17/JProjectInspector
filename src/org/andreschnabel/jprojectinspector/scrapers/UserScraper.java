@@ -71,8 +71,7 @@ public class UserScraper {
 
 	public static List<Project> scrapeProjectsOfUser(String user) throws Exception {
 		String reposHtml = Helpers.loadUrlIntoStr("https://github.com/" + user + "?tab=repositories");
-		List<Project> projs = scrapeProjects(reposHtml);
-		return projs;		
+		return scrapeProjects(reposHtml);
 	}
 
 }

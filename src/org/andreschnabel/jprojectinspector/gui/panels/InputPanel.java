@@ -42,8 +42,6 @@ public class InputPanel extends JPanel implements LaunchSettings {
 
 	private InputProjectTablePanel projLstPanel;
 
-	private JLabel ownerLbl, repoLbl;
-
 	private final static int NCOLUMNS = 10;
 
 	private final JTextField ownerField = new JTextField(NCOLUMNS);
@@ -91,12 +89,12 @@ public class InputPanel extends JPanel implements LaunchSettings {
 		JPanel topPane = new JPanel();
 		topPane.setLayout(new FlowLayout());
 
-		ownerLbl = new JLabel("owner:");
+		JLabel ownerLbl = new JLabel("owner:");
 		topPane.add(ownerLbl);
 		topPane.add(ownerField);
 		ownerField.getDocument().addDocumentListener(docListener);
 
-		repoLbl = new JLabel("repo:");
+		JLabel repoLbl = new JLabel("repo:");
 
 		topPane.add(repoLbl);
 		topPane.add(repoField);

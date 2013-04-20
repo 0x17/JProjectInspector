@@ -81,7 +81,7 @@ public class BenchmarkPanel extends PanelWithParent {
 		JPanel equationPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 		equationField = new JTextField("0");
-		equationField.setColumns(50);
+		equationField.setColumns(35);
 		equationField.getDocument().addDocumentListener(new EquationChangeListener());
 		equationPanel.add(equationField);
 

@@ -90,7 +90,6 @@ public class RoughFunctionCoverage implements OfflineMetric {
 			if(Double.isNaN(max) || c > max) {
 				max = c;
 			}
-			break;
 		}
 		return max;
 	}

@@ -36,8 +36,7 @@ public class LanguageDistribution {
 
 	public static List<Project> respProjectsToProjects(List<ResponseProjects> respProjsWithUser) {
 		List<Project> projs = new LinkedList<Project>();
-		List<ResponseProjects> rprojs = respProjsWithUser;
-		for(ResponseProjects rp : rprojs) {
+		for(ResponseProjects rp : respProjsWithUser) {
 			for(Project p : rp.toProjectList()) {
 				projs.add(p);
 			}

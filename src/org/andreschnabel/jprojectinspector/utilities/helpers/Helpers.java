@@ -19,7 +19,7 @@ public class Helpers {
 		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 		StringBuilder builder = new StringBuilder();
 		while(br.ready()) {
-			builder.append(br.readLine() + "\n");
+			builder.append(br.readLine()).append("\n");
 		}
 		br.close();
 		return builder.toString();

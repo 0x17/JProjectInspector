@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
 public class CsvTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private final JTextField filterExprField;
 
 	public CsvTablePanel(final CsvData data) {
 		setLayout(new GridBagLayout());
@@ -56,7 +55,7 @@ public class CsvTablePanel extends JPanel {
 		JLabel filterExprLbl = new JLabel("Filter RegEx:");
 		topPane.add(filterExprLbl);
 
-		filterExprField = new JTextField(30);
+		JTextField filterExprField = new JTextField(30);
 		filterExprField.getDocument().addDocumentListener(new FilterIfRxIsValid(filterExprField, data, fdata, csvTbl));
 		topPane.add(filterExprField);
 

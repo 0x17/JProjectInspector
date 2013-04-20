@@ -2,6 +2,7 @@ package org.andreschnabel.jprojectinspector.metrics.registry;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
+import org.andreschnabel.jprojectinspector.metrics.code.LocPerSourceFile;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.*;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage.SimpleJavaTestCoverage;
 import org.andreschnabel.jprojectinspector.metrics.plugins.MetricPlugins;
@@ -30,10 +31,8 @@ public class OfflineMetrics {
 		ms.add(new UnitTestDetector());
 		ms.add(new ContributorsOffline());
 		ms.add(new Commits());
+		ms.add(new LocPerSourceFile());
 		initJavaSpecificOfflineMetrics(ms);
-
-		// Add more offline metrics here!
-		// ms.add(new MyMetric());
 
 		ms.addAll(MetricPlugins.loadOfflineMetricPlugins(new File("plugins")));
 

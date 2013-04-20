@@ -60,7 +60,7 @@ public class CandidateTapper {
 						c.name = nameMatcher.group(1);
 					}
 
-					if(c.name != null && c.email != null && c.login != null && !candidateWithLogin(c.login, candidates)) {
+					if(c.name != null && c.email != null && c.login != null && candidateWithoutLogin(c.login, candidates)) {
 						addMostRecentRepoTriple(c);
 						if(c.repos[0] != null && c.repos[1] != null && c.repos[2] != null) {
 							if(notInOldSurvey(c, oldSurveyCandidates)) {
@@ -83,13 +83,13 @@ public class CandidateTapper {
 		return !oldSurveyCandidates.contains(c);
 	}
 
-	private static boolean candidateWithLogin(String login, List<Candidate> candidates) {		
+	private static boolean candidateWithoutLogin(String login, List<Candidate> candidates) {
 		for(Candidate c : candidates) {
 			if(c.login.equals(login))
-				return true;
+				return false;
 		}
 		
-		return false;
+		return true;
 	}
 
 	public static Candidate addMostRecentRepoTriple(Candidate candidate) throws Exception {
@@ -114,7 +114,7 @@ public class CandidateTapper {
 				Matcher projNameSubPatternMatcher = projNameSubPattern.matcher(projStr);
 				if(projNameSubPatternMatcher.find()) {
 					String nrepo = projNameSubPatternMatcher.group(1);
-					if(!containsRepo(candidate.repos, nrepo)) {
+					if(doesntContainRepo(candidate.repos, nrepo)) {
 						candidate.repos[curProj++] = nrepo;
 					}
 				}
@@ -124,12 +124,12 @@ public class CandidateTapper {
 		return candidate;
 	}
 
-	private static boolean containsRepo(String[] repos, String repo) {
+	private static boolean doesntContainRepo(String[] repos, String repo) {
 		for(int i=0; i<3; i++) {
 			if(repos[i] != null && repos[i].equals(repo))
-				return true;
+				return false;
 		}
-		return false;
+		return true;
 	}
 
 }

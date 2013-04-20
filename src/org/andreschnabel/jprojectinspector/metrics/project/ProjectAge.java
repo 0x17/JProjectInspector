@@ -17,9 +17,8 @@ public class ProjectAge implements OnlineMetric {
 		Repository repo = repoService.getRepository(project.owner, project.repoName);
 
 		Date creationDate = repo.getCreatedAt();
-		long delta = (new Date().getTime() - creationDate.getTime());
 
-		return delta;
+		return (new Date().getTime() - creationDate.getTime());
 	}
 
 	@Override

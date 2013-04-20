@@ -56,7 +56,7 @@ public class ConnectProjsWithUsersRunner {
 					}
 				};
 				return Func.contains(isProject, results);
-			};
+			}
 		};
 		List<Project> projsWithResp = Func.filter(hasResponse, projs);
 
