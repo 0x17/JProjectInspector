@@ -17,8 +17,10 @@ public class UserGuesserTest {
 
 		usrProjsLst.add(new Project("Hans", "a"));
 		usrProjsLst.add(new Project("Hans", "b"));
+		usrProjsLst.add(new Project("Hans", "d"));
 
 		usrProjsLst.add(new Project("Peter", "b"));
+		usrProjsLst.add(new Project("Peter", "c"));
 
 		ResponseProjects rp = new ResponseProjects("a", "b", "c", "d");
 

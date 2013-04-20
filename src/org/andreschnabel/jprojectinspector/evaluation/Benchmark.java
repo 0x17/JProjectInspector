@@ -38,7 +38,7 @@ public class Benchmark {
 
 			List<Project> projs = rp.toProjectList();
 
-			if(skipInvalidProjects(pml, projs)) {
+			if(isInvalidProject(pml, projs)) {
 				tePredictions.add(new String[] {"N/A", "N/A"});
 				bcPredictions.add(new String[] {"N/A", "N/A"});
 				continue;
@@ -112,7 +112,7 @@ public class Benchmark {
 		return Func.map(projectToMeasureResult, projectList);
 	}
 
-	public static boolean skipInvalidProjects(final List<ProjectWithResults> pml, List<Project> projs) {
+	public static boolean isInvalidProject(final List<ProjectWithResults> pml, List<Project> projs) {
 		Predicate<Project> isInvalid = new Predicate<Project>() {
 			@Override
 			public boolean invoke(Project p) {

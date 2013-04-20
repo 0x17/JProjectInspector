@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class JavaClassCoupling implements OfflineMetric {
 
-	public double getAverageCoupling(File root) throws Exception {
+	public static double getAverageCoupling(File root) throws Exception {
 		Map<String, File> classInFile = new HashMap<String, File>();
 		List<String> classNames = listClassNamesInProject(root, classInFile);
 		if(classNames == null) return 0.0;
@@ -27,7 +27,7 @@ public class JavaClassCoupling implements OfflineMetric {
 		else return (double) couplingCount / classCount;
 	}
 
-	public List<String> listClassNamesInFile(File f, Map<String, File> classInFile) throws Exception {
+	public static List<String> listClassNamesInFile(File f, Map<String, File> classInFile) throws Exception {
 		String srcStr = FileHelpers.readEntireFile(f);
 		List<String> clsNames = RegexHelpers.batchMatchOneGroup("class\\s+(\\w+)", JavaSourceHelpers.removeCommentsAndStrings(srcStr));
 
@@ -39,7 +39,7 @@ public class JavaClassCoupling implements OfflineMetric {
 		return clsNames;
 	}
 
-	public List<String> listClassNamesInProject(File rootDir, Map<String, File> classInFile) throws Exception {
+	public static List<String> listClassNamesInProject(File rootDir, Map<String, File> classInFile) throws Exception {
 		List<String> clsNames = new LinkedList<String>();
 		if(rootDir.isDirectory()) {
 			for(File f : rootDir.listFiles()) {
@@ -53,7 +53,7 @@ public class JavaClassCoupling implements OfflineMetric {
 		}
 	}
 
-	public List<String> referencedClasses(String className, Map<String, File> classInFile) throws Exception {
+	public static List<String> referencedClasses(String className, Map<String, File> classInFile) throws Exception {
 		String classCode = getCodeOfClass(className, classInFile);
 		List<String> refCls = new LinkedList<String>();
 
@@ -65,7 +65,7 @@ public class JavaClassCoupling implements OfflineMetric {
 		return refCls;
 	}
 
-	public String getCodeOfClass(String className, Map<String, File> classInFile) throws Exception {
+	public static String getCodeOfClass(String className, Map<String, File> classInFile) throws Exception {
 		if(!classInFile.containsKey(className))
 			return "";
 

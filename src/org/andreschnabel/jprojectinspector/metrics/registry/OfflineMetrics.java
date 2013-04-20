@@ -48,7 +48,6 @@ public class OfflineMetrics {
 	}
 
 	private static void initJavaSpecificOfflineMetrics(List<OfflineMetric> ms) {
-		ms.add(new JavaAverageWMC());
 		ms.add(new JavaClassCoupling());
 		ms.add(new JavaLinesOfCode());
 		ms.add(new TestContributors());

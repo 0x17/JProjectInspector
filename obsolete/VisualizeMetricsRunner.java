@@ -38,7 +38,7 @@ public class VisualizeMetricsRunner {
 		for(ResponseProjects rp : rpl) {
 			if(rp.user == null) continue;
 			List<Project> plist = rp.toProjectListDups();
-			if(Benchmark.skipInvalidProjects(pml, plist)) continue;
+			if(Benchmark.isInvalidProject(pml, plist)) continue;
 
 			StringBuilder userRow = new StringBuilder();
 			userRow.append(rp.user + ",");
