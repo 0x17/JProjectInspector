@@ -1,20 +1,15 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.gui.windows.SettingsWindow;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 public class SettingsPanel extends PanelWithParent {
 
@@ -48,7 +43,7 @@ public class SettingsPanel extends PanelWithParent {
 							sf = GuiHelpers.loadFileDialog(new File(path), extension);
 						}
 						if(sf != null) {
-							field.setText(sf.getAbsolutePath());
+							field.setText(sf.getAbsolutePath() + (extension.equals("") ? File.separator : ""));
 						}
 					}
 				});

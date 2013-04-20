@@ -44,7 +44,7 @@ public final class Config {
 				}
 			}
 
-			DEST_BASE = envVars.get("TMP");
+			DEST_BASE = envVars.get("TMP") + File.separator;
 		} else {
 			CLOC_PATH = "/usr/local/bin/cloc";
 			GIT_PATH = Helpers.unixType("git");

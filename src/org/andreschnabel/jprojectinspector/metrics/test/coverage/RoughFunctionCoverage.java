@@ -84,12 +84,15 @@ public class RoughFunctionCoverage implements OfflineMetric {
 	@Override
 	public double measure(File repoRoot) throws Exception {
 		Map<String, Double> coverages = approxFunctionCoverage(repoRoot);
-		String firstKey = null;
+		double max = Double.NaN;
 		for(String key : coverages.keySet()) {
-			firstKey = key;
+			double c = coverages.get(key);
+			if(Double.isNaN(max) || c > max) {
+				max = c;
+			}
 			break;
 		}
-		return coverages.get(firstKey);
+		return max;
 	}
 
 	private enum Mode {
