@@ -9,8 +9,9 @@ import java.io.File;
 import java.util.List;
 
 public class AvgLocPerSourceFile implements OfflineMetric {
-	private static final String[] SRC_EXTENSIONS = new String[] {"java", "js", "rb", "py", "cs", "cpp", "c", "pl",
-			"clj", "h", "hpp", "scala", "m", "mm"};
+
+	private static final String[] SRC_EXTENSIONS = new String[] {"java", "js", "rb", "py", "cs",
+			"cpp", "c", "pl", "clj", "h", "hpp", "scala", "m", "mm"};
 
 	@Override
 	public String getName() {
