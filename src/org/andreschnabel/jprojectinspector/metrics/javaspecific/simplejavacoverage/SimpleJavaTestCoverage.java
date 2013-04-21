@@ -34,7 +34,7 @@ public class SimpleJavaTestCoverage implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "JSimpleCov";
+		return "JavaCoverageApprox";
 	}
 
 	@Override

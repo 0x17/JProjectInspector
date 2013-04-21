@@ -1,23 +1,17 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.functional.Tautology;
 import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+
+import java.io.*;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.LinkedList;
+import java.util.List;
 
 public class FileHelpers {
 
@@ -148,25 +142,6 @@ public class FileHelpers {
 			throw new Exception("Path must point to directory!");
 		}
 		return root;
-	}
-	
-	public static List<String> listTestFiles(String path) throws Exception {
-		File root = enforceDir(path);
-		List<String> testfiles = new LinkedList<String>();
-		recursivelyCollectTestFiles(root, testfiles);
-		return testfiles;
-	}
-	
-	public static void recursivelyCollectTestFiles(File root, List<String> testfiles) {	
-		for(File f : root.listFiles()) {
-			if(f.isDirectory()) {
-				recursivelyCollectTestFiles(f, testfiles);
-			} else {
-				String fname = f.getName();
-				if(fname.endsWith("Test.java"))
-					testfiles.add(f.getPath());
-			}
-		}
 	}
 
 	public static List<String> listProductFiles(String path) throws Exception {

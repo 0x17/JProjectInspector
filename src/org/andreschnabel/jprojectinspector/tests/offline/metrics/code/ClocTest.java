@@ -23,6 +23,5 @@ public class ClocTest {
 				return result.language.equals("Java");
 			}
 		}, results));
-
 	}
 }

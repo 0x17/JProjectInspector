@@ -37,7 +37,7 @@ public class Issues implements OnlineMetric {
 
 	@Override
 	public String getName() {
-		return "nissues";
+		return "NumIssues";
 	}
 
 	@Override

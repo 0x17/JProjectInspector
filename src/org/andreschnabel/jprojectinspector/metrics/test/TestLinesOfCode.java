@@ -15,7 +15,7 @@ public class TestLinesOfCode implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "TestLoc";
+		return "TestLinesOfCode";
 	}
 
 	@Override

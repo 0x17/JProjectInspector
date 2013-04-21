@@ -85,7 +85,7 @@ public class JavaLinesOfCode implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "JLOC";
+		return "JavaLinesOfCode";
 	}
 
 	@Override

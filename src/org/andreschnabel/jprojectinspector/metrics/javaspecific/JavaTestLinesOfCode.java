@@ -22,7 +22,7 @@ public class JavaTestLinesOfCode implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "JTLOC";
+		return "JavaTestLinesOfCode";
 	}
 
 	@Override

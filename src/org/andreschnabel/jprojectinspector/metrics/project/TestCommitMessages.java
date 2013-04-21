@@ -7,9 +7,9 @@ import org.andreschnabel.jprojectinspector.utilities.git.GitHelpers;
 
 import java.io.File;
 
-public class TestCommitComments implements OfflineMetric {
+public class TestCommitMessages implements OfflineMetric {
 
-	public static int countNumTestCommitComments(File root) throws Exception {
+	public static int countNumTestCommitMessages(File root) throws Exception {
 		if(!root.exists())
 			throw new Exception("Check out first!");
 
@@ -24,16 +24,16 @@ public class TestCommitComments implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "NumTestCommitCommentContribs";
+		return "NumTestCommitMessages";
 	}
 
 	@Override
 	public String getDescription() {
-		return "Number of contributors that have commit comments containing substring 'test'.";
+		return "Number of commit messages containing substring 'test'.";
 	}
 
 	@Override
 	public double measure(File repoRoot) throws Exception {
-		return countNumTestCommitComments(repoRoot);
+		return countNumTestCommitMessages(repoRoot);
 	}
 }

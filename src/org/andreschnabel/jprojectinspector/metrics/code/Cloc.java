@@ -17,7 +17,7 @@ public class Cloc implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "LOC";
+		return "LinesOfCode";
 	}
 
 	@Override

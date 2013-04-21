@@ -60,7 +60,7 @@ public class UnitTestDetector implements OfflineMetric {
 	}
 
 	public static List<File> getTestFiles(File root) throws Exception {
-		return Func.filter(new IsTestPredicate(), FileHelpers.filesInTree(root));
+		return FileHelpers.filesWithPredicateInTree(root, new IsTestPredicate());
 	}
 
 	public static boolean isCsharpSrcTest(String srcStr, String filename) {

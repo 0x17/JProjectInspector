@@ -10,7 +10,7 @@ public class JavaTestSmellDetector implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "JTestSmellDetector";
+		return "JavaTestSmellDetector";
 	}
 
 	@Override

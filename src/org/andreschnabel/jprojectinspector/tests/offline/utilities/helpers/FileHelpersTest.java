@@ -1,15 +1,6 @@
 package org.andreschnabel.jprojectinspector.tests.offline.utilities.helpers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-
 import junit.framework.Assert;
-
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
@@ -17,6 +8,12 @@ import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Test;
+
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class FileHelpersTest {
 
@@ -105,22 +102,7 @@ public class FileHelpersTest {
 		List<String> outNames = Func.map(fileToName, out);
 		AssertHelpers.arrayEqualsLstOrderInsensitive(files, outNames);
 	}
-	
-	@Test
-	public void testListTestFiles() throws Exception {
-		List<String> out = FileHelpers.listTestFiles(TestCommon.TEST_SRC_DIRECTORY);
-		Assert.assertEquals(1, out.size());
-		Assert.assertEquals(TestCommon.TEST_SRC_TEST_FILENAME, out.get(0));
-	}
-	
-	@Test
-	public void testRecursivelyCollectTestFiles() {
-		List<String> out = new LinkedList<String>();
-		FileHelpers.recursivelyCollectTestFiles(new File(TestCommon.TEST_SRC_DIRECTORY), out);
-		Assert.assertEquals(1, out.size());
-		Assert.assertEquals(TestCommon.TEST_SRC_TEST_FILENAME, out.get(0));
-	}
-	
+
 	@Test
 	public void testListProductFiles() throws Exception {
 		List<String> out = FileHelpers.listProductFiles(TestCommon.TEST_SRC_DIRECTORY);

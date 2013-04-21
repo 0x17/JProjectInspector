@@ -76,7 +76,7 @@ public class JavaClassCoupling implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "JCoupling";
+		return "JavaClassCouplingApprox";
 	}
 
 	@Override

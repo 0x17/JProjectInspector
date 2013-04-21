@@ -8,13 +8,13 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 import java.io.File;
 import java.util.List;
 
-public class LocPerSourceFile implements OfflineMetric {
+public class AvgLocPerSourceFile implements OfflineMetric {
 	private static final String[] SRC_EXTENSIONS = new String[] {"java", "js", "rb", "py", "cs", "cpp", "c", "pl",
 			"clj", "h", "hpp", "scala", "m", "mm"};
 
 	@Override
 	public String getName() {
-		return "LocPerSourceFile";
+		return "AvgLocPerSourceFile";
 	}
 
 	@Override

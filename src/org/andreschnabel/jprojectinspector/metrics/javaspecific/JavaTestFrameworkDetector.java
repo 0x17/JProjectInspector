@@ -46,7 +46,7 @@ public class JavaTestFrameworkDetector implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "JTestFramework";
+		return "JavaTestFrameworkDetector";
 	}
 
 	@Override

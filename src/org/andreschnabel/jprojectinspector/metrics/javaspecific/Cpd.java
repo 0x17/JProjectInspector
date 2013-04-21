@@ -9,7 +9,7 @@ import java.io.File;
 public class Cpd implements OfflineMetric {
 	@Override
 	public String getName() {
-		return "CPD";
+		return "CopyPasteDetector";
 	}
 
 	@Override
