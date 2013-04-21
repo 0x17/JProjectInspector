@@ -1,14 +1,18 @@
 package org.andreschnabel.jprojectinspector.metrics.registry;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.churn.AverageChurnPerRevision;
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.Cpd;
 import org.andreschnabel.jprojectinspector.metrics.code.LocPerSourceFile;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.Pmd;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.*;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage.SimpleJavaTestCoverage;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.smells.JavaTestSmellDetector;
 import org.andreschnabel.jprojectinspector.metrics.plugins.MetricPlugins;
-import org.andreschnabel.jprojectinspector.metrics.project.Commits;
+import org.andreschnabel.jprojectinspector.metrics.project.Revisions;
 import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOffline;
-import org.andreschnabel.jprojectinspector.metrics.project.ContributorsTestCommit;
+import org.andreschnabel.jprojectinspector.metrics.project.TestCommitComments;
 import org.andreschnabel.jprojectinspector.metrics.test.TestContributors;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
@@ -27,11 +31,14 @@ public class OfflineMetrics {
 		ms.add(new Cloc());
 		ms.add(new TestLinesOfCode());
 		ms.add(new RoughFunctionCoverage());
-		ms.add(new ContributorsTestCommit());
+		ms.add(new TestCommitComments());
 		ms.add(new UnitTestDetector());
 		ms.add(new ContributorsOffline());
-		ms.add(new Commits());
+		ms.add(new Revisions());
 		ms.add(new LocPerSourceFile());
+		ms.add(new Pmd());
+		ms.add(new Cpd());
+		ms.add(new AverageChurnPerRevision());
 		initJavaSpecificOfflineMetrics(ms);
 
 		ms.addAll(MetricPlugins.loadOfflineMetricPlugins(new File("plugins")));
@@ -53,5 +60,6 @@ public class OfflineMetrics {
 		ms.add(new JavaTestFrameworkDetector());
 		ms.add(new JavaTestLinesOfCode());
 		ms.add(new SimpleJavaTestCoverage());
+		ms.add(new JavaTestSmellDetector());
 	}
 }

@@ -8,7 +8,7 @@ public class BugCountEstimation implements SurveyMetric {
 
 	@Override
 	public String getName() {
-		return "bugcount";
+		return "BugCountEstimate";
 	}
 
 	@Override

@@ -30,7 +30,7 @@ public class RecentCommits implements OnlineMetric {
 
 	@Override
 	public String getName() {
-		return "nrecentcommits";
+		return "NumRecentCommits";
 	}
 
 	@Override

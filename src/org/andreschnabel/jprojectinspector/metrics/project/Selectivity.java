@@ -56,7 +56,7 @@ public class Selectivity implements OnlineMetric {
 
 	@Override
 	public String getName() {
-		return "selectivity";
+		return "Selectivity";
 	}
 
 	@Override

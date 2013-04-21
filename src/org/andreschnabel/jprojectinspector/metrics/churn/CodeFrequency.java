@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.metrics.project;
+package org.andreschnabel.jprojectinspector.metrics.churn;
 
 import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
@@ -25,7 +25,7 @@ public class CodeFrequency implements OnlineMetric {
 
 	@Override
 	public String getName() {
-		return "codefreq";
+		return "CodeFreq";
 	}
 
 	@Override

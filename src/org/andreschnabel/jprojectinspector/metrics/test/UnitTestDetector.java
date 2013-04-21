@@ -106,7 +106,7 @@ public class UnitTestDetector implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "containstest";
+		return "ContainsTest";
 	}
 
 	@Override

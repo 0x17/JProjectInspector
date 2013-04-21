@@ -3,8 +3,8 @@ package org.andreschnabel.jprojectinspector.tests.offline.metrics.test;
 import junit.framework.Assert;
 import org.andreschnabel.jprojectinspector.metrics.test.TestContributors;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
+import org.andreschnabel.jprojectinspector.utilities.git.GitContributorHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GitHelpers;
 import org.junit.Test;
 
 import java.io.File;
@@ -24,7 +24,7 @@ public class TestContributorsTest {
 
 	@Test
 	public void testContribNamesForFile() throws Exception {
-		List<String> contribNames = GitHelpers.contribNamesForFile(new File(TestCommon.MAIN_DIR + File.separator + "README.md"));
+		List<String> contribNames = GitContributorHelpers.contribNamesForFile(new File(TestCommon.MAIN_DIR + File.separator + "README.md"));
 		AssertHelpers.arrayEqualsLstOrderInsensitive(new String[] {"0x17"}, contribNames);
 	}
 

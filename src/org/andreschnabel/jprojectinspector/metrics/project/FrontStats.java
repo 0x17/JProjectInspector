@@ -12,7 +12,7 @@ public class FrontStats {
 	public static class Branches implements OnlineMetric {
 		@Override
 		public String getName() {
-			return "nbranches";
+			return "NumBranches";
 		}
 
 		@Override
@@ -34,7 +34,7 @@ public class FrontStats {
 	public static class Forks implements OnlineMetric {
 		@Override
 		public String getName() {
-			return "nforks";
+			return "NumForks";
 		}
 
 		@Override
@@ -56,7 +56,7 @@ public class FrontStats {
 	public static class Stars implements OnlineMetric {
 		@Override
 		public String getName() {
-			return "nstars";
+			return "NumStars";
 		}
 
 		@Override
@@ -75,32 +75,10 @@ public class FrontStats {
 		}
 	}
 
-	public static class Issues implements OnlineMetric {
-		@Override
-		public String getName() {
-			return "nissues2";
-		}
-
-		@Override
-		public String getDescription() {
-			return "Number of issues from project profile.";
-		}
-
-		@Override
-		public Category getCategory() {
-			return Category.Scraping;
-		}
-
-		@Override
-		public double measure(Project p) throws Exception {
-			return statsForProject(p).nissues;
-		}
-	}
-
 	public static class PullRequests implements OnlineMetric {
 		@Override
 		public String getName() {
-			return "npullrequests";
+			return "NumPullRequests";
 		}
 
 		@Override

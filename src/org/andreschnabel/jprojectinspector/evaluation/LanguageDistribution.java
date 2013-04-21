@@ -1,11 +1,9 @@
 package org.andreschnabel.jprojectinspector.evaluation;
 
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.scrapers.LanguageDetector;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,16 +30,6 @@ public class LanguageDistribution {
 		else {
 			langDistr.put(lang, 1);
 		}
-	}
-
-	public static List<Project> respProjectsToProjects(List<ResponseProjects> respProjsWithUser) {
-		List<Project> projs = new LinkedList<Project>();
-		for(ResponseProjects rp : respProjsWithUser) {
-			for(Project p : rp.toProjectList()) {
-				projs.add(p);
-			}
-		}
-		return projs;
 	}
 
 }

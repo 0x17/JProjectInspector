@@ -2,8 +2,6 @@ package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 import java.io.File;
@@ -24,7 +22,7 @@ public class JavaTestLinesOfCode implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "jtloc";
+		return "JTLOC";
 	}
 
 	@Override
@@ -34,14 +32,9 @@ public class JavaTestLinesOfCode implements OfflineMetric {
 
 	@Override
 	public double measure(File repoRoot) throws Exception {
-		Predicate<File> isJava = new Predicate<File>() {
-			@Override
-			public boolean invoke(File f) {
-				return FileHelpers.extension(f).equals("java");
-			}
-		};
-
-		if(!Func.contains(isJava, FileHelpers.filesInTree(repoRoot))) return Double.NaN;
+		if(JavaCommon.containsNoJavaCode(repoRoot)){
+			return Double.NaN;
+		}
 
 		return countJavaTestLocOfDir(repoRoot);
 	}

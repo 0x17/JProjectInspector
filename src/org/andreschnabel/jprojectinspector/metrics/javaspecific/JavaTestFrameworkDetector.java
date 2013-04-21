@@ -46,7 +46,7 @@ public class JavaTestFrameworkDetector implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "jtestframework";
+		return "JTestFramework";
 	}
 
 	@Override
@@ -56,6 +56,9 @@ public class JavaTestFrameworkDetector implements OfflineMetric {
 
 	@Override
 	public double measure(File repoRoot) throws Exception {
+		if(JavaCommon.containsNoJavaCode(repoRoot)) {
+			return Double.NaN;
+		}
 		return checkForFramework(repoRoot);
 	}
 }

@@ -85,7 +85,7 @@ public class JavaLinesOfCode implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "jloc";
+		return "JLOC";
 	}
 
 	@Override
@@ -95,6 +95,10 @@ public class JavaLinesOfCode implements OfflineMetric {
 
 	@Override
 	public double measure(File repoRoot) throws Exception {
+		if(JavaCommon.containsNoJavaCode(repoRoot)) {
+			return Double.NaN;
+		}
+
 		int loc = countLocOfDir(repoRoot);
 		if(loc == 0) return Double.NaN;
 		else return (double)loc;

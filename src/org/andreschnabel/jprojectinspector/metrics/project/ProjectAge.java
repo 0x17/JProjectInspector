@@ -23,7 +23,7 @@ public class ProjectAge implements OnlineMetric {
 
 	@Override
 	public String getName() {
-		return "projectage";
+		return "ProjectAge";
 	}
 
 	@Override

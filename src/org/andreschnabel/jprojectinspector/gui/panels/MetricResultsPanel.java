@@ -1,9 +1,9 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.evaluation.MetricsCollector;
-import org.andreschnabel.jprojectinspector.gui.windows.FreeChartWindow;
 import org.andreschnabel.jprojectinspector.gui.freechart.MetricBarChart;
 import org.andreschnabel.jprojectinspector.gui.tables.MetricResultTableModel;
+import org.andreschnabel.jprojectinspector.gui.windows.FreeChartWindow;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
@@ -16,8 +16,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class MetricResultsPanel extends JPanel {
 

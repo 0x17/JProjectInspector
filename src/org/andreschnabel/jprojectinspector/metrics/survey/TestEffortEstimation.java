@@ -8,7 +8,7 @@ public class TestEffortEstimation implements SurveyMetric {
 
 	@Override
 	public String getName() {
-		return "testeffort";
+		return "TestEffortEstimate";
 	}
 
 	@Override

@@ -73,7 +73,7 @@ public class RoughFunctionCoverage implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "cov";
+		return "CoverageApprox";
 	}
 
 	@Override

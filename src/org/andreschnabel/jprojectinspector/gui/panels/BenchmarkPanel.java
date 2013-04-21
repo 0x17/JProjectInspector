@@ -7,7 +7,6 @@ import org.andreschnabel.jprojectinspector.gui.tables.BenchmarkTableCellRenderer
 import org.andreschnabel.jprojectinspector.gui.tables.BenchmarkTableModel;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.EquationHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
@@ -156,20 +155,7 @@ public class BenchmarkPanel extends PanelWithParent {
 					switch(inputType) {
 						case Estimations:
 							estimationsLbl.setText(data.title);
-							Transform<String[], ResponseProjects> rowToRespProjs = new Transform<String[], ResponseProjects>() {
-								@Override
-								public ResponseProjects invoke(String[] sa) {
-									ResponseProjects rps = new ResponseProjects();
-									rps.user = sa[0];
-									rps.leastTested = sa[1];
-									rps.mostTested = sa[2];
-									rps.lowestBugCount = sa[3];
-									rps.highestBugCount = sa[4];
-									rps.weight = Double.valueOf(sa[5]);
-									return rps;
-								}
-							};
-							respProjs = CsvData.toList(rowToRespProjs, data);
+							respProjs = ResponseProjects.fromPreprocessedCsvData(data);
 							benchmarkTableModel.setRespProjs(respProjs);
 							numEstimationsLbl.setText(""+respProjs.size()*2);
 							break;

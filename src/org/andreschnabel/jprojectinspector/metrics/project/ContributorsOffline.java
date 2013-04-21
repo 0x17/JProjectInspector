@@ -1,14 +1,14 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GitHelpers;
+import org.andreschnabel.jprojectinspector.utilities.git.GitContributorHelpers;
 
 import java.io.File;
 
 public class ContributorsOffline implements OfflineMetric {
 	@Override
 	public String getName() {
-		return "ncontribs";
+		return "NumContribs";
 	}
 
 	@Override
@@ -19,6 +19,6 @@ public class ContributorsOffline implements OfflineMetric {
 
 	@Override
 	public double measure(File repoRoot) throws Exception {
-		return GitHelpers.numContribs(repoRoot);
+		return GitContributorHelpers.numContribs(repoRoot);
 	}
 }

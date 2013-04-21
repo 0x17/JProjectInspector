@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage;
 
 import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaCommon;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -33,7 +34,7 @@ public class SimpleJavaTestCoverage implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "jsimplecov";
+		return "JSimpleCov";
 	}
 
 	@Override
@@ -43,6 +44,9 @@ public class SimpleJavaTestCoverage implements OfflineMetric {
 
 	@Override
 	public double measure(File repoRoot) throws Exception {
+		if(JavaCommon.containsNoJavaCode(repoRoot)) {
+			return Double.NaN;
+		}
 		return determineMethodCoverage(repoRoot);
 	}
 }

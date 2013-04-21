@@ -20,7 +20,7 @@ public class LanguageDistributionRunner {
 	}
 
 	public static void showLanguageDistribution() throws Exception {
-		List<Project> projs = LanguageDistribution.respProjectsToProjects(getProjectsWithUser());
+		List<Project> projs = ResponseProjects.allProjects(getProjectsWithUser());
 		Map<String, Integer> distr = LanguageDistribution.determineLanguageDistribution(projs);
 		for(String lang : distr.keySet()) {
 			Helpers.log(lang + " => " + distr.get(lang));

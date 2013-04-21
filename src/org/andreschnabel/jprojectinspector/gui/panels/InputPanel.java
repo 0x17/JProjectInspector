@@ -9,7 +9,6 @@ import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.scrapers.TimelineTapper;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
@@ -306,20 +305,7 @@ public class InputPanel extends JPanel implements LaunchSettings {
 					if(data == null) {
 						return;
 					}
-					Transform<String[], ResponseProjects> rowToRespProjs = new Transform<String[], ResponseProjects>() {
-						@Override
-						public ResponseProjects invoke(String[] sa) {
-							ResponseProjects rps = new ResponseProjects();
-							rps.user = sa[0];
-							rps.leastTested = sa[1];
-							rps.mostTested = sa[2];
-							rps.lowestBugCount = sa[3];
-							rps.highestBugCount = sa[4];
-							rps.weight = Double.valueOf(sa[5]);
-							return rps;
-					   }
-					};
-					List<ResponseProjects> respProjs = CsvData.toList(rowToRespProjs, data);
+					List<ResponseProjects> respProjs = ResponseProjects.fromPreprocessedCsvData(data);
 					List<Project> projs = new LinkedList<Project>();
 					for(ResponseProjects rps : respProjs) {
 						projs.addAll(rps.toProjectList());

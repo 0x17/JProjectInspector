@@ -16,7 +16,7 @@ public final class ContributorsOnline implements OnlineMetric {
 
 	@Override
 	public String getName() {
-		return "ncontribsonline";
+		return "NumContribsOnline";
 	}
 
 	@Override

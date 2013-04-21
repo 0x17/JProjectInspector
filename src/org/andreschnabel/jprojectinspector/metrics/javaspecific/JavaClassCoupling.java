@@ -76,7 +76,7 @@ public class JavaClassCoupling implements OfflineMetric {
 
 	@Override
 	public String getName() {
-		return "jcoupling";
+		return "JCoupling";
 	}
 
 	@Override
@@ -86,6 +86,9 @@ public class JavaClassCoupling implements OfflineMetric {
 
 	@Override
 	public double measure(File repoRoot) throws Exception {
+		if(JavaCommon.containsNoJavaCode(repoRoot)) {
+			return Double.NaN;
+		}
 		return getAverageCoupling(repoRoot);
 	}
 }

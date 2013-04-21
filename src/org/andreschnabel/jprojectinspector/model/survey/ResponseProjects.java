@@ -103,6 +103,31 @@ public class ResponseProjects {
 				'}';
 	}
 
+	public static List<ResponseProjects> fromPreprocessedCsvData(CsvData data) throws Exception {
+		Transform<String[], ResponseProjects> rowToRespProjs = new Transform<String[], ResponseProjects>() {
+			@Override
+			public ResponseProjects invoke(String[] sa) {
+				ResponseProjects rps = new ResponseProjects();
+				rps.user = sa[0];
+				rps.leastTested = sa[1];
+				rps.mostTested = sa[2];
+				rps.lowestBugCount = sa[3];
+				rps.highestBugCount = sa[4];
+				rps.weight = Double.valueOf(sa[5]);
+				return rps;
+			}
+		};
+		return CsvData.toList(rowToRespProjs, data);
+	}
+
+	public static List<ResponseProjects> fromPreprocessedCsvFile(File f) throws Exception {
+		CsvData data = CsvHelpers.parseCsv(f);
+		if(data == null) {
+			return null;
+		}
+		return fromPreprocessedCsvData(data);
+	}
+
 	public static List<ResponseProjects> fromCsvFile(File f) throws Exception {
 		final CsvData data = CsvHelpers.parseCsv(f);
 		Transform<String[], ResponseProjects> rowToRespProjs = new Transform<String[], ResponseProjects>() {
@@ -148,5 +173,15 @@ public class ResponseProjects {
 			}
 		};
 		return CsvData.fromList(headers, respProjToRow, rps);
+	}
+
+	public static List<Project> allProjects(List<ResponseProjects> respProjs) {
+		List<Project> projs = new LinkedList<Project>();
+		for(ResponseProjects rp : respProjs) {
+			for(Project p : rp.toProjectList()) {
+				projs.add(p);
+			}
+		}
+		return projs;
 	}
 }

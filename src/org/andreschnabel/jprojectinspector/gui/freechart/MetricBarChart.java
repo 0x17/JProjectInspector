@@ -14,14 +14,12 @@ public class MetricBarChart {
 	public static JFreeChart newInstance(String title, Map<Project, Double[]> results, int col) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for(Project p : results.keySet()) {
-			dataset.setValue(results.get(p)[col], p.toString(), p.toString());
+			dataset.setValue(results.get(p)[col], title, p.toString());
 		}
 		JFreeChart chart = ChartFactory.createBarChart(title, "Projects", title+" values", dataset, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot plot = (CategoryPlot) chart.getPlot();
 		plot.setForegroundAlpha(0.5f);
 		return chart;
 	}
-
-
 
 }

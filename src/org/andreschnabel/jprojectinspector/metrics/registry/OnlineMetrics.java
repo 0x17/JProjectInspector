@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.metrics.registry;
 
 import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
+import org.andreschnabel.jprojectinspector.metrics.churn.CodeFrequency;
 import org.andreschnabel.jprojectinspector.metrics.plugins.MetricPlugins;
 import org.andreschnabel.jprojectinspector.metrics.project.*;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
@@ -18,7 +19,6 @@ public class OnlineMetrics {
 		ms.add(new ContributorsOnline());
 		ms.add(new Issues());
 		ms.add(new FrontStats.Branches());
-		ms.add(new FrontStats.Issues());
 		ms.add(new FrontStats.Stars());
 		ms.add(new FrontStats.PullRequests());
 		ms.add(new FrontStats.Forks());
