@@ -34,4 +34,13 @@ public class GitRevisionHelpers {
 	public static String latestRevisionBeforeDate(File repoPath, String date) throws Exception {
 		return listRevisionsBeforeDate(repoPath, date)[0];
 	}
+	
+	public static long getDateOfRevision(File repoPath, String rev) throws Exception {
+		String out = ProcessHelpers.monitorProcess(repoPath, "git", "log","-1","--format=\"%ct\"",rev);
+		return Long.valueOf(out.replace("\n", "").replace("\"", ""));
+	}
+	
+	public static String getOldestRevision(File repoPath) throws Exception {
+		return ProcessHelpers.monitorProcess(repoPath, "git", "rev-list", "--max-parents=0", "HEAD").replace("\n", "").replace("\"", "");
+	}
 }

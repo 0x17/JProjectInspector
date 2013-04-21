@@ -5,13 +5,12 @@ import org.andreschnabel.jprojectinspector.metrics.churn.AverageChurnPerRevision
 import org.andreschnabel.jprojectinspector.metrics.code.AvgLocPerSourceFile;
 import org.andreschnabel.jprojectinspector.metrics.code.AvgLocPerTestFile;
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
-import org.andreschnabel.jprojectinspector.metrics.javaspecific.Cpd;
-import org.andreschnabel.jprojectinspector.metrics.javaspecific.Pmd;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.*;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage.SimpleJavaTestCoverage;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.smells.JavaTestSmellDetector;
 import org.andreschnabel.jprojectinspector.metrics.plugins.MetricPlugins;
 import org.andreschnabel.jprojectinspector.metrics.project.BugFixCommitMessages;
+import org.andreschnabel.jprojectinspector.metrics.project.ProjectAge;
 import org.andreschnabel.jprojectinspector.metrics.project.Revisions;
 import org.andreschnabel.jprojectinspector.metrics.project.ContributorsOffline;
 import org.andreschnabel.jprojectinspector.metrics.project.TestCommitMessages;
@@ -43,6 +42,7 @@ public class OfflineMetrics {
 		ms.add(new Pmd());
 		ms.add(new Cpd());
 		ms.add(new AverageChurnPerRevision());
+		ms.add(new ProjectAge());
 		initJavaSpecificOfflineMetrics(ms);
 
 		ms.addAll(MetricPlugins.loadOfflineMetricPlugins(new File("plugins")));

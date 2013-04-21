@@ -24,7 +24,6 @@ public class OnlineMetrics {
 		ms.add(new FrontStats.Forks());
 		ms.add(new CodeFrequency());
 		ms.add(new Selectivity());
-		ms.add(new ProjectAge());
 		ms.add(new RecentCommits());
 
 		ms.addAll(MetricPlugins.loadOnlineMetricPlugins(new File("plugins")));

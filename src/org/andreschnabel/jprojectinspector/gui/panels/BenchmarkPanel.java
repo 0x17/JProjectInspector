@@ -45,6 +45,9 @@ public class BenchmarkPanel extends PanelWithParent {
 	private JTable benchmarkTable = new JTable(benchmarkTableModel);
 
 	private volatile boolean updating;
+	private JLabel weightSumLbl;
+	private JLabel percWeightCorrLbl;
+	private double weightSum;
 
 	public BenchmarkPanel() {
 		initTopPane();
@@ -53,7 +56,7 @@ public class BenchmarkPanel extends PanelWithParent {
 
 	private void initTopPane() {
 		setLayout(new BorderLayout());
-		JPanel topPane = new JPanel(new GridLayout(9, 2));
+		JPanel topPane = new JPanel(new GridLayout(11, 2));
 
 		initResultSelectionPanel(topPane);
 		initEstimationsSelectionPanel(topPane);
@@ -101,10 +104,6 @@ public class BenchmarkPanel extends PanelWithParent {
 		numCorrLbl = new JLabel("0");
 		topPane.add(numCorrLbl);
 
-		topPane.add(new JLabel("Weighted:"));
-		weightedNumCorrLbl = new JLabel("0");
-		topPane.add(weightedNumCorrLbl);
-
 		topPane.add(new JLabel("Total number of estimations:"));
 		numEstimationsLbl = new JLabel("0");
 		topPane.add(numEstimationsLbl);
@@ -112,6 +111,18 @@ public class BenchmarkPanel extends PanelWithParent {
 		topPane.add(new JLabel("Percentage:"));
 		percCorrLbl = new JLabel("0%");
 		topPane.add(percCorrLbl);
+
+		topPane.add(new JLabel("# Correct weighted:"));
+		weightedNumCorrLbl = new JLabel("0");
+		topPane.add(weightedNumCorrLbl);
+
+		topPane.add(new JLabel("Total weight sum:"));
+		weightSumLbl = new JLabel("0");
+		topPane.add(weightSumLbl);
+
+		topPane.add(new JLabel("Percentage:"));
+		percWeightCorrLbl = new JLabel("0%");
+		topPane.add(percWeightCorrLbl);
 
 		add(topPane, BorderLayout.NORTH);
 	}
@@ -159,6 +170,14 @@ public class BenchmarkPanel extends PanelWithParent {
 							respProjs = ResponseProjects.fromPreprocessedCsvData(data);
 							benchmarkTableModel.setRespProjs(respProjs);
 							numEstimationsLbl.setText(""+respProjs.size()*2);
+
+							weightSum = 0;
+							for(ResponseProjects rps : respProjs) {
+								weightSum += rps.weight;
+							}
+							weightSum *= 2.0;
+							weightSumLbl.setText(""+weightSum);
+
 							break;
 						case MetricResults:
 							metricResultsLbl.setText(data.title);
@@ -306,6 +325,7 @@ public class BenchmarkPanel extends PanelWithParent {
 			numCorrLbl.setText("" + ncorr);
 			weightedNumCorrLbl.setText(""+wncorr);
 			percCorrLbl.setText(String.format("%.2f", (ncorr/(double)(respProjs.size()*2))*100.0) + "%");
+			percWeightCorrLbl.setText(String.format("%.2f", wncorr/weightSum * 100.0) + "%");
 
 			updateTable(q);
 

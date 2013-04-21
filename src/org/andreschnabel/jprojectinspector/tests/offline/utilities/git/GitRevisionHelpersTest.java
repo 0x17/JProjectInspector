@@ -57,5 +57,17 @@ public class GitRevisionHelpersTest {
 		String latestSha1 = GitRevisionHelpers.latestRevisionBeforeDate(new File("."), "2012-12-18");
 		Assert.assertEquals("43878103962d51bcac7e5317d8805030edc73f0b", latestSha1);
 	}
+	
+	@Test
+	public void testGetDateOfRevision() throws Exception {
+		long date = GitRevisionHelpers.getDateOfRevision(new File("."), "6be4ae99ae2e18b1f9f5dabd23e84177e9649ad2");
+		Assert.assertEquals(1353967499, date);
+	}
+	
+	@Test
+	public void testGetOldestRevision() throws Exception {
+		String rev = GitRevisionHelpers.getOldestRevision(new File("."));
+		Assert.assertEquals("6be4ae99ae2e18b1f9f5dabd23e84177e9649ad2", rev);
+	}
 
 }

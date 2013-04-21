@@ -1,24 +1,15 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
-import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.githubapi.GitHubHelpers;
-import org.eclipse.egit.github.core.Repository;
-import org.eclipse.egit.github.core.client.GitHubClient;
-import org.eclipse.egit.github.core.service.RepositoryService;
+import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.utilities.git.GitRevisionHelpers;
 
-import java.util.Date;
+import java.io.File;
 
-public class ProjectAge implements OnlineMetric {
+public class ProjectAge implements OfflineMetric {
 
-	public static long getProjectAge(Project project) throws Exception {
-		GitHubClient ghc = GitHubHelpers.authenticate();
-		RepositoryService repoService = new RepositoryService(ghc);
-		Repository repo = repoService.getRepository(project.owner, project.repoName);
-
-		Date creationDate = repo.getCreatedAt();
-
-		return (new Date().getTime() - creationDate.getTime());
+	public static long getProjectAge(File repoRoot) throws Exception {
+		String oldestRev = GitRevisionHelpers.getOldestRevision(repoRoot);
+		return GitRevisionHelpers.getDateOfRevision(repoRoot, oldestRev);
 	}
 
 	@Override
@@ -32,12 +23,8 @@ public class ProjectAge implements OnlineMetric {
 	}
 
 	@Override
-	public Category getCategory() {
-		return Category.GitHubApi;
+	public double measure(File repoRoot) throws Exception {
+		return getProjectAge(repoRoot);
 	}
 
-	@Override
-	public double measure(Project p) throws Exception {
-		return getProjectAge(p);
-	}
 }
