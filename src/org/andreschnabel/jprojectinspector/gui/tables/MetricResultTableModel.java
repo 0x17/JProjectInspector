@@ -74,4 +74,8 @@ public class MetricResultTableModel extends AbstractTableModel {
 				return Double.isNaN(result) ? "N/A" : String.valueOf(result);
 		}
 	}
+
+	public List<String> getMetricNames() {
+		return metricNames;
+	}
 }

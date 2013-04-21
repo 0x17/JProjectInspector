@@ -5,6 +5,8 @@ import org.andreschnabel.jprojectinspector.evaluation.PredictionType;
 import org.andreschnabel.jprojectinspector.evaluation.SurveyFormat;
 import org.andreschnabel.jprojectinspector.gui.tables.BenchmarkTableCellRenderer;
 import org.andreschnabel.jprojectinspector.gui.tables.BenchmarkTableModel;
+import org.andreschnabel.jprojectinspector.gui.windows.ProjectMetricsWindow;
+import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.helpers.EquationHelpers;
@@ -15,10 +17,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public class BenchmarkPanel extends PanelWithParent {
 	private JTextField equationField;
 	private JLabel estimationsLbl;
 	private JLabel metricResultsLbl;
-	private JLabel variablesLbl;
+	private JTextArea variablesArea;
 	private List<String> variablesLst = new ArrayList<String>();
 
 	private List<ResponseProjects> respProjs;
@@ -60,8 +59,10 @@ public class BenchmarkPanel extends PanelWithParent {
 		initEstimationsSelectionPanel(topPane);
 
 		topPane.add(new JLabel("Variables:"));
-		variablesLbl = new JLabel();
-		topPane.add(variablesLbl);
+		variablesArea = new JTextArea(1, 30);
+		variablesArea.setEditable(false);
+		variablesArea.setLineWrap(true);
+		topPane.add(new JScrollPane(variablesArea));
 
 		topPane.add(new JLabel("Mode: "));
 		modeCombo = new JComboBox(new String[]{"Test effort estimation", "Bug count estimation"});
@@ -171,7 +172,7 @@ public class BenchmarkPanel extends PanelWithParent {
 								if(i+1<headers.length)
 									sb.append(", ");
 							}
-							variablesLbl.setText(sb.toString());
+							variablesArea.setText(sb.toString());
 							metricsData = ProjectWithResults.fromCsv(data);
 							break;
 					}
@@ -187,6 +188,34 @@ public class BenchmarkPanel extends PanelWithParent {
 		JPanel tablePane = new JPanel(new GridLayout(1,1));
 		tablePane.add(new JScrollPane(benchmarkTable));
 		benchmarkTable.setDefaultRenderer(Object.class, new BenchmarkTableCellRenderer());
+		benchmarkTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				super.mouseClicked(e);
+
+				int selRowIndex = benchmarkTable.getSelectedRow();
+				int selColIndex = benchmarkTable.getSelectedColumn();
+				if(selColIndex == 0) {
+					return;
+				}
+
+				String user = (String)benchmarkTableModel.getValueAt(selRowIndex, 0);
+				Object cellVal = benchmarkTableModel.getValueAt(selRowIndex, selColIndex);
+				if(!(cellVal instanceof String)) {
+					return;
+				}
+				String repoName = (String)cellVal;
+
+				Project p = new Project(user, repoName);
+				for(ProjectWithResults projectWithResults : metricsData) {
+					if(projectWithResults.project.equals(p)) {
+						new ProjectMetricsWindow(projectWithResults).setVisible(true);
+						return;
+					}
+				}
+
+			}
+		});
 		add(tablePane, BorderLayout.CENTER);
 	}
 

@@ -1,20 +1,21 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.evaluation.MetricsCollector;
-import org.andreschnabel.jprojectinspector.gui.freechart.MetricBarChart;
 import org.andreschnabel.jprojectinspector.gui.tables.MetricResultTableModel;
-import org.andreschnabel.jprojectinspector.gui.windows.FreeChartWindow;
+import org.andreschnabel.jprojectinspector.gui.windows.ProjectMetricsWindow;
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTaskBatch;
-import org.jfree.chart.JFreeChart;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -121,20 +122,18 @@ public class MetricResultsPanel extends JPanel {
 		});
 		topPane.add(exportBtn);
 
-		for(int col=0; col<metricNames.size(); col++) {
-			JButton visualizeBtn = new JButton("Visualize " + metricNames.get(col));
-			final int finalCol = col;
-			visualizeBtn.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent actionEvent) {
-					String title = metricNames.get(finalCol);
-					JFreeChart mbc = MetricBarChart.newInstance(title, mrtm.getResults(), finalCol);
-					FreeChartWindow cw = new FreeChartWindow(mbc, new Dimension(640, 480));
-					cw.setVisible(true);
-				}
-			});
-			topPane.add(visualizeBtn);
-		}
+		JButton visualizeBtn = new JButton("Visualize");
+		visualizeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				/*String title = metricNames.get(finalCol);
+				JFreeChart mbc = MetricBarChart.newInstance(title, mrtm.getResults(), finalCol);
+				FreeChartWindow cw = new FreeChartWindow(mbc, new Dimension(640, 480));
+				cw.setVisible(true);*/
+				// TODO: Open visualisation settings window!
+			}
+		});
+		topPane.add(visualizeBtn);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -145,7 +144,7 @@ public class MetricResultsPanel extends JPanel {
 		add(topPane);
 	}
 
-	private void initAndAddTable(MetricResultTableModel mrtm) {
+	private void initAndAddTable(final MetricResultTableModel mrtm) {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = gbc.weighty = 1;
@@ -153,7 +152,29 @@ public class MetricResultsPanel extends JPanel {
 		gbc.gridy = 1;
 		gbc.gridwidth = 3;
 		resultTable = new JTable(mrtm);
-		add(new JScrollPane(resultTable), gbc);
+		resultTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				super.mouseClicked(e);
+
+				int selRowIndex = resultTable.getSelectedRow();
+				String owner = (String)mrtm.getValueAt(selRowIndex, 0);
+				String repo = (String)mrtm.getValueAt(selRowIndex, 1);
+				Project p = new Project(owner, repo);
+
+				Map<Project, Double[]> cache = mrtm.getResults();
+				if(!cache.containsKey(p)) {
+					return;
+				}
+
+				Double[] results = cache.get(p);
+				List<String> metricNames = mrtm.getMetricNames();
+				String[] metricNamesArray = metricNames.toArray(new String[] {});
+				new ProjectMetricsWindow(new ProjectWithResults(p, metricNamesArray, results)).setVisible(true);
+			}
+		});
+		JScrollPane scrollPane = new JScrollPane(resultTable);
+		add(scrollPane, gbc);
 	}
 
 	private void initAndExecTaskBatch(List<Project> projects, final List<String> metricNames, final MetricResultTableModel mrtm) {

@@ -11,7 +11,7 @@ public class IssuesTest {
 	@Test
 	public void testGetNumberOfIssues() throws Exception {
 		assertEquals(0, Issues.getNumberOfIssues(TestCommon.THIS_PROJECT));
-		assertEquals(36, Issues.getNumberOfIssues(Project.fromString("jlnr/gosu")));
+		assertEquals(37, Issues.getNumberOfIssues(Project.fromString("jlnr/gosu")));
 	}
 
 }

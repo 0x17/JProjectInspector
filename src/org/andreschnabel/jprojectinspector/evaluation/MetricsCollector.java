@@ -1,14 +1,14 @@
 package org.andreschnabel.jprojectinspector.evaluation;
 
+import java.io.File;
+import java.util.List;
+
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
 import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
-
-import java.io.File;
-import java.util.List;
 
 /**
  * Collects specified metrics for a project.
@@ -17,6 +17,13 @@ public class MetricsCollector {
 
 	public static Double[] gatherMetricsForProject(List<String> metricNames, Project p) {
 		Double[] results = new Double[metricNames.size()];
+
+		if(!ProjectDownloader.isProjectOnline(p)) {
+			for(int i=0; i<results.length; i++) {
+				results[i] = Double.NaN;
+			}
+			return results;
+		}
 
 		Predicate<String> isOfflineMetric = new Predicate<String>() {
 			@Override

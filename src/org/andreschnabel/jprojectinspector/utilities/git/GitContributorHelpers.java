@@ -11,7 +11,7 @@ public class GitContributorHelpers {
 	public static List<String> contribNamesForFile(File f) throws Exception {
 		List<String> result = new LinkedList<String>();
 
-		String out = ProcessHelpers.monitorProcess(f.getParentFile(), Config.GIT_PATH, "log", "--follow", "--pretty=format:%an", "--", f.getName());
+		String out = ProcessHelpers.monitorProcess(f.getParentFile(), Config.GIT_PATH, "--no-pager", "log", "--follow", "--pretty=format:%an", f.getName());
 		String[] names = out.split("\n");
 		for(String name : names) {
 			if(name != null && !name.isEmpty()) {
@@ -29,7 +29,7 @@ public class GitContributorHelpers {
 	}
 
 	public static List<String> listAllContribs(File repoPath) throws Exception {
-		String out = ProcessHelpers.monitorProcess(repoPath, Config.GIT_PATH, "log", "--all", "--format=%aN");
+		String out = ProcessHelpers.monitorProcess(repoPath, Config.GIT_PATH, "--no-pager", "log", "--all", "--format=%an", ".");
 		String[] lines = out.split("\n");
 		List<String> contribs = new LinkedList<String>();
 		for(String line : lines) {
