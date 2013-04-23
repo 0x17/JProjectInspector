@@ -9,7 +9,7 @@ public class ExampleOfflineMetric implements IOfflineMetric {
 	public String getName() { return "exoffmetric"; }
 	public String getDescription() { return "Number of files in repo dir. Example metric implemented as plugin."; }
 
-	public float measure(File repoRoot) throws Exception {
+	public double measure(File repoRoot) throws Exception {
 		return FileHelpers.filesInTree(repoRoot).size();
 	}
 

@@ -108,4 +108,20 @@ public final class Func {
 		}
 		return copy;
 	}
+
+	public static void nestedFor(int depth, int fromInclusive, int toExclusive, IVarIndexedAction action) {
+		nestedFor(depth, fromInclusive, toExclusive, action, new int[0]);
+	}
+
+	public static void nestedFor(int depth, int fromInclusive, int toExclusive, IVarIndexedAction action, int[] indices) {
+		if(depth > 0) {
+			indices = Arrays.copyOf(indices, indices.length+1);
+			for(int i=fromInclusive; i<toExclusive; i++) {
+				indices[indices.length-1] = i;
+				nestedFor(depth - 1, fromInclusive, toExclusive, action, indices);
+			}
+		} else {
+			action.invoke(indices);
+		}
+	}
 }

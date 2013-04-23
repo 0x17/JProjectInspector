@@ -129,4 +129,29 @@ public class FuncTest {
 		};
 		Assert.assertEquals(sumOfIntsTo10, (int) Func.reduce(add, 0, nums));
 	}
+
+	@Test
+	public void testNestedForDepth1() throws Exception {
+		final StringBuilder sb = new StringBuilder();
+		Func.nestedFor(1, 0, 10, new IVarIndexedAction() {
+			@Override
+			public void invoke(int[] indices) {
+				sb.append(indices[0] + ",");
+			}
+		});
+		Assert.assertEquals("0,1,2,3,4,5,6,7,8,9,", sb.toString());
+	}
+
+	@Test
+	public void testNestedForDepth2() throws Exception {
+		final StringBuilder sb = new StringBuilder();
+		IVarIndexedAction action = new IVarIndexedAction() {
+			@Override
+			public void invoke(int[] indices) {
+				sb.append(indices[0]+","+indices[1]+"\n");
+			}
+		};
+		Func.nestedFor(2, 0, 2, action);
+		Assert.assertEquals("0,0\n0,1\n1,0\n1,1\n", sb.toString());
+	}
 }

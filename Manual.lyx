@@ -127,6 +127,16 @@ apt-get install cloc
 \end_inset
 
  depending on the specific distribution should do the trick.
+ On OS X it can be installed using 
+\begin_inset Quotes eld
+\end_inset
+
+brew install cloc
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This requires the Homebrew package manager.
 \end_layout
 
 \begin_layout Section

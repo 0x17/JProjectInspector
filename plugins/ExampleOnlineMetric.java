@@ -11,7 +11,7 @@ public class ExampleOnlineMetric implements IOnlineMetric {
 	
 	public Category getCategory() { return Category.Scraping; }
 
-	public float measure(Project p) throws Exception {
+	public double measure(Project p) throws Exception {
 		return UserScraper.scrapeUser(p.owner).followers.size();
 	}
 

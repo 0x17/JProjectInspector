@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.evaluation.Benchmark;
+import org.andreschnabel.jprojectinspector.evaluation.PredictionMethodsFromString;
 import org.andreschnabel.jprojectinspector.evaluation.PredictionType;
 import org.andreschnabel.jprojectinspector.evaluation.SurveyFormat;
 import org.andreschnabel.jprojectinspector.gui.tables.BenchmarkTableCellRenderer;
@@ -20,9 +21,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BenchmarkPanel extends PanelWithParent {
 	private static final long serialVersionUID = 1L;
@@ -97,7 +96,26 @@ public class BenchmarkPanel extends PanelWithParent {
 		});
 		equationPanel.add(computeBtn);
 
-		//topPane.add(equationField);
+		JButton permutateBtn = new JButton("Permutate");
+		permutateBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String winner = null;
+				try {
+					winner = Benchmark.permutate(equationField.getText(), metricsData, respProjs, mode);
+				} catch(Exception e1) {
+					e1.printStackTrace();
+				}
+				if(winner == null) {
+					return;
+				}
+
+				equationField.setText(winner);
+				eqtnChanged();
+			}
+		});
+		equationPanel.add(permutateBtn);
+
 		topPane.add(equationPanel);
 
 		topPane.add(new JLabel("# Correct predictions:"));
@@ -270,40 +288,7 @@ public class BenchmarkPanel extends PanelWithParent {
 
 		updating = true;
 
-		Benchmark.PredictionMethods predMethods = new Benchmark.PredictionMethods() {
-			@Override
-			public String getName() {
-				return "gui-input";
-			}
-
-			@Override
-			public double testEffortPredictionMeasure(ProjectWithResults m) {
-				return common(m);
-			}
-
-			@Override
-			public double bugCountPredictionMeasure(ProjectWithResults m) {
-				return common(m);
-			}
-
-			private double common(ProjectWithResults m) {
-				Map<String, Object> bindings = resultsToBindings(m);
-				Object result = EquationHelpers.parseEquation(bindings, equationField.getText());
-				if(result != null) {
-					return (Double)result;
-				}
-				return 0.0;
-			}
-
-			private Map<String, Object> resultsToBindings(ProjectWithResults m) {
-				Map<String, Object> bindings = new HashMap<String, Object>();
-				String[] headers = m.getResultHeaders();
-				for(int i=0; i<m.results.length; i++) {
-					bindings.put(headers[i], m.results[i]);
-				}
-				return bindings;
-			}
-		};
+		Benchmark.PredictionMethods predMethods = new PredictionMethodsFromString(equationField.getText());
 
 		try {
 			Benchmark.Quality q = Benchmark.runBenchmark(predMethods, metricsData, respProjs);

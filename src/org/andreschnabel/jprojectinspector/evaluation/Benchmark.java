@@ -6,6 +6,7 @@ import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
+import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +15,121 @@ import java.util.List;
  * Assess quality of test effort estimation resp. bug count estimation prediction equation.
  */
 public class Benchmark {
+
+	public static String permutate(String template, List<ProjectWithResults> metricsData, List<ResponseProjects> respProjs, PredictionType mode) throws Exception {
+		List<String[]> matches = RegexHelpers.batchMatch("([A-Za-z]+)", template);
+		if(matches.isEmpty()) {
+			return null;
+		}
+
+		String[] vars = new String[matches.size()];
+
+		if(vars.length == 0) {
+			return null;
+		}
+
+		int i=0;
+		for(String[] marr : matches) {
+			String match = marr[0];
+			if(match.length() > 1) {
+				return null;
+			}
+			vars[i++] = match;
+		}
+
+		String winner = null;
+		double winnerCorr = 0.0;
+
+		String[] metricNames = metricsData.get(0).getResultHeaders();
+
+		// TODO: Use Func.nestedFor here...
+
+		if(vars.length == 1) {
+			for(int j=0; j<metricNames.length; j++) {
+					String candidate = template.replace(vars[0], metricNames[j]);
+
+					Quality quality = runBenchmark(new PredictionMethodsFromString(candidate), metricsData, respProjs);
+
+					double corr = 0;
+
+					switch(mode) {
+						case BugCount:
+							corr = quality.bcWeightedCorrect;
+							break;
+						case TestEffort:
+							corr = quality.teWeightedCorrect;
+							break;
+					}
+
+					if(corr > winnerCorr) {
+						winner = candidate;
+						winnerCorr = corr;
+					}
+
+			}
+		} else if(vars.length == 2) {
+			for(int j=0; j<metricNames.length; j++) {
+				for(int k=0; k<metricNames.length; k++) {
+					if(j == k) {
+						continue;
+					}
+
+					String candidate = template.replace(vars[0], metricNames[j]).replace(vars[1], metricNames[k]);
+
+					Quality quality = runBenchmark(new PredictionMethodsFromString(candidate), metricsData, respProjs);
+
+					double corr = 0;
+
+					switch(mode) {
+						case BugCount:
+							corr = quality.bcWeightedCorrect;
+							break;
+						case TestEffort:
+							corr = quality.teWeightedCorrect;
+							break;
+					}
+
+					if(corr > winnerCorr) {
+						winner = candidate;
+						winnerCorr = corr;
+					}
+
+				}
+			}
+		} else if(vars.length == 3) {
+			for(int j=0; j<metricNames.length; j++) {
+				for(int k=0; k<metricNames.length; k++) {
+					for(int l=0; l<metricNames.length; l++) {
+						if(j == k && k == l) {
+							continue;
+						}
+
+						String candidate = template.replace(vars[0], metricNames[j]).replace(vars[1], metricNames[k]).replace(vars[2], metricNames[l]);
+
+						Quality quality = runBenchmark(new PredictionMethodsFromString(candidate), metricsData, respProjs);
+
+						double corr = 0;
+
+						switch(mode) {
+							case BugCount:
+								corr = quality.bcWeightedCorrect;
+								break;
+							case TestEffort:
+								corr = quality.teWeightedCorrect;
+								break;
+						}
+
+						if(corr > winnerCorr) {
+							winner = candidate;
+							winnerCorr = corr;
+						}
+					}
+				}
+			}
+		}
+
+		return winner;
+	}
 
 	public interface PredictionMethods {
 		public String getName();
