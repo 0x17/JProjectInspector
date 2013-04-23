@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -25,7 +25,7 @@ public class EquationHelpers {
 	public static boolean validateEquationSuccess(final List<String> varNames, String equation) {
 		if(equation.isEmpty()) { return false; }
 		List<String> referencedVars = RegexHelpers.batchMatchOneGroup("([A-Za-z]\\w*)", equation);
-		Predicate<String> notInVarNames = new Predicate<String>() {
+		IPredicate<String> notInVarNames = new IPredicate<String>() {
 			@Override
 			public boolean invoke(String s) {
 				return !varNames.contains(s);

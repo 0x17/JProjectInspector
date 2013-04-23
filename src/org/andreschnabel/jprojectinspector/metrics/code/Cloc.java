@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.metrics.code;
 
 import org.andreschnabel.jprojectinspector.Config;
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
-import org.andreschnabel.jprojectinspector.utilities.functional.BinaryOperator;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
+import org.andreschnabel.jprojectinspector.utilities.functional.IBinaryOperator;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Cloc implements OfflineMetric {
+public class Cloc implements IOfflineMetric {
 
 	@Override
 	public String getName() {
@@ -31,7 +31,7 @@ public class Cloc implements OfflineMetric {
 	}
 
 	public static int sumOfLinesOfCodeForFiles(List<File> files) {
-		return Func.reduce(new BinaryOperator<File, Integer>() {
+		return Func.reduce(new IBinaryOperator<File, Integer>() {
 			@Override
 			public Integer invoke(Integer accum, File srcFile) {
 				try {

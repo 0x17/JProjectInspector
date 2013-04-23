@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.model.survey;
 
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 
@@ -25,7 +25,7 @@ public class CandidateLst {
 
 	public CsvData toCsv() throws Exception {
 		String[] headers = new String[]{"login", "name", "email"};
-		Transform<Candidate, String[]> candidateToRow = new Transform<Candidate, String[]>() {
+		ITransform<Candidate, String[]> candidateToRow = new ITransform<Candidate, String[]>() {
 			@Override
 			public String[] invoke(Candidate c) {
 				return new String[] {c.login, c.name, c.email };
@@ -39,7 +39,7 @@ public class CandidateLst {
 	}
 
 	public static CandidateLst fromCsv(CsvData data) throws Exception {
-		Transform<String[], Candidate> rowToCandidate = new Transform<String[], Candidate>() {
+		ITransform<String[], Candidate> rowToCandidate = new ITransform<String[], Candidate>() {
 			@Override
 			public Candidate invoke(String[] sa) {
 				return new Candidate(sa[0], sa[1], sa[2]);

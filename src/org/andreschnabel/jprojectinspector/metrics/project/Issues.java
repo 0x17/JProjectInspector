@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.githubapi.GitHubHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Issues implements OnlineMetric {
+public class Issues implements IOnlineMetric {
 
 	public static int getNumberOfIssues(Project p) throws Exception {
 		String pageSrc = Helpers.loadUrlIntoStr("https://github.com/" + p.owner + "/" + p.repoName);

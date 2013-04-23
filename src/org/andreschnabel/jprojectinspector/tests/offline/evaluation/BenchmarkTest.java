@@ -8,7 +8,7 @@ import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.junit.Test;
 
 import java.util.LinkedList;
@@ -36,14 +36,14 @@ public class BenchmarkTest {
 
 	@Test
 	public void testGetLowestPredIndex() throws Exception {
-		Transform<Integer, Project> numToProj = new Transform<Integer, Project>() {
+		ITransform<Integer, Project> numToProj = new ITransform<Integer, Project>() {
 			@Override
 			public Project invoke(Integer i) {
 				return new Project("owner" + i, "repo" + i);
 			}
 		};
 		List<Project> projs = Func.map(numToProj, Func.countUpTo(4));
-		Transform<Integer, Double> toDouble = new Transform<Integer, Double>() {
+		ITransform<Integer, Double> toDouble = new ITransform<Integer, Double>() {
 			@Override
 			public Double invoke(Integer i) {
 				return Double.valueOf(i);
@@ -56,14 +56,14 @@ public class BenchmarkTest {
 
 	@Test
 	public void testGetHighestPredIndex() throws Exception {
-		Transform<Integer, Project> numToProj = new Transform<Integer, Project>() {
+		ITransform<Integer, Project> numToProj = new ITransform<Integer, Project>() {
 			@Override
 			public Project invoke(Integer i) {
 				return new Project("owner" + i, "repo" + i);
 			}
 		};
 		List<Project> projs = Func.map(numToProj, Func.countUpTo(4));
-		Transform<Integer, Double> toDouble = new Transform<Integer, Double>() {
+		ITransform<Integer, Double> toDouble = new ITransform<Integer, Double>() {
 			@Override
 			public Double invoke(Integer i) {
 				return Double.valueOf(i);
@@ -108,7 +108,7 @@ public class BenchmarkTest {
 	@Test
 	public void isInvalidProject() throws Exception {
 		List<ProjectWithResults> projectWithResultsList = getTestData().getPml();
-		List<Project> projectList = Func.map(new Transform<ProjectWithResults, Project>() {
+		List<Project> projectList = Func.map(new ITransform<ProjectWithResults, Project>() {
 			@Override
 			public Project invoke(ProjectWithResults p) {
 				return p.project;

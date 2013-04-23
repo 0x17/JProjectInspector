@@ -6,7 +6,7 @@ public final class Func {
 
 	private Func() {}
 
-	public static <T> boolean contains(Predicate<T> pred, Iterable<T> coll) {
+	public static <T> boolean contains(IPredicate<T> pred, Iterable<T> coll) {
 		for(T obj : coll) {
 			if(pred.invoke(obj))
 				return true;
@@ -14,7 +14,7 @@ public final class Func {
 		return false;
 	}
 
-	public static <T> boolean contains(Predicate<T> pred, T[] arr) {
+	public static <T> boolean contains(IPredicate<T> pred, T[] arr) {
 		return contains(pred, Arrays.asList(arr));
 	}
 
@@ -34,7 +34,7 @@ public final class Func {
 		return nums;
 	}
 
-	public static <T,U> List<U> map(Transform<T,U> transform, Collection<T> coll) {
+	public static <T,U> List<U> map(ITransform<T,U> transform, Collection<T> coll) {
 		List<U> destLst = new ArrayList<U>(coll.size());
 		for(T obj : coll) {
 			destLst.add(transform.invoke(obj));
@@ -42,7 +42,7 @@ public final class Func {
 		return destLst;
 	}
 
-	public static <T,U> List<U> mapi(IndexedTransform<T,U> transform, List<T> srcLst) {
+	public static <T,U> List<U> mapi(IIndexedTransform<T,U> transform, List<T> srcLst) {
 		List<U> destLst = new ArrayList<U>(srcLst.size());
 		for(int i=0; i<srcLst.size(); i++) {
 			T obj = srcLst.get(i);
@@ -60,7 +60,7 @@ public final class Func {
 		return mapping;
 	}
 
-	public static <T> List<T> filter(Predicate<T> pred, Collection<T> coll) {
+	public static <T> List<T> filter(IPredicate<T> pred, Collection<T> coll) {
 		List<T> destLst = new ArrayList<T>(coll.size());
 		for(T obj : coll) {
 			if(pred.invoke(obj))
@@ -73,7 +73,7 @@ public final class Func {
 		return Arrays.asList(array);
 	}
 
-	public static <T> int count(Predicate<T> pred, Iterable<T> coll) {
+	public static <T> int count(IPredicate<T> pred, Iterable<T> coll) {
 		int n = 0;
 		for(T obj : coll) {
 			if(pred.invoke(obj))
@@ -82,7 +82,7 @@ public final class Func {
 		return n;
 	}
 
-	public static <T> T find(Predicate<T> pred, Iterable<T> coll) {
+	public static <T> T find(IPredicate<T> pred, Iterable<T> coll) {
 		for(T obj : coll) {
 			if(pred.invoke(obj))
 				return obj;
@@ -90,14 +90,14 @@ public final class Func {
 		return null;
 	}
 
-	public static <T,U> U reduce(BinaryOperator<T,U> op, U accum, Iterable<T> coll) {
+	public static <T,U> U reduce(IBinaryOperator<T,U> op, U accum, Iterable<T> coll) {
 		for(T obj : coll) {
 			accum = op.invoke(accum, obj);
 		}
 		return accum;
 	}
 
-	public static <T,U> U reduce(BinaryOperator<T,U> op, U accum, T[] arr) {
+	public static <T,U> U reduce(IBinaryOperator<T,U> op, U accum, T[] arr) {
 		return reduce(op, accum, Arrays.asList(arr));
 	}
 

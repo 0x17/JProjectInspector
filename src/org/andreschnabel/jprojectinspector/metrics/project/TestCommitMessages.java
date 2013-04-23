@@ -1,19 +1,19 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.git.GitHelpers;
 
 import java.io.File;
 
-public class TestCommitMessages implements OfflineMetric {
+public class TestCommitMessages implements IOfflineMetric {
 
 	public static int countNumTestCommitMessages(File root) throws Exception {
 		if(!root.exists())
 			throw new Exception("Check out first!");
 
-		Predicate<String> containsTestSubstring = new Predicate<String>() {
+		IPredicate<String> containsTestSubstring = new IPredicate<String>() {
 			@Override
 			public boolean invoke(String s) {
 				return s.toLowerCase().contains("test");

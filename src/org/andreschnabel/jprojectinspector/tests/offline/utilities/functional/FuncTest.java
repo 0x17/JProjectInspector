@@ -13,7 +13,7 @@ public class FuncTest {
 	public void testContains() throws Exception {
 		List<Integer> nums = Func.countUpTo(10);
 
-		Predicate<Integer> pred10 = new Predicate<Integer>() {
+		IPredicate<Integer> pred10 = new IPredicate<Integer>() {
 			@Override
 			public boolean invoke(Integer num) {
 				return num == 10;
@@ -21,7 +21,7 @@ public class FuncTest {
 		};
 		Assert.assertTrue(Func.contains(pred10, nums));
 
-		Predicate<Integer> pred20 = new Predicate<Integer>() {
+		IPredicate<Integer> pred20 = new IPredicate<Integer>() {
 			@Override
 			public boolean invoke(Integer num) {
 				return num == 20;
@@ -46,7 +46,7 @@ public class FuncTest {
 	public void testMap() throws Exception {
 		Integer[] oneToTen = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 		Integer[] oneToTenSquared = new Integer[] { 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 };
-		Transform<Integer, Integer> square = new Transform<Integer, Integer>() {
+		ITransform<Integer, Integer> square = new ITransform<Integer, Integer>() {
 			@Override
 			public Integer invoke(Integer obj) {
 				return obj * obj;
@@ -58,7 +58,7 @@ public class FuncTest {
 	@Test
 	public void testMapi() throws Exception {
 		String[] names = new String[] { "Hans", "Peter", "Uwe", "Harald", "Anton", "Heinrich", "Hermann", "Siegfried", "Joachim", "Heinz" };
-		IndexedTransform<String, Integer> itrans = new IndexedTransform<String, Integer>() {
+		IIndexedTransform<String, Integer> itrans = new IIndexedTransform<String, Integer>() {
 			@Override
 			public Integer invoke(int i, String obj) {
 				return i;
@@ -76,7 +76,7 @@ public class FuncTest {
 	@Test
 	public void testFilter() throws Exception {
 		Integer[] evens = new Integer[] { 2, 4, 6, 8, 10 };
-		Predicate<Integer> isEven = new Predicate<Integer>() {
+		IPredicate<Integer> isEven = new IPredicate<Integer>() {
 			@Override
 			public boolean invoke(Integer num) {
 				return num % 2 == 0;
@@ -87,7 +87,7 @@ public class FuncTest {
 
 	@Test
 	public void testCount() throws Exception {
-		Predicate<Integer> isEven = new Predicate<Integer>() {
+		IPredicate<Integer> isEven = new IPredicate<Integer>() {
 			@Override
 			public boolean invoke(Integer num) {
 				return num % 2 == 0;
@@ -100,7 +100,7 @@ public class FuncTest {
 	public void testFind() throws Exception {
 		List<Integer> nums = Func.countUpTo(10);
 
-		Predicate<Integer> pred10 = new Predicate<Integer>() {
+		IPredicate<Integer> pred10 = new IPredicate<Integer>() {
 			@Override
 			public boolean invoke(Integer num) {
 				return num == 10;
@@ -108,7 +108,7 @@ public class FuncTest {
 		};
 		Assert.assertEquals(10, (int) Func.find(pred10, nums));
 
-		Predicate<Integer> pred20 = new Predicate<Integer>() {
+		IPredicate<Integer> pred20 = new IPredicate<Integer>() {
 			@Override
 			public boolean invoke(Integer num) {
 				return num == 20;
@@ -121,7 +121,7 @@ public class FuncTest {
 	public void testReduce() throws Exception {
 		List<Integer> nums = Func.countUpTo(10);
 		int sumOfIntsTo10 = 10 * 11 / 2;
-		BinaryOperator<Integer, Integer> add = new BinaryOperator<Integer, Integer>() {
+		IBinaryOperator<Integer, Integer> add = new IBinaryOperator<Integer, Integer>() {
 			@Override
 			public Integer invoke(Integer a, Integer b) {
 				return a + b;

@@ -1,9 +1,9 @@
 package org.andreschnabel.jprojectinspector.tests.visual;
 
 import org.andreschnabel.jprojectinspector.gui.tables.CsvTableModel;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITestCallback;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
-import org.andreschnabel.jprojectinspector.utilities.functional.TestCallback;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 
 import javax.swing.*;
@@ -12,9 +12,9 @@ import java.io.File;
 
 public class CsvTableModelTest extends VisualTest {
 	@Override
-	protected TestCallback[] getTests() {
-		return new TestCallback[] {
-				new TestCallback() {
+	protected ITestCallback[] getTests() {
+		return new ITestCallback[] {
+				new ITestCallback() {
 					@Override
 					public String getDescription() {
 						return "csvtablewindow";

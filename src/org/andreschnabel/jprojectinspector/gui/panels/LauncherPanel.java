@@ -15,7 +15,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-public class LauncherPanel extends PanelWithParent implements LaunchSettings {
+public class LauncherPanel extends PanelWithParent implements ILaunchSettings {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String ABOUT_TEXT = "<html><h2>JProjectInspector</h2><br />" +

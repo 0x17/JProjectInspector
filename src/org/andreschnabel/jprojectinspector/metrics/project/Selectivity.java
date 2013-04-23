@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.githubapi.GitHubHelpers;
 import org.eclipse.egit.github.core.PullRequest;
@@ -12,7 +12,7 @@ import org.eclipse.egit.github.core.service.RepositoryService;
 
 import java.util.Collection;
 
-public class Selectivity implements OnlineMetric {
+public class Selectivity implements IOnlineMetric {
 
 	private static final int MAX_PULL_REQ_PAGES = 5;
 	private static PullRequestService pullReqService;

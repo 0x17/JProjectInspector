@@ -6,7 +6,7 @@ import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.XmlHelpers;
@@ -28,7 +28,7 @@ public class ConnectProjsWithUsersRunner {
 			rp.user = UserGuesser.guessUserWithProjects(rp, projs);
 		}
 
-		responseProjectsList = Func.filter(new Predicate<ResponseProjects>() {
+		responseProjectsList = Func.filter(new IPredicate<ResponseProjects>() {
 			@Override
 			public boolean invoke(ResponseProjects rps) {
 				for(Project p : rps.toProjectList()) {
@@ -46,10 +46,10 @@ public class ConnectProjsWithUsersRunner {
 	}
 
 	private static void saveListOfProjectsWithResponse(final List<ResponseProjects> results, List<Project> projs) throws Exception {
-		Predicate<Project> hasResponse = new Predicate<Project>() {
+		IPredicate<Project> hasResponse = new IPredicate<Project>() {
 			@Override
 			public boolean invoke(final Project p) {
-				Predicate<ResponseProjects> isProject = new Predicate<ResponseProjects>() {
+				IPredicate<ResponseProjects> isProject = new IPredicate<ResponseProjects>() {
 					@Override
 					public boolean invoke(ResponseProjects rps) {
 						return rps.toProjectList().contains(p);
@@ -72,7 +72,7 @@ public class ConnectProjsWithUsersRunner {
 
 	public static int countProjectsWithoutUser() throws Exception {
 		ResponseProjectsLst rpl = (ResponseProjectsLst)XmlHelpers.deserializeFromXml(ResponseProjectsLst.class, new File("data/responseswithuser500.xml"));
-		Predicate<ResponseProjects> isWithoutUser = new Predicate<ResponseProjects>() {
+		IPredicate<ResponseProjects> isWithoutUser = new IPredicate<ResponseProjects>() {
 			@Override
 			public boolean invoke(ResponseProjects rp) {
 				return rp.user == null;

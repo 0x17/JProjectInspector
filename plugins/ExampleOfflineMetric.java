@@ -1,11 +1,10 @@
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 import java.io.File;
 
-public class ExampleOfflineMetric implements OfflineMetric {
+public class ExampleOfflineMetric implements IOfflineMetric {
 
 	public String getName() { return "exoffmetric"; }
 	public String getDescription() { return "Number of files in repo dir. Example metric implemented as plugin."; }

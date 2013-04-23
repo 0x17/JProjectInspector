@@ -3,7 +3,7 @@ package org.andreschnabel.jprojectinspector.tests.visual;
 import junit.framework.Assert;
 import org.andreschnabel.jprojectinspector.gui.panels.CsvTablePanel;
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
-import org.andreschnabel.jprojectinspector.utilities.functional.TestCallback;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITestCallback;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
@@ -13,9 +13,9 @@ import java.io.File;
 
 public class GuiHelpersTest extends VisualTest {
 	@Override
-	protected TestCallback[] getTests() {
-		return new TestCallback[] {
-				new TestCallback() {
+	protected ITestCallback[] getTests() {
+		return new ITestCallback[] {
+				new ITestCallback() {
 					@Override
 					public String getDescription() {
 						return "Nimbus laf";
@@ -31,7 +31,7 @@ public class GuiHelpersTest extends VisualTest {
 						UIManager.setLookAndFeel(laf);
 					}
 				},
-				new TestCallback() {
+				new ITestCallback() {
 					@Override
 					public String getDescription() {
 						return "Open URL";
@@ -42,7 +42,7 @@ public class GuiHelpersTest extends VisualTest {
 						GuiHelpers.openUrl("https://www.github.com/0x17/JProjectInspector");
 					}
 				},
-				new TestCallback() {
+				new ITestCallback() {
 					@Override
 					public String getDescription() {
 						return "Show PDF";
@@ -53,7 +53,7 @@ public class GuiHelpersTest extends VisualTest {
 						GuiHelpers.showPdf(new File("Manual.pdf"));
 					}
 				},
-				new TestCallback() {
+				new ITestCallback() {
 					@Override
 					public String getDescription() {
 						return "Load CSV dialog";
@@ -68,7 +68,7 @@ public class GuiHelpersTest extends VisualTest {
 						waitForFrameToClose(testFrame);
 					}
 				},
-				new TestCallback() {
+				new ITestCallback() {
 					@Override
 					public String getDescription() {
 						return "Show error";
@@ -79,7 +79,7 @@ public class GuiHelpersTest extends VisualTest {
 						GuiHelpers.showError("This is some error, isn't it? Actually everything works fine. :)");
 					}
 				},
-				new TestCallback() {
+				new ITestCallback() {
 					@Override
 					public String getDescription() {
 						return "Save string with file dialog";

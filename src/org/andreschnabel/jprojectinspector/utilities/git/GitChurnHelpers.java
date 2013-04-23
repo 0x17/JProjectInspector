@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.utilities.git;
 
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
 
 import java.io.File;
@@ -21,7 +21,7 @@ public class GitChurnHelpers {
 			Pattern.compile("(\\d+) deletions\\(\\-\\)")
 		};
 
-		Transform<Pattern, Matcher> matcherFromPattern = new Transform<Pattern, Matcher>() {
+		ITransform<Pattern, Matcher> matcherFromPattern = new ITransform<Pattern, Matcher>() {
 			@Override
 			public Matcher invoke(Pattern p) {
 				return p.matcher(shortStat);

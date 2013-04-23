@@ -1,12 +1,12 @@
 package org.andreschnabel.jprojectinspector.metrics.test;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
 
 import java.io.File;
 import java.util.List;
 
-public class TestLinesOfCode implements OfflineMetric {
+public class TestLinesOfCode implements IOfflineMetric {
 
 	public static int countTestLocHeuristic(File path) throws Exception {
 		List<File> testFiles = UnitTestDetector.getTestFiles(path);

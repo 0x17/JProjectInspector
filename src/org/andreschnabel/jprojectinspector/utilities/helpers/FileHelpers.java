@@ -2,9 +2,9 @@ package org.andreschnabel.jprojectinspector.utilities.helpers;
 
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.functional.Tautology;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 
 import java.io.*;
 import java.net.URI;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class FileHelpers {
 
-	public static List<File> filesWithPredicateInTree(File root, Predicate<File> pred) throws Exception {
+	public static List<File> filesWithPredicateInTree(File root, IPredicate<File> pred) throws Exception {
 		if(!root.isDirectory())
 			throw new Exception("Path must point to dir!");
 
@@ -122,7 +122,7 @@ public class FileHelpers {
 	}
 
 	public static List<File> recursiveCollectJavaSrcFiles(File dir) throws Exception {
-		Predicate<File> isJavaSrc = new Predicate<File>() {
+		IPredicate<File> isJavaSrc = new IPredicate<File>() {
 			@Override
 			public boolean invoke(File f) {
 				return f.getName().endsWith(".java");
@@ -168,7 +168,7 @@ public class FileHelpers {
 	}
 
 	public static List<String> listJavaSourceFiles(File dir) throws Exception {
-		Transform<File, String> fileToName = new Transform<File, String>() {
+		ITransform<File, String> fileToName = new ITransform<File, String>() {
 			@Override
 			public String invoke(File f) {
 				return f.getName();

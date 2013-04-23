@@ -1,11 +1,11 @@
 package org.andreschnabel.jprojectinspector.metrics.registry;
 
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 import org.andreschnabel.jprojectinspector.metrics.churn.CodeFrequency;
 import org.andreschnabel.jprojectinspector.metrics.plugins.MetricPlugins;
 import org.andreschnabel.jprojectinspector.metrics.project.*;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public class OnlineMetrics {
-	public static Map<String, OnlineMetric> init() throws Exception {
-		List<OnlineMetric> ms = new LinkedList<OnlineMetric>();
+	public static Map<String, IOnlineMetric> init() throws Exception {
+		List<IOnlineMetric> ms = new LinkedList<IOnlineMetric>();
 
 		ms.add(new ContributorsOnline());
 		ms.add(new Issues());
@@ -28,9 +28,9 @@ public class OnlineMetrics {
 
 		ms.addAll(MetricPlugins.loadOnlineMetricPlugins(new File("plugins")));
 
-		Transform<OnlineMetric, String> metricToName = new Transform<OnlineMetric, String>() {
+		ITransform<IOnlineMetric, String> metricToName = new ITransform<IOnlineMetric, String>() {
 			@Override
-			public String invoke(OnlineMetric m) {
+			public String invoke(IOnlineMetric m) {
 				return m.getName();
 			}
 		};

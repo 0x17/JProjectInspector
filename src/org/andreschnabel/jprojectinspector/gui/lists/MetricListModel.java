@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.gui.lists;
 
+import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
 import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class MetricListModel extends ListListModel<String> {
 		MetricType type = MetricsRegistry.getTypeOfMetric(metric);
 		String onlineExtra = "";
 		if(type == MetricType.Online) {
-			OnlineMetric.Category category = MetricsRegistry.getOnlineCategoryOfMetric(metric);
+			IOnlineMetric.Category category = MetricsRegistry.getOnlineCategoryOfMetric(metric);
 			onlineExtra = ", " + category.toString();
 		}
 		return metric + " (" + type.toString() + onlineExtra + ")";

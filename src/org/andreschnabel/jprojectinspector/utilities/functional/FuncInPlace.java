@@ -6,7 +6,7 @@ public final class FuncInPlace {
 
 	private FuncInPlace() {}
 
-	public static <T> void removeAll(Predicate<T> pred, List<T> lst) {
+	public static <T> void removeAll(IPredicate<T> pred, List<T> lst) {
 		List<T> toRem = Func.filter(pred, lst);
 		lst.removeAll(toRem);
 	}

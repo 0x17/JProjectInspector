@@ -1,13 +1,13 @@
 package org.andreschnabel.jprojectinspector.metrics.test.coverage;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
 import org.andreschnabel.jprojectinspector.metrics.code.ClocResult;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers.IndexerRegistry;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 import java.io.File;
@@ -16,10 +16,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class RoughFunctionCoverage implements OfflineMetric {
+public class RoughFunctionCoverage implements IOfflineMetric {
 
 	public static Map<String, Double> approxFunctionCoverage(File rootPath) throws Exception {
-		final Map<String, FunctionIndexer> indexerForExtension = IndexerRegistry.indexerForExtension;
+		final Map<String, IFunctionIndexer> indexerForExtension = IndexerRegistry.indexerForExtension;
 
 		final List<File> files = FileHelpers.filesInTree(rootPath);
 
@@ -33,7 +33,7 @@ public class RoughFunctionCoverage implements OfflineMetric {
 			String lang = knownLangs.get(i);
 			List<String> funcDecls = funcDeclsForKnownLangs.get(i);
 			final List<String> funcCalls = funcCallsForKnownLangs.get(i);
-			Predicate<String> wasCalled = new Predicate<String>() {
+			IPredicate<String> wasCalled = new IPredicate<String>() {
 				@Override
 				public boolean invoke(String funcName) {
 					return funcCalls.contains(funcName);
@@ -44,7 +44,7 @@ public class RoughFunctionCoverage implements OfflineMetric {
 			coverages.put(lang, funcDecls.isEmpty() ? 0.0f : (double)calledFuncs.size() / (double)funcDecls.size());
 		}
 
-		Predicate<File> unknownLang = new Predicate<File>() {
+		IPredicate<File> unknownLang = new IPredicate<File>() {
 			@Override
 			public boolean invoke(File f) {
 				return !indexerForExtension.containsKey(FileHelpers.extension(f));
@@ -99,11 +99,11 @@ public class RoughFunctionCoverage implements OfflineMetric {
 		FunctionCalls
 	}
 
-	private static List<List<String>> determineFunctionsForKnownLanguages(final Mode mode, final Map<String, FunctionIndexer> indexerForExtension, final List<File> files, List<String> knownLangs) {
-		Transform<String, List<String>> langToFuncNames = new Transform<String, List<String>>() {
+	private static List<List<String>> determineFunctionsForKnownLanguages(final Mode mode, final Map<String, IFunctionIndexer> indexerForExtension, final List<File> files, List<String> knownLangs) {
+		ITransform<String, List<String>> langToFuncNames = new ITransform<String, List<String>>() {
 			@Override
 			public List<String> invoke(final String ext) {
-				Predicate<File> hasExtAndCorrectType = new Predicate<File>() {
+				IPredicate<File> hasExtAndCorrectType = new IPredicate<File>() {
 					@Override
 					public boolean invoke(File f) {
 						boolean isTest = false;
@@ -116,7 +116,7 @@ public class RoughFunctionCoverage implements OfflineMetric {
 					}
 				};
 				List<File> srcFiles = Func.filter(hasExtAndCorrectType, files);
-				FunctionIndexer indexer = indexerForExtension.get(ext);
+				IFunctionIndexer indexer = indexerForExtension.get(ext);
 
 				List<String> names = new LinkedList<String>();
 

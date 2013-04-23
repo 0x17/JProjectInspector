@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers;
 
-import org.andreschnabel.jprojectinspector.metrics.test.coverage.FunctionIndexer;
+import org.andreschnabel.jprojectinspector.metrics.test.coverage.IFunctionIndexer;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class JavaIndexer implements FunctionIndexer {
+public class JavaIndexer implements IFunctionIndexer {
 	@Override
 	public List<String> listFunctionDeclarations(String src) {
 		List<String> funcNames = new LinkedList<String>();

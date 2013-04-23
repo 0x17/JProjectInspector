@@ -1,14 +1,14 @@
 package org.andreschnabel.jprojectinspector.metrics.code;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.File;
 import java.util.List;
 
-public class AvgLocPerSourceFile implements OfflineMetric {
+public class AvgLocPerSourceFile implements IOfflineMetric {
 
 	private static final String[] SRC_EXTENSIONS = new String[] {"java", "js", "rb", "py", "cs",
 			"cpp", "c", "pl", "clj", "h", "hpp", "scala", "m", "mm"};
@@ -25,7 +25,7 @@ public class AvgLocPerSourceFile implements OfflineMetric {
 
 	@Override
 	public double measure(File repoRoot) throws Exception {
-		Predicate<File> isSrcFile = new Predicate<File>() {
+		IPredicate<File> isSrcFile = new IPredicate<File>() {
 			@Override
 			public boolean invoke(File f) {
 				String extension = FileHelpers.extension(f);

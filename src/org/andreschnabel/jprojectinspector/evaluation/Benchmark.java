@@ -4,8 +4,8 @@ import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -108,12 +108,12 @@ public class Benchmark {
 	}
 
 	public static List<Double> calcPredictionValues(final PredictionMethods predMethods, final PredictionType predType, final List<ProjectWithResults> pml, List<Project> projectList) {
-		Transform<Project, Double> projectToMeasureResult = new ProjectToMeasureResultTransform(predType, predMethods, pml);
+		ITransform<Project, Double> projectToMeasureResult = new ProjectToMeasureResultTransform(predType, predMethods, pml);
 		return Func.map(projectToMeasureResult, projectList);
 	}
 
 	public static boolean isInvalidProject(final List<ProjectWithResults> pml, List<Project> projs) {
-		Predicate<Project> isInvalid = new Predicate<Project>() {
+		IPredicate<Project> isInvalid = new IPredicate<Project>() {
 			@Override
 			public boolean invoke(Project p) {
 				return metricsForProject(p, pml) == null;
@@ -123,7 +123,7 @@ public class Benchmark {
 	}
 
 	public static ProjectWithResults metricsForProject(final Project p, List<ProjectWithResults> pml) {
-		Predicate<ProjectWithResults> isProj = new Predicate<ProjectWithResults>() {
+		IPredicate<ProjectWithResults> isProj = new IPredicate<ProjectWithResults>() {
 			@Override
 			public boolean invoke(ProjectWithResults obj) {
 				return obj.project.equals(p);
@@ -150,7 +150,7 @@ public class Benchmark {
 		}
 	}
 
-	public static class ProjectToMeasureResultTransform implements Transform<Project, Double> {
+	public static class ProjectToMeasureResultTransform implements ITransform<Project, Double> {
 		private final PredictionType predType;
 		private final PredictionMethods predMethods;
 		private final List<ProjectWithResults> pml;

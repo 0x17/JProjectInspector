@@ -1,12 +1,12 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 import java.io.File;
 
-public class JavaTestLinesOfCode implements OfflineMetric {
+public class JavaTestLinesOfCode implements IOfflineMetric {
 
 	public static int countJavaTestLocOfDir(File root) throws Exception {
 		if(root.isDirectory()) {

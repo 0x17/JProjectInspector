@@ -1,10 +1,10 @@
 package org.andreschnabel.jprojectinspector.metrics.survey;
 
 import org.andreschnabel.jprojectinspector.evaluation.SurveyFormat;
-import org.andreschnabel.jprojectinspector.metrics.SurveyMetric;
+import org.andreschnabel.jprojectinspector.metrics.ISurveyMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 
-public class TestEffortEstimation implements SurveyMetric {
+public class TestEffortEstimation implements ISurveyMetric {
 
 	@Override
 	public String getName() {

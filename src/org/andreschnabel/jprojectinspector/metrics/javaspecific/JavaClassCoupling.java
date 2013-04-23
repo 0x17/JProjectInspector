@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.JavaSourceHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class JavaClassCoupling implements OfflineMetric {
+public class JavaClassCoupling implements IOfflineMetric {
 
 	public static double getAverageCoupling(File root) throws Exception {
 		Map<String, File> classInFile = new HashMap<String, File>();

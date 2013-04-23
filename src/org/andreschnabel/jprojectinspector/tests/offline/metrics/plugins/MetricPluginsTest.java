@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.tests.offline.metrics.plugins;
 
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 import org.andreschnabel.jprojectinspector.metrics.plugins.MetricPlugins;
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.junit.Test;
 
@@ -12,13 +12,13 @@ import java.util.List;
 public class MetricPluginsTest {
 	@Test
 	public void testLoadOfflineMetricPlugins() throws Exception {
-		List<OfflineMetric> metrics = MetricPlugins.loadOfflineMetricPlugins(new File("plugins"));
+		List<IOfflineMetric> metrics = MetricPlugins.loadOfflineMetricPlugins(new File("plugins"));
 		AssertHelpers.listNotEmpty(metrics);
 	}
 
 	@Test
 	public void testLoadOnlineMetricPlugins() throws Exception {
-		List<OnlineMetric> metrics = MetricPlugins.loadOnlineMetricPlugins(new File("plugins"));
+		List<IOnlineMetric> metrics = MetricPlugins.loadOnlineMetricPlugins(new File("plugins"));
 		AssertHelpers.listNotEmpty(metrics);
 
 	}

@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.tests.offline.utilities.serialization;
 
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.junit.Assert;
@@ -37,7 +37,7 @@ public class CsvDataTest {
 				new Person("Heinrich", 44),
 				new Person("Peter", 57),
 		};
-		Transform<Person, String[]> personToRow = new Transform<Person, String[]>() {
+		ITransform<Person, String[]> personToRow = new ITransform<Person, String[]>() {
 			@Override
 			public String[] invoke(Person p) {
 				return new String[] {p.name, String.valueOf(p.age)};
@@ -56,7 +56,7 @@ public class CsvDataTest {
 		rows.add(new String[]{"Heinrich", "44"});
 		rows.add(new String[]{"Peter", "57"});
 		CsvData data = new CsvData(rows);
-		Transform<String[], Person> rowToPerson = new Transform<String[], Person>() {
+		ITransform<String[], Person> rowToPerson = new ITransform<String[], Person>() {
 			@Override
 			public Person invoke(String[] sa) {
 				return new Person(sa[0], Integer.valueOf(sa[1]));

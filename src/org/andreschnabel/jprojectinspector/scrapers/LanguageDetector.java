@@ -4,7 +4,7 @@ import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import java.io.File;
@@ -37,7 +37,7 @@ public final class LanguageDetector {
 	}
 
 	public static int numProjectsWithLanguage(List<Project> projects, final String language) throws Exception {
-		Predicate<Project> isLanguage = new Predicate<Project>() {
+		IPredicate<Project> isLanguage = new IPredicate<Project>() {
 			@Override
 			public boolean invoke(Project p) {
 				try {

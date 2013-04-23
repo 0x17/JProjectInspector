@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import org.andreschnabel.jprojectinspector.utilities.functional.BinaryOperator;
+import org.andreschnabel.jprojectinspector.utilities.functional.IBinaryOperator;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 
 public final class StringHelpers {
 
@@ -24,7 +24,7 @@ public final class StringHelpers {
 	}
 
 	public static int countOccurencesOfWords(final String str, String[] words) {
-		return Func.reduce(new BinaryOperator<String, Integer>() {
+		return Func.reduce(new IBinaryOperator<String, Integer>() {
 			@Override
 			public Integer invoke(Integer accum, String word) {
 				return accum + countOccurencesOfWord(str, word);
@@ -33,7 +33,7 @@ public final class StringHelpers {
 	}
 
 	public static boolean strEndsWithOneOf(final String str, String... suffixes) {
-		return Func.contains(new Predicate<String>() {
+		return Func.contains(new IPredicate<String>() {
 			@Override
 			public boolean invoke(String suffix) {
 				return str.endsWith(suffix);
@@ -42,7 +42,7 @@ public final class StringHelpers {
 	}
 
 	public static boolean containsOneOf(final String str, String... candidates) {
-		return Func.contains(new Predicate<String>() {
+		return Func.contains(new IPredicate<String>() {
 			@Override
 			public boolean invoke(String candidate) {
 				return str.contains(candidate);
@@ -51,7 +51,7 @@ public final class StringHelpers {
 	}
 
 	public static boolean equalsOneOf(final String str, final String... candidates) {
-		return Func.contains(new Predicate<String>() {
+		return Func.contains(new IPredicate<String>() {
 			@Override
 			public boolean invoke(String candidate) {
 				return str.equals(candidate);

@@ -1,12 +1,10 @@
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric.Category;
+import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 
-public class ExampleOnlineMetric implements OnlineMetric {
+public class ExampleOnlineMetric implements IOnlineMetric {
 
 	public String getName() { return "exonmetric"; }
 	public String getDescription() { return "Number of followers of user maintaining project. Example metric implemented as plugin."; }

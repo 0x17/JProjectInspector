@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities.serialization;
 
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
@@ -82,7 +82,7 @@ public class CsvData {
 	}
 
 	public void addColumn(String header) {
-		Transform<String[], String[]> addColumnToRow = new Transform<String[], String[]>() {
+		ITransform<String[], String[]> addColumnToRow = new ITransform<String[], String[]>() {
 			@Override
 			public String[] invoke(String[] row) {
 				return Arrays.copyOf(row, row.length+1);
@@ -92,7 +92,7 @@ public class CsvData {
 		rowList.get(0)[columnCount()-1] = header;
 	}
 
-	public static <T> CsvData fromList(String[] headers, Transform<T, String[]> elemToRow, List<T> lst) throws Exception {
+	public static <T> CsvData fromList(String[] headers, ITransform<T, String[]> elemToRow, List<T> lst) throws Exception {
 		List<String[]> rows = new ArrayList<String[]>(lst.size()+1);
 		rows.add(headers);
 		for(T elem : lst) {
@@ -113,7 +113,7 @@ public class CsvData {
 
 	public List<String> getColumn(String header) {
 		final int columnIndex = columnWithHeader(header);
-		Transform<String[], String> cellForColumn = new Transform<String[], String>() {
+		ITransform<String[], String> cellForColumn = new ITransform<String[], String>() {
 			@Override
 			public String invoke(String[] row) {
 				return row[columnIndex];
@@ -122,12 +122,12 @@ public class CsvData {
 		return Func.map(cellForColumn, rowList);
 	}
 
-	public static <T> List<T> toList(Transform<String[], T> rowToElem, File f) throws Exception {
+	public static <T> List<T> toList(ITransform<String[], T> rowToElem, File f) throws Exception {
 		CsvData data = CsvHelpers.parseCsv(f);
 		return toList(rowToElem, data);
 	}
 
-	public static <T> List<T> toList(Transform<String[], T> rowToElem, CsvData data) throws Exception {
+	public static <T> List<T> toList(ITransform<String[], T> rowToElem, CsvData data) throws Exception {
 		List<T> lst = new ArrayList<T>(data.rowCount()-1);
 		for(int row = 0; row<data.rowCount(); row++) {
 			lst.add(rowToElem.invoke(data.getRow(row)));

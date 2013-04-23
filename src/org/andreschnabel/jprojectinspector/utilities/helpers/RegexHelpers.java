@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class RegexHelpers {
 
 	public static List<String> batchMatchOneGroup(String regex, String input) {
 		List<String[]> matches = batchMatch(regex, input);
-		Transform<String[], String> first = new Transform<String[], String>() {
+		ITransform<String[], String> first = new ITransform<String[], String>() {
 			@Override
 			public String invoke(String[] strs) {
 				return strs[0];

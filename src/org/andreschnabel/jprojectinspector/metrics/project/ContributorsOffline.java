@@ -1,11 +1,11 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.git.GitContributorHelpers;
 
 import java.io.File;
 
-public class ContributorsOffline implements OfflineMetric {
+public class ContributorsOffline implements IOfflineMetric {
 	@Override
 	public String getName() {
 		return "NumContribs";

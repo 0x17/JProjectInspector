@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.tests.offline.utilities.functional;
 
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class FuncInPlaceTest {
 	@Test
 	public void testRemoveAll() throws Exception {
 		List<Integer> nums = Func.countUpTo(10);
-		Predicate<Integer> isOdd = new Predicate<Integer>() {
+		IPredicate<Integer> isOdd = new IPredicate<Integer>() {
 			@Override
 			public boolean invoke(Integer n) {
 				return n % 2 == 1;

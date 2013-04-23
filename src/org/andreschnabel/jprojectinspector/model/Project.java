@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.model;
 
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
 import java.util.List;
@@ -63,7 +63,7 @@ public class Project {
 	public final static String[] csvHeaders = new String[]{"owner","repo"};
 
 	public static CsvData projectListToCsv(List<Project> projs) throws Exception {
-		Transform<Project, String[]> projToRow = new Transform<Project, String[]>() {
+		ITransform<Project, String[]> projToRow = new ITransform<Project, String[]>() {
 			@Override
 			public String[] invoke(Project p) {
 				return new String[] {p.owner, p.repoName};
@@ -73,7 +73,7 @@ public class Project {
 	}
 
 	public static List<Project> projectListFromCsv(CsvData data) throws Exception {
-		Transform<String[], Project> rowToProj = new Transform<String[], Project>() {
+		ITransform<String[], Project> rowToProj = new ITransform<String[], Project>() {
 			@Override
 			public Project invoke(String[] row) {
 				return new Project(row[0], row[1]);

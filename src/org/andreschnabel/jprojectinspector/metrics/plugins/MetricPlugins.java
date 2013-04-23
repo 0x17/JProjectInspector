@@ -1,9 +1,9 @@
 package org.andreschnabel.jprojectinspector.metrics.plugins;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AsmHelpers;
 
 import java.io.File;
@@ -13,34 +13,34 @@ import java.util.List;
 
 public class MetricPlugins {
 
-	public static List<OfflineMetric> loadOfflineMetricPlugins(File dir) throws Exception {
+	public static List<IOfflineMetric> loadOfflineMetricPlugins(File dir) throws Exception {
 		List<File> classFiles = AsmHelpers.findClassFilesImplementingInterfaceInDir(dir, "OfflineMetric");
 		final URLClassLoader classLoader = initLoader(dir);
 
-		Transform<File, OfflineMetric> classFileToOfflineMetric = new Transform<File, OfflineMetric>() {
+		ITransform<File, IOfflineMetric> classFileToOfflineMetric = new ITransform<File, IOfflineMetric>() {
 			@Override
-			public OfflineMetric invoke(File classFile) {
-				return (OfflineMetric)objFromClassFile(classFile, classLoader);
+			public IOfflineMetric invoke(File classFile) {
+				return (IOfflineMetric)objFromClassFile(classFile, classLoader);
 			}
 		};
 		
-		List<OfflineMetric> plugins = Func.map(classFileToOfflineMetric, classFiles);
+		List<IOfflineMetric> plugins = Func.map(classFileToOfflineMetric, classFiles);
 		//classLoader.close();
 		return plugins;		
 	}
 	
-	public static List<OnlineMetric> loadOnlineMetricPlugins(File dir) throws Exception {
+	public static List<IOnlineMetric> loadOnlineMetricPlugins(File dir) throws Exception {
 		List<File> classFiles = AsmHelpers.findClassFilesImplementingInterfaceInDir(dir, "OnlineMetric");
 		final URLClassLoader classLoader = initLoader(dir);
 
-		Transform<File, OnlineMetric> classFileToOnlineMetric = new Transform<File, OnlineMetric>() {
+		ITransform<File, IOnlineMetric> classFileToOnlineMetric = new ITransform<File, IOnlineMetric>() {
 			@Override
-			public OnlineMetric invoke(File classFile) {
-				return (OnlineMetric)objFromClassFile(classFile, classLoader);
+			public IOnlineMetric invoke(File classFile) {
+				return (IOnlineMetric)objFromClassFile(classFile, classLoader);
 			}
 		};
 		
-		List<OnlineMetric> plugins = Func.map(classFileToOnlineMetric, classFiles);
+		List<IOnlineMetric> plugins = Func.map(classFileToOnlineMetric, classFiles);
 		//classLoader.close();
 		return plugins;
 	}

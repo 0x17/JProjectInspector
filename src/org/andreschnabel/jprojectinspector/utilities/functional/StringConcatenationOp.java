@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.utilities.functional;
 
-public class StringConcatenationOp implements BinaryOperator<String, String> {
+public class StringConcatenationOp implements IBinaryOperator<String, String> {
 
 	private final String infix;
 

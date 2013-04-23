@@ -1,13 +1,13 @@
 package org.andreschnabel.jprojectinspector.metrics.churn;
 
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 import java.util.List;
 
-public class CodeFrequency implements OnlineMetric {
+public class CodeFrequency implements IOnlineMetric {
 
 	public static int countCodeFrequencyForProj(Project project) throws Exception {
 		String cfdStr = Helpers.loadUrlIntoStr("https://github.com/" + project.owner + "/" + project.repoName + "/graphs/code-frequency-data");

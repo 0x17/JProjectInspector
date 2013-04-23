@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
-public interface LaunchSettings {
+public interface ILaunchSettings {
 
 	public void closeSettings();
 

@@ -3,7 +3,7 @@ package org.andreschnabel.jprojectinspector.model.survey;
 import org.andreschnabel.jprojectinspector.evaluation.SurveyFormat;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
@@ -104,7 +104,7 @@ public class ResponseProjects {
 	}
 
 	public static List<ResponseProjects> fromPreprocessedCsvData(CsvData data) throws Exception {
-		Transform<String[], ResponseProjects> rowToRespProjs = new Transform<String[], ResponseProjects>() {
+		ITransform<String[], ResponseProjects> rowToRespProjs = new ITransform<String[], ResponseProjects>() {
 			@Override
 			public ResponseProjects invoke(String[] sa) {
 				ResponseProjects rps = new ResponseProjects();
@@ -130,7 +130,7 @@ public class ResponseProjects {
 
 	public static List<ResponseProjects> fromCsvFile(File f) throws Exception {
 		final CsvData data = CsvHelpers.parseCsv(f);
-		Transform<String[], ResponseProjects> rowToRespProjs = new Transform<String[], ResponseProjects>() {
+		ITransform<String[], ResponseProjects> rowToRespProjs = new ITransform<String[], ResponseProjects>() {
 			@Override
 			public ResponseProjects invoke(String[] row) {
 				ResponseProjects rps = new ResponseProjects();
@@ -161,7 +161,7 @@ public class ResponseProjects {
 				SurveyFormat.LOWEST_BUG_COUNT_HEADER,
 				SurveyFormat.HIGHEST_BUG_COUNT_HEADER,
 				"weight"};
-		Transform<ResponseProjects, String[]> respProjToRow = new Transform<ResponseProjects, String[]>() {
+		ITransform<ResponseProjects, String[]> respProjToRow = new ITransform<ResponseProjects, String[]>() {
 			@Override
 			public String[] invoke(ResponseProjects rp) {
 				return new String[] {rp.user == null ? "null" : rp.user,

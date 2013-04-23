@@ -4,8 +4,8 @@ import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class DeltaCalculator {
 	
 	public static ProjectWithResults metricsForProject(final Project p, List<ProjectWithResults> pml) {
-		Predicate<ProjectWithResults> isProj = new Predicate<ProjectWithResults>() {
+		IPredicate<ProjectWithResults> isProj = new IPredicate<ProjectWithResults>() {
 			@Override
 			public boolean invoke(ProjectWithResults obj) {
 				return obj.project.equals(p);
@@ -26,7 +26,7 @@ public class DeltaCalculator {
 	}
 
 	public static List<Double[]> calculateDeltas(List<ResponseProjects> rpl, final List<ProjectWithResults> pml) {
-		Transform<ResponseProjects, Double[]> responseProjToDeltas = new Transform<ResponseProjects, Double[]>() {
+		ITransform<ResponseProjects, Double[]> responseProjToDeltas = new ITransform<ResponseProjects, Double[]>() {
 			@Override
 			public Double[] invoke(ResponseProjects rp) {
 				ProjectWithResults highBugMetrics = metricsForProject(new Project(rp.user, rp.highestBugCount), pml);

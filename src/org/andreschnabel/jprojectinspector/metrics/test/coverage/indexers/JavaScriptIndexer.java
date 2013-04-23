@@ -1,13 +1,13 @@
 package org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers;
 
-import org.andreschnabel.jprojectinspector.metrics.test.coverage.FunctionIndexer;
+import org.andreschnabel.jprojectinspector.metrics.test.coverage.IFunctionIndexer;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 import java.util.List;
 
-public class JavaScriptIndexer implements FunctionIndexer {
+public class JavaScriptIndexer implements IFunctionIndexer {
 	@Override
 	public List<String> listFunctionDeclarations(String src) {
 		List<String> funcIdentifiers = null;
@@ -29,7 +29,7 @@ public class JavaScriptIndexer implements FunctionIndexer {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		Predicate<String> notDeclaredAndNotConstructor = new Predicate<String>() {
+		IPredicate<String> notDeclaredAndNotConstructor = new IPredicate<String>() {
 			@Override
 			public boolean invoke(String s) {
 				return !declaredFuncs.contains(s) && !src.contains("new " + s);

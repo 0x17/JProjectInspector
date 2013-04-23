@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.tests;
 
-import org.andreschnabel.jprojectinspector.utilities.functional.TestCallback;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITestCallback;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,12 +12,12 @@ import java.awt.event.WindowEvent;
 
 public abstract class VisualTest {
 
-	protected abstract TestCallback[] getTests();
+	protected abstract ITestCallback[] getTests();
 
 	@Test
 	public void testVisual() throws Exception {
-		TestCallback[] tests = getTests();
-		for(TestCallback test : tests) {
+		ITestCallback[] tests = getTests();
+		for(ITestCallback test : tests) {
 			String description = test.getDescription();
 			Helpers.log("Running visual test: " + description);
 			test.invoke();

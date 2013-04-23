@@ -3,6 +3,7 @@ package org.andreschnabel.jprojectinspector.gui.panels;
 import org.andreschnabel.jprojectinspector.evaluation.MetricsCollector;
 import org.andreschnabel.jprojectinspector.gui.tables.MetricResultTableModel;
 import org.andreschnabel.jprojectinspector.gui.windows.ProjectMetricsWindow;
+import org.andreschnabel.jprojectinspector.gui.windows.VisualizationWindow;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
@@ -126,11 +127,8 @@ public class MetricResultsPanel extends JPanel {
 		visualizeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				/*String title = metricNames.get(finalCol);
-				JFreeChart mbc = MetricBarChart.newInstance(title, mrtm.getResults(), finalCol);
-				FreeChartWindow cw = new FreeChartWindow(mbc, new Dimension(640, 480));
-				cw.setVisible(true);*/
-				// TODO: Open visualisation settings window!
+				JFrame vw = new VisualizationWindow(metricNames, mrtm.getResults());
+				vw.setVisible(true);
 			}
 		});
 		topPane.add(visualizeBtn);

@@ -4,7 +4,7 @@ import junit.framework.Assert;
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Test;
@@ -93,7 +93,7 @@ public class FileHelpersTest {
 		String[] files = new String[] {
 			"Points.java", "PointsTest.java"
 		};
-		Transform<File, String> fileToName = new Transform<File, String>() {
+		ITransform<File, String> fileToName = new ITransform<File, String>() {
 			@Override
 			public String invoke(File f) {
 				return f.getName();

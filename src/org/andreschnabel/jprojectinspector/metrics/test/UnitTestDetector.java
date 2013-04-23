@@ -1,9 +1,9 @@
 package org.andreschnabel.jprojectinspector.metrics.test;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UnitTestDetector implements OfflineMetric {
+public class UnitTestDetector implements IOfflineMetric {
 
 	private final static String[] supportedLangs = new String[]{"Java", "Ruby", "C++", "C#", "JavaScript", "Python"};
 
-	private static class IsTestPredicate implements Predicate<File> {
+	private static class IsTestPredicate implements IPredicate<File> {
 		@Override
 		public boolean invoke(File f) {
 			try {

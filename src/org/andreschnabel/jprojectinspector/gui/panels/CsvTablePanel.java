@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.gui.tables.CsvTableModel;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.functional.Tautology;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
@@ -93,7 +93,7 @@ public class CsvTablePanel extends JPanel {
 		private final CsvData data;
 		private final FilteredCsvData fdata;
 		private final JTable csvTbl;
-		public Predicate<String[]> pred;
+		public IPredicate<String[]> pred;
 
 		public FilterIfRxIsValid(JTextField filterExprField, CsvData csvData, FilteredCsvData fdata, JTable csvTbl) {
 			this.filterExprField = filterExprField;
@@ -125,7 +125,7 @@ public class CsvTablePanel extends JPanel {
 					final String colName = parts[0];
 					if(data.hasColumnWithHeader(colName)) {
 						final Pattern pattern = Pattern.compile(parts[1]);
-						pred = new Predicate<String[]>() {
+						pred = new IPredicate<String[]>() {
 							@Override
 							public boolean invoke(String[] sa) {
 								int colIndex = data.columnWithHeader(colName);

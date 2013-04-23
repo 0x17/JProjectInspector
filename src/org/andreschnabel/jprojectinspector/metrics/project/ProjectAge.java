@@ -1,11 +1,11 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.git.GitRevisionHelpers;
 
 import java.io.File;
 
-public class ProjectAge implements OfflineMetric {
+public class ProjectAge implements IOfflineMetric {
 
 	public static long getProjectAge(File repoRoot) throws Exception {
 		String oldestRev = GitRevisionHelpers.getOldestRevision(repoRoot);

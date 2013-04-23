@@ -1,8 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
@@ -57,7 +56,7 @@ public class AsmHelpers {
 	}
 	
 	public static List<Class<?>> findClassesImplementingInterfaceInDir(File dir, String ifaceName) throws Exception {
-		Transform<File, Class<?>> fileToClass = new Transform<File, Class<?>>() {
+		ITransform<File, Class<?>> fileToClass = new ITransform<File, Class<?>>() {
 			@Override
 			public Class<?> invoke(File f) {
 				String classname = f.getName().replace("/", ".");

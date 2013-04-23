@@ -5,7 +5,7 @@ import org.andreschnabel.jprojectinspector.evaluation.PredictionCandidates;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Transform;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.XmlHelpers;
@@ -26,7 +26,7 @@ public class BenchmarkRunner {
 		final List<ProjectWithResults> pms = ProjectWithResults.fromCsv(CsvHelpers.parseCsv(new File("data/benchmark/metrics500.csv")));
 
 		final List<Benchmark.PredictionMethods> candidates = PredictionCandidates.getCandidates();
-		Transform<Benchmark.PredictionMethods, Benchmark.Quality> candToQuality = new Transform<Benchmark.PredictionMethods, Benchmark.Quality>() {
+		ITransform<Benchmark.PredictionMethods, Benchmark.Quality> candToQuality = new ITransform<Benchmark.PredictionMethods, Benchmark.Quality>() {
 			@Override
 			public Benchmark.Quality invoke(Benchmark.PredictionMethods pm) {
 				try {

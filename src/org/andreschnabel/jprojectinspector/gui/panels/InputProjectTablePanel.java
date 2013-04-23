@@ -7,7 +7,7 @@ import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTaskBatch;
 
 import javax.swing.*;
@@ -87,7 +87,7 @@ public class InputProjectTablePanel extends JPanel {
 			}
 			@Override
 			public List<Project> doInBackground() {
-				Predicate<Project> isOffline = new Predicate<Project>() {
+				IPredicate<Project> isOffline = new IPredicate<Project>() {
 					@Override
 					public boolean invoke(Project p) {
 						return !ProjectDownloader.isProjectOnline(p);

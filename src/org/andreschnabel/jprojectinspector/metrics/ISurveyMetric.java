@@ -1,19 +1,13 @@
 package org.andreschnabel.jprojectinspector.metrics;
 
+import org.andreschnabel.jprojectinspector.metrics.survey.Estimation;
 import org.andreschnabel.jprojectinspector.model.Project;
 
-public interface OnlineMetric {
-
-	public static enum Category {
-		Scraping,
-		GitHubApi
-	}
+public interface ISurveyMetric {
 
 	public String getName();
 	public String getDescription();
 
-	public Category getCategory();
-
-	public double measure(Project p) throws Exception;
+	public Estimation measure(Project p);
 
 }

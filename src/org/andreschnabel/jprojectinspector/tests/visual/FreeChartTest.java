@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.tests.visual;
 
 import org.andreschnabel.jprojectinspector.gui.panels.FreeChartPanel;
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
-import org.andreschnabel.jprojectinspector.utilities.functional.TestCallback;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITestCallback;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
@@ -25,9 +25,9 @@ public class FreeChartTest extends VisualTest {
 	}
 
 	@Override
-	protected TestCallback[] getTests() {
-		return new TestCallback[] {
-				new TestCallback() {
+	protected ITestCallback[] getTests() {
+		return new ITestCallback[] {
+				new ITestCallback() {
 					@Override
 					public String getDescription() {
 						return "barChart";

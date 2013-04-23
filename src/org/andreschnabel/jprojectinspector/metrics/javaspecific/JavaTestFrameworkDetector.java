@@ -1,12 +1,12 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.File;
 
-public class JavaTestFrameworkDetector implements OfflineMetric {
+public class JavaTestFrameworkDetector implements IOfflineMetric {
 	
 	public static final int FRAMEWORK_NONE = -1;
 	public static final int FRAMEWORK_JUNIT = 0;

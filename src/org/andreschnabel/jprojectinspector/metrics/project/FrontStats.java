@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class FrontStats {
 
-	public static class Branches implements OnlineMetric {
+	public static class Branches implements IOnlineMetric {
 		@Override
 		public String getName() {
 			return "NumBranches";
@@ -31,7 +31,7 @@ public class FrontStats {
 		}
 	}
 
-	public static class Forks implements OnlineMetric {
+	public static class Forks implements IOnlineMetric {
 		@Override
 		public String getName() {
 			return "NumForks";
@@ -53,7 +53,7 @@ public class FrontStats {
 		}
 	}
 
-	public static class Stars implements OnlineMetric {
+	public static class Stars implements IOnlineMetric {
 		@Override
 		public String getName() {
 			return "NumStars";
@@ -75,7 +75,7 @@ public class FrontStats {
 		}
 	}
 
-	public static class PullRequests implements OnlineMetric {
+	public static class PullRequests implements IOnlineMetric {
 		@Override
 		public String getName() {
 			return "NumPullRequests";

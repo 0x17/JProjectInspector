@@ -8,7 +8,7 @@ import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.Predicate;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 
 /**
  * Collects specified metrics for a project.
@@ -25,7 +25,7 @@ public class MetricsCollector {
 			return results;
 		}
 
-		Predicate<String> isOfflineMetric = new Predicate<String>() {
+		IPredicate<String> isOfflineMetric = new IPredicate<String>() {
 			@Override
 			public boolean invoke(String metricName) {
 				return MetricsRegistry.getTypeOfMetric(metricName) == MetricType.Offline;

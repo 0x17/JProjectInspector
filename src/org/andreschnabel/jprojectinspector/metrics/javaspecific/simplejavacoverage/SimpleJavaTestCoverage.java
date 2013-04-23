@@ -1,13 +1,13 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaCommon;
 
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SimpleJavaTestCoverage implements OfflineMetric {
+public class SimpleJavaTestCoverage implements IOfflineMetric {
 
 	public static Double determineMethodCoverage(File root) throws Exception {
 		List<String> projectMethodNames = new LinkedList<String>();

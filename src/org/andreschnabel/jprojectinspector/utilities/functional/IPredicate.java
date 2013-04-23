@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities.functional;
 
-public interface Callback {
+public interface IPredicate<T> {
 
-	public void invoke();
+	public boolean invoke(T obj);
 
 }

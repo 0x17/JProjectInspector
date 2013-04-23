@@ -1,12 +1,12 @@
 package org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers;
 
-import org.andreschnabel.jprojectinspector.metrics.test.coverage.FunctionIndexer;
+import org.andreschnabel.jprojectinspector.metrics.test.coverage.IFunctionIndexer;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 import java.util.List;
 
-public class PythonIndexer implements FunctionIndexer {
+public class PythonIndexer implements IFunctionIndexer {
 	@Override
 	public List<String> listFunctionDeclarations(String src) {
 		List<String> funcIdentifiers = null;

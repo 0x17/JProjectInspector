@@ -1,13 +1,13 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
 import org.andreschnabel.jprojectinspector.Config;
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 import java.io.File;
 
-public class JavaLinesOfCode implements OfflineMetric {
+public class JavaLinesOfCode implements IOfflineMetric {
 
 	public static int countLocForProj(Project project) throws Exception {
 		File root = new File(Config.DEST_BASE + project.repoName);

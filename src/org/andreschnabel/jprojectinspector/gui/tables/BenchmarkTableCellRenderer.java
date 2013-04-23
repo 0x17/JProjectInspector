@@ -25,6 +25,8 @@ public class BenchmarkTableCellRenderer extends DefaultTableCellRenderer {
 				} else {
 					cell.setForeground(Color.BLACK);
 				}
+			} else {
+				cell.setForeground(Color.BLACK);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

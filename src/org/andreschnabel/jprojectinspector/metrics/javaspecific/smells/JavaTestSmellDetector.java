@@ -1,11 +1,11 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific.smells;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaCommon;
 
 import java.io.File;
 
-public class JavaTestSmellDetector implements OfflineMetric {
+public class JavaTestSmellDetector implements IOfflineMetric {
 
 
 	@Override

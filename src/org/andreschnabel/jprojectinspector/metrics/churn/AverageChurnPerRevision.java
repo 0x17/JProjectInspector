@@ -1,12 +1,12 @@
 package org.andreschnabel.jprojectinspector.metrics.churn;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.git.GitChurnHelpers;
 import org.andreschnabel.jprojectinspector.utilities.git.GitRevisionHelpers;
 
 import java.io.File;
 
-public class AverageChurnPerRevision implements OfflineMetric {
+public class AverageChurnPerRevision implements IOfflineMetric {
 	@Override
 	public String getName() {
 		return "AverageChurnPerRevision";

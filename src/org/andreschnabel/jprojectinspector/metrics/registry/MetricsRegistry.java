@@ -1,9 +1,9 @@
 package org.andreschnabel.jprojectinspector.metrics.registry;
 
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
+import org.andreschnabel.jprojectinspector.metrics.ISurveyMetric;
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
-import org.andreschnabel.jprojectinspector.metrics.OnlineMetric;
-import org.andreschnabel.jprojectinspector.metrics.SurveyMetric;
 import org.andreschnabel.jprojectinspector.metrics.survey.Estimation;
 import org.andreschnabel.jprojectinspector.model.Project;
 
@@ -17,9 +17,9 @@ public class MetricsRegistry {
 	private static final String SCRAPING_WARNING = "<br /><br /><b>Important note:</b> This metric uses scraping to extract data from GitHub.<br />" +
 			"If GitHub changes the format of their website this metric might break.<br />" +
 			"In this case please get the newest version of this tool from GitHub '0x17/JProjectInspector'.</p>";
-	public static Map<String, OfflineMetric> offlineMetrics;
-	public static Map<String, OnlineMetric> onlineMetrics;
-	public static Map<String, SurveyMetric> surveyMetrics;
+	public static Map<String, IOfflineMetric> offlineMetrics;
+	public static Map<String, IOnlineMetric> onlineMetrics;
+	public static Map<String, ISurveyMetric> surveyMetrics;
 
 	static {
 		try {
@@ -69,8 +69,8 @@ public class MetricsRegistry {
 	public static String getDescriptionOfMetric(String metric) {
 		if(onlineMetrics.containsKey(metric)) {
 			String warning = "";
-			OnlineMetric metricObj = onlineMetrics.get(metric);
-			if(metricObj.getCategory() == OnlineMetric.Category.Scraping) {
+			IOnlineMetric metricObj = onlineMetrics.get(metric);
+			if(metricObj.getCategory() == IOnlineMetric.Category.Scraping) {
 				warning = SCRAPING_WARNING;
 			}
 			return metricObj.getDescription() + warning;
@@ -83,7 +83,7 @@ public class MetricsRegistry {
 		}
 	}
 
-	public static OnlineMetric.Category getOnlineCategoryOfMetric(String metric) {
+	public static IOnlineMetric.Category getOnlineCategoryOfMetric(String metric) {
 		if(onlineMetrics.containsKey(metric))
 			return onlineMetrics.get(metric).getCategory();
 		return null;

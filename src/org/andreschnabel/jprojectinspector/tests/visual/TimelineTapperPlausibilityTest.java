@@ -4,7 +4,7 @@ import org.andreschnabel.jprojectinspector.gui.tables.CsvTableModel;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.scrapers.TimelineTapper;
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
-import org.andreschnabel.jprojectinspector.utilities.functional.TestCallback;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITestCallback;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
 import javax.swing.*;
@@ -13,9 +13,9 @@ import java.util.List;
 
 public class TimelineTapperPlausibilityTest extends VisualTest {
 	@Override
-	protected TestCallback[] getTests() {
-		return new TestCallback[] {
-			new TestCallback() {
+	protected ITestCallback[] getTests() {
+		return new ITestCallback[] {
+			new ITestCallback() {
 				@Override
 				public String getDescription() {
 					return "timeline tapper plausiblity";

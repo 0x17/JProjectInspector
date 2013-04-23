@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities.functional;
 
-public interface Predicate<T> {
+public interface IBinaryOperator<T, U> {
 
-	public boolean invoke(T obj);
+	public U invoke(U a, T b);
 
 }

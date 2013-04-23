@@ -1,12 +1,12 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
-import org.andreschnabel.jprojectinspector.metrics.OfflineMetric;
+import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
 
 import java.io.File;
 
-public class Cpd implements OfflineMetric {
+public class Cpd implements IOfflineMetric {
 	@Override
 	public String getName() {
 		return "CopyPasteDetector";

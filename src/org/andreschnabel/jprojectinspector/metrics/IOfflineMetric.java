@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.metrics;
 
 import java.io.File;
 
-public interface OfflineMetric {
+public interface IOfflineMetric {
 
 	public String getName();
 	public String getDescription();

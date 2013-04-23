@@ -26,7 +26,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-public class InputPanel extends JPanel implements LaunchSettings {
+public class InputPanel extends JPanel implements ILaunchSettings {
 	
 	private static final long serialVersionUID = 1L;
 	private ContinuousTask<java.util.List<Project>> tapTimelineTask;
