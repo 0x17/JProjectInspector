@@ -1,17 +1,20 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.gui.tables.InputProjectTableModel;
+import org.andreschnabel.jprojectinspector.gui.windows.UserStatsWindow;
 import org.andreschnabel.jprojectinspector.metrics.project.FrontStats;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
 import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
+import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
 import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTaskBatch;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,18 @@ public class InputProjectTablePanel extends JPanel {
 		setLayout(new GridLayout(1,1));
 		JScrollPane scrollPane = new JScrollPane(projTable);
 		add(scrollPane);
+		projTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				super.mouseClicked(e);
+				int selRowIndex = projTable.getSelectedRow();
+				int selColumnIndex = projTable.getSelectedColumn();
+				if(selColumnIndex == 0) {
+					String user = (String) projTable.getValueAt(selRowIndex, selColumnIndex);
+					new UserStatsWindow(user).setVisible(true);
+				}
+			}
+		});
 	}
 	
 	public void addProject(final Project p) {

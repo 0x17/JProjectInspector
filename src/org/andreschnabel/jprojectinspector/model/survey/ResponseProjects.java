@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @XmlRootElement(name = "responseprojects")
 public class ResponseProjects {
@@ -183,5 +185,22 @@ public class ResponseProjects {
 			}
 		}
 		return projs;
+	}
+
+	public void simplify() {
+		leastTested = simplify(leastTested);
+		mostTested = simplify(mostTested);
+		lowestBugCount = simplify(lowestBugCount);
+		highestBugCount = simplify(highestBugCount);
+	}
+
+	private String simplify(String repoName) {
+		if(repoName.startsWith("https://github.com/")) {
+			Matcher m = Pattern.compile("https://github.com/.+?/(.+)").matcher(repoName);
+			m.find();
+			return m.group(1);
+		} else {
+			return repoName;
+		}
 	}
 }

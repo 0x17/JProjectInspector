@@ -1,8 +1,11 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import org.andreschnabel.jprojectinspector.utilities.functional.IBinaryOperator;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.IBinaryOperator;
 import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public final class StringHelpers {
 
@@ -21,6 +24,23 @@ public final class StringHelpers {
 			}
 		}
 		return ctr;
+	}
+
+	public static List<Integer> indicesOf(String str, String substr) {
+		List<Integer> indices = new LinkedList<Integer>();
+		int j = 0;
+		for(int i = 0; i < str.length(); i++) {
+			if(str.charAt(i) == substr.charAt(j)) {
+				if(j == substr.length() - 1) {
+					indices.add(i-j);
+					j = 0;
+				} else
+					j++;
+			} else {
+				j = 0;
+			}
+		}
+		return indices;
 	}
 
 	public static int countOccurencesOfWords(final String str, String[] words) {
@@ -82,5 +102,35 @@ public final class StringHelpers {
 
 	public static String removeQuotes(String s) {
 		return s.replaceAll("\"", "");
+	}
+
+	public static String replaceCorresponding(String str, String[] oldStrs, String[] newStrs) {
+		StringBuilder out = new StringBuilder();
+
+		List[] startPositionsLists = new LinkedList[oldStrs.length];
+
+		for(int i=0; i<oldStrs.length; i++) {
+			startPositionsLists[i] = StringHelpers.indicesOf(str, oldStrs[i]);
+		}
+
+		for(int i=0; i<str.length(); i++) {
+			for(int j=0; j<startPositionsLists.length; j++) {
+				for(int k=0; k<startPositionsLists[j].size(); k++) {
+					int startPos = (Integer)startPositionsLists[j].get(k);
+					int endPos = startPos+oldStrs[j].length();
+					if(i >= startPos && i < endPos) {
+						i = endPos;
+						out.append(newStrs[j]);
+						continue;
+					}
+				}
+			}
+
+			if(i < str.length()) {
+				out.append(str.charAt(i));
+			}
+		}
+
+		return out.toString();
 	}
 }

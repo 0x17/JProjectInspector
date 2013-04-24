@@ -8,6 +8,7 @@ import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.functional.IVarIndexedAction;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -54,10 +55,7 @@ public class Benchmark {
 					}
 				}
 
-				String candidate = template;
-				for(int i=0; i<indices.length; i++) {
-					candidate = template.replace(vars[i], metricNames[indices[i]]);
-				}
+				String candidate = insertMetricsForVarPlaceholders(template, vars, metricNames, indices);
 
 				Quality quality;
 				try {
@@ -75,10 +73,18 @@ public class Benchmark {
 
 				switch(mode) {
 					case BugCount:
-						corr = quality.bcWeightedCorrect;
+						if(quality.numBcWeightedApplicable == 0) {
+							corr = 0;
+						} else {
+							corr = quality.bcWeightedCorrect / quality.numBcWeightedApplicable;
+						}
 						break;
 					case TestEffort:
-						corr = quality.teWeightedCorrect;
+						if(quality.numTeWeightedApplicable == 0) {
+							corr = 0;
+						} else {
+							corr = quality.teWeightedCorrect / quality.numTeWeightedApplicable;;
+						}
 						break;
 				}
 
@@ -93,6 +99,14 @@ public class Benchmark {
 		return winner[0];
 	}
 
+	public static String insertMetricsForVarPlaceholders(String template, String[] vars, String[] metricNames, int[] indices) {
+		String[] varReplacements = new String[vars.length];
+		for(int i=0; i<indices.length; i++) {
+			varReplacements[i] = metricNames[indices[i]];
+		}
+		return StringHelpers.replaceCorresponding(template, vars, varReplacements);
+	}
+
 	public interface PredictionMethods {
 		public String getName();
 		public double testEffortPredictionMeasure(ProjectWithResults m);
@@ -102,12 +116,16 @@ public class Benchmark {
 	public static Quality runBenchmark(final PredictionMethods predMethods, List<ProjectWithResults> pml, List<ResponseProjects> rpl) throws Exception {
 		int teCorrect = 0;
 		int bcCorrect = 0;
-		double teWeightedCorrect = 0.0f;
-		double bcWeightedCorrect = 0.0f;
+		double teWeightedCorrect = 0.0;
+		double bcWeightedCorrect = 0.0;
 		List<String[]> tePredictions = new LinkedList<String[]>();
 		List<String[]> bcPredictions = new LinkedList<String[]>();
+		int numBcApplicable = 0;
+		int numTeApplicable = 0;
+		double numBcWeightedApplicable = 0.0;
+		double numTeWeightedApplicable = 0.0;
 
-		for(ResponseProjects rp : rpl) {
+		for(final ResponseProjects rp : rpl) {
 			if(rp.user == null) {
 				tePredictions.add(new String[] {"N/A", "N/A"});
 				bcPredictions.add(new String[] {"N/A", "N/A"});
@@ -116,49 +134,73 @@ public class Benchmark {
 
 			List<Project> projs = rp.toProjectList();
 
-			if(isInvalidProject(pml, projs)) {
+			if(containsInvalidProject(pml, projs)) {
 				tePredictions.add(new String[] {"N/A", "N/A"});
 				bcPredictions.add(new String[] {"N/A", "N/A"});
 				continue;
 			}
 
-			List<Double> bcPredVals = calcPredictionValues(predMethods, PredictionType.BugCount, pml, projs);
+			ProjectWithResults highestBugCountProjWithResults = Func.find(new IPredicate<ProjectWithResults>() {
+				@Override
+				public boolean invoke(ProjectWithResults pwr) {
+					return pwr.project.owner.equals(rp.user) && pwr.project.repoName.equals(rp.highestBugCount);
+				}
+			}, pml);
+			ProjectWithResults lowestBugCountProjWithResults = Func.find(new IPredicate<ProjectWithResults>() {
+				@Override
+				public boolean invoke(ProjectWithResults pwr) {
+					return pwr.project.owner.equals(rp.user) && pwr.project.repoName.equals(rp.lowestBugCount);
+				}
+			}, pml);
 
-			int highestPredIx = getHighestPredIndex(projs, bcPredVals);
-			String hiRepo = projs.get(highestPredIx).repoName;
-			if(rp.highestBugCount.equals(hiRepo)) {
+			double hiPred = predMethods.bugCountPredictionMeasure(highestBugCountProjWithResults);
+			double lowPred = predMethods.bugCountPredictionMeasure(lowestBugCountProjWithResults);
+
+			if(Double.isNaN(hiPred) || Double.isNaN(lowPred)){
+				bcPredictions.add(new String[] {"N/A","N/A"});
+			} else if(hiPred > lowPred) {
 				bcCorrect++;
 				bcWeightedCorrect += rp.weight;
+				bcPredictions.add(new String[] {rp.lowestBugCount, rp.highestBugCount});
+				numBcApplicable++;
+				numBcWeightedApplicable += rp.weight;
+			} else {
+				bcPredictions.add(new String[] {rp.highestBugCount, rp.lowestBugCount});
+				numBcApplicable++;
+				numBcWeightedApplicable += rp.weight;
 			}
 
-			int lowestPredIx = getLowestPredictionIndex(projs, bcPredVals);
-			String loRepo = projs.get(lowestPredIx).repoName;
-			if(rp.lowestBugCount.equals(loRepo)) {
-				bcCorrect++;
-				bcWeightedCorrect += rp.weight;
-			}
+			ProjectWithResults mostTestedProjWithResults = Func.find(new IPredicate<ProjectWithResults>() {
+				@Override
+				public boolean invoke(ProjectWithResults pwr) {
+					return pwr.project.owner.equals(rp.user) && pwr.project.repoName.equals(rp.mostTested);
+				}
+			}, pml);
+			ProjectWithResults leastTestedCountProjWithResults = Func.find(new IPredicate<ProjectWithResults>() {
+				@Override
+				public boolean invoke(ProjectWithResults pwr) {
+					return pwr.project.owner.equals(rp.user) && pwr.project.repoName.equals(rp.leastTested);
+				}
+			}, pml);
 
-			bcPredictions.add(new String[] {loRepo, hiRepo});
+			hiPred = predMethods.testEffortPredictionMeasure(mostTestedProjWithResults);
+			lowPred = predMethods.testEffortPredictionMeasure(leastTestedCountProjWithResults);
 
-			List<Double> tePredVals = calcPredictionValues(predMethods, PredictionType.TestEffort, pml, projs);
-
-			highestPredIx = getHighestPredIndex(projs, tePredVals);
-			hiRepo = projs.get(highestPredIx).repoName;
-			if(rp.mostTested.equals(hiRepo)) {
+			if(Double.isNaN(hiPred) || Double.isNaN(lowPred)) {
+				tePredictions.add(new String[] {"N/A", "N/A"});
+			} else if(hiPred > lowPred) {
 				teCorrect++;
 				teWeightedCorrect += rp.weight;
+				tePredictions.add(new String[] {rp.leastTested, rp.mostTested});
+				numTeApplicable++;
+				numTeWeightedApplicable += rp.weight;
+			} else {
+				tePredictions.add(new String[] {rp.mostTested, rp.leastTested});
+				numTeApplicable++;
+				numTeWeightedApplicable += rp.weight;
 			}
-
-			lowestPredIx = getLowestPredictionIndex(projs, tePredVals);
-			loRepo = projs.get(lowestPredIx).repoName;
-			if(rp.leastTested.equals(loRepo)) {
-				teCorrect++;
-				teWeightedCorrect += rp.weight;
-			}
-
-			tePredictions.add(new String[] {loRepo, hiRepo});
 		}
-		return new Quality(teCorrect, bcCorrect, teWeightedCorrect, bcWeightedCorrect, tePredictions, bcPredictions);
+		return new Quality(teCorrect, bcCorrect, teWeightedCorrect, bcWeightedCorrect, tePredictions, bcPredictions, numTeApplicable, numTeWeightedApplicable, numBcApplicable, numBcWeightedApplicable);
 	}
 
 	public static int getLowestPredictionIndex(List<Project> projs, List<Double> predVals) {
@@ -190,7 +232,7 @@ public class Benchmark {
 		return Func.map(projectToMeasureResult, projectList);
 	}
 
-	public static boolean isInvalidProject(final List<ProjectWithResults> pml, List<Project> projs) {
+	public static boolean containsInvalidProject(final List<ProjectWithResults> pml, List<Project> projs) {
 		IPredicate<Project> isInvalid = new IPredicate<Project>() {
 			@Override
 			public boolean invoke(Project p) {
@@ -217,14 +259,22 @@ public class Benchmark {
 		public final double bcWeightedCorrect;
 		public final List<String[]> tePredictions;
 		public final List<String[]> bcPredictions;
+		public final int numTeApplicable;
+		public final double numTeWeightedApplicable;
+		public final int numBcApplicable;
+		public final double numBcWeightedApplicable;
 
-		public Quality(int teCorrect, int bcCorrect, double teWeightedCorrect, double bcWeightedCorrect, List<String[]> tePredictions, List<String[]> bcPredictions) {
+		public Quality(int teCorrect, int bcCorrect, double teWeightedCorrect, double bcWeightedCorrect, List<String[]> tePredictions, List<String[]> bcPredictions, int numTeApplicable, double numTeWeightedApplicable, int numBcApplicable, double numBcWeightedApplicable) {
 			this.teCorrect = teCorrect;
 			this.bcCorrect = bcCorrect;
 			this.teWeightedCorrect = teWeightedCorrect;
 			this.bcWeightedCorrect = bcWeightedCorrect;
 			this.tePredictions = tePredictions;
 			this.bcPredictions = bcPredictions;
+			this.numTeApplicable = numTeApplicable;
+			this.numTeWeightedApplicable = numTeWeightedApplicable;
+			this.numBcApplicable = numBcApplicable;
+			this.numBcWeightedApplicable = numBcWeightedApplicable;
 		}
 	}
 

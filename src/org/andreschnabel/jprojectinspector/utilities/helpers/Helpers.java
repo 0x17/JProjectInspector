@@ -77,4 +77,16 @@ public class Helpers {
 		String[] parts = ProcessHelpers.monitorProcess(new File("."), "type", cmd).split(" ");
 		return parts[parts.length-1].trim();
 	}
+
+	public static String loadHTMLUrlIntoStrRetry(String url, int maxRetries) {
+		String out = null;
+		for(int i=0; i<maxRetries; i++) {
+			try {
+				out = loadHTMLUrlIntoStr(url);
+				break;
+			} catch(Exception e) {
+			}
+		}
+		return out;
+	}
 }

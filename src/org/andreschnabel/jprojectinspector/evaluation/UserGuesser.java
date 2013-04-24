@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UserGuesser {
 
@@ -17,6 +19,17 @@ public class UserGuesser {
 		FuncInPlace.addNoDups(projNames, rp.lowestBugCount);
 		FuncInPlace.addNoDups(projNames, rp.leastTested);
 		FuncInPlace.addNoDups(projNames, rp.mostTested);
+
+		Pattern p = Pattern.compile("https://github.com/(.+)/");
+
+		for(int i=0; i<projNames.size(); i++) {
+			String pname = projNames.get(i);
+			if(pname.startsWith("https://github.com/")) {
+				Matcher m = p.matcher(pname);
+				m.find();
+				return m.group(1);
+			}
+		}
 		
 		Map<String, Integer> userHits = new HashMap<String, Integer>();
 

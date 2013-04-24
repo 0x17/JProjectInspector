@@ -54,8 +54,9 @@ public class Project {
 			throw new Exception("Project string must contain /!");
 
 		String[] parts = s.split("/");
-		if(parts.length != 2)
+		if(parts.length != 2) {
 			throw new Exception("Project string malformed!");
+		}
 
 		return new Project(parts[0], parts[1]);
 	}

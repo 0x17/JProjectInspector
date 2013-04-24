@@ -9,6 +9,8 @@ import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.scrapers.TimelineTapper;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
@@ -101,11 +103,57 @@ public class InputPanel extends JPanel implements ILaunchSettings {
 		topPane.add(repoField);
 
 		initAddButton(topPane);
+		initAddMissingProjectsButton(topPane);
 		initQueryProjsButton(topPane);
 		initUserReposCombo(topPane);
 		initAddAllButton(topPane);
 
 		add(topPane, ThreeRowGridBagConstraints.topPaneConstraints());
+	}
+
+	private void initAddMissingProjectsButton(JPanel topPane) {
+		JButton addMissingProjectsBtn = new JButton("+Missing projects");
+		addMissingProjectsBtn.setToolTipText("Add missing projects from owners in the current project list.");
+		addMissingProjectsBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(projLstPanel.getProjects().isEmpty()) {
+					GuiHelpers.showError("Only works when project list isn't empty!");
+				} else {
+					List<Project> projs = projLstPanel.getProjects();
+					List<String> owners = Func.map(new ITransform<Project, String>() {
+						@Override
+						public String invoke(Project p) {
+							return p.owner;
+						}
+					},projs);
+					owners = Func.remDups(owners);
+
+					final List<String> finalOwners = owners;
+					AsyncTask<List<Project>> scrapeProjsInBackgroundTask = new AsyncTask<List<Project>>() {
+						@Override
+						public void onFinished(List<Project> projsToAdd) {
+							if(projsToAdd != null) {
+								projLstPanel.addProjects(projsToAdd);
+							}
+						}
+
+						@Override
+						public List<Project> doInBackground() {
+							List<Project> projsToAdd = null;
+							try {
+								projsToAdd = UserScraper.scrapeProjectsOfUsers(finalOwners);
+							} catch(Exception e1) {
+								e1.printStackTrace();
+							}
+							return projsToAdd;
+						}
+					};
+					scrapeProjsInBackgroundTask.execute();
+				}
+			}
+		});
+		topPane.add(addMissingProjectsBtn);
 	}
 
 	private void initAddButton(JPanel topPane) {

@@ -4,9 +4,9 @@ import org.andreschnabel.jprojectinspector.evaluation.UserGuesser;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
-import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.XmlHelpers;
@@ -17,24 +17,30 @@ import java.util.List;
 public class ConnectProjsWithUsersRunner {
 
 	public static void main(String[] args) throws Exception {
+		/*CsvData data = CsvHelpers.parseCsv(new File("data/Benchmark/WeightedEstimates.csv"));
+		List<String> users = data.getColumn("user");
+		List<Project> projects = UserScraper.scrapeProjectsOfUsers(users);
+		Helpers.log(""+projects.size());*/
 		connectProjectsWithUsers();
 	}
 
 	public static void connectProjectsWithUsers() throws Exception {
-		List<ResponseProjects> responseProjectsList = ResponseProjects.fromCsvFile(new File("data/responses500.csv"));
-		List<Project> projs = Project.projectListFromCsv(CsvHelpers.parseCsv(new File("data/userprojects500.csv")));
+		List<ResponseProjects> responseProjectsList = ResponseProjects.fromCsvFile(new File("data/RohantwortenUmfrage2Kopie.csv"));
+		List<Project> projs = Project.projectListFromCsv(CsvHelpers.parseCsv(new File("data/KandidatenProjekteUmfrage2.csv")));
 
 		for(ResponseProjects rp : responseProjectsList) {
 			rp.user = UserGuesser.guessUserWithProjects(rp, projs);
+			Helpers.log("Guessed user: " + rp.user);
+			rp.simplify();
 		}
 
 		responseProjectsList = Func.filter(new IPredicate<ResponseProjects>() {
 			@Override
 			public boolean invoke(ResponseProjects rps) {
-				for(Project p : rps.toProjectList()) {
+				/*for(Project p : rps.toProjectList()) {
 					if(!ProjectDownloader.isProjectOnline(p))
 						return false;
-				}
+				}*/
 				return rps.user != null && !Double.isNaN(rps.weight) && rps.weight != 0.0f;
 			}
 		}, responseProjectsList);

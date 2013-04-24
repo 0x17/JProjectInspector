@@ -36,7 +36,7 @@ public class PredictionMethodsFromString implements Benchmark.PredictionMethods 
 		if(result != null) {
 			return (Double)result;
 		}
-		return 0.0;
+		return Double.NaN;
 	}
 
 	private Map<String, Object> resultsToBindings(ProjectWithResults m) {

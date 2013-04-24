@@ -25,6 +25,9 @@ public class UserGuesserTest {
 		ResponseProjects rp = new ResponseProjects("a", "b", "c", "d");
 
 		Assert.assertEquals("Hans", UserGuesser.guessUserWithProjects(rp, usrProjsLst));
+
+		rp = new ResponseProjects("a", "b", "https://github.com/Heinz/xisakjld", "c");
+		Assert.assertEquals("Heinz", UserGuesser.guessUserWithProjects(rp, usrProjsLst));
 	}
 
 }

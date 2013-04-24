@@ -127,7 +127,7 @@ public class BenchmarkPanel extends PanelWithParent {
 		numEstimationsLbl = new JLabel("0");
 		topPane.add(numEstimationsLbl);
 
-		topPane.add(new JLabel("Percentage:"));
+		topPane.add(new JLabel("Percentage of points:"));
 		percCorrLbl = new JLabel("0%");
 		topPane.add(percCorrLbl);
 
@@ -139,7 +139,7 @@ public class BenchmarkPanel extends PanelWithParent {
 		weightSumLbl = new JLabel("0");
 		topPane.add(weightSumLbl);
 
-		topPane.add(new JLabel("Percentage:"));
+		topPane.add(new JLabel("Percentage of weighted points:"));
 		percWeightCorrLbl = new JLabel("0%");
 		topPane.add(percWeightCorrLbl);
 
@@ -188,13 +188,12 @@ public class BenchmarkPanel extends PanelWithParent {
 							estimationsLbl.setText(data.title);
 							respProjs = ResponseProjects.fromPreprocessedCsvData(data);
 							benchmarkTableModel.setRespProjs(respProjs);
-							numEstimationsLbl.setText(""+respProjs.size()*2);
+							numEstimationsLbl.setText(""+respProjs.size());
 
 							weightSum = 0;
 							for(ResponseProjects rps : respProjs) {
 								weightSum += rps.weight;
 							}
-							weightSum *= 2.0;
 							weightSumLbl.setText(""+weightSum);
 
 							break;
@@ -299,22 +298,31 @@ public class BenchmarkPanel extends PanelWithParent {
 
 			int ncorr;
 			double wncorr;
+			int napplicable;
+			double nwapplicable;
 			switch(mode) {
 				default:
 				case TestEffort:
 					ncorr = q.teCorrect;
 					wncorr = q.teWeightedCorrect;
+					napplicable = q.numTeApplicable;
+					nwapplicable = q.numTeWeightedApplicable;
 					break;
 				case BugCount:
 					ncorr = q.bcCorrect;
 					wncorr = q.bcWeightedCorrect;
+					napplicable = q.numBcApplicable;
+					nwapplicable = q.numBcWeightedApplicable;
 					break;
 			}
 
 			numCorrLbl.setText("" + ncorr);
 			weightedNumCorrLbl.setText(""+wncorr);
-			percCorrLbl.setText(String.format("%.2f", (ncorr/(double)(respProjs.size()*2))*100.0) + "%");
-			percWeightCorrLbl.setText(String.format("%.2f", wncorr/weightSum * 100.0) + "%");
+			percCorrLbl.setText(String.format("%.2f", (double)ncorr/(double)napplicable*100.0) + "%");
+			percWeightCorrLbl.setText(String.format("%.2f", wncorr/nwapplicable*100.0) + "%");
+
+			weightSumLbl.setText(""+nwapplicable);
+			numEstimationsLbl.setText(""+napplicable);
 
 			updateTable(q);
 

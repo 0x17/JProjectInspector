@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.tests.offline.utilities.helpers;
 
+import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.JavaSourceHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 import org.junit.Assert;
@@ -33,6 +34,12 @@ public class StringHelpersTest {
 	@Test
 	public void testCountOccurencesOfWords() {
 		assertEquals(4, StringHelpers.countOccurencesOfWords("asiodjiosjdoaisdjiaosdjasiodjblabluppblasjidojsdiobla", new String[]{"bla", "blupp"}));
+	}
+
+	@Test
+	public void testIndicesOf() throws Exception {
+		List<Integer> indices = StringHelpers.indicesOf("Bla something blupp something somethingsomething", "something");
+		AssertHelpers.arrayEqualsLstOrderSensitive(new Integer[]{4, 20, 30, 39}, indices);
 	}
 
 	@Test
@@ -82,4 +89,21 @@ public class StringHelpersTest {
 		assertEquals(expectedFields, JavaSourceHelpers.extractFieldDeclarations(src));
 	}
 
+	@Test
+	public void testReplaceCorresponding() throws Exception {
+		String result = StringHelpers.replaceCorresponding("Fight Club Is Closed", new String[] {"Fight", "Closed"}, new String[] {"Dance", "Open"});
+		Assert.assertEquals("Dance Club Is Open", result);
+	}
+
+	@Test
+	public void testReplaceCorrespondingSingleCharStrs() throws Exception {
+		String result = StringHelpers.replaceCorresponding("a*b/c", new String[]{"a", "b", "c"}, new String[] {"Velocity", "Mass", "Force"});
+		Assert.assertEquals("Velocity*Mass/Force", result);
+	}
+
+	@Test
+	public void testReplaceCorrespondingMultipleOccurences() throws Exception {
+		String result = StringHelpers.replaceCorresponding("Come on feed the da da da da da", new String[]{"da"}, new String[]{"DA"});
+		Assert.assertEquals("Come on feed the DA DA DA DA DA", result);
+	}
 }

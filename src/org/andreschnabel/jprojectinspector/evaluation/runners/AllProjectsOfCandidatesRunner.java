@@ -14,11 +14,11 @@ public class AllProjectsOfCandidatesRunner {
 	}
 
 	public static void userProjsForCandidates() throws Exception {
-		CsvData candidatesData = CsvHelpers.parseCsv(new File("data/candidates500.csv"));
+		CsvData candidatesData = CsvHelpers.parseCsv(new File("data/KandidatenUmfrage2.csv"));
 		List<String> users = candidatesData.getColumn("login");
 		List<Project> userProjects = UserScraper.scrapeProjectsOfUsers(users);
 		CsvData csv = Project.projectListToCsv(userProjects);
-		csv.save(new File("data/userprojects500.csv"));
+		csv.save(new File("data/KandidatenProjekteUmfrage2.csv"));
 	}
 
 }

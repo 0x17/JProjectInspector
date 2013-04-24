@@ -56,7 +56,11 @@ public class UserScraper {
 	public static int scrapeNumStarredProjects(String htmlStr) throws Exception {
 		htmlStr = StringHelpers.removeAllWhitespace(htmlStr);
 		String regex = "([0-9]+)</strong>\\s*?<span>starred</span>";
-		String resStr = RegexHelpers.batchMatchOneGroup(regex, htmlStr).get(0);
+		List<String> matches = RegexHelpers.batchMatchOneGroup(regex, htmlStr);
+		if(matches.isEmpty()) {
+			return 0;
+		}
+		String resStr = matches.get(0);
 		return Integer.valueOf(resStr);
 	}
 
@@ -80,14 +84,15 @@ public class UserScraper {
 	}
 
 	public static List<Project> scrapeProjectsOfUser(String user) throws Exception {
-		String reposHtml = Helpers.loadUrlIntoStr("https://github.com/" + user + "?tab=repositories");
+		String reposHtml = Helpers.loadHTMLUrlIntoStrRetry("https://github.com/" + user + "?tab=repositories", 10);
 		return scrapeProjects(reposHtml);
 	}
 
 	public static List<Project> scrapeProjectsOfUsers(List<String> users) throws Exception {
 		List<Project> projects = new LinkedList<Project>();
 		for(String user : users) {
-			projects.addAll(scrapeProjectsOfUser(user));
+			List<Project> up = scrapeProjectsOfUser(user);
+			projects.addAll(up);
 		}
 		return projects;
 	}

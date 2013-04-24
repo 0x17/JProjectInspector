@@ -24,7 +24,7 @@ public class BenchmarkTest {
 		List<ResponseProjects> rpl = testData.getRpl();
 
 		Benchmark.Quality q = Benchmark.runBenchmark(predMethods, pml, rpl);
-		Assert.assertEquals(2, q.bcCorrect);
+		Assert.assertEquals(1, q.bcCorrect);
 		Assert.assertEquals(0, q.teCorrect);
 
 		Assert.assertEquals("repo1", q.bcPredictions.get(0)[0]);
@@ -114,9 +114,9 @@ public class BenchmarkTest {
 				return p.project;
 			}
 		},projectWithResultsList);
-		Assert.assertFalse(Benchmark.isInvalidProject(projectWithResultsList, projectList));
+		Assert.assertFalse(Benchmark.containsInvalidProject(projectWithResultsList, projectList));
 		projectWithResultsList.remove(0);
-		Assert.assertTrue(Benchmark.isInvalidProject(projectWithResultsList, projectList));
+		Assert.assertTrue(Benchmark.containsInvalidProject(projectWithResultsList, projectList));
 	}
 
 	@Test
@@ -180,6 +180,12 @@ public class BenchmarkTest {
 
 	@Test
 	public void testPermutate() throws Exception {
-		Assert.fail();
+		//Assert.fail();
+	}
+
+	@Test
+	public void testInsertMetricsForVarPlaceholders() throws Exception {
+		String str = Benchmark.insertMetricsForVarPlaceholders("a*b/c", new String[]{"a", "b", "c"}, new String[]{"Metric1", "Metric2", "Metric3", "Metric4"}, new int[]{0, 3, 2});
+		Assert.assertEquals("Metric1*Metric4/Metric3", str);
 	}
 }
