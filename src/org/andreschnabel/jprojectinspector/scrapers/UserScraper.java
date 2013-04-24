@@ -18,12 +18,22 @@ public class UserScraper {
 		String reposHtml = Helpers.loadUrlIntoStr("https://github.com/" + name + "?tab=repositories");
 		UserData ud = new UserData();
 		ud.name = name;
+		ud.realName = scrapeRealName(mainHtml);
 		ud.joinDate = scrapeJoinDate(mainHtml);
 		ud.projects = scrapeProjects(reposHtml);
 		ud.numStarredProjects = scrapeNumStarredProjects(mainHtml);
 		ud.followers = scrapeFollowers(followersHtml, name);
 		ud.following = scrapeFollowing(followingHtml, name);
 		return ud;
+	}
+
+	private static String scrapeRealName(String mainHtml) {
+		String regex = "<span itemprop=\"name\">(.+?)</span>";
+		List<String> matches = RegexHelpers.batchMatchOneGroup(regex, mainHtml);
+		if(matches.size() == 1) {
+			return matches.get(0);
+		}
+		return null;
 	}
 
 	public static List<String> scrapeNames(String htmlStr) throws Exception {
@@ -74,4 +84,11 @@ public class UserScraper {
 		return scrapeProjects(reposHtml);
 	}
 
+	public static List<Project> scrapeProjectsOfUsers(List<String> users) throws Exception {
+		List<Project> projects = new LinkedList<Project>();
+		for(String user : users) {
+			projects.addAll(scrapeProjectsOfUser(user));
+		}
+		return projects;
+	}
 }

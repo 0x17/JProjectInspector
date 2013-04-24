@@ -8,10 +8,6 @@ public class StringConcatenationOp implements IBinaryOperator<String, String> {
 		this.infix = infix;
 	}
 
-	public StringConcatenationOp() {
-		infix = "";
-	}
-
 	@Override
 	public String invoke(String a, String b) {
 		return a+infix+b;

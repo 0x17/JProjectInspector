@@ -3,6 +3,7 @@ package org.andreschnabel.jprojectinspector.gui.panels;
 import org.andreschnabel.jprojectinspector.evaluation.MetricsCollector;
 import org.andreschnabel.jprojectinspector.gui.tables.MetricResultTableModel;
 import org.andreschnabel.jprojectinspector.gui.windows.ProjectMetricsWindow;
+import org.andreschnabel.jprojectinspector.gui.windows.UserStatsWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.VisualizationWindow;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
@@ -156,9 +157,15 @@ public class MetricResultsPanel extends JPanel {
 				super.mouseClicked(e);
 
 				int selRowIndex = resultTable.getSelectedRow();
+				int selColIndex = resultTable.getSelectedColumn();
 				String owner = (String)mrtm.getValueAt(selRowIndex, 0);
 				String repo = (String)mrtm.getValueAt(selRowIndex, 1);
 				Project p = new Project(owner, repo);
+
+				if(selColIndex == 0) {
+					new UserStatsWindow(owner).setVisible(true);
+					return;
+				}
 
 				Map<Project, Double[]> cache = mrtm.getResults();
 				if(!cache.containsKey(p)) {

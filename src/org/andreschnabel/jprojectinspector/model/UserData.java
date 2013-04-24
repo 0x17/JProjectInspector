@@ -4,6 +4,7 @@ import java.util.List;
 
 public class UserData {
 	public String name;
+	public String realName;
 	public String joinDate;
 	public List<Project> projects;
 	public int numStarredProjects;
@@ -35,6 +36,7 @@ public class UserData {
 		if(joinDate != null ? !joinDate.equals(userData.joinDate) : userData.joinDate != null) return false;
 		if(name != null ? !name.equals(userData.name) : userData.name != null) return false;
 		if(projects != null ? !projects.equals(userData.projects) : userData.projects != null) return false;
+		if(realName != null ? !realName.equals(userData.realName) : userData.realName != null) return false;
 
 		return true;
 	}
@@ -42,6 +44,7 @@ public class UserData {
 	@Override
 	public int hashCode() {
 		int result = name != null ? name.hashCode() : 0;
+		result = 31 * result + (realName != null ? realName.hashCode() : 0);
 		result = 31 * result + (joinDate != null ? joinDate.hashCode() : 0);
 		result = 31 * result + (projects != null ? projects.hashCode() : 0);
 		result = 31 * result + numStarredProjects;
@@ -54,6 +57,7 @@ public class UserData {
 	public String toString() {
 		return "UserData{" +
 				"name='" + name + '\'' +
+				", realName='" + realName + '\'' +
 				", joinDate='" + joinDate + '\'' +
 				", projects=" + projects +
 				", numStarredProjects=" + numStarredProjects +

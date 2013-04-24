@@ -7,6 +7,7 @@ import org.andreschnabel.jprojectinspector.evaluation.SurveyFormat;
 import org.andreschnabel.jprojectinspector.gui.tables.BenchmarkTableCellRenderer;
 import org.andreschnabel.jprojectinspector.gui.tables.BenchmarkTableModel;
 import org.andreschnabel.jprojectinspector.gui.windows.ProjectMetricsWindow;
+import org.andreschnabel.jprojectinspector.gui.windows.UserStatsWindow;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
@@ -96,13 +97,13 @@ public class BenchmarkPanel extends PanelWithParent {
 		});
 		equationPanel.add(computeBtn);
 
-		JButton permutateBtn = new JButton("Permutate");
-		permutateBtn.addActionListener(new ActionListener() {
+		JButton enumerateBtn = new JButton("Enumerate");
+		enumerateBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String winner = null;
 				try {
-					winner = Benchmark.permutate(equationField.getText(), metricsData, respProjs, mode);
+					winner = Benchmark.enumerate(equationField.getText(), metricsData, respProjs, mode);
 				} catch(Exception e1) {
 					e1.printStackTrace();
 				}
@@ -114,7 +115,7 @@ public class BenchmarkPanel extends PanelWithParent {
 				eqtnChanged();
 			}
 		});
-		equationPanel.add(permutateBtn);
+		equationPanel.add(enumerateBtn);
 
 		topPane.add(equationPanel);
 
@@ -232,11 +233,14 @@ public class BenchmarkPanel extends PanelWithParent {
 
 				int selRowIndex = benchmarkTable.getSelectedRow();
 				int selColIndex = benchmarkTable.getSelectedColumn();
+
+				String user = (String)benchmarkTableModel.getValueAt(selRowIndex, 0);
+
 				if(selColIndex == 0) {
+					new UserStatsWindow(user).setVisible(true);
 					return;
 				}
 
-				String user = (String)benchmarkTableModel.getValueAt(selRowIndex, 0);
 				Object cellVal = benchmarkTableModel.getValueAt(selRowIndex, selColIndex);
 				if(!(cellVal instanceof String)) {
 					return;

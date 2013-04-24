@@ -1,6 +1,5 @@
 package org.andreschnabel.jprojectinspector.tests;
 
-import org.andreschnabel.jprojectinspector.utilities.functional.ITestCallback;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,15 +11,15 @@ import java.awt.event.WindowEvent;
 
 public abstract class VisualTest {
 
-	protected abstract ITestCallback[] getTests();
+	protected abstract VisualTestCallback[] getTests();
 
 	@Test
 	public void testVisual() throws Exception {
-		ITestCallback[] tests = getTests();
-		for(ITestCallback test : tests) {
+		VisualTestCallback[] tests = getTests();
+		for(VisualTestCallback test : tests) {
 			String description = test.getDescription();
 			Helpers.log("Running visual test: " + description);
-			test.invoke();
+			test.invokeWithSetupAndTeardown();
 			int result = JOptionPane.showConfirmDialog (null, "Did '" + description + "' meet your expectations?","Visual Test Feedback", JOptionPane.YES_NO_OPTION);
 			Assert.assertEquals("Visual test: " + description, JOptionPane.YES_OPTION, result);
 		}

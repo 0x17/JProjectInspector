@@ -6,6 +6,7 @@ import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
+import org.andreschnabel.jprojectinspector.utilities.functional.IVarIndexedAction;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 import java.util.LinkedList;
@@ -16,13 +17,13 @@ import java.util.List;
  */
 public class Benchmark {
 
-	public static String permutate(String template, List<ProjectWithResults> metricsData, List<ResponseProjects> respProjs, PredictionType mode) throws Exception {
+	public static String enumerate(final String template, final List<ProjectWithResults> metricsData, final List<ResponseProjects> respProjs, final PredictionType mode) throws Exception {
 		List<String[]> matches = RegexHelpers.batchMatch("([A-Za-z]+)", template);
 		if(matches.isEmpty()) {
 			return null;
 		}
 
-		String[] vars = new String[matches.size()];
+		final String[] vars = new String[matches.size()];
 
 		if(vars.length == 0) {
 			return null;
@@ -37,98 +38,59 @@ public class Benchmark {
 			vars[i++] = match;
 		}
 
-		String winner = null;
-		double winnerCorr = 0.0;
+		final String[] winner = new String[1];
+		final double[] winnerCorr = new double[1];
 
-		String[] metricNames = metricsData.get(0).getResultHeaders();
+		final String[] metricNames = metricsData.get(0).getResultHeaders();
 
-		// TODO: Use Func.nestedFor here...
-
-		if(vars.length == 1) {
-			for(int j=0; j<metricNames.length; j++) {
-					String candidate = template.replace(vars[0], metricNames[j]);
-
-					Quality quality = runBenchmark(new PredictionMethodsFromString(candidate), metricsData, respProjs);
-
-					double corr = 0;
-
-					switch(mode) {
-						case BugCount:
-							corr = quality.bcWeightedCorrect;
-							break;
-						case TestEffort:
-							corr = quality.teWeightedCorrect;
-							break;
-					}
-
-					if(corr > winnerCorr) {
-						winner = candidate;
-						winnerCorr = corr;
-					}
-
-			}
-		} else if(vars.length == 2) {
-			for(int j=0; j<metricNames.length; j++) {
-				for(int k=0; k<metricNames.length; k++) {
-					if(j == k) {
-						continue;
-					}
-
-					String candidate = template.replace(vars[0], metricNames[j]).replace(vars[1], metricNames[k]);
-
-					Quality quality = runBenchmark(new PredictionMethodsFromString(candidate), metricsData, respProjs);
-
-					double corr = 0;
-
-					switch(mode) {
-						case BugCount:
-							corr = quality.bcWeightedCorrect;
-							break;
-						case TestEffort:
-							corr = quality.teWeightedCorrect;
-							break;
-					}
-
-					if(corr > winnerCorr) {
-						winner = candidate;
-						winnerCorr = corr;
-					}
-
-				}
-			}
-		} else if(vars.length == 3) {
-			for(int j=0; j<metricNames.length; j++) {
-				for(int k=0; k<metricNames.length; k++) {
-					for(int l=0; l<metricNames.length; l++) {
-						if(j == k && k == l) {
-							continue;
-						}
-
-						String candidate = template.replace(vars[0], metricNames[j]).replace(vars[1], metricNames[k]).replace(vars[2], metricNames[l]);
-
-						Quality quality = runBenchmark(new PredictionMethodsFromString(candidate), metricsData, respProjs);
-
-						double corr = 0;
-
-						switch(mode) {
-							case BugCount:
-								corr = quality.bcWeightedCorrect;
-								break;
-							case TestEffort:
-								corr = quality.teWeightedCorrect;
-								break;
-						}
-
-						if(corr > winnerCorr) {
-							winner = candidate;
-							winnerCorr = corr;
+		Func.nestedFor(vars.length, 0, metricNames.length, new IVarIndexedAction() {
+			@Override
+			public void invoke(int[] indices) {
+				for(int i=0; i<indices.length; i++) {
+					for(int j=0; j<indices.length; j++) {
+						if(i != j && indices[i] == indices[j]) {
+							return;
 						}
 					}
 				}
-			}
-		}
 
-		return winner;
+				String candidate = template;
+				for(int i=0; i<indices.length; i++) {
+					candidate = template.replace(vars[i], metricNames[indices[i]]);
+				}
+
+				Quality quality;
+				try {
+					quality = runBenchmark(new PredictionMethodsFromString(candidate), metricsData, respProjs);
+				} catch(Exception e) {
+					e.printStackTrace();
+					return;
+				}
+
+				if(quality == null) {
+					return;
+				}
+
+				double corr = 0;
+
+				switch(mode) {
+					case BugCount:
+						corr = quality.bcWeightedCorrect;
+						break;
+					case TestEffort:
+						corr = quality.teWeightedCorrect;
+						break;
+				}
+
+				if(corr > winnerCorr[0]) {
+					winner[0] = candidate;
+					winnerCorr[0] = corr;
+				}
+
+			}
+		});
+
+		return winner[0];
 	}
 
 	public interface PredictionMethods {

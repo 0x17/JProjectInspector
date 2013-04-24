@@ -4,7 +4,7 @@ import org.andreschnabel.jprojectinspector.gui.tables.CsvTableModel;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.scrapers.TimelineTapper;
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
-import org.andreschnabel.jprojectinspector.utilities.functional.ITestCallback;
+import org.andreschnabel.jprojectinspector.tests.VisualTestCallback;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
 import javax.swing.*;
@@ -13,9 +13,9 @@ import java.util.List;
 
 public class TimelineTapperPlausibilityTest extends VisualTest {
 	@Override
-	protected ITestCallback[] getTests() {
-		return new ITestCallback[] {
-			new ITestCallback() {
+	protected VisualTestCallback[] getTests() {
+		return new VisualTestCallback[] {
+			new VisualTestCallback() {
 				@Override
 				public String getDescription() {
 					return "timeline tapper plausiblity";
@@ -23,7 +23,6 @@ public class TimelineTapperPlausibilityTest extends VisualTest {
 
 				@Override
 				public void invoke() throws Exception {
-					JFrame frm = getTestFrame();
 					frm.setLayout(new GridLayout(1,1));
 					List<Project> projs = TimelineTapper.tapProjects();
 					CsvData data = Project.projectListToCsv(projs);
@@ -31,7 +30,6 @@ public class TimelineTapperPlausibilityTest extends VisualTest {
 					frm.add(new JScrollPane(table));
 					frm.setSize(1024, 768);
 					frm.setLocationRelativeTo(null);
-					waitForFrameToClose(frm);
 				}
 			}
 		};

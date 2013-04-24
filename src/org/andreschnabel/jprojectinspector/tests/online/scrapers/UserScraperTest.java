@@ -7,6 +7,7 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class UserScraperTest {
@@ -20,13 +21,14 @@ public class UserScraperTest {
 			new Project("0x17", "UnfollowDetectorDroid")
 		};
 
-		String[] followers = new String[] {"uniphil", "bradjonesca", "flgr", "jlnr"};
+		String[] followers = new String[] {"uniphil", "bradjonesca", "flgr", "jlnr", "s1n4"};
 		String[] following = new String[] {"chrisforbes", "Spaxe", "stuarthalloway", "ntherning", "flgr", "renaudbedard", "jlnr", "unclebob", "exDreamDuck", "seanpaultaylor", "badlogic", "rbecher", "lsinger"};
 
 		String name = "0x17";
+		String realName = "André Schnabel";
 		String date = "Apr 18, 2012";
 
-		int numStarred = 19;
+		int numStarred = 20;
 
 		UserData ud = UserScraper.scrapeUser(name);
 
@@ -34,6 +36,7 @@ public class UserScraperTest {
 		AssertHelpers.arrayEqualsLstOrderInsensitive(followers, ud.followers);
 		AssertHelpers.arrayEqualsLstOrderInsensitive(following, ud.following);
 		Assert.assertEquals(name, ud.name);
+		Assert.assertEquals(realName, ud.realName);
 		Assert.assertEquals(date, ud.joinDate);
 		AssertHelpers.arrayEqualsLstOrderInsensitive(projs, ud.projects);
 	}
@@ -120,5 +123,20 @@ public class UserScraperTest {
 			expectedProjs[i] = new Project(user, repoNames[i]);
 		}
 		AssertHelpers.arrayEqualsLstOrderInsensitive(expectedProjs, projs);
+	}
+
+	@Test
+	public void testScrapeProjectsOfUsers() throws Exception {
+		List<String> users = Arrays.asList(new String[] {"0x17", "twehrmaker"});
+		List<Project> projects = UserScraper.scrapeProjectsOfUsers(users);
+		Project[] expectedProjects = new Project[] {
+				new Project("0x17", "KCImageCollector"),
+				new Project("0x17", "JProjectInspector"),
+				new Project("0x17", "DeathJam"),
+				new Project("0x17", "KosuFSharp"),
+				new Project("0x17", "UnfollowDetectorDroid"),
+				new Project("twehrmaker", "dsl4xml-perf")
+		};
+		AssertHelpers.arrayEqualsLstOrderInsensitive(expectedProjects, projects);
 	}
 }

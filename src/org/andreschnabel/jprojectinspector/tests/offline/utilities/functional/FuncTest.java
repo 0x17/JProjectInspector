@@ -2,10 +2,10 @@ package org.andreschnabel.jprojectinspector.tests.offline.utilities.functional;
 
 import org.andreschnabel.jprojectinspector.utilities.functional.*;
 import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class FuncTest {
@@ -128,6 +128,12 @@ public class FuncTest {
 			}
 		};
 		Assert.assertEquals(sumOfIntsTo10, (int) Func.reduce(add, 0, nums));
+	}
+
+	@Test
+	public void testRemDups() throws Exception {
+		List<Integer> noDups = Func.remDups(Arrays.asList(1, 2, 2, 3, 4, 5, 5, 5, 6, 5, 3, 1, 0));
+		Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 0), noDups);
 	}
 
 	@Test

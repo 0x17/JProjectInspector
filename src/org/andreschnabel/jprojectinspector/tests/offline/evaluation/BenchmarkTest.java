@@ -177,4 +177,9 @@ public class BenchmarkTest {
 			return rpl;
 		}
 	}
+
+	@Test
+	public void testPermutate() throws Exception {
+		Assert.fail();
+	}
 }
