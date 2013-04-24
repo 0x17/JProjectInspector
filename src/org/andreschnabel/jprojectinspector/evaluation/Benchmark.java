@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class Benchmark {
 
-	public static String enumerate(final String template, final List<ProjectWithResults> metricsData, final List<ResponseProjects> respProjs, final PredictionType mode) throws Exception {
+	public static String enumerate(final String template, final List<ProjectWithResults> metricsData, final List<ResponseProjects> respProjs, final PredictionType mode, final boolean zeroIsInvalid) throws Exception {
 		List<String[]> matches = RegexHelpers.batchMatch("([A-Za-z]+)", template);
 		if(matches.isEmpty()) {
 			return null;
@@ -59,7 +59,7 @@ public class Benchmark {
 
 				Quality quality;
 				try {
-					quality = runBenchmark(new PredictionMethodsFromString(candidate), metricsData, respProjs);
+					quality = runBenchmark(new PredictionMethodsFromString(candidate), metricsData, respProjs, zeroIsInvalid);
 				} catch(Exception e) {
 					e.printStackTrace();
 					return;
@@ -113,7 +113,7 @@ public class Benchmark {
 		public double bugCountPredictionMeasure(ProjectWithResults m);
 	}
 
-	public static Quality runBenchmark(final PredictionMethods predMethods, List<ProjectWithResults> pml, List<ResponseProjects> rpl) throws Exception {
+	public static Quality runBenchmark(final PredictionMethods predMethods, List<ProjectWithResults> pml, List<ResponseProjects> rpl, boolean zeroIsInvalid) throws Exception {
 		int teCorrect = 0;
 		int bcCorrect = 0;
 		double teWeightedCorrect = 0.0;
@@ -126,6 +126,7 @@ public class Benchmark {
 		double numTeWeightedApplicable = 0.0;
 
 		for(final ResponseProjects rp : rpl) {
+
 			if(rp.user == null) {
 				tePredictions.add(new String[] {"N/A", "N/A"});
 				bcPredictions.add(new String[] {"N/A", "N/A"});
@@ -156,7 +157,7 @@ public class Benchmark {
 			double hiPred = predMethods.bugCountPredictionMeasure(highestBugCountProjWithResults);
 			double lowPred = predMethods.bugCountPredictionMeasure(lowestBugCountProjWithResults);
 
-			if(Double.isNaN(hiPred) || Double.isNaN(lowPred)){
+			if(Double.isNaN(hiPred) || Double.isNaN(lowPred) || (zeroIsInvalid && (hiPred == 0.0 || lowPred == 0.0))) {
 				bcPredictions.add(new String[] {"N/A","N/A"});
 			} else if(hiPred > lowPred) {
 				bcCorrect++;
@@ -186,7 +187,7 @@ public class Benchmark {
 			hiPred = predMethods.testEffortPredictionMeasure(mostTestedProjWithResults);
 			lowPred = predMethods.testEffortPredictionMeasure(leastTestedCountProjWithResults);
 
-			if(Double.isNaN(hiPred) || Double.isNaN(lowPred)) {
+			if(Double.isNaN(hiPred) || Double.isNaN(lowPred) || (zeroIsInvalid && (hiPred == 0.0 || lowPred == 0.0))) {
 				tePredictions.add(new String[] {"N/A", "N/A"});
 			} else if(hiPred > lowPred) {
 				teCorrect++;

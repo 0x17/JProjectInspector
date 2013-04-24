@@ -30,7 +30,7 @@ public class BenchmarkRunner {
 			@Override
 			public Benchmark.Quality invoke(Benchmark.PredictionMethods pm) {
 				try {
-					return Benchmark.runBenchmark(pm, pms, rpl.responseProjs);
+					return Benchmark.runBenchmark(pm, pms, rpl.responseProjs, false);
 				} catch(Exception e) {
 					e.printStackTrace();
 					return null;

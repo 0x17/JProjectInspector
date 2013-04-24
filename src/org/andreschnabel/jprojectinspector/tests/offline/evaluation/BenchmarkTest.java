@@ -23,7 +23,7 @@ public class BenchmarkTest {
 		List<ProjectWithResults> pml = testData.getPml();
 		List<ResponseProjects> rpl = testData.getRpl();
 
-		Benchmark.Quality q = Benchmark.runBenchmark(predMethods, pml, rpl);
+		Benchmark.Quality q = Benchmark.runBenchmark(predMethods, pml, rpl, false);
 		Assert.assertEquals(1, q.bcCorrect);
 		Assert.assertEquals(0, q.teCorrect);
 

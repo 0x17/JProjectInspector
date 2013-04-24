@@ -48,6 +48,7 @@ public class BenchmarkPanel extends PanelWithParent {
 	private JLabel weightSumLbl;
 	private JLabel percWeightCorrLbl;
 	private double weightSum;
+	private JCheckBox zeroIsInvalidCheckbox;
 
 	public BenchmarkPanel() {
 		initTopPane();
@@ -56,7 +57,7 @@ public class BenchmarkPanel extends PanelWithParent {
 
 	private void initTopPane() {
 		setLayout(new BorderLayout());
-		JPanel topPane = new JPanel(new GridLayout(11, 2));
+		JPanel topPane = new JPanel(new GridLayout(12, 2));
 
 		initResultSelectionPanel(topPane);
 		initEstimationsSelectionPanel(topPane);
@@ -78,6 +79,10 @@ public class BenchmarkPanel extends PanelWithParent {
 			}
 		});
 		topPane.add(modeCombo);
+
+		topPane.add(new JLabel("Option:"));
+		zeroIsInvalidCheckbox = new JCheckBox("Zero is invalid", false);
+		topPane.add(zeroIsInvalidCheckbox);
 
 		topPane.add(new JLabel("Prediction equation:"));
 
@@ -103,7 +108,7 @@ public class BenchmarkPanel extends PanelWithParent {
 			public void actionPerformed(ActionEvent e) {
 				String winner = null;
 				try {
-					winner = Benchmark.enumerate(equationField.getText(), metricsData, respProjs, mode);
+					winner = Benchmark.enumerate(equationField.getText(), metricsData, respProjs, mode, zeroIsInvalidCheckbox.isSelected());
 				} catch(Exception e1) {
 					e1.printStackTrace();
 				}
@@ -127,7 +132,7 @@ public class BenchmarkPanel extends PanelWithParent {
 		numEstimationsLbl = new JLabel("0");
 		topPane.add(numEstimationsLbl);
 
-		topPane.add(new JLabel("Percentage of points:"));
+		topPane.add(new JLabel("Percentage of correct orderings:"));
 		percCorrLbl = new JLabel("0%");
 		topPane.add(percCorrLbl);
 
@@ -139,7 +144,7 @@ public class BenchmarkPanel extends PanelWithParent {
 		weightSumLbl = new JLabel("0");
 		topPane.add(weightSumLbl);
 
-		topPane.add(new JLabel("Percentage of weighted points:"));
+		topPane.add(new JLabel("Percentage of weighted correct orderings:"));
 		percWeightCorrLbl = new JLabel("0%");
 		topPane.add(percWeightCorrLbl);
 
@@ -294,7 +299,7 @@ public class BenchmarkPanel extends PanelWithParent {
 		Benchmark.PredictionMethods predMethods = new PredictionMethodsFromString(equationField.getText());
 
 		try {
-			Benchmark.Quality q = Benchmark.runBenchmark(predMethods, metricsData, respProjs);
+			Benchmark.Quality q = Benchmark.runBenchmark(predMethods, metricsData, respProjs, zeroIsInvalidCheckbox.isSelected());
 
 			int ncorr;
 			double wncorr;
