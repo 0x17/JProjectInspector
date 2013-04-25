@@ -31,7 +31,7 @@ public class PredictionMethodsFromString implements Benchmark.PredictionMethods 
 	}
 
 	private double common(ProjectWithResults m) {
-		Map<String, Object> bindings = resultsToBindings(m);
+		Map<String, Double> bindings = resultsToBindings(m);
 		Object result = EquationHelpers.parseEquation(bindings, eqtn);
 		if(result != null) {
 			return (Double)result;
@@ -39,8 +39,8 @@ public class PredictionMethodsFromString implements Benchmark.PredictionMethods 
 		return Double.NaN;
 	}
 
-	private Map<String, Object> resultsToBindings(ProjectWithResults m) {
-		Map<String, Object> bindings = new HashMap<String, Object>();
+	private Map<String, Double> resultsToBindings(ProjectWithResults m) {
+		Map<String, Double> bindings = new HashMap<String, Double>();
 		String[] headers = m.getResultHeaders();
 		for(int i=0; i<m.results.length; i++) {
 			bindings.put(headers[i], m.results[i]);

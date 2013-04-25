@@ -15,13 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 public class VisualizationPanel extends JPanel {
-	private final List<String> metricNames;
-	private final Map<Project, Double[]> results;
+	private static final long serialVersionUID = 1L;
 
 	public VisualizationPanel(List<String> metricNames, final Map<Project, Double[]> results) {
-		this.metricNames = metricNames;
-		this.results = results;
-
 		Map<String, IVisualization> vis = VisualizationsRegistry.visualizations;
 		int numVis = vis.size();
 

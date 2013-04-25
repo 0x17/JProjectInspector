@@ -13,10 +13,10 @@ import java.util.Map;
 public class EquationHelpersTest {
 	@Test
 	public void testParseEquation() throws Exception {
-		Map<String, Object> bindings = new HashMap<String, Object>();
-		bindings.put("x", 10);
-		bindings.put("y", 20);
-		bindings.put("z", 3);
+		Map<String, Double> bindings = new HashMap<String, Double>();
+		bindings.put("x", 10.0);
+		bindings.put("y", 20.0);
+		bindings.put("z", 3.0);
 		Object result = EquationHelpers.parseEquation(bindings, "(x+y)/z");
 		Assert.assertEquals(10.0, (Double)result, TestCommon.DELTA);
 	}

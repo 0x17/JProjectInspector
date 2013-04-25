@@ -61,14 +61,11 @@ public class CandidateTapper {
 					}
 
 					if(c.name != null && c.email != null && c.login != null && candidateWithoutLogin(c.login, candidates)) {
-						addMostRecentRepoTriple(c);
-						//if(c.repos[0] != null && c.repos[1] != null && c.repos[2] != null) {
-							if(notInOldSurvey(c, oldSurveyCandidates)) {
-								if(FuncInPlace.addNoDups(candidates, c)) {
-									Helpers.log("Candidate: " + c + " " + candidates.size() + "/" + upTo);
-								}
+						if(notInOldSurvey(c, oldSurveyCandidates)) {
+							if(FuncInPlace.addNoDups(candidates, c)) {
+								Helpers.log("Candidate: " + c + " " + candidates.size() + "/" + upTo);
 							}
-						//}
+						}
 					}
 				}
 			}
@@ -89,46 +86,6 @@ public class CandidateTapper {
 				return false;
 		}
 		
-		return true;
-	}
-
-	public static Candidate addMostRecentRepoTriple(Candidate candidate) throws Exception {
-		String profile;
-		try {
-			profile = Helpers.loadHTMLUrlIntoStr("https://github.com/" + candidate.login + "?tab=repositories");
-		} catch(Exception e) {
-			return candidate;
-		}
-
-		Pattern projPattern = Pattern.compile("<li class=\"public source[\\s\\S]+?(<time.+?</time>)");
-		Matcher projMatcher = projPattern.matcher(profile);
-
-		Pattern projNameSubPattern = Pattern.compile("<a href=\"/.+?/.+?\">(.+?)</a>");
-
-		int curProj = 0;
-		while(projMatcher.find() && curProj < 3) {
-			String projStr = projMatcher.group(0);
-			String timeStr = projMatcher.group(1);
-
-			if(timeStr.contains("2012")) {
-				Matcher projNameSubPatternMatcher = projNameSubPattern.matcher(projStr);
-				if(projNameSubPatternMatcher.find()) {
-					String nrepo = projNameSubPatternMatcher.group(1);
-					//if(doesntContainRepo(candidate.repos, nrepo)) {
-					//	candidate.repos[curProj++] = nrepo;
-					//}
-				}
-			}
-		}
-
-		return candidate;
-	}
-
-	private static boolean doesntContainRepo(String[] repos, String repo) {
-		for(int i=0; i<3; i++) {
-			if(repos[i] != null && repos[i].equals(repo))
-				return false;
-		}
 		return true;
 	}
 

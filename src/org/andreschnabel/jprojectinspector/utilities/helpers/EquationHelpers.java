@@ -1,23 +1,21 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import javax.script.SimpleBindings;
 import java.util.List;
 import java.util.Map;
 
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
+
+import de.congrace.exp4j.ExpressionBuilder;
+
 public class EquationHelpers {
 
-	private static ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
-
-	public static Object parseEquation(Map<String, Object> varBindings, String equation) {
-		try {
-			return engine.eval(equation, new SimpleBindings(varBindings));
-		} catch(ScriptException e) {
+	public static Object parseEquation(Map<String, Double> varBindings, String equation) {		
+		ExpressionBuilder builder = new ExpressionBuilder(equation);
+		builder.withVariables(varBindings);
+      try {
+			return builder.build().calculate();
+		} catch (Exception e) {
 			return null;
 		}
 	}

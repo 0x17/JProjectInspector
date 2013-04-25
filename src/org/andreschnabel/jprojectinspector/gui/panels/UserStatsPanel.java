@@ -12,7 +12,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class UserStatsPanel extends JPanel {
-
+	private static final long serialVersionUID = 1L;
+	
 	private final Map<String, String> stats = new TreeMap<String, String>();
 	private List<String> statNames = new LinkedList<String>();
 
