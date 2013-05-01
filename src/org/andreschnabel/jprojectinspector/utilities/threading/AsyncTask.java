@@ -2,11 +2,32 @@ package org.andreschnabel.jprojectinspector.utilities.threading;
 
 import javax.swing.*;
 
+/**
+ * Aufgabe, welche in einem Hintergrundthread ausgeführt wird.
+ * Berechnet im Hintergrund ein Ergebnis und liefert dieses dann
+ * an den Oberflächenthread zurück, wenn fertig.
+ *
+ * Benutze zum asynchronen Ausführen von blockierende Anweisungen für Oberflächen-Code.
+ *
+ * @param <T> Typ des Ergebnisses.
+ */
 public abstract class AsyncTask<T> {
 
+	/**
+	 * Reagiere auf berechnetes Ergebnis.
+	 * @param result das Ergebnis.
+	 */
 	public abstract void onFinished(T result);
+
+	/**
+	 * Berechne Ergebnis.
+	 * @return das Ergebnis.
+	 */
 	public abstract T doInBackground();
 
+	/**
+	 * Führe asynchronen Task aus.
+	 */
 	public void execute() {
 		SwingWorker<T, Object> worker = new SwingWorker<T, Object>() {
 			@Override

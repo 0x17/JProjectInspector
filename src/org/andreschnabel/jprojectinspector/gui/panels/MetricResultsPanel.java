@@ -24,6 +24,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Panel zur Darstellung von Metrik-Ergebnissen.
+ *
+ * Metrik-Ergebnisse werden entweder für gegebene Projekte und Metrik-Namen im Hintergrund neu ermittelt
+ * ODER von CSV-Daten übernommen.
+ *
+ * Falls Metrik-Namen erst im Hintergrund ermittelt werden, sind die Werte vorher mit N/A gefüllt.
+ * Das steht für ungültig.
+ */
 public class MetricResultsPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -39,6 +48,11 @@ public class MetricResultsPanel extends JPanel {
 		MetricResultTableModel mrtm = initCommon(projects, metricNames);
 		addResultsFromCsv(mrtm, results);
 		resultTable.updateUI();
+	}
+
+	public MetricResultsPanel(List<Project> projects, List<String> metricNames) {
+		MetricResultTableModel mrtm = initCommon(projects, metricNames);
+		initAndExecTaskBatch(projects, metricNames, mrtm);
 	}
 
 	private List<String> metricNamesFromHeaders(String[] headers) {
@@ -58,11 +72,6 @@ public class MetricResultsPanel extends JPanel {
 			}
 			mrtm.addResultTupleToCache(new Project(row[0], row[1]), vals);
 		}
-	}
-
-	public MetricResultsPanel(List<Project> projects, List<String> metricNames) {
-		MetricResultTableModel mrtm = initCommon(projects, metricNames);
-		initAndExecTaskBatch(projects, metricNames, mrtm);
 	}
 
 	private MetricResultTableModel initCommon(List<Project> projects, List<String> metricNames) {

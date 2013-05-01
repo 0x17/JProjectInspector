@@ -7,6 +7,10 @@ import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import javax.swing.*;
 import java.util.List;
 
+/**
+ * Fenster mit Metrikergebnissen.
+ * @see MetricResultsPanel
+ */
 public class MetricResultsWindow extends AbstractWindowWithParent<MetricResultsPanel> {
 	
 	private static final long serialVersionUID = 1L;

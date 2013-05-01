@@ -8,6 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Tabellenmodell für die Auswahl von Projekten zur Messung.
+ * Zeilen sind Projekte.
+ * Spalten sind owner, repo, #branches, #commits, #forks, #issues, #pullreqs, #stars.
+ */
 public class InputProjectTableModel extends AbstractTableModel {
 	
 	private static final long serialVersionUID = 1L;

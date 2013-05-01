@@ -7,7 +7,9 @@ import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * Hilfsfunktionen
+ */
 public class Helpers {
 	
 	public static boolean runningOnUnix() {

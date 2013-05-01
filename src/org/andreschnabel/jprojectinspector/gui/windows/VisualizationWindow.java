@@ -7,6 +7,10 @@ import javax.swing.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Visualisierungsfenster.
+ * @see VisualizationPanel
+ */
 public class VisualizationWindow extends AbstractWindow<VisualizationPanel> {
 	private static final long serialVersionUID = 1L;
 

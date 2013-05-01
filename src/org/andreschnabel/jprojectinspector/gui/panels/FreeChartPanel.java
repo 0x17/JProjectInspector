@@ -12,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+/**
+ * Panel for JFreeChart chart.
+ */
 public class FreeChartPanel extends PanelWithParent {
 	private static final long serialVersionUID = 1L;
 

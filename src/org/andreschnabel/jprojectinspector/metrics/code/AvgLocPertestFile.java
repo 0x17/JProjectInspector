@@ -6,6 +6,9 @@ import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Durchschnittliche Anzahl Codezeilen pro Testdatei.
+ */
 public class AvgLocPerTestFile implements IOfflineMetric {
 	@Override
 	public String getName() {

@@ -5,6 +5,9 @@ import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Kandidaten für die Vorhersage.
+ */
 public class PredictionCandidates {
 
 	public static List<Benchmark.PredictionMethods> getCandidates() {

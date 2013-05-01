@@ -2,18 +2,54 @@ package org.andreschnabel.jprojectinspector.model;
 
 import java.util.List;
 
+/**
+ * Daten zu einem GitHub-Nutzer.
+ */
 public class UserData {
+	/**
+	 * Login name.
+	 */
 	public String name;
+	/**
+	 * Klarname.
+	 */
 	public String realName;
+	/**
+	 * GitHub-Beitrittsdatum.
+	 */
 	public String joinDate;
+	/**
+	 * Liste seiner Projekte.
+	 */
 	public List<Project> projects;
+	/**
+	 * Anzahl gesternter Projekte.
+	 */
 	public int numStarredProjects;
+	/**
+	 * Liste von Nutzern, welche ihm folgen.
+	 */
 	public List<String> followers;
+	/**
+	 * Liste von Nutzern, welche er folgt.
+	 */
 	public List<String> following;
 
+	/**
+	 * Leerer Nutzer (null, null, ...)
+	 */
 	public UserData() {
 	}
 
+	/**
+	 * Konstruktor
+	 * @param name login name.
+	 * @param joinDate Beitrittsdatum.
+	 * @param projects Projektliste.
+	 * @param numStarredProjects Anzahl gesternter Projekte.
+	 * @param followers Liste der Followers.
+	 * @param following Liste der gefolgten Nutzer.
+	 */
 	public UserData(String name, String joinDate, List<Project> projects, int numStarredProjects, List<String> followers, List<String> following) {
 		this.name = name;
 		this.joinDate = joinDate;

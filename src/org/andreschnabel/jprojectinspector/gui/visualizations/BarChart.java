@@ -1,6 +1,5 @@
 package org.andreschnabel.jprojectinspector.gui.visualizations;
 
-import org.andreschnabel.jprojectinspector.gui.visualizations.IVisualization;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -10,6 +9,13 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.util.Map;
 
+/**
+ * Balkendiagramm.
+ *
+ * Gruppiert Balken für Metriken zusammen mit einer Farbe.
+ * Innerhalb Gruppe enthält jedes Projekt einen Balken mit höhe Passend zur
+ * Ausprägung des Metrik-Werts.
+ */
 public class BarChart implements IVisualization {
 
 	@Override

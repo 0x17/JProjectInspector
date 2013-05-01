@@ -2,17 +2,17 @@ package org.andreschnabel.jprojectinspector.tests.offline.evaluation;
 
 import junit.framework.Assert;
 import org.andreschnabel.jprojectinspector.evaluation.Benchmark;
-import org.andreschnabel.jprojectinspector.evaluation.PredictionType;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class BenchmarkTest {
 
@@ -20,7 +20,7 @@ public class BenchmarkTest {
 	public void testRunBenchmark() throws Exception {
 		Benchmark.PredictionMethods predMethods = getTestPredictionMethods();
 		TestData testData = getTestData();
-		List<ProjectWithResults> pml = testData.getPml();
+		Map<Project, ProjectWithResults> pml = testData.getPml();
 		List<ResponseProjects> rpl = testData.getRpl();
 
 		Benchmark.Quality q = Benchmark.runBenchmark(predMethods, pml, rpl, false);
@@ -94,44 +94,32 @@ public class BenchmarkTest {
 	}
 
 	@Test
-	public void testCalcPredictionValues() throws Exception {
-		Benchmark.PredictionMethods predMethods = getTestPredictionMethods();
-		TestData testData = getTestData();
-		List<ProjectWithResults> pml = testData.getPml();
-		List<ResponseProjects> rpl = testData.getRpl();
-		PredictionType type = PredictionType.BugCount;
-		List<Double> vals = Benchmark.calcPredictionValues(predMethods, type, pml, rpl.get(0).toProjectList());
-		Assert.assertEquals(1000.0, vals.get(0), TestCommon.DELTA);
-		Assert.assertEquals(400.0, vals.get(1), TestCommon.DELTA);
-	}
-
-	@Test
-	public void isInvalidProject() throws Exception {
-		List<ProjectWithResults> projectWithResultsList = getTestData().getPml();
+	public void containsInvalidProject() throws Exception {
+		Map<Project, ProjectWithResults> projectWithResultsList = getTestData().getPml();
 		List<Project> projectList = Func.map(new ITransform<ProjectWithResults, Project>() {
 			@Override
 			public Project invoke(ProjectWithResults p) {
 				return p.project;
 			}
-		},projectWithResultsList);
-		Assert.assertFalse(Benchmark.containsInvalidProject(projectWithResultsList, projectList));
-		projectWithResultsList.remove(0);
-		Assert.assertTrue(Benchmark.containsInvalidProject(projectWithResultsList, projectList));
+		},projectWithResultsList.values());
+		Assert.assertFalse(Benchmark.containsInvalidProject(projectWithResultsList.values(), projectList));
+		projectWithResultsList.remove(projectWithResultsList.keySet().iterator().next());
+		Assert.assertTrue(Benchmark.containsInvalidProject(projectWithResultsList.values(), projectList));
 	}
 
 	@Test
 	public void testMetricsForProject() throws Exception {
-		List<ProjectWithResults> projectWithResultsList = getTestData().getPml();
-		ProjectWithResults projectWithResults = Benchmark.metricsForProject(new Project("owner", "repo1"), projectWithResultsList);
-		Assert.assertEquals(projectWithResultsList.get(0), projectWithResults);
-		Assert.assertNull(Benchmark.metricsForProject(new Project("not", "inthere"), projectWithResultsList));
+		Map<Project, ProjectWithResults> projectWithResultsList = getTestData().getPml();
+		ProjectWithResults projectWithResults = Benchmark.metricsForProject(new Project("owner", "repo1"), projectWithResultsList.values());
+		Assert.assertEquals(projectWithResultsList.get(projectWithResultsList.keySet().iterator().next()), projectWithResults);
+		Assert.assertNull(Benchmark.metricsForProject(new Project("not", "inthere"), projectWithResultsList.values()));
 	}
 
 	private static TestData getTestData() {
-		List<ProjectWithResults> pml;
+		Map<Project, ProjectWithResults> pml;
 		List<ResponseProjects > rpl;
 
-		pml = new LinkedList<ProjectWithResults>();
+		pml = new HashMap<Project, ProjectWithResults>();
 
 		String[] resultHeaders = new String[] {"loc", "testloc"};
 
@@ -139,12 +127,12 @@ public class BenchmarkTest {
 
 		Double[] results = new Double[] {400.0, 200.0};
 		ProjectWithResults pm1 = new ProjectWithResults(p1, resultHeaders, results);
-		pml.add(pm1);
+		pml.put(p1, pm1);
 
 		results = new Double[] {1000.0, 400.0};
 		Project p2 = new Project("owner", "repo2");
 		ProjectWithResults pm2 = new ProjectWithResults(p2, resultHeaders, results);
-		pml.add(pm2);
+		pml.put(p2, pm2);
 
 		rpl = new LinkedList<ResponseProjects>();
 
@@ -161,15 +149,15 @@ public class BenchmarkTest {
 	}
 
 	private static class TestData {
-		private List<ProjectWithResults> pml;
+		private Map<Project, ProjectWithResults> pml;
 		private List<ResponseProjects> rpl;
 
-		private TestData(List<ProjectWithResults> pml, List<ResponseProjects> rpl) {
+		private TestData(Map<Project, ProjectWithResults> pml, List<ResponseProjects> rpl) {
 			this.pml = pml;
 			this.rpl = rpl;
 		}
 
-		public List<ProjectWithResults> getPml() {
+		public Map<Project, ProjectWithResults> getPml() {
 			return pml;
 		}
 

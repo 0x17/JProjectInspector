@@ -4,6 +4,11 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
+/**
+ * Zellen-Renderer für Benchmarkfenster.
+ * Genutzt um fehlerhafte Vorhersagen rot eingefärbt erscheinen zu lassen
+ * und korrekte Vorhersagen als grün eingefärbt.
+ */
 public class BenchmarkTableCellRenderer extends DefaultTableCellRenderer {
 
 	private static final long serialVersionUID = 1L;

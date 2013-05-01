@@ -15,23 +15,68 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Projekte aus Antwort eines GitHub-Nutzers in einer Umfrage.
+ * Enthält zugehörigen Nutzer und genannte Projekte mit
+ * <ul>
+ *     <li>Niedrigstem Testaufwand (least tested)</li>
+ *     <li>Höchstem Testaufwand (most tested)</li>
+ *     <li>Niedrigster Fehlerzahl (least bug count)</li>
+ *     <li>Höchster Fehlerzahl (most bug count)</li>
+ * </ul>
+ */
 @XmlRootElement(name = "responseprojects")
 public class ResponseProjects {
-	
+
+	/**
+	 * Nutzername, welcher Fragebogen beantwortet hat und die Projekte angegeben mit entsprechenden Einschätzungen.
+	 */
 	public String user;
-	
+
+	/**
+	 * Projekt des Nutzers welches geschätzt wurde den geringsten bisherigen Testaufwand seiner Projekte zu haben.
+ 	 */
 	public String leastTested;
-	public String mostTested;	
-	
+	/**
+	 * Projekt des Nutzers welches geschätzt wurde den höchsten bisherigen Testaufwand seiner Projekte zu haben.
+	 */
+	public String mostTested;
+
+	/**
+	 * Projekt des Nutzers welches dieser schätzte die geringste Fehlerzahl seiner Projekte zu haben.
+ 	 */
 	public String lowestBugCount;
+
+	/**
+	 * Projekt des Nutzers welches dieser schätzte die höchste Fehlerzahl seiner Projekte zu haben.
+	 */
 	public String highestBugCount;
 
+	/**
+	 * Gewichtung des Nutzers. Das ist der Anteil der Buzzwords, welcher dieser als einem Bekannten erklärbar kennzeichnete.
+	 */
 	public double weight;
 
+	/**
+	 * Konstruktor wobei User auf null und Gewicht auf NaN gesetzt werrden.
+	 * @param leastTested Projekt mit geschätztem minimalen relativen Testaufwand.
+	 * @param mostTested Projekt mit geschätztem maximalen relativen Testaufwand.
+	 * @param lowestBugCount Projekt mit geschätzter minimaler Fehlerzahl.
+	 * @param highestBugCount Projekt mit geschätzter maximaler Fehlerzahl.
+	 */
 	public ResponseProjects(String leastTested, String mostTested, String lowestBugCount, String highestBugCount) {
 		this(null, leastTested, mostTested, lowestBugCount, highestBugCount, Double.NaN);
 	}
-	
+
+	/**
+	 * Konstruktor
+	 * @param user Zugehöriger Nutzer.
+	 * @param leastTested Projekt mit geschätztem minimalen relativen Testaufwand.
+	 * @param mostTested Projekt mit geschätztem maximalen relativen Testaufwand.
+	 * @param lowestBugCount Projekt mit geschätzter minimaler Fehlerzahl.
+	 * @param highestBugCount Projekt mit geschätzter maximaler Fehlerzahl.
+	 * @param weight Gewicht nach Anteil der bekannten Buzzwords.
+	 */
 	public ResponseProjects(String user, String leastTested, String mostTested, String lowestBugCount, String highestBugCount, Double weight) {
 		this.user = user;
 		this.leastTested = leastTested;
@@ -40,9 +85,16 @@ public class ResponseProjects {
 		this.highestBugCount = highestBugCount;
 		this.weight = weight;
 	}
-	
+
+	/**
+	 * Leere Antworten (null, null, ...)
+	 */
 	public ResponseProjects() {}
-	
+
+	/**
+	 * Getter für genannte Projekte.
+	 * @return Liste der gennannten Projekte ohne Duplikate.
+	 */
 	public List<Project> toProjectList() {
 		List<Project> projs = new LinkedList<Project>();
 		FuncInPlace.addNoDups(projs, new Project(user, leastTested));
@@ -52,6 +104,10 @@ public class ResponseProjects {
 		return projs;
 	}
 
+	/**
+	 * Getter für gennante Projekte mit Duplikation.
+	 * @return Liste der genannten Projekte mit Duplikaten
+	 */
 	public List<Project> toProjectListDups() {
 		List<Project> projs = new LinkedList<Project>();
 		projs.add(new Project(user, leastTested));
@@ -105,6 +161,12 @@ public class ResponseProjects {
 				'}';
 	}
 
+	/**
+	 * Konvertiere CSV-Daten mit nutzer, least tested, ...., gewicht Spalten zu Antwortprojekten-Liste.
+	 * @param data CSV-Daten mit Spalten nutzer,leasttested,mosttested,lowestbugcount,highestbugcount,gewicht in der Reihenfolge (Bezeichner egal).
+	 * @return passende Liste von Antwortprojekten.
+	 * @throws Exception
+	 */
 	public static List<ResponseProjects> fromPreprocessedCsvData(CsvData data) throws Exception {
 		ITransform<String[], ResponseProjects> rowToRespProjs = new ITransform<String[], ResponseProjects>() {
 			@Override
@@ -122,6 +184,14 @@ public class ResponseProjects {
 		return CsvData.toList(rowToRespProjs, data);
 	}
 
+	/**
+	 * Liste aus Antwortprojekten aus vorbearbeiteter CSV-Datei. D.h. Nutzer und Gewicht eingetragen und in Format
+	 * user,leasttested,mostttested,lowestbugcount,highestbugcount,gewicht in der Reihenfolge wobei Bezeichner
+	 * egal sind.
+	 * @param f vorbearbeitete CSV-Datei.
+	 * @return Liste aus Antwortprojekten.
+	 * @throws Exception
+	 */
 	public static List<ResponseProjects> fromPreprocessedCsvFile(File f) throws Exception {
 		CsvData data = CsvHelpers.parseCsv(f);
 		if(data == null) {
@@ -130,6 +200,12 @@ public class ResponseProjects {
 		return fromPreprocessedCsvData(data);
 	}
 
+	/**
+	 * Erzeuge Liste aus Umfragerohdaten.
+	 * @param f CSV-Datei mit Umfragerohdaten.
+	 * @return Liste aus Antwortprojekten wobei Nutzer auf null gesetzt ist.
+	 * @throws Exception
+	 */
 	public static List<ResponseProjects> fromCsvFile(File f) throws Exception {
 		final CsvData data = CsvHelpers.parseCsv(f);
 		ITransform<String[], ResponseProjects> rowToRespProjs = new ITransform<String[], ResponseProjects>() {
@@ -156,6 +232,12 @@ public class ResponseProjects {
 		return CsvData.toList(rowToRespProjs, data);
 	}
 
+	/**
+	 * Convertiere Antwortprojketliste in CSV-Daten
+	 * @param rps Antwortprojektliste.
+	 * @return Zugehörige CSV-Daten
+	 * @throws Exception
+	 */
 	public static CsvData toCsv(List<ResponseProjects> rps) throws Exception {
 		String[] headers = new String[] {"user",
 				SurveyFormat.LEAST_TESTED_HEADER,
@@ -177,6 +259,11 @@ public class ResponseProjects {
 		return CsvData.fromList(headers, respProjToRow, rps);
 	}
 
+	/**
+	 * Sammel alle Projekte aus einer Liste von Antwortprojekten.
+	 * @param respProjs Liste von Antwortprojekten.
+	 * @return alle enthaltenen Projekte.
+	 */
 	public static List<Project> allProjects(List<ResponseProjects> respProjs) {
 		List<Project> projs = new LinkedList<Project>();
 		for(ResponseProjects rp : respProjs) {
@@ -187,6 +274,9 @@ public class ResponseProjects {
 		return projs;
 	}
 
+	/**
+	 * Vereinfache alle Projektnamen.
+	 */
 	public void simplify() {
 		leastTested = simplify(leastTested);
 		mostTested = simplify(mostTested);
@@ -194,6 +284,11 @@ public class ResponseProjects {
 		highestBugCount = simplify(highestBugCount);
 	}
 
+	/**
+	 * Vereinfache https://github.com/user/repo zu repo.
+	 * @param repoName eventuell link.
+	 * @return vereinfachter Repository Name.
+	 */
 	private String simplify(String repoName) {
 		if(repoName.startsWith("https://github.com/")) {
 			Matcher m = Pattern.compile("https://github.com/.+?/(.+)").matcher(repoName);

@@ -15,6 +15,19 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Panel des Start-Dialogs.
+ *
+ * "New Measurement" öffnet Projektauswahldialog.
+ * "Load Measurement" öffnet Dialog zum Laden einer CSV-Datei mit Ergebnissen.
+ * "Benchmark Predictors" öffnet Benchmark-Dialog.
+ * "Settings" öffnet Einstellungsdialog.
+ * "Documentation" öffnet Manual.pdf in PDF-Viewer.
+ * "Website" öffnet GitHub-Projektseite von JProjectInspector im Browser.
+ * "About" öffnet Dialog mit Hinweis auf Bibliotheken.
+ * "Quit" beendet die Anwendung.
+ *
+ */
 public class LauncherPanel extends PanelWithParent implements ILaunchSettings {
 	private static final long serialVersionUID = 1L;
 	

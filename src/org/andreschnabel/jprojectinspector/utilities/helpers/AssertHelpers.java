@@ -4,6 +4,9 @@ import org.junit.Assert;
 
 import java.util.List;
 
+/**
+ * Hilfsfunktionen für Assertions in Tests.
+ */
 public class AssertHelpers {
 
 	public static <T> void arrayEqualsLstOrderInsensitive(T[] expectedValues, List<T> actualValues) {

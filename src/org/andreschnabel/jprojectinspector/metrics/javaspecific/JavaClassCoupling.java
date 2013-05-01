@@ -11,6 +11,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Sehr grobe Annäherung von Kopplung.
+ */
 public class JavaClassCoupling implements IOfflineMetric {
 
 	public static double getAverageCoupling(File root) throws Exception {

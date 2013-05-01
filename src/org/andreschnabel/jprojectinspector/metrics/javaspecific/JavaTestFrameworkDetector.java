@@ -6,6 +6,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.File;
 
+/**
+ * Erkennung von spezifischem Test-Framework, welches in Java-Projekt benutzt worden ist.
+ */
 public class JavaTestFrameworkDetector implements IOfflineMetric {
 	
 	public static final int FRAMEWORK_NONE = -1;

@@ -4,6 +4,11 @@ import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * Tabellenmodell für CSV-Daten.
+ * Zeigt erste CSV-Zeile als Spaltenbezeichnungen an.
+ * Restliche Zeilen als Tabellenzeilen.
+ */
 public class CsvTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;

@@ -26,6 +26,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Liste aller bekannten Offline-Metriken.
+ */
 public class OfflineMetrics {
 	public static Map<String, IOfflineMetric> init() throws Exception {
 		List<IOfflineMetric> ms = new LinkedList<IOfflineMetric>();

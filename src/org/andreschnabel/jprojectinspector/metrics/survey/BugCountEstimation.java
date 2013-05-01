@@ -4,6 +4,9 @@ import org.andreschnabel.jprojectinspector.evaluation.SurveyFormat;
 import org.andreschnabel.jprojectinspector.metrics.ISurveyMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
 
+/**
+ * Einschätzung der Fehlerzahl.
+ */
 public class BugCountEstimation implements ISurveyMetric {
 
 	@Override

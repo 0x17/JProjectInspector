@@ -6,6 +6,10 @@ import org.andreschnabel.jprojectinspector.utilities.git.GitRevisionHelpers;
 
 import java.io.File;
 
+/**
+ * Bestimme durchschnittlichen Churn pro Revision.
+ * D.h. die durchschnittliche Anzahl Zeilen hinzugefügt + entfernt über alle Revisionen.
+ */
 public class AverageChurnPerRevision implements IOfflineMetric {
 	@Override
 	public String getName() {
@@ -14,7 +18,7 @@ public class AverageChurnPerRevision implements IOfflineMetric {
 
 	@Override
 	public String getDescription() {
-		return "Average number of lines added / removed per revision over all revisions.";
+		return "Average number of lines added OR(+) removed per revision over all revisions.";
 	}
 
 	@Override

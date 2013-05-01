@@ -11,6 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+/**
+ * Panel für Einstellungsdialog.
+ *
+ * Zeigt Werte von Einstellungsvariablen an.
+ * Momentan für Pfad zu Git, Cloc und Perl-Interpreter, Ordner zum temporären Klonen und Git-Url.
+ */
 public class SettingsPanel extends PanelWithParent {
 
 	private static final long serialVersionUID = 1L;

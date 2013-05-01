@@ -6,6 +6,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
 
 import java.io.File;
 
+/**
+ * Duplikaterkennung.
+ */
 public class Cpd implements IOfflineMetric {
 	@Override
 	public String getName() {

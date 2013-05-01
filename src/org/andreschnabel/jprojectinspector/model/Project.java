@@ -5,22 +5,48 @@ import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
 import java.util.List;
 
+/**
+ * Repräsentiert Projekt auf GitHub.
+ * Projekte auf GitHub sind eindeutig durch (owner, repo)-Tupel identifiziert.
+ */
 public class Project {
+	/**
+	 * login des Verwalters.
+	 */
 	public String owner;
+	/**
+	 * Name des Repositories.
+	 */
 	public String repoName;
 
+	/**
+	 * Konstruktor für Projekt (owner, repoName)
+	 * @param owner Login des Projektverwalters.
+	 * @param repoName Name des Repositories.
+	 */
 	public Project(String owner, String repoName) {
 		this.owner = owner;
 		this.repoName = repoName;
 	}
 
+	/**
+	 * Leeres projekt (null, null).
+	 */
 	public Project() {}
 
+	/**
+	 * Wandel Projekt in "owner/repo"-String-Darstellung.
+	 * @return "owner/repo"
+	 */
 	@Override
 	public String toString() {
 		return toId();
 	}
 
+	/**
+	 * Wandel Projekt in "owner/repo"-String-Darstellung.
+	 * @return "owner/repo"
+	 */
 	public String toId() {
 		return owner + "/" + repoName;
 	}
@@ -49,6 +75,12 @@ public class Project {
 		return true;
 	}
 
+	/**
+	 * Erzeuge Projekt (owner,repo) aus "owner/repo"-Zeichenkette
+	 * @param s "owner/repo"-Zeichenkette
+	 * @return Projekt (owner,repo)
+	 * @throws Exception
+	 */
 	public static Project fromString(String s) throws Exception {
 		if(!s.contains("/"))
 			throw new Exception("Project string must contain /!");
@@ -61,8 +93,17 @@ public class Project {
 		return new Project(parts[0], parts[1]);
 	}
 
+	/**
+	 * CSV-Headerbezeichner für Liste aus Projekten.
+	 */
 	public final static String[] csvHeaders = new String[]{"owner","repo"};
 
+	/**
+	 * Konvertiert Liste von Projekten in CSV-Darstellung.
+	 * @param projs Projektliste
+	 * @return CSV-Darstellung der gegebenen Liste.
+	 * @throws Exception
+	 */
 	public static CsvData projectListToCsv(List<Project> projs) throws Exception {
 		ITransform<Project, String[]> projToRow = new ITransform<Project, String[]>() {
 			@Override
@@ -73,6 +114,12 @@ public class Project {
 		return CsvData.fromList(csvHeaders, projToRow, projs);
 	}
 
+	/**
+	 * Wandelt CSV-Darstellung von Projektliste wider in Liste um.
+	 * @param data CSV-Darstellung von Projektliste (1. Spalte owner, 2. Spalte repo)
+	 * @return Projektliste passend zum CSV.
+	 * @throws Exception
+	 */
 	public static List<Project> projectListFromCsv(CsvData data) throws Exception {
 		ITransform<String[], Project> rowToProj = new ITransform<String[], Project>() {
 			@Override

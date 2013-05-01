@@ -14,16 +14,26 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * List programming languages used in project according to GitHub.
+ * Liste Programmiersprachen auf, welche in Projekt laut GitHub genutzt worden sind.
+ * Benutzt Scraping!
  */
 public final class LanguageDetector {
+	/**
+	 * Nur statische Methoden.
+	 */
 	private LanguageDetector() {}
 
+	/**
+	 * Sprachen, welche von Projekt p genutzt werden.
+	 * @param p Projekt (owner, repo).
+	 * @return Benutzte Sprachen in p.
+	 * @throws Exception
+	 */
 	public static List<String> languagesOfProject(Project p) throws Exception {
 		List<String> langs = new LinkedList<String>();
 
 		try {
-			String html = Helpers.loadHTMLUrlIntoStr("https://github.com/" + p.owner + "/" + p.repoName);
+			String html = Helpers.loadHTMLUrlIntoStrRetry("https://github.com/" + p.owner + "/" + p.repoName, 10);
 			Pattern langPat = Pattern.compile("<span class=\"lang\">([^<]+)</span>");
 			Matcher m = langPat.matcher(html);
 			while(m.find()) {
@@ -36,6 +46,13 @@ public final class LanguageDetector {
 		return langs;
 	}
 
+	/**
+	 * Zähle Anzahl von Projekten, welche unter anderem gegebene Sprache verwenden.
+	 * @param projects Projektliste.
+	 * @param language Name einer Programmiersprache.
+	 * @return Anzahl der Projekte aus der Liste, welche gegbene Sprache benutzen.
+	 * @throws Exception
+	 */
 	public static int numProjectsWithLanguage(List<Project> projects, final String language) throws Exception {
 		IPredicate<Project> isLanguage = new IPredicate<Project>() {
 			@Override
@@ -51,11 +68,16 @@ public final class LanguageDetector {
 		return Func.count(isLanguage, projects);
 	}
 
+	/**
+	 * Gebe Anteil der Projekte aus, die bestimmte Sprache nutzen.
+	 * @param language Programmiersprache.
+	 * @throws Exception
+	 */
 	public static void printSurveyPercentageInLanguage(String language) throws Exception {
 		List<ResponseProjects> respProjs = ResponseProjects.fromPreprocessedCsvFile(new File("data/benchmark/WeightedEstimates.csv"));
 		List<Project> projects = ResponseProjects.allProjects(respProjs);
-		int numJavaProjects = numProjectsWithLanguage(projects, language);
-		Helpers.log("Number of java projects = " + numJavaProjects);
+		int numLangProjs = numProjectsWithLanguage(projects, language);
+		Helpers.log("Number "+language+" projects = " + numLangProjs);
 		Helpers.log("Total number of projects = " + projects.size());
 	}
 

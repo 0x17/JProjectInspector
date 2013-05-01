@@ -14,6 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Visualisierungspanel.
+ *
+ * Enthält Buttons zum Öffnen von Diagrammen für gegebene Metrikergebnisse.
+ */
 public class VisualizationPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 

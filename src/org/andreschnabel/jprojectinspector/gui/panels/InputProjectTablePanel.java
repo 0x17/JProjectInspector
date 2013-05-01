@@ -18,7 +18,13 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Tabellenpanel für gewählte Projekte aus dem Eingabedialog.
+ *
+ * Je Projekt eine Zeile.
+ * Spalten sind owner, repo, #branches, #commits, #forks, #issues, #pullreqs, #stars.
+ *
+ */
 public class InputProjectTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;

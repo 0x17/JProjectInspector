@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Gesamtzahl Codezeilen in Projektverzeichnis.
+ */
 public class Cloc implements IOfflineMetric {
 
 	@Override

@@ -13,8 +13,14 @@ import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+/**
+ * Hilfsmethoden für XML-Serialisierung/Deserialisierung.
+ */
 public class XmlHelpers {
 
+	/**
+	 * Nur statische Methoden.
+	 */
 	private XmlHelpers() {}
 
 	public static Document documentForUrl(String url) throws Exception {

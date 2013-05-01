@@ -7,6 +7,9 @@ import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Hilfsfunktionen für den Umgang mit Zeichenketten.
+ */
 public final class StringHelpers {
 
 	public static int countOccurencesOfWord(String str, String word) {

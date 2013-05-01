@@ -7,6 +7,10 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Einstellungsfenster.
+ * @see SettingsPanel
+ */
 public class SettingsWindow extends AbstractWindow<SettingsPanel> {
 
 	private static final long serialVersionUID = 1L;

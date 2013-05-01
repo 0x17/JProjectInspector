@@ -8,6 +8,10 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Startdialog.
+ * @see LauncherPanel
+ */
 public class LauncherWindow extends AbstractWindow<LauncherPanel> {
 
 	private static final long serialVersionUID = 1L;

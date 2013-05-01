@@ -8,6 +8,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Hilfsfunktionen für Git.
+ */
 public class GitHelpers {
 
 	public static List<String> listCommitMessages(File repoPath) throws Exception {

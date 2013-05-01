@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.tests.offline.utilities.helpers;
+package org.andreschnabel.jprojectinspector.tests.offline.utilities.serialization;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -7,7 +7,7 @@ import java.io.File;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.JsonHelpers;
+import org.andreschnabel.jprojectinspector.utilities.serialization.JsonHelpers;
 import org.junit.Test;
 
 public class JsonHelpersTest {

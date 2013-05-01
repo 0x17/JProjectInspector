@@ -5,6 +5,9 @@ import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
+/**
+ * Bestimmt Anzahl der Beitragenden zu einem Repository über Scraping von GitHub.
+ */
 public final class ContributorsOnline implements IOnlineMetric {
 
 	public static int countNumContributors(Project project) throws Exception {

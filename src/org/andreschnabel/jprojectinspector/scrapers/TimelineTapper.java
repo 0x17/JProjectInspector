@@ -8,8 +8,14 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 import java.util.List;
 
+/**
+ * Greife Projekte aus der GitHub-Timeline ab.
+ */
 public final class TimelineTapper {
-	
+
+	/**
+	 * Nur statische Methoden.
+	 */
 	private TimelineTapper() {}
 
 	public static List<Project> tapProjects() throws Exception {

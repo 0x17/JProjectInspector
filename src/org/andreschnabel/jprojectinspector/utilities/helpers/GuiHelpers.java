@@ -12,6 +12,9 @@ import java.awt.*;
 import java.io.File;
 import java.net.URI;
 
+/**
+ * Hilfsfunktionen mit Relevanz für grafische Oberflächen.
+ */
 public class GuiHelpers {
 
 	public static void setNimbusLaf() throws Exception {

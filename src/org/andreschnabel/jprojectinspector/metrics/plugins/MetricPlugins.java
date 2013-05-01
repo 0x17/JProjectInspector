@@ -11,6 +11,9 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
 
+/**
+ * Hilfsklasse zum Laden von Metrik-Plugins.
+ */
 public class MetricPlugins {
 
 	public static List<IOfflineMetric> loadOfflineMetricPlugins(File dir) throws Exception {

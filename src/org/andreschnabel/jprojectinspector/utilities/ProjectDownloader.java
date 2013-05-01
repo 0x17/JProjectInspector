@@ -8,10 +8,23 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
 
 import java.io.File;
 
+/**
+ * Klont Projekte von GitHub.
+ */
 public final class ProjectDownloader {
-	
+
+	/**
+	 * Nur statische Methoden.
+	 */
 	private ProjectDownloader() {}
 
+	/**
+	 * Klone gegebenes Projekt p (owner, repo).
+	 * Blockiere solange.
+	 * @param p zu klonendes Projekt.
+	 * @return Pfad zu geklontem Projekt.
+	 * @throws Exception
+	 */
 	public static File loadProject(Project p) throws Exception {
 		if(!isProjectOnline(p)) {
 			return null;
@@ -28,6 +41,11 @@ public final class ProjectDownloader {
 		return f.exists() ? f : null;
 	}
 
+	/**
+	 * Schaue, ob Projekt verfügbar ist.
+	 * @param p zu prüfendes Projekt.
+	 * @return true, gdw. Projekt online ist.
+	 */
 	public static boolean isProjectOnline(Project p) {
 		String projHtml;
 		try {
@@ -37,7 +55,12 @@ public final class ProjectDownloader {
 		}
 		return projHtml != null && !projHtml.contains("<title>Page not found &middot; GitHub</title>");
 	}
-	
+
+	/**
+	 * Schau, ob Nutzer verfügbar ist.
+	 * @param user login des Nutzers.
+	 * @return true, gdw. Nutzer online ist.
+	 */
 	public static boolean isUserOnline(String user) {
 		String userHtml;
 		try {
@@ -48,6 +71,11 @@ public final class ProjectDownloader {
 		return userHtml != null && !userHtml.contains("<title>Page not found &middot; GitHub</title>");
 	}
 
+	/**
+	 * Lösche geklontes Projekt.
+	 * @param p geklontes Projekt.
+	 * @throws Exception
+	 */
 	public static void deleteProject(Project p) throws Exception {
 		String destPath = Config.DEST_BASE + p.repoName;
 		//Helpers.deleteDir(new File(destPath));

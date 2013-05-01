@@ -6,6 +6,9 @@ import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 
 import java.io.File;
 
+/**
+ * Gemeinsame Oberklasse für BugCountEst und TestEffortEst.
+ */
 public class SurveyMetricCommon {
 
 	public final static File ESTIMATIONS_FILE = new File("data/benchmark/WeightedEstimates.csv");

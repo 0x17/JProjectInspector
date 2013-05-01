@@ -5,6 +5,9 @@ import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaCommon;
 
 import java.io.File;
 
+/**
+ * Statische Erkennung von Testsmells.
+ */
 public class JavaTestSmellDetector implements IOfflineMetric {
 
 

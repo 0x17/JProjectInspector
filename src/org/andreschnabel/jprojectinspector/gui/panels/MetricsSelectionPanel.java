@@ -15,7 +15,17 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 
-
+/**
+ * Panel zur Auswahl von Metriken für eine Messung von zuvor gewählten Projekten.
+ *
+ * Auf der linken Seite werden die zur Verfügung stehenden Metriken in einer Liste angezeigt.
+ * Auf der rechten Seite werden die für die Messung ausgewählten Metriken in einer Liste angezeigt.
+ *
+ * Buttons im unteren Bereich erlauben Verschieben zwischen den Listen und Starten der Messung.
+ *
+ * Oben in der Mitte wird eine Beschreibung der zuletzt ausgewählten Metrik angezeigt.
+ *
+ */
 public class MetricsSelectionPanel extends PanelWithParent {
 
 	private static final long serialVersionUID = 1L;

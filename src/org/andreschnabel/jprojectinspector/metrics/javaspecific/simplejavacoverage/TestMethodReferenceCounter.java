@@ -8,6 +8,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Bestimme referenzierte Methoden in Tests.
+ */
 public final class TestMethodReferenceCounter {
 
 	private TestMethodReferenceCounter() {}

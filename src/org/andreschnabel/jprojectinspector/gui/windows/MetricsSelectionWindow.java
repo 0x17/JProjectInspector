@@ -5,6 +5,10 @@ import org.andreschnabel.jprojectinspector.gui.panels.MetricsSelectionPanel;
 
 import javax.swing.*;
 
+/**
+ * Metrikauswahlfenster.
+ * @see MetricsSelectionPanel
+ */
 public class MetricsSelectionWindow extends AbstractWindow<MetricsSelectionPanel> {
 
 	private static final long serialVersionUID = 1L;

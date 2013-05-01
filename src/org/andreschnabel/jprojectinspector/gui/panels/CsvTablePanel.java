@@ -17,10 +17,21 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.regex.Pattern;
 
+/**
+ * Panel für eine Tabelle mit Zellen aus CSV-Daten.
+ *
+ * Erlaubt exportieren der Daten in eine CSV-Textdatei. Dies öffnet Speicher-Dialog.
+ *
+ * Zeilen können hinzugefügt oder gewählte Zeilen entfernt werden.
+ */
 public class CsvTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Konstruktor
+	 * @param data CSV-Daten, welche in der Tabelle angezeigt werden.
+	 */
 	public CsvTablePanel(final CsvData data) {
 		setLayout(new GridBagLayout());
 

@@ -5,16 +5,43 @@ import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
 import java.util.List;
 
+/**
+ * Ein Projekt mit Messergebnissen.
+ * Die Messergebnisse haben bestimmte Bezeichnungen und Werte.
+ */
 public class ProjectWithResults {
+	/**
+	 * Bezeichnungen der Messergebnis-Spalten.
+	 */
 	private final String[] resultHeaders;
-	public Project project;
+
+	/**
+	 * Ergebniswerte der Messung.
+	 */
 	public Double[] results;
+
+	/**
+	 * Projekt zu dem die Ergebnisse gehören.
+	 */
+	public Project project;
+
+	/**
+	 * Konstruktor
+	 * @param project Projekt auf GitHub.
+	 * @param resultHeaders Metrik-Namen der Messwertspalten.
+	 * @param results Messwerte.
+	 */
 	public ProjectWithResults(Project project, String[] resultHeaders, Double[] results) {
 		this.resultHeaders = resultHeaders;
 		this.project = project;
 		this.results = results;
 	}
 
+	/**
+	 * Ergebnis für gegebenen Metrik-Namen.
+	 * @param metric Name der Metrik zu der das Ergebnis kommen soll.
+	 * @return Messergebnis.
+	 */
 	public Double get(String metric) {
 		for(int i=0; i< resultHeaders.length; i++) {
 			if(resultHeaders[i].equals(metric)) {
@@ -24,6 +51,12 @@ public class ProjectWithResults {
 		return Double.NaN;
 	}
 
+	/**
+	 * Erzeuge Liste aus Projekten mit Ergebnissen aus CSV-Daten.
+	 * @param data CSV-Daten mit ersten Spalten (owner, repo) und danach Metrik-Ergebnissen.
+	 * @return Liste aus Projekten mit Ergebnissen.
+	 * @throws Exception
+	 */
 	public static List<ProjectWithResults> fromCsv(final CsvData data) throws Exception {
 		ITransform<String[], ProjectWithResults> rowToProjWithResults = new ITransform<String[], ProjectWithResults>() {
 			@Override
@@ -40,10 +73,20 @@ public class ProjectWithResults {
 		return CsvData.toList(rowToProjWithResults, data);
 	}
 
+	/**
+	 * Getter für Metrik-Namen.
+	 * @return Namen der Metriken, dessen Messwerte in results stehen.
+	 */
 	public String[] getResultHeaders() {
 		return resultHeaders;
 	}
 
+	/**
+	 * Wandelt Liste aus Projekten mit Ergebnissen in CSV um.
+	 * @param pwrs Liste aus Projekten mit Ergebnissen.
+	 * @return CSV-Daten wobei ersten Spalten (owner,repo) sind und danach Metrikergebnisse.
+	 * @throws Exception
+	 */
 	public static CsvData toCsv(List<ProjectWithResults> pwrs) throws Exception {
 		final int nresults = pwrs.get(0).results.length;
 

@@ -6,6 +6,9 @@ import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Anzahl der Testcodezeilen.
+ */
 public class TestLinesOfCode implements IOfflineMetric {
 
 	public static int countTestLocHeuristic(File path) throws Exception {

@@ -7,6 +7,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 import java.util.List;
 
+/**
+ * Anzahl der demletzt getätigen Commits von den GitHub-Statistiken gescraped.
+ */
 public class RecentCommits implements IOnlineMetric {
 
 	private final static int NUM_PREV_WEEKS_CONSIDERED = 3;

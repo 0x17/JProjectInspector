@@ -22,8 +22,28 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * Panel für das Benchmark.
+ *
+ * Erlaubt Auswahl von CSV-Dateien mit Einschätzungen und Metrik-Ergebnissen.
+ *
+ * Eine Combobox erlaubt auswahl des Modus -> Testaufwand oder Fehlerzahl.
+ *
+ * Ein Textfeld für Vorhersageformel zum gewählten Modus.
+ *
+ * "Null is invalid"-Checkbox wählt, ob ein Ergebnis von 0 (bspw. bei Testcodezeilen) ein ungültiges Ergebnis sein
+ * und nicht für das Benchmark beachtet wird. Wird also nicht für Gesamtzahl der Entscheidungen gezählt.
+ *
+ * "Compute"-Schaltfläche führt Benchmark für gewählten Modus und eingegebene Formel aus. *
+ * Ergebnisse werden darunter angezeigt.
+ *
+ * "Enumerate"-Schaltfläche probiert für Platzhalter (einzelne Zeichen, z.B. 'a') alle Metriknamen aus und setzt am
+ * Ende in das Textfeld für die Formel die Metriknamen ein, bei denen die Bewertung am besten war.
+ */
 public class BenchmarkPanel extends PanelWithParent {
 	private static final long serialVersionUID = 1L;
 
@@ -34,7 +54,7 @@ public class BenchmarkPanel extends PanelWithParent {
 	private List<String> variablesLst = new ArrayList<String>();
 
 	private List<ResponseProjects> respProjs;
-	private List<ProjectWithResults> metricsData;
+	private Map<Project, ProjectWithResults> metricsData;
 	private JLabel numEstimationsLbl;
 	private JLabel numCorrLbl;
 	private JLabel percCorrLbl;
@@ -215,7 +235,11 @@ public class BenchmarkPanel extends PanelWithParent {
 									sb.append(", ");
 							}
 							variablesArea.setText(sb.toString());
-							metricsData = ProjectWithResults.fromCsv(data);
+							List<ProjectWithResults> pwrLst = ProjectWithResults.fromCsv(data);
+							metricsData = new HashMap<Project, ProjectWithResults>();
+							for(ProjectWithResults pwr : pwrLst) {
+								metricsData.put(pwr.project, pwr);
+							}
 							break;
 					}
 				} catch(Exception e) {
@@ -252,13 +276,9 @@ public class BenchmarkPanel extends PanelWithParent {
 				String repoName = (String)cellVal;
 
 				Project p = new Project(user, repoName);
-				for(ProjectWithResults projectWithResults : metricsData) {
-					if(projectWithResults.project.equals(p)) {
-						new ProjectMetricsWindow(projectWithResults).setVisible(true);
-						return;
-					}
+				if(metricsData.containsKey(p)) {
+					new ProjectMetricsWindow(metricsData.get(p)).setVisible(true);
 				}
-
 			}
 		});
 		add(tablePane, BorderLayout.CENTER);

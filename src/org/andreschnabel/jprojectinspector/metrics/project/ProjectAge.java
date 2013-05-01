@@ -5,6 +5,9 @@ import org.andreschnabel.jprojectinspector.utilities.git.GitRevisionHelpers;
 
 import java.io.File;
 
+/**
+ * Alter eines geklonten Projekt mithilfe von "git rev-list".
+ */
 public class ProjectAge implements IOfflineMetric {
 
 	public static long getProjectAge(File repoRoot) throws Exception {

@@ -7,6 +7,9 @@ import org.andreschnabel.jprojectinspector.utilities.git.GitHelpers;
 
 import java.io.File;
 
+/**
+ * Anzahl der Commit-Nachrichten mit Teilstring "test" (case insensitive).
+ */
 public class TestCommitMessages implements IOfflineMetric {
 
 	public static int countNumTestCommitMessages(File root) throws Exception {

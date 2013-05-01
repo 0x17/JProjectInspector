@@ -1,6 +1,5 @@
 package org.andreschnabel.jprojectinspector.gui.visualizations;
 
-import org.andreschnabel.jprojectinspector.gui.visualizations.IVisualization;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -12,6 +11,9 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import java.util.Map;
 
+/**
+ * Streudiagramm.
+ */
 public class ScatterPlot implements IVisualization {
 	@Override
 	public String getName() {

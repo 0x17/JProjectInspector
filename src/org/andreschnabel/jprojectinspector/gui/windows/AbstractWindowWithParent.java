@@ -2,6 +2,10 @@ package org.andreschnabel.jprojectinspector.gui.windows;
 
 import javax.swing.*;
 
+/**
+ * Ein Fenster mit einem Elternfenster.
+ * @param <T> Typ des Hauptpanels vom Fenster.
+ */
 public abstract class AbstractWindowWithParent<T extends JPanel> extends AbstractWindow<T> {
 	private static final long serialVersionUID = 1L;
 	private final JFrame parentFrame;

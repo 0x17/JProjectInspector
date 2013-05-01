@@ -10,8 +10,7 @@ import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import java.util.List;
 
 /**
- * Calculates differences of metric values from projects with
- * high (testing effort resp. bug count est) - low (testing effort resp. bug count est)
+ * Berechne Differenzen von Metrikwerten von Projekten mit hohem (Testaufwand bzw. Fehlerzahl) - niedrigem (Testaufwand bzw. Fehlerzahl)
  */
 public class DeltaCalculator {
 	

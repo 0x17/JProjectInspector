@@ -6,6 +6,9 @@ import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 
 import java.util.List;
 
+/**
+ * Listenmodell für Namen von Metriken. Fügt Beschreibung zur Kategorie hinzu.
+ */
 public class MetricListModel extends ListListModel<String> {
 	private static final long serialVersionUID = 1L;
 

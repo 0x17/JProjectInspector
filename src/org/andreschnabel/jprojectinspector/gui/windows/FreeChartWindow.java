@@ -6,6 +6,10 @@ import org.jfree.chart.JFreeChart;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Fenster mit FreeChart-Diagramm.
+ * @see FreeChartPanel
+ */
 public class FreeChartWindow extends AbstractWindow<FreeChartPanel> {
 
 	private static final long serialVersionUID = 1L;

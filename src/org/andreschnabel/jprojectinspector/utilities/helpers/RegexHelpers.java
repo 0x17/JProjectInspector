@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Hilfsfunktionen für den Umgang mit regulären Ausdrücken.
+ */
 public class RegexHelpers {
 	public static List<String[]> batchMatch(String regex, String input) {
 		Pattern p = Pattern.compile(regex);

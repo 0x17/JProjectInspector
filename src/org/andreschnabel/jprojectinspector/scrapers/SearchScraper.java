@@ -1,12 +1,15 @@
 package org.andreschnabel.jprojectinspector.scrapers;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * Suche Projekte nach bestimmten Kriterien.
+ */
 public class SearchScraper {
 
 	public static List<Project> searchByStars(String lang, int minStars, int numPages) throws Exception {

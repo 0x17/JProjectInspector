@@ -2,6 +2,9 @@ package org.andreschnabel.jprojectinspector.metrics.code;
 
 import java.util.List;
 
+/**
+ * Geparstes Ergebnis des Perl-Skripts "cloc".
+ */
 public class ClocResult {
 	public String language;
 	public int fileCount;

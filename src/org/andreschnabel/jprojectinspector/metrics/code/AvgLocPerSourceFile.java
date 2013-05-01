@@ -8,6 +8,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Durchschnittliche Anzahl Codezeilen von Quelldateien (enthält auch Tests).
+ */
 public class AvgLocPerSourceFile implements IOfflineMetric {
 
 	private static final String[] SRC_EXTENSIONS = new String[] {"java", "js", "rb", "py", "cs",

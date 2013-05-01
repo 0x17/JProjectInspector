@@ -2,12 +2,30 @@ package org.andreschnabel.jprojectinspector.model.survey;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Kandidat für eine Umfrage auf GitHub.
+ */
 @XmlRootElement(name = "candidate")
 public class Candidate {
+	/**
+	 * Login/User name.
+	 */
 	public String login;
+	/**
+	 * Klarname.
+	 */
 	public String name;
+	/**
+	 * E-Mail Adresse.
+	 */
 	public String email;
-	
+
+	/**
+	 * Konstruktor
+	 * @param login Username.
+	 * @param name Klarname.
+	 * @param email E-Mail Adresse.
+	 */
 	public Candidate(String login, String name, String email) {
 		super();
 		this.login = login;
@@ -15,6 +33,9 @@ public class Candidate {
 		this.email = email;
 	}
 
+	/**
+	 * Leerer Nutzer. (null, null, ...)
+	 */
 	public Candidate() {
 	}
 

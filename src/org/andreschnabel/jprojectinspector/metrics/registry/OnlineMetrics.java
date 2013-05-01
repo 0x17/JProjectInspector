@@ -12,6 +12,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Liste aller bekannten Online-Metriken.
+ */
 public class OnlineMetrics {
 	public static Map<String, IOnlineMetric> init() throws Exception {
 		List<IOnlineMetric> ms = new LinkedList<IOnlineMetric>();

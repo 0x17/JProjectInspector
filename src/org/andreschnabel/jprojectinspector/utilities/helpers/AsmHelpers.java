@@ -10,6 +10,9 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Hilfsfunktionen zum Umgang mit der Bytecode-Manipulationsbibliothek ASM.
+ */
 public class AsmHelpers {
 	
 	private static interface HitCallback {

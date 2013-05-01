@@ -5,6 +5,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
 
 import java.io.File;
 
+/**
+ * Hilfsfunktionen zum Umgang mit Revisionen eines geklonten Git-Repositories.
+ */
 public class GitRevisionHelpers {
 	public static int numRevisions(File repoPath) throws Exception {
 		return listAllRevisions(repoPath).length;

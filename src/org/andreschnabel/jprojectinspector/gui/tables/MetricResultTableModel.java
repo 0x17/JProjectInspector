@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Tabellenmodell für Metrikergebnisse.
+ */
 public class MetricResultTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private final List<Project> projects;

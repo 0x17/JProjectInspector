@@ -7,6 +7,10 @@ import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 import javax.swing.*;
 import java.io.File;
 
+/**
+ * CSV-Tabellenfenster.
+ * @see CsvTablePanel
+ */
 public class CsvTableWindow extends AbstractWindow<CsvTablePanel> {
 	
 	private static final long serialVersionUID = 1L;

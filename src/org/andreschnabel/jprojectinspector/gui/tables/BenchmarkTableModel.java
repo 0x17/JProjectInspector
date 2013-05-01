@@ -6,6 +6,16 @@ import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
+/**
+ * Tabellenmodell für die Tabelle des Benchmark-Dialogs.
+ *
+ * Spalten sind Nutzer, minimale Einschätzung, maximale Einschätzung, minimal vorhergesagt, maximal vorhergesagt, gewicht.
+ *
+ * Wobei die Einschätzung zum in der ComboBox gewählten Modus (Testaufwand oder Fehlerzahl) ist.
+ * Die Vorhersage ergibt sich aus Eingabe der Metrikergebnisse für die min/max-Projekte des Nutzers in die gewählte Formel.
+ *
+ * Das Gewicht ergibt sich aus dem Anteil der Buzzwords, welche als gut bekannt in der Umfrage vom Nutzer genannt worden sind.
+ */
 public class BenchmarkTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;

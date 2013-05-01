@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Bestimmt Anzahl der Issues im Tracker von gegebenen Projekt per Scraping von GitHub.
+ */
 public class Issues implements IOnlineMetric {
 
 	public static int getNumberOfIssues(Project p) throws Exception {

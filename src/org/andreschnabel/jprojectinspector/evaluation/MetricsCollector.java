@@ -1,8 +1,5 @@
 package org.andreschnabel.jprojectinspector.evaluation;
 
-import java.io.File;
-import java.util.List;
-
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
 import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 import org.andreschnabel.jprojectinspector.model.Project;
@@ -10,8 +7,11 @@ import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 
+import java.io.File;
+import java.util.List;
+
 /**
- * Collects specified metrics for a project.
+ * Messe bestimmte Metriken für ein Projekt.
  */
 public class MetricsCollector {
 

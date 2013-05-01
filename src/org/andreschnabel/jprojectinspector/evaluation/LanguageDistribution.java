@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Determine distribution of programming languages for projects named by users in a survey (response projects).
+ * Bestimme Sprachverteilung für Projekte.
  */
 public class LanguageDistribution {
 	

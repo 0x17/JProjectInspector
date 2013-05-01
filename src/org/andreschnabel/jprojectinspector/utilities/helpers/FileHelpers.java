@@ -13,6 +13,9 @@ import java.net.URLClassLoader;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Hilfsfunktionen für den Umgang mit Dateien.
+ */
 public class FileHelpers {
 
 	public static List<File> filesWithPredicateInTree(File root, IPredicate<File> pred) throws Exception {

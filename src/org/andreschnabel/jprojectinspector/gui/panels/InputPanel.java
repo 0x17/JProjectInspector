@@ -28,6 +28,39 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Panel des Eingabedialogs.
+ *
+ * Obere Zeile erlaubt Eingabe von (owner,repo)-Tupel für neues Projekt zur Auswahl.
+ * Weiterhin können für einen gegebenen owner alle seine Repositories per "query" in
+ * einer Combobox angezeigt werden. Dann lassen sich mit "+All"-Schaltfläche alle diese
+ * Projekte hinzufügen.
+ * Schaltfläche "+Missing projects" fügt alle übrigen Projekte von ownern aus der derzeitigen
+ * Auswahl zur Auswahl hinzu.
+ *
+ * Die mittlere Zeile gibt eine Auflistung der gewählten Projekte mit ein paar Metriken.
+ * @see InputProjectTablePanel
+ *
+ * Die untere Zeile enthält eine Reihe von Schaltflächen.
+ * "Import from CSV" erlaubt importieren von Projekten aus einer CSV-Datei mit ersten beiden Spalten enthalten "owner" und "repo".
+ * "Export to CSV" exportiert Liste der gewählten Projekte zu CSV-Datei mit Spalten "owner" und "repo".
+ *
+ * "Remove project" entfernt gewähltes Projekt aus Auswahl.
+ * "Remove offline" entfernt nicht mehr verfügbare Projekte aus der Auswahl.
+ *
+ * "View CSV" erlaubt betrachten einer beliebigen CSV-Datei.
+ *
+ * "Import survey projects" importiert Projekte aus einer der "WeightedEstimatesUmfrage....csv"-Dateien, welche aus Umfragen erzeugt worden sind.
+ *
+ * "Tap Timeline" fügt Projekte aus der GitHub-Timeline der Auswahlliste hinzu.
+ *
+ * "Clear" leert die komplette Auswahl.
+ *
+ * "Settings" öffnet den Einstellungsdialog.
+ *
+ * "Start Measurements" öffnet den Dialog zur Auswahl von Metriken. Die Messung wird dann für alle gewählten Projekte durchgeführt.
+ *
+ */
 public class InputPanel extends JPanel implements ILaunchSettings {
 	
 	private static final long serialVersionUID = 1L;

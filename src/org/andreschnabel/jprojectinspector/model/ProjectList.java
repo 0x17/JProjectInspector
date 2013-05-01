@@ -7,7 +7,11 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Liste von Projekten (evtl. zu bestimmten Schlüsselwort).
+ */
 public class ProjectList {
+	@Deprecated
 	public final String keyword;
 	public final List<Project> projects;
 

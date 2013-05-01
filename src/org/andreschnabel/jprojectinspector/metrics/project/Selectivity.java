@@ -12,6 +12,9 @@ import org.eclipse.egit.github.core.service.RepositoryService;
 
 import java.util.Collection;
 
+/**
+ * Selektivität der Projektverwalter (Anzahl eingemerged Pull-Requests / Anzahl Pull-Requests gesamt) über GitHub-Web-API.
+ */
 public class Selectivity implements IOnlineMetric {
 
 	private static final int MAX_PULL_REQ_PAGES = 5;

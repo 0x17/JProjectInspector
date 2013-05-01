@@ -7,6 +7,9 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Einfache Annäherung der Testabdeckung für Java-Code.
+ */
 public class SimpleJavaTestCoverage implements IOfflineMetric {
 
 	public static Double determineMethodCoverage(File root) throws Exception {

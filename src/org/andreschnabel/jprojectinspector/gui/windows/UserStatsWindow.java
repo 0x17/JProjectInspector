@@ -4,6 +4,10 @@ import org.andreschnabel.jprojectinspector.gui.panels.UserStatsPanel;
 
 import javax.swing.*;
 
+/**
+ * Fenster mit Nutzerstatistiken.
+ * @see UserStatsPanel
+ */
 public class UserStatsWindow extends AbstractWindow<UserStatsPanel> {
 	private static final long serialVersionUID = 1L;
 

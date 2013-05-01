@@ -6,6 +6,11 @@ import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel für die Metriken zu einem einzigen Projekt.
+ * Zeigt Metriken in einer Gitterförmigen-Anordnung an.
+ * Metrik name: Ausprägung.
+ */
 public class ProjectMetricsPanel extends PanelWithParent {
 	private static final long serialVersionUID = 1L;
 

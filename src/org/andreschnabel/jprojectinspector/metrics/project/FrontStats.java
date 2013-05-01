@@ -7,6 +7,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Einige Statistiken zu einem GitHub-Projekt von dessen Profilseite gescraped.
+ */
 public class FrontStats {
 
 	public static class Branches implements IOnlineMetric {

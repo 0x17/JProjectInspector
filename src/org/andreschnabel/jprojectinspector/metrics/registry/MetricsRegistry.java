@@ -12,6 +12,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Registriert bekannte Metriken.
+ */
 public class MetricsRegistry {
 
 	private static final String SCRAPING_WARNING = "<br /><br /><b>Important note:</b> This metric uses scraping to extract data from GitHub.<br />" +

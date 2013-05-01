@@ -7,6 +7,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 import java.util.List;
 
+/**
+ * Scrape die Codefrequenz von GitHub.
+ */
 public class CodeFrequency implements IOnlineMetric {
 
 	public static int countCodeFrequencyForProj(Project project) throws Exception {

@@ -12,6 +12,12 @@ import java.util.List;
  * '([col11 col12 ... col1n] ... [colm1 colm2 ... colmn])
  */
 public class CsvHelpers {
+
+	/**
+	 * Zähle Anzahl der Spalten in CSV-Textzeile.
+	 * @param line CSV-Textzeile.
+	 * @return Spaltenzahl.
+	 */
 	public static int countColumns(String line) {
 		int numColums = 1;
 		boolean escaped = false;
@@ -28,11 +34,22 @@ public class CsvHelpers {
 		}
 		return numColums;
 	}
-	
+
+	/**
+	 * Extrahiere Kopfzeile (erste Zeile) aus CSV-Text.
+	 * @param content CSV-Text.
+	 * @return Kopfzeile.
+	 */
 	public static String headerLine(String content) {
 		return content.contains("\n") ? content.substring(0, content.indexOf("\n")) : content;
 	}
 
+	/**
+	 * Parse CSV-Daten aus CSV-Text.
+	 * @param content CSV-Text.
+	 * @return CSV-Daten.
+	 * @throws Exception
+	 */
 	public static CsvData parseCsv(String content) throws Exception {
 		if(!content.endsWith("\n"))
 			content += "\n";
@@ -87,10 +104,21 @@ public class CsvHelpers {
 		return new CsvData(rows);
 	}
 
+	/**
+	 * Parse CSV-Daten aus CSV-Datei.
+	 * @param file CSV-Datei.
+	 * @return CSV-Daten.
+	 * @throws Exception
+	 */
 	public static CsvData parseCsv(File file) throws Exception {
 		return parseCsv(FileHelpers.readEntireFile(file));
 	}
 
+	/**
+	 * Escape Zelle mit Anführungsstrichen, falls sie ein Komma enthält.
+	 * @param str Zelle.
+	 * @return Zelle oder Zelle in Anführungsstrichen, falls sie Komma enthält.
+	 */
 	public static String escapeIfComma(String str) {
 		return str.contains(",") ? "\"" + str + "\"" : str;
 	}

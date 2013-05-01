@@ -2,6 +2,7 @@ package org.andreschnabel.jprojectinspector.evaluation.runners;
 
 import org.andreschnabel.jprojectinspector.evaluation.Benchmark;
 import org.andreschnabel.jprojectinspector.evaluation.PredictionCandidates;
+import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
@@ -11,7 +12,9 @@ import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.XmlHelpers;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BenchmarkRunner {
 
@@ -25,12 +28,17 @@ public class BenchmarkRunner {
 
 		final List<ProjectWithResults> pms = ProjectWithResults.fromCsv(CsvHelpers.parseCsv(new File("data/benchmark/metrics500.csv")));
 
+		final Map<Project, ProjectWithResults> pml = new HashMap<Project, ProjectWithResults>();
+		for(ProjectWithResults pwr : pms) {
+			pml.put(pwr.project, pwr);
+		}
+
 		final List<Benchmark.PredictionMethods> candidates = PredictionCandidates.getCandidates();
 		ITransform<Benchmark.PredictionMethods, Benchmark.Quality> candToQuality = new ITransform<Benchmark.PredictionMethods, Benchmark.Quality>() {
 			@Override
 			public Benchmark.Quality invoke(Benchmark.PredictionMethods pm) {
 				try {
-					return Benchmark.runBenchmark(pm, pms, rpl.responseProjs, false);
+					return Benchmark.runBenchmark(pm, pml, rpl.responseProjs, false);
 				} catch(Exception e) {
 					e.printStackTrace();
 					return null;

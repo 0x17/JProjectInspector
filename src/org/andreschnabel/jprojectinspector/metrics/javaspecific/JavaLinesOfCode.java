@@ -7,6 +7,10 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 
 import java.io.File;
 
+/**
+ * Anzahl Codezeilen speziell für Java implementiert.
+ * Ignoriert Kommentarzeilen.
+ */
 public class JavaLinesOfCode implements IOfflineMetric {
 
 	public static int countLocForProj(Project project) throws Exception {

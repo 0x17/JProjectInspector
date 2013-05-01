@@ -8,6 +8,9 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Anzahl der Beitragenden zu Tests in einem geklonten Repository.
+ */
 public final class TestContributors implements IOfflineMetric {
 	
 	public static int numTestContribs(File root) throws Exception {

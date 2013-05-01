@@ -4,11 +4,15 @@ import org.andreschnabel.jprojectinspector.gui.panels.BenchmarkPanel;
 
 import javax.swing.*;
 
+/**
+ * Benchmarkfenster.
+ * @see BenchmarkPanel
+ */
 public class BenchmarkWindow extends AbstractWindowWithParent<BenchmarkPanel> {
 	private static final long serialVersionUID = 1L;
 
 	public BenchmarkWindow(JFrame parentFrame) {
-		super("Benchmark Predictors", 1280, 720, JFrame.DISPOSE_ON_CLOSE, new BenchmarkPanel(), parentFrame);
+		super("Benchmark Predictors", 1350, 720, JFrame.DISPOSE_ON_CLOSE, new BenchmarkPanel(), parentFrame);
 	}
 
 	public static void main(String[] args) {

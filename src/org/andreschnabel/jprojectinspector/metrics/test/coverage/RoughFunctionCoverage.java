@@ -16,6 +16,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Grobe Annäherung der Testabdeckung für JavaScript, Ruby, Python, Java.
+ */
 public class RoughFunctionCoverage implements IOfflineMetric {
 
 	public static Map<String, Double> approxFunctionCoverage(File rootPath) throws Exception {

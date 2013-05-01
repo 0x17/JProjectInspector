@@ -1,13 +1,15 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import java.util.List;
-import java.util.Map;
-
+import de.congrace.exp4j.ExpressionBuilder;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 
-import de.congrace.exp4j.ExpressionBuilder;
+import java.util.List;
+import java.util.Map;
 
+/**
+ * Hilfsfunktionen zum Auswerten von Formeln in Zeichenkettendarstellung.
+ */
 public class EquationHelpers {
 
 	public static Object parseEquation(Map<String, Double> varBindings, String equation) {		

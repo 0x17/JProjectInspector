@@ -3,6 +3,9 @@ package org.andreschnabel.jprojectinspector.githubapi;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import org.eclipse.egit.github.core.client.GitHubClient;
 
+/**
+ * Hilfsfunktionen für die GitHub-Web-API.
+ */
 public class GitHubHelpers {
 
 	private static GitHubClient ghc = null;

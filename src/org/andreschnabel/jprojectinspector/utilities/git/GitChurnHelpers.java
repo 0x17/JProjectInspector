@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Hilfsfunktionen zur Ermittlung des Churns in einem geklonten Git-Repository.
+ */
 public class GitChurnHelpers {
 
 	public static ChurnStats parseChurnStatsFromShortStat(final String shortStat) {

@@ -10,6 +10,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Box und whisker Diagramm.
+ *
+ * Zeigt je Metrik eine Box passend zur Verteilung an.
+ */
 public class BoxAndWhisker implements IVisualization {
 	@Override
 	public String getName() {

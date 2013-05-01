@@ -7,6 +7,9 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Hilfsfunktionen zur Ermittlung der Beitragenden zu einem geklonten Git-Repository.
+ */
 public class GitContributorHelpers {
 	public static List<String> contribNamesForFile(File f) throws Exception {
 		List<String> result = new LinkedList<String>();

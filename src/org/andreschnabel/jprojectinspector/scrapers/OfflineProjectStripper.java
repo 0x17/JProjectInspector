@@ -3,14 +3,20 @@ package org.andreschnabel.jprojectinspector.scrapers;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.JsonHelpers;
+import org.andreschnabel.jprojectinspector.utilities.serialization.JsonHelpers;
 
 import java.util.LinkedList;
 
+/**
+ * Entferne nicht mehr verfügbare Projekte aus JSON-Projektliste.
+ * Obsoleter Code?
+ */
 public final class OfflineProjectStripper {
-	
+	/**
+	 * Nur statische Methoden.
+	 */
 	private OfflineProjectStripper() {}
-	
+
 	public static void stripOfflineProjs(String projLstFilename) throws Exception {
 		ProjectList projLst = ProjectList.fromJson(projLstFilename);
 		ProjectList outLst = new ProjectList(projLst.keyword, new LinkedList<Project>());

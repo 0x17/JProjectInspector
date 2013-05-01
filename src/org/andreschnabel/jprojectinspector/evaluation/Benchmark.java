@@ -10,15 +10,18 @@ import org.andreschnabel.jprojectinspector.utilities.functional.IVarIndexedActio
 import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Assess quality of test effort estimation resp. bug count estimation prediction equation.
+ * Beurteilung der Qualität von Vorhersageformeln für relative geschätzte Fehlerzahl
+ * und relativer geschätzter Testaufwand von Projekten eines GitHub-Nutzers.
  */
 public class Benchmark {
 
-	public static String enumerate(final String template, final List<ProjectWithResults> metricsData, final List<ResponseProjects> respProjs, final PredictionType mode, final boolean zeroIsInvalid) throws Exception {
+	public static String enumerate(final String template, final Map<Project, ProjectWithResults> metricsData, final List<ResponseProjects> respProjs, final PredictionType mode, final boolean zeroIsInvalid) throws Exception {
 		List<String[]> matches = RegexHelpers.batchMatch("([A-Za-z]+)", template);
 		if(matches.isEmpty()) {
 			return null;
@@ -42,7 +45,7 @@ public class Benchmark {
 		final String[] winner = new String[1];
 		final double[] winnerCorr = new double[1];
 
-		final String[] metricNames = metricsData.get(0).getResultHeaders();
+		final String[] metricNames = metricsData.values().iterator().next().getResultHeaders();
 
 		Func.nestedFor(vars.length, 0, metricNames.length, new IVarIndexedAction() {
 			@Override
@@ -113,7 +116,7 @@ public class Benchmark {
 		public double bugCountPredictionMeasure(ProjectWithResults m);
 	}
 
-	public static Quality runBenchmark(final PredictionMethods predMethods, List<ProjectWithResults> pml, List<ResponseProjects> rpl, boolean zeroIsInvalid) throws Exception {
+	public static Quality runBenchmark(final PredictionMethods predMethods, Map<Project, ProjectWithResults> pml, List<ResponseProjects> rpl, boolean zeroIsInvalid) throws Exception {
 		int teCorrect = 0;
 		int bcCorrect = 0;
 		double teWeightedCorrect = 0.0;
@@ -135,25 +138,14 @@ public class Benchmark {
 
 			List<Project> projs = rp.toProjectList();
 
-			if(containsInvalidProject(pml, projs)) {
+			if(containsInvalidProject(pml.values(), projs)) {
 				tePredictions.add(new String[] {"N/A", "N/A"});
 				bcPredictions.add(new String[] {"N/A", "N/A"});
 				continue;
 			}
 
-			ProjectWithResults highestBugCountProjWithResults = Func.find(new IPredicate<ProjectWithResults>() {
-				@Override
-				public boolean invoke(ProjectWithResults pwr) {
-					return pwr.project.owner.equals(rp.user) && pwr.project.repoName.equals(rp.highestBugCount);
-				}
-			}, pml);
-			ProjectWithResults lowestBugCountProjWithResults = Func.find(new IPredicate<ProjectWithResults>() {
-				@Override
-				public boolean invoke(ProjectWithResults pwr) {
-					return pwr.project.owner.equals(rp.user) && pwr.project.repoName.equals(rp.lowestBugCount);
-				}
-			}, pml);
-
+			ProjectWithResults highestBugCountProjWithResults = pml.get(new Project(rp.user, rp.highestBugCount));
+			ProjectWithResults lowestBugCountProjWithResults = pml.get(new Project(rp.user, rp.lowestBugCount));
 			double hiPred = predMethods.bugCountPredictionMeasure(highestBugCountProjWithResults);
 			double lowPred = predMethods.bugCountPredictionMeasure(lowestBugCountProjWithResults);
 
@@ -171,19 +163,8 @@ public class Benchmark {
 				numBcWeightedApplicable += rp.weight;
 			}
 
-			ProjectWithResults mostTestedProjWithResults = Func.find(new IPredicate<ProjectWithResults>() {
-				@Override
-				public boolean invoke(ProjectWithResults pwr) {
-					return pwr.project.owner.equals(rp.user) && pwr.project.repoName.equals(rp.mostTested);
-				}
-			}, pml);
-			ProjectWithResults leastTestedCountProjWithResults = Func.find(new IPredicate<ProjectWithResults>() {
-				@Override
-				public boolean invoke(ProjectWithResults pwr) {
-					return pwr.project.owner.equals(rp.user) && pwr.project.repoName.equals(rp.leastTested);
-				}
-			}, pml);
-
+			ProjectWithResults mostTestedProjWithResults = pml.get(new Project(rp.user, rp.mostTested));
+			ProjectWithResults leastTestedCountProjWithResults = pml.get(new Project(rp.user, rp.leastTested));
 			hiPred = predMethods.testEffortPredictionMeasure(mostTestedProjWithResults);
 			lowPred = predMethods.testEffortPredictionMeasure(leastTestedCountProjWithResults);
 
@@ -233,7 +214,7 @@ public class Benchmark {
 		return Func.map(projectToMeasureResult, projectList);
 	}
 
-	public static boolean containsInvalidProject(final List<ProjectWithResults> pml, List<Project> projs) {
+	public static boolean containsInvalidProject(final Collection<ProjectWithResults> pml, List<Project> projs) {
 		IPredicate<Project> isInvalid = new IPredicate<Project>() {
 			@Override
 			public boolean invoke(Project p) {
@@ -243,7 +224,7 @@ public class Benchmark {
 		return Func.contains(isInvalid, projs);
 	}
 
-	public static ProjectWithResults metricsForProject(final Project p, List<ProjectWithResults> pml) {
+	public static ProjectWithResults metricsForProject(final Project p, Collection<ProjectWithResults> pml) {
 		IPredicate<ProjectWithResults> isProj = new IPredicate<ProjectWithResults>() {
 			@Override
 			public boolean invoke(ProjectWithResults obj) {

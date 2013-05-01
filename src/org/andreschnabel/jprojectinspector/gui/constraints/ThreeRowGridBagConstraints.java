@@ -2,6 +2,10 @@ package org.andreschnabel.jprojectinspector.gui.constraints;
 
 import java.awt.*;
 
+/**
+ * GridBagConstraints für dreizeiliges Layout.
+ * Obere und untere Zeile sind flach. Mittlere Zeile füllt Fläche.
+ */
 public final class ThreeRowGridBagConstraints {
 
 	private ThreeRowGridBagConstraints() {}

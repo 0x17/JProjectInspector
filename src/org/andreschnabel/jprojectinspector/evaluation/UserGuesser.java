@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Versuche zugehörigen Nutzer zu gegebener Antwortliste von Projekten zu erraten.
+ */
 public class UserGuesser {
 
 	public static String guessUserWithProjects(ResponseProjects rp, List<Project> usrProjs) {
@@ -24,6 +27,8 @@ public class UserGuesser {
 
 		for(int i=0; i<projNames.size(); i++) {
 			String pname = projNames.get(i);
+			// Sonderfall: Nutzer hat in Antwort den gesamten Repo-Link angegeben.
+			// Sein Name ist schon im Link!
 			if(pname.startsWith("https://github.com/")) {
 				Matcher m = p.matcher(pname);
 				m.find();

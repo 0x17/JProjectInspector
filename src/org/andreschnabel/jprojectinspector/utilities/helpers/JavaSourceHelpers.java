@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Hilfsfunktionen für den Umgang mit Java-Quelltexten.
+ */
 public class JavaSourceHelpers {
 	
 	public static List<String> listClassNamesInSrcStr(String sourceStr) {

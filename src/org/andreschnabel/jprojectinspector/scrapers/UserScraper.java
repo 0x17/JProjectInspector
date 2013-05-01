@@ -9,6 +9,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Scrape Daten von Nutzer auf GitHub.
+ */
 public class UserScraper {
 
 	public static UserData scrapeUser(String name) throws Exception {

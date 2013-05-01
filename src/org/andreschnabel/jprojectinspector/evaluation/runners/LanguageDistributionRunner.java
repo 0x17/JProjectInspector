@@ -1,12 +1,13 @@
 package org.andreschnabel.jprojectinspector.evaluation.runners;
 
 import org.andreschnabel.jprojectinspector.evaluation.LanguageDistribution;
+import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
-import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 import org.andreschnabel.jprojectinspector.utilities.serialization.XmlHelpers;
 
 import java.io.File;
@@ -20,7 +21,8 @@ public class LanguageDistributionRunner {
 	}
 
 	public static void showLanguageDistribution() throws Exception {
-		List<Project> projs = ResponseProjects.allProjects(getProjectsWithUser());
+		//List<Project> projs = ResponseProjects.allProjects(getProjectsWithUser());
+		List<Project> projs = Project.projectListFromCsv(CsvHelpers.parseCsv(new File("data/benchmark/MetricResultsUmfragenCombined.csv")));
 		Map<String, Integer> distr = LanguageDistribution.determineLanguageDistribution(projs);
 		for(String lang : distr.keySet()) {
 			Helpers.log(lang + " => " + distr.get(lang));

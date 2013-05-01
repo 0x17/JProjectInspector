@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Tap GitHub timeline for candidates for our evaluation experiment.
+ * Greife Kandidaten für eine Umfrage von der GitHub-Timeline ab.
  */
 public class CandidateTapper {
 	

@@ -5,6 +5,9 @@ import org.andreschnabel.jprojectinspector.utilities.git.GitRevisionHelpers;
 
 import java.io.File;
 
+/**
+ * Anzahl der Revisionen von geklontem Repository mithilfe von "git rev-list".
+ */
 public class Revisions implements IOfflineMetric {
 	@Override
 	public String getName() {

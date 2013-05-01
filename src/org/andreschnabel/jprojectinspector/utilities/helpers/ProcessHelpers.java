@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * Hilfsfunktionen für den Umgang mit Prozessen.
+ */
 public class ProcessHelpers {
 
 	private static class StreamTapper extends Thread {

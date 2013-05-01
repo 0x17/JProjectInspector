@@ -5,6 +5,9 @@ import org.andreschnabel.jprojectinspector.utilities.git.GitContributorHelpers;
 
 import java.io.File;
 
+/**
+ * Bestimmt Anzahl der beitragenden eines geklonten Projekts mithilfe von "git log".
+ */
 public class ContributorsOffline implements IOfflineMetric {
 	@Override
 	public String getName() {

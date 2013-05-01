@@ -5,6 +5,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import com.google.gson.Gson;
 
+/**
+ * Prüfe überschreiten von RateLimit der GitHub-Web-API.
+ */
 public final class RateLimitChecker {
 	
 	private RateLimitChecker() {}

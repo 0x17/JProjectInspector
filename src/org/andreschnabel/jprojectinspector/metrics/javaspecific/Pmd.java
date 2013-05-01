@@ -7,6 +7,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.File;
 
+/**
+ * Anzahl von PMD-Regelverstößen für Java-Projekt.
+ */
 public class Pmd implements IOfflineMetric {
 
 	public static String pmdPath = "libs/pmd-5.0.3/";

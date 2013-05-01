@@ -1,5 +1,8 @@
 package org.andreschnabel.jprojectinspector.utilities.functional;
 
+/**
+ * Konkatenationsoperator.
+ */
 public class StringConcatenationOp implements IBinaryOperator<String, String> {
 
 	private final String infix;

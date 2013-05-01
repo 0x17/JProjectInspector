@@ -8,6 +8,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
 
 import java.io.File;
 
+/**
+ * Zählt Commit-Nachrichten mit mindestens einem der Teilstrings "bug", "defect", "fix", "issue", "solve", "correct".
+ */
 public class BugFixCommitMessages implements IOfflineMetric {
 	private static final String[] BUG_FIX_STRS = new String[] {
 			"bug", "defect", "fix", "issue", "solve", "correct"

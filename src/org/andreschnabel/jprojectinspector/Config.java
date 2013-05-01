@@ -6,13 +6,31 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import java.io.File;
 import java.util.Map;
 
+/**
+ * Konfiguration von JProjectInspector.
+ */
 public final class Config {
 	private static final String CONFIG_FILENAME = "jprojinspector.cfg";
 
+	/**
+	 * URL von GitHub-Seite.
+	 */
 	public static String BASE_URL = "https://github.com/";
+	/**
+	 * Verzeichnis zum temporären Klonen von Repositories für die Bestimmung von Offline-Metriken.
+	 */
 	public static String DEST_BASE;
+	/**
+	 * Pfad zur ausführbaren Binärdatei von Git.
+	 */
 	public static String GIT_PATH;
+	/**
+	 * Pfad zum Perl-Interpreter.
+	 */
 	public static String PERL_PATH;
+	/**
+	 * Pfad zum Cloc-Perl-Skript.
+	 */
 	public static String CLOC_PATH;
 
 	static {
@@ -23,6 +41,11 @@ public final class Config {
 		}
 	}
 
+	/**
+	 * Versuche Pfade zu initialisieren.
+	 * @return true, gdw. etwas schief gelaufen ist.
+	 * @throws Exception
+	 */
 	public static boolean initializePathsFailed() throws Exception {
 		if(FileHelpers.exists(CONFIG_FILENAME)) {
 			loadSettingsFromDisk();
@@ -63,15 +86,28 @@ public final class Config {
 		PERL_PATH = lines[3];
 		CLOC_PATH = lines[4];
 	}
-	
+
+	/**
+	 * Speicher gewählte Einstellungen.
+	 * @throws Exception
+	 */
 	public static void persist() throws Exception {
 		persist(new File(Config.CONFIG_FILENAME));
 	}
 
+	/**
+	 * Speicher gewählte Einstellungen in bestimmte Datei.
+	 * @param cfgFile Name der Einstellungsdatei.
+	 * @throws Exception
+	 */
 	public static void persist(File cfgFile) throws Exception {
 		FileHelpers.writeStrToFile(BASE_URL+"\n"+DEST_BASE+"\n"+GIT_PATH+"\n"+PERL_PATH+"\n"+CLOC_PATH, cfgFile);
 	}
 
+	/**
+	 * Bestimme absoluten Pfad zu Cloc.
+	 * @return absoluter Pfad zu Cloc.
+	 */
 	public static String absoluteClocPath() {
 		return new File(CLOC_PATH).getAbsolutePath();
 	}

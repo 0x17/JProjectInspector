@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Scrape beliebte Repositories von GitHUb.
+ */
 public class PopularRepoScraper {
 
 	private final static String POPULAR_FORKED_URL = "https://github.com/popular/forked";

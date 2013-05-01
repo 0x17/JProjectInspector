@@ -7,6 +7,13 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Abstrakte Klasse für Fenster.
+ *
+ * Für weniger Boilerplate-Code bei der Erstellung von Fenstern.
+ *
+ * @param <T> Typ des zentralen Panels vom Fenster.
+ */
 public abstract class AbstractWindow<T extends JPanel> extends JFrame {
 	
 	private static final long serialVersionUID = 1L;

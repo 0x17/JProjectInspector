@@ -5,6 +5,10 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 
 import javax.swing.*;
 
+/**
+ * Eingabedialog
+ * @see InputPanel
+ */
 public class InputWindow extends AbstractWindowWithParent<InputPanel> {
 
 	private static final long serialVersionUID = 1L;

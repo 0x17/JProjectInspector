@@ -13,6 +13,13 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
+/**
+ * Hilfsmethoden zum Exportieren von JFreeChart-Diagrammen als
+ * <ul>
+ *     <li>Rastergrafik (PNG),</li>
+ *     <li>Vectorgrafik (PDF).</li>
+ * </ul>
+ */
 public class FreeChartExporter {
 
 	public static void saveChartToPNG(JFreeChart chart, File f, int width, int height) throws Exception {

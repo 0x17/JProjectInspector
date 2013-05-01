@@ -6,6 +6,10 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.EquationHelpers;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Implementiere PredictionMethods-Schnittstelle für Benchmark mithilfe von Formel,
+ * welche in Textform gegeben worden ist.
+ */
 public class PredictionMethodsFromString implements Benchmark.PredictionMethods {
 
 	private final String eqtn;

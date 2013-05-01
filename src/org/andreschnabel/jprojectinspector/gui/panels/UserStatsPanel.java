@@ -11,12 +11,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Panel zur Anzeige von Statistiken für einen bestmimten User.
+ * Zeigt Statistiken in einer Art Gitter an.
+ *
+ * Attribut: Ausprägung.
+ */
 public class UserStatsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private final Map<String, String> stats = new TreeMap<String, String>();
 	private List<String> statNames = new LinkedList<String>();
 
+	/**
+	 * Konstruktor. Erzeugt Panel mit Statistiken eines gegebenen GitHub-Nutzers.
+	 * @param user login name eines GitHub-Nutzers.
+	 */
 	public UserStatsPanel(final String user) {
 		setLayout(new FlowLayout());
 		add(new JLabel("Fetching data. Please wait..."));
