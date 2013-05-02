@@ -2,7 +2,7 @@
 \lyxformat 413
 \begin_document
 \begin_header
-\textclass scrbook
+\textclass scrartcl
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -72,53 +72,166 @@ Manual
 André Schnabel
 \end_layout
 
-\begin_layout Standard
-\begin_inset CommandInset toc
-LatexCommand tableofcontents
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
+\begin_layout Section
 Installation
 \end_layout
 
 \begin_layout Standard
-The tool requires a working installation of the git distributed version
- control client and a Perl interpreter (or alternatively a binary version
- of cloc, e.g.
- cloc.exe).
+The tool requires a working installation of the 
+\emph on
+git
+\emph default
+ distributed version control client and a Perl interpreter (or alternatively
+ a binary version of cloc, e.g.
+ cloc.exe for Windows).
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Git
 \end_layout
 
-\begin_layout Standard
-Under Linux this can easily be installed using the package manager of the
- distribution.
+\begin_layout Itemize
+Under 
+\series bold
+Linux
+\series default
+ 
+\emph on
+git
+\emph default
+ can easily be installed using the package manager of the distribution.
  E.g.
  
 \begin_inset Quotes eld
 \end_inset
 
+
+\family typewriter
 apt-get install git
+\family default
+
 \begin_inset Quotes erd
 \end_inset
 
  on Debian/Ubuntu.
 \end_layout
 
-\begin_layout Section
+\begin_layout Itemize
+On 
+\series bold
+OS X
+\series default
+ an installer for the 
+\emph on
+git
+\emph default
+ binaries can be fetched from 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://git-scm.com/download/mac"
+
+\end_inset
+
+.
+ Alternatively the source based package management system 
+\emph on
+Homebrew
+\emph default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "http://mxcl.github.io/homebrew/"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ offers a 
+\begin_inset Quotes eld
+\end_inset
+
+formula
+\begin_inset Quotes erd
+\end_inset
+
+ for building 
+\emph on
+git
+\emph default
+.
+ Hence on Macs with 
+\emph on
+Homebrew
+\emph default
+ installed 
+\begin_inset Quotes erd
+\end_inset
+
+
+\family typewriter
+brew install git
+\family default
+
+\begin_inset Quotes eld
+\end_inset
+
+ compiles and installs 
+\emph on
+git
+\emph default
+.
+\end_layout
+
+\begin_layout Itemize
+On computers running the 
+\series bold
+Windows
+\series default
+ operating system an installer for git can be found on 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://git-scm.com/download/win"
+
+\end_inset
+
+.
+ Alternatively a portable version of 
+\emph on
+git
+\emph default
+ for Windows can be downloaded at 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://code.google.com/p/msysgit/downloads/detail?name=PortableGit-1.8.1.2-preview20130201.7z"
+
+\end_inset
+
+.
+ The portable version is self contained and does not require installation.
+\end_layout
+
+\begin_layout Subsection
 Cloc
 \end_layout
 
 \begin_layout Standard
 Cloc is a Perl script that counts the actual code lines in source files
  written in a variety of popular languages.
- Again under Linux something like 
+\end_layout
+
+\begin_layout Itemize
+Again under 
+\series bold
+Linux
+\series default
+ something similar to 
 \begin_inset Quotes eld
 \end_inset
 
@@ -126,8 +239,15 @@ apt-get install cloc
 \begin_inset Quotes erd
 \end_inset
 
- depending on the specific distribution should do the trick.
- On OS X it can be installed using 
+ (depending on the specific) distribution.
+\end_layout
+
+\begin_layout Itemize
+On 
+\series bold
+OS X
+\series default
+ it can be installed using 
 \begin_inset Quotes eld
 \end_inset
 
@@ -139,7 +259,29 @@ brew install cloc
  This requires the Homebrew package manager.
 \end_layout
 
-\begin_layout Section
+\begin_layout Itemize
+On Windows there are two options.
+ A self-contained executable of cloc can be downloaded from 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://sourceforge.net/projects/cloc/files/cloc/v1.58/cloc-1.58.exe/download"
+
+\end_inset
+
+.
+ Alternatively the ActiveState Perl interpreter in version then only the
+ perl script of cloc is needed.
+ The script can be found at 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://sourceforge.net/projects/cloc/files/cloc/v1.58/cloc-1.58.pl/download"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
 Configuring JProjectInspector
 \end_layout
 
@@ -160,18 +302,6 @@ Path to git executable.
 \begin_layout Enumerate
 Path to Perl interpreter and cloc.pl OR path to cloc-executable.
  Required for loc metrics.
-\end_layout
-
-\begin_layout Chapter
-Overview of JProjectInspector
-\end_layout
-
-\begin_layout Chapter
-Measurement
-\end_layout
-
-\begin_layout Chapter
-Benchmarking
 \end_layout
 
 \end_body

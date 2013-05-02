@@ -123,4 +123,15 @@ public class FileHelpersTest {
 		Assert.assertEquals("md", FileHelpers.extension(new File("README.md")));
 		Assert.assertEquals("", FileHelpers.extension(new File(".gitignore")));
 	}
+
+	@Test
+	public void testFoldersInTree() throws Exception {
+		List<File> folders = FileHelpers.foldersInTree(new File("data"));
+		File[] expectedFolders = new File[] {
+				new File("data/benchmark"),
+				new File("data/oldxml"),
+				new File("data/old")
+		};
+		AssertHelpers.arrayEqualsLstOrderInsensitive(expectedFolders, folders);
+	}
 }

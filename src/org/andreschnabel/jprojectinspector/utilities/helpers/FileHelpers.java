@@ -18,6 +18,13 @@ import java.util.List;
  */
 public class FileHelpers {
 
+	/**
+	 * Liste rekursiv Dateien innerhalb Wurzelverzeichnis auf (nicht Verzeichnisse), welche ein gegebenes Prädikat erfüllen.
+	 * @param root Wurzelverzeichnis als Startknoten.
+	 * @param pred Prädikat welches Inklusion von Dateien in Ergebnis entscheidet.
+	 * @return Liste von Dateien unterhalb von Wurzelverzeichnis, welche Prädikat erfüllen.
+	 * @throws Exception
+	 */
 	public static List<File> filesWithPredicateInTree(File root, IPredicate<File> pred) throws Exception {
 		if(!root.isDirectory())
 			throw new Exception("Path must point to dir!");
@@ -36,7 +43,14 @@ public class FileHelpers {
 
 		return files;
 	}
-	
+
+	/**
+	 * Lade eine Klasse mit gegebenem Namen aus einer .class-Datei mithilfe des Classloaders.
+	 * @param f .class-Datei.
+	 * @param classname Name der zu ladenden Klasse.
+	 * @return Class-Objekt der Klasse.
+	 * @throws Exception
+	 */
 	public static Class<?> loadClassFromFile(File f, String classname) throws Exception {
 		Class<?> cls = null;
 		URLClassLoader cl = null;
@@ -55,6 +69,13 @@ public class FileHelpers {
 		return cls;
 	}
 
+	/**
+	 * Schreibe eine Zeichenkette in eine Datei.<br />
+	 * Analog zu "spit" in Clojure.
+	 * @param str Zeichenkette, welche in Datei geschrieben werden soll.
+	 * @param outFilename Datei, in welche die Zeichenkette geschrieben wird.
+	 * @throws IOException Schreibfehler.
+	 */
 	public static void writeStrToFile(String str, String outFilename) throws IOException {
 		FileWriter fw = new FileWriter(outFilename);
 		BufferedWriter bw = new BufferedWriter(fw);
@@ -63,6 +84,12 @@ public class FileHelpers {
 		fw.close();
 	}
 
+	/**
+	 * Rekursives Löschen von Dateien/Verzeichnissen unterhalb und inklusive des gegebenen Wurzelverzeichnis.<br />
+	 * Benutzt Java-Datei-API.
+	 * @param root Wurzelverzeichnis.
+	 * @throws Exception Löschfehler.
+	 */
 	public static void deleteDir(File root) throws Exception {
 		if(!root.isDirectory())
 			throw new Exception("Path must point to dir!");
@@ -76,6 +103,13 @@ public class FileHelpers {
 		root.delete();
 	}
 
+	/**
+	 * Lese gesamten Inhalt einer gegebenen Textdatei in eine Zeichenkette.<br />
+	 * Analog zu "slurp" in Clojure.
+	 * @param file Textdatei.
+	 * @return Zeichenkette mit Inhalt der Textdatei.
+	 * @throws Exception Lesefehler.
+	 */
 	public static String readEntireFile(File file) throws Exception {
 		FileReader fr = new FileReader(file);
 		StringBuilder builder = new StringBuilder();
@@ -86,7 +120,13 @@ public class FileHelpers {
 		fr.close();
 		return builder.toString();
 	}
-	
+
+	/**
+	 * Lese gesamten Inhalt einer beliebigen Datei in einen Byte-Buffer ein.
+	 * @param file Datei.
+	 * @return Byte-Buffer mit Inhalt der Datei.
+	 * @throws Exception Lesefehler.
+	 */
 	public static byte[] readBytes(File file) throws Exception {
 		byte[] buf = new byte[(int)file.length()];
 		InputStream ios = null;
@@ -100,17 +140,31 @@ public class FileHelpers {
 		return buf;
 	}
 
+	/**
+	 * Lösche Verzeichnis rekursiv.<br />
+	 * Benutzt Kommandozeilenbefehl.
+	 * @param destPath Verzeichnis.
+	 * @throws Exception Löschfehler.
+	 */
 	public static void rmDir(String destPath) throws Exception {
 		if(destPath.startsWith(Config.DEST_BASE)) {
+			Helpers.log("Deleting " + destPath);
 			String rmCmd = Helpers.runningOnUnix() ? "rm -rf" : "rmdir /S /Q";
-			if(Helpers.runningOnUnix())
+			if(Helpers.runningOnUnix()) {
 				ProcessHelpers.system(rmCmd + " " + destPath + File.separator);
-			else
+			} else {
 				deleteDir(new File(destPath + File.separator));
+			}
 		}
 		else throw new Exception("Never leave "+Config.DEST_BASE+" with recursive force deletion!");
 	}
 
+	/**
+	 * Zähle rekursiv Dateien mit gegebener Endung.
+	 * @param rootDir Wurzelverzeichnis.
+	 * @param extension Datei-Endung. Dateien mit dieser Endung werden mitgezählt.
+	 * @return Anzahl der Dateien unterhalb des gegebenen Wurzelverzeichnisses, welche gegebene Endung besitzen.
+	 */
 	public static int recursivelyCountFilesWithExtension(File rootDir, String extension) {
 		if(rootDir.isDirectory()) {
 			int sum = 0;
@@ -124,6 +178,12 @@ public class FileHelpers {
 		}
 	}
 
+	/**
+	 * Liste rekursiv Java-Quelldateien in einem Verzeichnis.
+	 * @param dir Verzeichnis.
+	 * @return Liste von Java-Quelldateien.
+	 * @throws Exception
+	 */
 	public static List<File> recursiveCollectJavaSrcFiles(File dir) throws Exception {
 		IPredicate<File> isJavaSrc = new IPredicate<File>() {
 			@Override
@@ -134,11 +194,22 @@ public class FileHelpers {
 		return filesWithPredicateInTree(dir, isJavaSrc);
 	}
 
+	/**
+	 * Lösche Datei.
+	 * @param path Pfad zur Datei.
+	 * @throws Exception
+	 */
 	public static void deleteFile(String path) throws Exception {
 		File f = new File(path);
 		if(!f.delete()) throw new Exception("Failed to delete file!");
 	}
-	
+
+	/**
+	 * Stelle sicher, dass Pfad auf Verzeichnis zeigt.
+	 * @param path Pfad.
+	 * @return Pfad.
+	 * @throws Exception
+	 */
 	public static File enforceDir(String path) throws Exception {
 		File root = new File(path);
 		if(!root.isDirectory()) {
@@ -147,6 +218,12 @@ public class FileHelpers {
 		return root;
 	}
 
+	/**
+	 * Liste Java-Dateien in Pfad auf, welche kein Suffix "Test" besitzen.
+	 * @param path Pfad.
+	 * @return Java-Dateien ohne Suffix "Test".
+	 * @throws Exception
+	 */
 	public static List<String> listProductFiles(String path) throws Exception {
 		File root = enforceDir(path);
 		List<String> productfiles = new LinkedList<String>();
@@ -166,10 +243,21 @@ public class FileHelpers {
 		}
 	}
 
+	/**
+	 * Prüfe, ob Datei mit Pfad existiert.
+	 * @param path Pfad auf eine Datei.
+	 * @return true, gdw. Datei mit Pfad existiert.
+	 */
 	public static boolean exists(String path) {
 		return new File(path).exists();
 	}
 
+	/**
+	 * Liste Java-Quelldateien in Verzeichnis auf.
+	 * @param dir Verzeichnis.
+	 * @return Java-Quelldateien in dir.
+	 * @throws Exception
+	 */
 	public static List<String> listJavaSourceFiles(File dir) throws Exception {
 		ITransform<File, String> fileToName = new ITransform<File, String>() {
 			@Override
@@ -180,10 +268,22 @@ public class FileHelpers {
 		return Func.map(fileToName, FileHelpers.recursiveCollectJavaSrcFiles(dir));
 	}
 
+	/**
+	 * Liste rekursiv alle Dateien in Verzeichnis auf.
+	 * @param root Wurzelverzeichnis.
+	 * @return Liste aller Dateien in Verzeichnis.
+	 * @throws Exception
+	 */
 	public static List<File> filesInTree(File root) throws Exception {
 		return filesWithPredicateInTree(root, new Tautology<File>());
 	}
 
+	/**
+	 * Gebe die Dateiendung einer gegebenen Datei zurück.<br />
+	 * Bspw.: extension(new File("test.txt")) => "txt".
+	 * @param f Datei.
+	 * @return Endung der Datei (ohne .)
+	 */
 	public static String extension(File f) {
 		String filename = f.getName();
 		if(filename.contains(".") && filename.charAt(0) != '.') {
@@ -192,15 +292,49 @@ public class FileHelpers {
 		} else return "";
 	}
 
+	/**
+	 * Datei ohne Erweiterung.<br />
+	 * Beispiel: trimExtension(new File("test.txt")) => "test".
+	 * @param f Datei.
+	 * @return Dateiname ohne Erweiterung.
+	 */
 	public static String trimExtension(File f) {
 		return f.getName().substring(0, f.getName().lastIndexOf("."));
 	}
 
+	/**
+	 * Schreibe Zeichenkette in Datei.
+	 * @param str Zeichenkette.
+	 * @param outFile Datei zum Schreiben.
+	 * @throws Exception
+	 */
 	public static void writeStrToFile(String str, File outFile) throws Exception {
 		FileWriter fw = new FileWriter(outFile);
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(str);
 		bw.close();
 		fw.close();
+	}
+
+	/**
+	 * Liste Verzeichnisse unterhalb eines Wurzelverzeichnis auf. Wurzelverzeichnis ist nicht enthalten (exklusive).
+	 * @param root Wurzelverzeichnis.
+	 * @return Liste der Verzeichnisse unterhalb von root. Ohne root.
+	 * @throws Exception
+	 */
+	public static List<File> foldersInTree(File root) throws Exception {
+		if(!root.isDirectory())
+			throw new Exception("Path must point to dir!");
+
+		List<File> files = new LinkedList<File>();
+
+		for(File f : root.listFiles()) {
+			if(f.isDirectory()) {
+				files.add(f);
+				files.addAll(foldersInTree(f));
+			}
+		}
+
+		return files;
 	}
 }

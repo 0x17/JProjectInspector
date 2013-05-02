@@ -36,7 +36,7 @@ public final class ProjectDownloader {
 			return f;
 		}
 
-		ProcessHelpers.system(Config.GIT_PATH + " clone -v " + Config.BASE_URL + p.owner + "/" + p.repoName + " " + destPath);
+		ProcessHelpers.system(new File(Config.DEST_BASE), Config.GIT_PATH, "clone", "-v", "--progress", p.toUrl(), destPath);
 
 		return f.exists() ? f : null;
 	}

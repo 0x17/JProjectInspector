@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.model;
 
+import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
@@ -128,5 +129,13 @@ public class Project {
 			}
 		};
 		return CsvData.toList(rowToProj, data);
+	}
+
+	/**
+	 * Erzeugt den zum Projekt gehörigen Repository-Link.
+	 * @return url auf Profil des Projekt-Repositores auf GitHub.
+	 */
+	public String toUrl() {
+		return Config.BASE_URL + owner + "/" + repoName;
 	}
 }

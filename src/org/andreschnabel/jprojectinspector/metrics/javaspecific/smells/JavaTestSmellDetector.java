@@ -2,6 +2,7 @@ package org.andreschnabel.jprojectinspector.metrics.javaspecific.smells;
 
 import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaCommon;
+import org.andreschnabel.jprojectinspector.utilities.helpers.JavaSourceHelpers;
 
 import java.io.File;
 
@@ -26,7 +27,13 @@ public class JavaTestSmellDetector implements IOfflineMetric {
 		if(JavaCommon.containsNoJavaCode(repoRoot)) {
 			return Double.NaN;
 		}
-		// TODO: Implement
+		
+		// TODO: Implement.
+		
 		return 0;
+	}
+
+	public static boolean isTestAssertionless(String src) {
+		return !src.contains("Assert.assert");
 	}
 }

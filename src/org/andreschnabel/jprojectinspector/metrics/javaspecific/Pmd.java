@@ -27,10 +27,7 @@ public class Pmd implements IOfflineMetric {
 	@Override
 	public double measure(File repoRoot) throws Exception {
 		String out = null;
-
-		// TODO: Refactor out PmdHelpers for cpd and pmd stuff making OnlineMetric classes minimal.
-		// TODO: PmdJunit for java-junit ruleset
-		// JUnit violation count of this project is 110
+		
 		if(Helpers.runningOnUnix()) {
 			out = ProcessHelpers.monitorProcess(new File(pmdPath), "bin/run.sh", "pmd", "-d", repoRoot.getAbsolutePath(), "-f","text","-R","java-basic,java-design");
 		}

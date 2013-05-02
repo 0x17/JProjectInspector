@@ -37,6 +37,17 @@ public class UnitTestDetector implements IOfflineMetric {
 	}
 
 	public static boolean containsTest(File root) throws Exception {
+		boolean containsTestFolder = Func.contains(new IPredicate<File>() {
+			@Override
+			public boolean invoke(File folder) {
+				return folder.getName().toLowerCase().contains("test");
+			}
+		}, FileHelpers.foldersInTree(root));
+
+		if(containsTestFolder) {
+			return true;
+		}
+
 		return Func.contains(new IsTestPredicate(), FileHelpers.filesInTree(root));
 	}
 

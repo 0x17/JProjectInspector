@@ -100,7 +100,7 @@ public class LauncherPanel extends PanelWithParent implements ILaunchSettings {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					CsvData results = GuiHelpers.loadCsvDialog(new File("."));
+					CsvData results = GuiHelpers.loadCsvDialog(new File("data/benchmark"));
 					if(results == null) {
 						return;
 					}
