@@ -11,6 +11,12 @@ import java.util.List;
  */
 public class TestLinesOfCode implements IOfflineMetric {
 
+	/**
+	 * Zähle die Anzahl der Testcodezeilen von Tests innerhalb von Wurzelverzeichnis.
+	 * @param path Wurzelverzeichnis.
+	 * @return Anzahl der Testcodezeilen (Summe) von Tests innerhalb von Wurzelverzeichnis.
+	 * @throws Exception
+	 */
 	public static int countTestLocHeuristic(File path) throws Exception {
 		List<File> testFiles = UnitTestDetector.getTestFiles(path);
 		return Cloc.sumOfLinesOfCodeForFiles(testFiles);

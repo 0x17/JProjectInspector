@@ -21,6 +21,12 @@ import java.util.Map;
  */
 public class RoughFunctionCoverage implements IOfflineMetric {
 
+	/**
+	 * Nähere die Methodenabdeckung von Code innerhalb gegebenem Wurzelverzeichnis grob an.
+	 * @param rootPath Wurzelverzeichnis.
+	 * @return Map von Sprache zu grob angenäherter Methodenabdeckung.
+	 * @throws Exception
+	 */
 	public static Map<String, Double> approxFunctionCoverage(File rootPath) throws Exception {
 		final Map<String, IFunctionIndexer> indexerForExtension = IndexerRegistry.indexerForExtension;
 
@@ -81,9 +87,15 @@ public class RoughFunctionCoverage implements IOfflineMetric {
 
 	@Override
 	public String getDescription() {
-		return "Number of called methods divided by number of declared methods for JavaScript, Java, Ruby, Python. Otherweise TLOC/LOC.";
+		return "Number of called methods divided by number of declared methods for JavaScript, Java, Ruby, Python. Maximum. Otherweise TLOC/LOC.";
 	}
 
+	/**
+	 * Angenäherte Methodenabdeckung der Sprache mit der höchsten angenäherten Methodenabdeckung.
+	 * @param repoRoot Pfad zu geklontem Repository
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public double measure(File repoRoot) throws Exception {
 		Map<String, Double> coverages = approxFunctionCoverage(repoRoot);

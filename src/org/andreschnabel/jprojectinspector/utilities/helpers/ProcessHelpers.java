@@ -67,7 +67,7 @@ public class ProcessHelpers {
 	 * @param cmd Befehl (evtl. mit Parametern) "befehl param1 param2 ... paramN"
 	 */
 	public static void system(String cmd) {
-		System.out.println("Running: " + cmd);
+		Helpers.log("Running: " + cmd);
 		try {
 			Process p = Runtime.getRuntime().exec(cmd);
 			StreamTapper st = new StreamTapper(p.getInputStream());
@@ -75,17 +75,17 @@ public class ProcessHelpers {
 
 			p.waitFor();
 
-			System.out.print(st.getOutput());
+			Helpers.logNoNewline(st.getOutput());
 		} catch(Exception e) {
 
 			if(Helpers.runningOnUnix() || cmd.split(" ")[0].equals("cmd")) {
-				System.out.println("Error executing: " + cmd);
+				Helpers.log("Error executing: " + cmd);
 				e.printStackTrace();
 			} else {
 				try {
 					trySystemWithCmdPrefix(cmd);
 				} catch(Exception e2) {
-					System.out.println("Error executing: " + cmd);
+					Helpers.log("Error executing: " + cmd);
 					e.printStackTrace();
 				}
 			}
@@ -105,11 +105,11 @@ public class ProcessHelpers {
 	 */
 	public static void system(File workDir, String... command) throws Exception {
 		try {
-			System.out.print("Running: \"");
+			Helpers.logNoNewline("Running: \"");
 			for(String cmd : command) {
-				System.out.print(cmd + " ");
+				Helpers.logNoNewline(cmd + " ");
 			}
-			System.out.print("\" in " + workDir.getAbsolutePath() + "\n");
+			Helpers.logNoNewline("\" in " + workDir.getAbsolutePath() + "\n");
 
 			ProcessBuilder pb = new ProcessBuilder(command);
 			pb.directory(workDir);
@@ -168,7 +168,7 @@ public class ProcessHelpers {
 				while((c = isr.read()) != -1 && !done) {
 					outputBuilder.append((char) c);
 					if(forwardToStdOut) {
-						System.out.append((char)c);
+						Helpers.log(c);
 					}
 				}
 			} catch(IOException e) {

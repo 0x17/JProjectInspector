@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Quellcode Indexer für Java.
+ */
 public class JavaIndexer implements IFunctionIndexer {
 	@Override
 	public List<String> listFunctionDeclarations(String src) {

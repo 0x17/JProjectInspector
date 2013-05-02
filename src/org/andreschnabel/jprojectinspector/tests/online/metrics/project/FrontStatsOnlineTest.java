@@ -13,7 +13,7 @@ public class FrontStatsOnlineTest {
 		Assert.assertTrue(162 < stats.ncommits);
 		Assert.assertEquals(0, stats.nissues);
 		Assert.assertEquals(0, stats.nforks);
-		Assert.assertEquals(0, stats.nstars);
+		Assert.assertEquals(1, stats.nstars);
 		Assert.assertEquals(0, stats.npullreqs);
 	}
 
@@ -23,7 +23,7 @@ public class FrontStatsOnlineTest {
 		Assert.assertTrue(2 <= stats.nbranches);
 		Assert.assertTrue(1000 <= stats.ncommits);
 		Assert.assertTrue(36 <= stats.nissues);
-		Assert.assertTrue(47 <= stats.nforks);
+		Assert.assertTrue(40 <= stats.nforks);
 		Assert.assertTrue(396 <= stats.nstars);
 		Assert.assertTrue(2 <= stats.npullreqs);
 	}

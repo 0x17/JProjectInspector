@@ -3,16 +3,16 @@ package org.andreschnabel.jprojectinspector.metrics;
 import org.andreschnabel.jprojectinspector.model.Project;
 
 /**
- * Online-Metrik. Basierend auf Scraping oder GitHubAPI (Kategorie).
- * Misst für ein Projekt identifiziert durch (owner,repo)-Tupel eine bestimmte
- * Eigenschaft per Scraping oder Web-API und liefert das Ergebnis als
+ * Online-Metrik. Basierend auf Scraping oder GitHubAPI (Kategorie).<br />
+ * Misst für ein Projekt identifiziert durch (owner,repo)-Tupel eine bestimmte<br />
+ * Eigenschaft per Scraping oder Web-API und liefert das Ergebnis als<br />
  * Fließpunktzahl mit doppelter Genauigkeit zurück.
  */
 public interface IOnlineMetric {
 
 	/**
-	 * Mögliche Kategorien von Online-Metriken:
-	 * Scraping ermittelt Daten von GitHub-Webseite durch reguläre Ausdrücke oder XPath,
+	 * Mögliche Kategorien von Online-Metriken:<br />
+	 * Scraping ermittelt Daten von GitHub-Webseite durch reguläre Ausdrücke oder XPath,<br />
 	 * GitHubApi ermittelt Daten von GitHub-WebAPI durch Parsen von JSON.
 	 */
 	public static enum Category {

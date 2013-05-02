@@ -3,9 +3,9 @@ package org.andreschnabel.jprojectinspector.metrics;
 import java.io.File;
 
 /**
- * Offline-Metrik.
- * Misst für Pfad zu geklontem Repository eine Eigenschaft auf diesem
- * und gibt das Ergebnis als Fließpunktzahl mit doppelter Genauigkeit wieder
+ * Offline-Metrik.<br />
+ * Misst für Pfad zu geklontem Repository eine Eigenschaft auf diesem<br />
+ * und gibt das Ergebnis als Fließpunktzahl mit doppelter Genauigkeit wieder<br />
  * zurück.
  */
 public interface IOfflineMetric {

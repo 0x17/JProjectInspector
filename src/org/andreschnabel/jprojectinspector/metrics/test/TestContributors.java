@@ -12,7 +12,13 @@ import java.util.List;
  * Anzahl der Beitragenden zu Tests in einem geklonten Repository.
  */
 public final class TestContributors implements IOfflineMetric {
-	
+
+	/**
+	 * Zähle Anzahl der Beitragenden zu vermutlichen Modultest-Dateien innerhalb von Wurzelverzeichnis.
+	 * @param root Wurzelverzeichnis.
+	 * @return Anzahl der Beitragenden zu vermutlichen Modultest-Dateien innerhalb von Wurzelverzeichnis.
+	 * @throws Exception
+	 */
 	public static int numTestContribs(File root) throws Exception {
 		List<File> testFiles = UnitTestDetector.getTestFiles(root);
 		List<String> contribNames = new LinkedList<String>();

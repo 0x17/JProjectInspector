@@ -6,6 +6,9 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
 
 import java.util.List;
 
+/**
+ * Quellcode-Indexer für Python.
+ */
 public class PythonIndexer implements IFunctionIndexer {
 	@Override
 	public List<String> listFunctionDeclarations(String src) {

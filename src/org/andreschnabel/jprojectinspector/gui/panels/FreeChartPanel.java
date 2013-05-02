@@ -26,7 +26,7 @@ public class FreeChartPanel extends PanelWithParent {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weightx = 0;
-		gbc.weighty = 1;
+		gbc.weighty = 0;
 		JButton exportBtn = new JButton("Export");
 		exportBtn.addActionListener(new ActionListener() {
 			@Override

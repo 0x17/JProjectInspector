@@ -116,7 +116,7 @@ public class UserScraperTest {
 		String user = "jlnr";
 		List<Project> projs = UserScraper.scrapeProjectsOfUser(user);
 		String[] repoNames = new String[] {
-				"gosu-forum", "gosu", "petermorphose", "releasy", "libmodbus", "mruby_demo_game", "lonesome_cowboy", "freegemas", "0hgame", "72hgdc_magic", "CptnCpp"
+				"gosu-forum", "gosu", "petermorphose", "releasy", "libmodbus", "mruby_demo_game", "lonesome_cowboy", "freegemas", "0hgame", "72hgdc_magic", "CptnCpp", "ld26"
 		};
 		Project[] expectedProjs = new Project[repoNames.length];
 		for(int i = 0; i < repoNames.length; i++) {

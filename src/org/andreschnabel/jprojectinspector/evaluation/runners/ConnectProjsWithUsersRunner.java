@@ -73,7 +73,7 @@ public class ConnectProjsWithUsersRunner {
 
 	public static void showProjectWithoutUserCount() throws Exception {
 		int count = countProjectsWithoutUser();
-		System.out.println("Projs without user: " + count);
+		Helpers.log("Projs without user: " + count);
 	}
 
 	public static int countProjectsWithoutUser() throws Exception {

@@ -2,9 +2,11 @@ package org.andreschnabel.jprojectinspector.metrics;
 
 /**
  * Metrik-Typ:
- * Offline,
- * Online,
- * Umfrage
+ * <ul>
+ *  <li>Offline,</li>
+ *	<li>Online,</li>
+ * 	<li>Umfrage</li>
+ * </ul>
  */
 public enum MetricType {
 	Offline,

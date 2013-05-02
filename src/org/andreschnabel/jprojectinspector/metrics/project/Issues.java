@@ -24,7 +24,7 @@ public class Issues implements IOnlineMetric {
 		if(!pageSrc.contains("repo_issues")) { // issues disabled
 			return 0;
 		}
-		Pattern pat = Pattern.compile("highlight=\"repo_issues\">Issues <span class='counter'>([0-9]+)</span></a></li>");
+		Pattern pat = Pattern.compile("Issues <span class='counter'>([0-9]+)</span>");
 		Matcher m = pat.matcher(pageSrc);
 		if(m.find()) {
 			return Integer.valueOf(m.group(1));

@@ -60,7 +60,7 @@ public class UnitTestDetectorOnlineTest {
 	}
 
 	@Test
-	public void testGetTestFiles() throws Exception {
+	public void testGetTestFilesKcImgCollector() throws Exception {
 		loadKcImageCollector();
 		List<File> testFiles = UnitTestDetector.getTestFiles(kcImgCollectorPath);
 		File[] expectedTestFiles = new File[] {
@@ -68,5 +68,13 @@ public class UnitTestDetectorOnlineTest {
 		};
 		AssertHelpers.arrayEqualsLstOrderInsensitive(expectedTestFiles, testFiles);
 		deleteKcImageCollector();
+	}
+
+	@Test
+	public void testGetTestFilesPintos() throws Exception {
+		loadPintos();
+		List<File> testFiles = UnitTestDetector.getTestFiles(pintosPath);
+		Assert.assertTrue(testFiles.size() > 10);
+		deletePintos();
 	}
 }

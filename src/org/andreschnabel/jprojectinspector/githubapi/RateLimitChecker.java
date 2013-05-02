@@ -29,8 +29,8 @@ public final class RateLimitChecker {
 		}
 		Gson gson = new Gson();
 		rateLimitResult = gson.fromJson(rateLimitJson, RateLimitResult.class);
-		System.out.println("Rate limit = " + rateLimitResult.limit);
-		System.out.println("Remaining = " + rateLimitResult.remaining);
+		Helpers.log("Rate limit = " + rateLimitResult.limit);
+		Helpers.log("Remaining = " + rateLimitResult.remaining);
 	}
 
 	public static boolean apiCall() {

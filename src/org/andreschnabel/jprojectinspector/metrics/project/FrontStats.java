@@ -143,11 +143,11 @@ public class FrontStats {
 	private final static String NLINESPACECRAP = "\n?\\s*";
 
 	public static int getNumberOfPullRequests(String html) {
-		return extractNumWithRegex(html, "highlight=\"repo_pulls\">Pull Requests <span class='counter'>(\\d+)</span></a></li>");
+		return extractNumWithRegex(html, "Pull Requests <span class='counter'>(\\d+)</span>");
 	}
 
 	public static int getNumberOfIssues(String html) {
-		return extractNumWithRegex(html, "repo_issues\">Issues <span class='counter'>(\\d+)</span>");
+		return extractNumWithRegex(html, "Issues <span class='counter'>(\\d+)</span>");
 	}
 
 	public static int getNumberOfStars(String html) {
@@ -159,7 +159,7 @@ public class FrontStats {
 	}
 
 	public static int getNumberOfBranches(String html) {
-		return extractNumWithRegex(html, "highlight=\"repo_branches\" rel=\"nofollow\">Branches <span class=\"counter \">(\\d+)</span>");
+		return extractNumWithRegex(html, "Branches <span class=\"counter \">(\\d+)</span>");
 	}
 
 	public static int getNumberOfForks(String html) {
