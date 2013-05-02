@@ -2,10 +2,13 @@ package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.model.UserData;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
+import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
 import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +24,7 @@ public class UserStatsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private final Map<String, String> stats = new TreeMap<String, String>();
+	private final String user;
 	private List<String> statNames = new LinkedList<String>();
 
 	/**
@@ -28,6 +32,7 @@ public class UserStatsPanel extends JPanel {
 	 * @param user login name eines GitHub-Nutzers.
 	 */
 	public UserStatsPanel(final String user) {
+		this.user = user;
 		setLayout(new FlowLayout());
 		add(new JLabel("Fetching data. Please wait..."));
 		AsyncTask<UserData> getStatsTask = new AsyncTask<UserData>() {
@@ -64,12 +69,26 @@ public class UserStatsPanel extends JPanel {
 
 	private void addStatsToPanel() {
 		removeAll();
-		setLayout(new GridLayout(6, 2));
+		setLayout(new GridLayout(7, 2));
 		for(String statName : statNames) {
 			String val = stats.get(statName);
 			add(new JLabel(statName+":"));
 			add(new JLabel(val));
 		}
+		add(new JLabel(""));
+		JButton openInBrowserBtn = new JButton("Open in browser");
+		openInBrowserBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					GuiHelpers.openUrl("https://github.com/" + user);
+				} catch(Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		add(openInBrowserBtn);
+
 		updateUI();
 	}
 
