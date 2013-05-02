@@ -304,5 +304,22 @@ Path to Perl interpreter and cloc.pl OR path to cloc-executable.
  Required for loc metrics.
 \end_layout
 
+\begin_layout Section
+Support
+\end_layout
+
+\begin_layout Standard
+If you have any issues using JProjectInspector don't hesitate to write me
+ a mail at: 
+\begin_inset CommandInset href
+LatexCommand href
+target "andreschnabel@me.com"
+type "mailto:"
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document

@@ -21,36 +21,50 @@ import java.util.Map;
  */
 public class VisualizationPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private final JComboBox metricNameComboBox;
+	private final Map<Project, Double[]> results;
+	private final List<String> metricNames;
 
 	public VisualizationPanel(List<String> metricNames, final Map<Project, Double[]> results) {
 		Map<String, IVisualization> vis = VisualizationsRegistry.visualizations;
 		int numVis = vis.size();
 
-		setLayout(new GridLayout(numVis, metricNames.size()+1));
+		setLayout(new GridLayout(1+numVis, 1));
+
+		this.metricNames = metricNames;
+		this.results = results;
+
+		metricNameComboBox = new JComboBox();
+		for(String name : metricNames) {
+			metricNameComboBox.addItem(name);
+		}
+		add(metricNameComboBox);
 
 		for(final String visName : vis.keySet()) {
-			add(new JLabel(visName));
+			JButton btn = new JButton(visName);
 
-			int i=0;
-			for(final String metricName : metricNames) {
-				JButton btn = new JButton(metricName);
-				final int finalI = i;
-				btn.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent actionEvent) {
-						Map<Project, Double> mresults = new HashMap<Project, Double>();
-						for(Project p : results.keySet()) {
-							mresults.put(p, results.get(p)[finalI]);
-						}
-						JFreeChart chart = VisualizationsRegistry.visualizations.get(visName).visualize(metricName, mresults);
-						Dimension dim = new Dimension(640, 480);
-						FreeChartWindow fcw = new FreeChartWindow(chart, dim);
-						fcw.setVisible(true);
-					}
-				});
-				add(btn);
-				i++;
-			}
+
+			btn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent actionEvent) {
+					showVis(visName);
+				}
+			});
+			add(btn);
 		}
+	}
+
+	private void showVis(String visName) {
+		final String metricName = (String) metricNameComboBox.getSelectedItem();
+		int i = metricNames.indexOf(metricName);
+
+		Map<Project, Double> mresults = new HashMap<Project, Double>();
+		for(Project p : results.keySet()) {
+			mresults.put(p, results.get(p)[i]);
+		}
+		JFreeChart chart = VisualizationsRegistry.visualizations.get(visName).visualize(metricName, mresults);
+		Dimension dim = new Dimension(640, 480);
+		FreeChartWindow fcw = new FreeChartWindow(chart, dim);
+		fcw.setVisible(true);
 	}
 }
