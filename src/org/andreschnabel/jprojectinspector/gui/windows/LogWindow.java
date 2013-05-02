@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.windows;
 
+import org.andreschnabel.jprojectinspector.gui.panels.LogPanel;
 import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package org.andreschnabel.jprojectinspector.gui.windows;
+package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.utilities.helpers.IObserver;
 
@@ -20,6 +20,17 @@ public class LogPanel extends JPanel implements IObserver<String> {
 
 	@Override
 	public void update(String msg) {
-		logArea.append(msg);
+		if(msg.contains("\r")) {
+			removeLastLine();
+		} else {
+			logArea.append(msg);
+		}
+	}
+
+	private void removeLastLine() {
+		String txt = logArea.getText();
+		String[] lines = txt.split("\n");
+		String lastLine = lines[lines.length-1];
+		logArea.setText(txt.replace(lastLine, ""));
 	}
 }

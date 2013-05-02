@@ -14,7 +14,7 @@ public class TestContributorsTest {
 
 	@Test
 	public void testNumTestContribs() throws Exception {
-		int numContribs = TestContributors.numTestContribs(new File("testdata"));
+		int numContribs = TestContributors.numTestContribs(new File("dummydata"));
 		Assert.assertEquals(1, numContribs);
 	}
 

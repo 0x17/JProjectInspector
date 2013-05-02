@@ -25,7 +25,7 @@ public class GitContributorHelpersTest {
 
 	@Test
 	public void testListAllContribs() throws Exception {
-		List<String> contribs = GitContributorHelpers.listAllContribs(new File("testdata"));
+		List<String> contribs = GitContributorHelpers.listAllContribs(new File("dummydata"));
 		Assert.assertFalse(contribs.get(0).startsWith("usage: git"));
 		AssertHelpers.listNotEmpty(contribs);
 		Assert.assertTrue(contribs.get(0).contains("0x17"));

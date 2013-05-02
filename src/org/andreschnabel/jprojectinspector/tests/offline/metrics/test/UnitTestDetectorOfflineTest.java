@@ -12,19 +12,19 @@ public class UnitTestDetectorOfflineTest {
 
 	@Test
 	public void testIsTest() throws Exception {
-		Assert.assertTrue(UnitTestDetector.isTest(new File("testdata/PointsTest.java")));
-		Assert.assertFalse(UnitTestDetector.isTest(new File("testdata/Points.java")));
+		Assert.assertTrue(UnitTestDetector.isTest(new File("dummydata/PointsTest.java")));
+		Assert.assertFalse(UnitTestDetector.isTest(new File("dummydata/Points.java")));
 	}
 
 	@Test
 	public void testGetTestFiles() throws Exception {
-		List<File> testfiles = UnitTestDetector.getTestFiles(new File("testdata"));
-		AssertHelpers.arrayEqualsLstOrderInsensitive(new File[]{new File("testdata/PointsTest.java")}, testfiles);
+		List<File> testfiles = UnitTestDetector.getTestFiles(new File("dummydata"));
+		AssertHelpers.arrayEqualsLstOrderInsensitive(new File[]{new File("dummydata/PointsTest.java")}, testfiles);
 	}
 
 	@Test
 	public void testContainsTest() throws Exception {
-		Assert.assertTrue(UnitTestDetector.containsTest(new File("testdata")));
+		Assert.assertTrue(UnitTestDetector.containsTest(new File("dummydata")));
 	}
 
 }

@@ -14,7 +14,7 @@ public class UniqueMethodCounterTest {
 	@Test
 	public void testDetermineUniqueMethodsInProject() throws Exception {
 		List<String> projectMethodNames = new LinkedList<String>();
-		UniqueMethodCounter.determineUniqueMethodsInProject(new File("testdata"), projectMethodNames);
+		UniqueMethodCounter.determineUniqueMethodsInProject(new File("dummydata"), projectMethodNames);
 		assertEquals(5, projectMethodNames.size());
 		String[] expectedMethods = {"Point2D", "Point3D", "Position2D", "getLocation", "Position3D"};
 		for(int i = 0; i < expectedMethods.length; i++) {

@@ -75,7 +75,7 @@ public class FileHelpersTest {
 
 	@Test
 	public void testRecursivelyCountFilesWithExtension() {
-		assertEquals(2, FileHelpers.recursivelyCountFilesWithExtension(new File("testdata"), "java"));
+		assertEquals(2, FileHelpers.recursivelyCountFilesWithExtension(new File("dummydata"), "java"));
 	}
 	
 	@Test

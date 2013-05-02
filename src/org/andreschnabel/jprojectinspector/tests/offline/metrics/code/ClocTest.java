@@ -14,7 +14,7 @@ import java.util.List;
 public class ClocTest {
 	@Test
 	public void testDetermineLinesOfCode() throws Exception {
-		List<ClocResult> results = Cloc.determineLinesOfCode(new File("."), "testdata");
+		List<ClocResult> results = Cloc.determineLinesOfCode(new File("."), "dummydata");
 		AssertHelpers.listNotEmpty(results);
 
 		Assert.assertTrue(Func.contains(new IPredicate<ClocResult>() {
