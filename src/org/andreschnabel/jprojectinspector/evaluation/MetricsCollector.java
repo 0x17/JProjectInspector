@@ -6,6 +6,7 @@ import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
 import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
+import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 
 import java.io.File;
 import java.util.List;
@@ -46,6 +47,8 @@ public class MetricsCollector {
 			String metricName = metricNames.get(i);
 			MetricType type = MetricsRegistry.getTypeOfMetric(metricName);
 			Double result = Double.NaN;
+
+			Helpers.log("Measuring " + metricName + " for " + p);
 
 			try {
 				switch(type) {

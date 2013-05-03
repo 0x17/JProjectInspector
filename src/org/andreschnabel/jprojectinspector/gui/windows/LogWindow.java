@@ -6,7 +6,8 @@ import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
 import javax.swing.*;
 
 public class LogWindow extends AbstractWindow<LogPanel> {
-
+	private static final long serialVersionUID = 1L;
+	
 	private LogPanel logPanel;
 
 	public LogWindow() {

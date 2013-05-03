@@ -1,11 +1,10 @@
 package org.andreschnabel.jprojectinspector.tests.offline.metrics.javaspecific;
 
-import static org.junit.Assert.*;
 import junit.framework.Assert;
-
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.smells.JavaTestSmellDetector;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
 import org.junit.Test;
+
+import static org.junit.Assert.fail;
 
 public class JavaTestSmellDetectorTest {
 

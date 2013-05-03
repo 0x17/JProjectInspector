@@ -9,10 +9,18 @@ import org.junit.Test;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class RoughFunctionCoverageOnlineTest {
 	@Test
 	public void testApproxFunctionCoverage() throws Exception {
+		Project p = Project.fromString("0x17/KCImageCollector");
+		File path = ProjectDownloader.loadProject(p);
+		Map<String, Double> cov = RoughFunctionCoverage.approxFunctionCoverage(path);
+		double javaCov = cov.get("java");
+		// Actual EclEmma coverage of project is ~11.8% allow 2% tolerance.
+		Assert.assertEquals(0.118, javaCov, 0.02);
+		ProjectDownloader.deleteProject(p);
 	}
 
 	@Test

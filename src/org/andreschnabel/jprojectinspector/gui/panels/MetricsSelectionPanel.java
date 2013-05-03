@@ -12,6 +12,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,6 +53,7 @@ public class MetricsSelectionPanel extends PanelWithParent {
 		leftPanel.add(headerLbl, BorderLayout.NORTH);
 
 		availableMetricNames.addAll(MetricsRegistry.listAllMetrics());
+		Collections.sort(availableMetricNames);
 		availableMetricNamesLst = new JList(new MetricListModel(availableMetricNames));
 		availableMetricNamesLst.addListSelectionListener(new ListSelectionListener() {
 			@Override

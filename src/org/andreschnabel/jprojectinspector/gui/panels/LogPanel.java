@@ -6,7 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LogPanel extends JPanel implements IObserver<String> {
-
+	private static final long serialVersionUID = 1L;
+	
 	private final JTextArea logArea;
 
 	public LogPanel() {
