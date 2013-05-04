@@ -11,6 +11,6 @@ public class LocPerSourceFileTest {
 	@Test
 	public void testMeasure() throws Exception {
 		double lpsf = new AvgLocPerSourceFile().measure(new File("dummydata"));
-		Assert.assertEquals(27.0, lpsf, TestCommon.DELTA);
+		Assert.assertEquals(27.0, lpsf, TestCommon.EPSILON);
 	}
 }

@@ -18,7 +18,7 @@ public class EquationHelpersTest {
 		bindings.put("y", 20.0);
 		bindings.put("z", 3.0);
 		Object result = EquationHelpers.parseEquation(bindings, "(x+y)/z");
-		Assert.assertEquals(10.0, (Double)result, TestCommon.DELTA);
+		Assert.assertEquals(10.0, (Double)result, TestCommon.EPSILON);
 	}
 
 	@Test

@@ -1,5 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
+import org.andreschnabel.jprojectinspector.gui.visualizations.BoxAndWhisker;
 import org.andreschnabel.jprojectinspector.gui.visualizations.IVisualization;
 import org.andreschnabel.jprojectinspector.gui.visualizations.VisualizationsRegistry;
 import org.andreschnabel.jprojectinspector.gui.windows.FreeChartWindow;
@@ -21,15 +22,20 @@ import java.util.Map;
  */
 public class VisualizationPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
+
 	private final JComboBox metricNameComboBox;
+
 	private final Map<Project, Double[]> results;
+
 	private final List<String> metricNames;
+
+	private final Dimension dim = new Dimension(640, 480);
 
 	public VisualizationPanel(List<String> metricNames, final Map<Project, Double[]> results) {
 		Map<String, IVisualization> vis = VisualizationsRegistry.visualizations;
 		int numVis = vis.size();
 
-		setLayout(new GridLayout(1+numVis, 1));
+		setLayout(new GridLayout(2+numVis, 1));
 
 		this.metricNames = metricNames;
 		this.results = results;
@@ -42,8 +48,6 @@ public class VisualizationPanel extends JPanel {
 
 		for(final String visName : vis.keySet()) {
 			JButton btn = new JButton(visName);
-
-
 			btn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent actionEvent) {
@@ -52,6 +56,22 @@ public class VisualizationPanel extends JPanel {
 			});
 			add(btn);
 		}
+
+		JButton boxPlotCombined = new JButton("box and whisker combined");
+		boxPlotCombined.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				showCombined("box and whisker");
+			}
+		});
+		add(boxPlotCombined);
+	}
+
+	private void showCombined(String visName) {
+		BoxAndWhisker bwvis = (BoxAndWhisker) VisualizationsRegistry.visualizations.get(visName);
+		JFreeChart chart = bwvis.visualizeCombined(results);
+		FreeChartWindow fcw = new FreeChartWindow(chart, dim);
+		fcw.setVisible(true);
 	}
 
 	private void showVis(String visName) {
@@ -63,7 +83,6 @@ public class VisualizationPanel extends JPanel {
 			mresults.put(p, results.get(p)[i]);
 		}
 		JFreeChart chart = VisualizationsRegistry.visualizations.get(visName).visualize(metricName, mresults);
-		Dimension dim = new Dimension(640, 480);
 		FreeChartWindow fcw = new FreeChartWindow(chart, dim);
 		fcw.setVisible(true);
 	}

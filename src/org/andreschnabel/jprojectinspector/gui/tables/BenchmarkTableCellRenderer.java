@@ -25,7 +25,7 @@ public class BenchmarkTableCellRenderer extends DefaultTableCellRenderer {
 				if(sval.contains(" (OK)")) {
 					cell.setForeground(okColor);
 				}
-				else if(sval.contains(" (FAIL)")) {
+				else if(sval.contains(" (FAIL)") && !sval.contains("N/A")) {
 					cell.setForeground(failColor);
 				} else {
 					cell.setForeground(Color.BLACK);

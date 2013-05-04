@@ -1,6 +1,7 @@
 package org.andreschnabel.jprojectinspector.gui.visualizations;
 
 import org.andreschnabel.jprojectinspector.model.Project;
+import org.andreschnabel.jprojectinspector.utilities.helpers.StatisticHelpers;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.statistics.BoxAndWhiskerItem;
@@ -25,13 +26,17 @@ public class BoxAndWhisker implements IVisualization {
 
 		List<Double> outliers = new LinkedList<Double>();
 
-		Number mean = calcMean(results);
-		Number median = calcMedian(results);
-		Number q1 = calcLowerQuartile((Double)median, results);
-		Number q3 = calcHigherQuartile((Double)median, results);
+		List<Double> orderedResults = new ArrayList<Double>(results.values().size());
+		orderedResults.addAll(results.values());
+		Collections.sort(orderedResults);
 
-		Number minOutlier = calcMin(results);
-		Number maxOutlier = calcMax(results);
+		Number mean = StatisticHelpers.mean(orderedResults);
+		Number median = StatisticHelpers.medianOfSorted(orderedResults);
+		Number q1 = StatisticHelpers.lowerQuartileOfSorted(orderedResults);
+		Number q3 = StatisticHelpers.upperQuartileOfSorted(orderedResults);
+
+		Number minOutlier = StatisticHelpers.minOfSorted(orderedResults);
+		Number maxOutlier = StatisticHelpers.maxOfSorted(orderedResults);
 
 		Number minReg = q1;
 		Number maxReg = q3;
@@ -44,76 +49,12 @@ public class BoxAndWhisker implements IVisualization {
 		return chart;
 	}
 
-	private Number calcMax(Map<Project, Double> results) {
-		Double max = Double.MIN_VALUE;
-		for(Double d : results.values()) {
-			if(Double.isNaN(d)) {
-				continue;
-			}
-			if(d > max) {
-				max = d;
-			}
-		}
-		return max;
-	}
-
-	private Number calcMin(Map<Project, Double> results) {
-		Double min = Double.MAX_VALUE;
-		for(Double d : results.values()) {
-			if(Double.isNaN(d)) {
-				continue;
-			}
-			if(d < min) {
-				min = d;
-			}
-		}
-		return min;
-	}
-
-	private Number calcHigherQuartile(Double median, Map<Project, Double> results) {
-		List<Double> asc = new LinkedList<Double>();
-		for (Double d : results.values()) {
-			if(Double.isNaN(d)) {
-				continue;
-			}
-			if(d >= median) {
-				asc.add(d);
-			}
-		}
-		return median(asc);
-	}
-
-	private Number calcLowerQuartile(Double median, Map<Project, Double> results) {
-		List<Double> asc = new LinkedList<Double>();
-		for (Double d : results.values()) {
-			if(Double.isNaN(d)) {
-				continue;
-			}
-			if(d <= median) {
-				asc.add(d);
-			}
-		}
-		return median(asc);
-	}
-
-	private double median(List<Double> nums) {
-		Collections.sort(nums);
-		return nums.get((int)Math.floor(nums.size()/2.0));
-	}
-
-	private Number calcMedian(Map<Project, Double> results) {
-		List<Double> asc = new ArrayList<Double>(results.size());
-		asc.addAll(results.values());
-		return median(asc);
-	}
-
-	private Number calcMean(Map<Project, Double> results) {
-		Double sum = 0.0;
-		for (Double d : results.values()) {
-			if(!Double.isNaN(d)) {
-				sum += d;
-			}
-		}
-		return sum / (double)results.size();
+	/**
+	 * Erzeuge Visualisierung für alle Metriken kombiniert und Resultate zu Projekten.
+	 * @param results Map von Projekt auf Meßergebnisse der Metriken des Projekts.
+	 * @return JFreeChart-Diagramm.
+	 */
+	public JFreeChart visualizeCombined(Map<Project, Double[]> results) {
+		return null;
 	}
 }

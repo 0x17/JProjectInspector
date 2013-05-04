@@ -70,11 +70,20 @@ public class BenchmarkPanel extends PanelWithParent {
 	private double weightSum;
 	private JCheckBox zeroIsInvalidCheckbox;
 
+	/**
+	 * Konstruktor
+	 * Erzeuge neues Benchmark-Panel.
+	 */
 	public BenchmarkPanel() {
 		initTopPane();
 		initTablePane();
 	}
 
+	/**
+	 * Initialisiere die obere Leiste, in welcher Messergebnisse und Einschätzungen geladen,<br />
+	 * eine Formel eingegeben (berechnet oder durch ausprobieren der Platzhalter ausgewertet),<br />
+	 * die Bewertungsergebnisse angezeigt werden.
+	 */
 	private void initTopPane() {
 		setLayout(new BorderLayout());
 		JPanel topPane = new JPanel(new GridLayout(12, 2));
@@ -175,6 +184,10 @@ public class BenchmarkPanel extends PanelWithParent {
 		return "<html><div style=\"width:"+width+"px;\">Select CSV file with column headers: " + colNames +"</div></html>";
 	}
 
+	/**
+	 * Einschätzungspanel mit Label für Namen der gewählten Datei und Auswahlbutton zum Öffnen des Lade-Dialogs.
+	 * @param topPane obere Leiste des Benchmark-Panels.
+	 */
 	private void initEstimationsSelectionPanel(JPanel topPane) {
 		topPane.add(new JLabel("Estimations:"));
 		JPanel esp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -184,6 +197,10 @@ public class BenchmarkPanel extends PanelWithParent {
 		esp.add(getBrowseButton(BenchInputType.Estimations));
 	}
 
+	/**
+	 * Ergebniswahlpanel mit Label für Namen der gewählten Datei und Auswahlbutton zum Öffnen des Lade-Dialogs.
+	 * @param topPane obere Leiste des Benchmark-Panels.
+	 */
 	private void initResultSelectionPanel(JPanel topPane) {
 		topPane.add(new JLabel("Metric results:"));
 		JPanel mrp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -193,11 +210,19 @@ public class BenchmarkPanel extends PanelWithParent {
 		mrp.add(getBrowseButton(BenchInputType.MetricResults));
 	}
 
+	/**
+	 * Eingabetypen: Einschätzungen aus Umfrage oder Messergebnisse.
+	 */
 	private static enum BenchInputType {
 		Estimations,
 		MetricResults
 	}
 
+	/**
+	 * Erzeuge Lade-Button für Messergebnisse oder Umfrage.
+	 * @param inputType Eingabetyp.
+	 * @return neuen Button zum Laden.
+	 */
 	private JButton getBrowseButton(final BenchInputType inputType) {
 		JButton btn = new JButton("Browse");
 		btn.addActionListener(new ActionListener() {
@@ -250,6 +275,9 @@ public class BenchmarkPanel extends PanelWithParent {
 		return btn;
 	}
 
+	/**
+	 * Initialisiere den unteren Bereichs des Benchmark-Panels mit einer Tabelle von Schätzungen und Vorhersagen.
+	 */
 	private void initTablePane() {
 		JPanel tablePane = new JPanel(new GridLayout(1,1));
 		tablePane.add(new JScrollPane(benchmarkTable));

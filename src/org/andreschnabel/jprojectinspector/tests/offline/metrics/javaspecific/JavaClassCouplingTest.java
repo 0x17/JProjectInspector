@@ -52,6 +52,6 @@ public class JavaClassCouplingTest {
 	public void testGetAverageCoupling() throws Exception {
 		Double actualAvgCoupling = JavaClassCoupling.getAverageCoupling(new File(TestCommon.TEST_SRC_DIRECTORY));
 		Double expectedAvgCoupling = 3.0 / 5.0;
-		assertEquals(expectedAvgCoupling, actualAvgCoupling, TestCommon.DELTA);
+		assertEquals(expectedAvgCoupling, actualAvgCoupling, TestCommon.EPSILON);
 	}
 }
