@@ -7,7 +7,8 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Balkendiagramm.
