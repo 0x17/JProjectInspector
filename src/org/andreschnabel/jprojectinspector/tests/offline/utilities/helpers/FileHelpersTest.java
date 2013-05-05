@@ -130,7 +130,11 @@ public class FileHelpersTest {
 		File[] expectedFolders = new File[] {
 				new File("data/benchmark"),
 				new File("data/oldxml"),
-				new File("data/old")
+				new File("data/old"),
+				new File("data/oldresults"),
+				new File("data/oldresults/java"),
+				new File("data/oldresults/java/lists"),
+				new File("data/oldresults/java/summaries"),
 		};
 		AssertHelpers.arrayEqualsLstOrderInsensitive(expectedFolders, folders);
 	}

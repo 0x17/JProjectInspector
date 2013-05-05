@@ -45,8 +45,8 @@
 \end_index
 \secnumdepth 3
 \tocdepth 3
-\paragraph_separation indent
-\paragraph_indentation default
+\paragraph_separation skip
+\defskip smallskip
 \quotes_language english
 \papercolumns 1
 \papersides 1
@@ -90,7 +90,7 @@ git
 Git
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 Under 
 \series bold
 Linux
@@ -116,7 +116,7 @@ apt-get install git
  on Debian/Ubuntu.
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 On 
 \series bold
 OS X
@@ -125,15 +125,29 @@ OS X
 \emph on
 git
 \emph default
- binaries can be fetched from 
-\begin_inset CommandInset href
-LatexCommand href
-target "http://git-scm.com/download/mac"
+ binaries can be fetched from
+\end_layout
+
+\begin_layout Standard
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://git-scm.com/download/mac
+\end_layout
 
 \end_inset
 
 .
- Alternatively the source based package management system 
+\end_layout
+
+\begin_layout Standard
+Alternatively the source based package management system 
 \emph on
 Homebrew
 \emph default
@@ -189,32 +203,61 @@ git
 .
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 On computers running the 
 \series bold
 Windows
 \series default
- operating system an installer for git can be found on 
-\begin_inset CommandInset href
-LatexCommand href
-target "http://git-scm.com/download/win"
+ operating system an installer for git can be found on
+\end_layout
+
+\begin_layout Standard
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://git-scm.com/download/win
+\end_layout
 
 \end_inset
 
 .
- Alternatively a portable version of 
+\end_layout
+
+\begin_layout Standard
+Alternatively a portable version of 
 \emph on
 git
 \emph default
- for Windows can be downloaded at 
-\begin_inset CommandInset href
-LatexCommand href
-target "https://code.google.com/p/msysgit/downloads/detail?name=PortableGit-1.8.1.2-preview20130201.7z"
+ for Windows can be downloaded at
+\end_layout
+
+\begin_layout Standard
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://code.google.com/p/msysgit/downloads/list
+\end_layout
 
 \end_inset
 
 .
- The portable version is self contained and does not require installation.
+ 
+\end_layout
+
+\begin_layout Standard
+The portable version is self contained and does not require installation.
 \end_layout
 
 \begin_layout Subsection
@@ -226,7 +269,7 @@ Cloc is a Perl script that counts the actual code lines in source files
  written in a variety of popular languages.
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 Again under 
 \series bold
 Linux
@@ -235,23 +278,31 @@ Linux
 \begin_inset Quotes eld
 \end_inset
 
+
+\family typewriter
 apt-get install cloc
+\family default
+
 \begin_inset Quotes erd
 \end_inset
 
  (depending on the specific) distribution.
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 On 
 \series bold
 OS X
 \series default
  it can be installed using 
+\family typewriter
+
 \begin_inset Quotes eld
 \end_inset
 
 brew install cloc
+\family default
+
 \begin_inset Quotes erd
 \end_inset
 
@@ -259,22 +310,47 @@ brew install cloc
  This requires the Homebrew package manager.
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 On Windows there are two options.
- A self-contained executable of cloc can be downloaded from 
-\begin_inset CommandInset href
-LatexCommand href
-target "http://sourceforge.net/projects/cloc/files/cloc/v1.58/cloc-1.58.exe/download"
+ A self-contained executable of cloc can be downloaded from
+\end_layout
+
+\begin_layout Standard
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://sourceforge.net/projects/cloc/files/cloc/v1.58/cloc-1.58.exe/download
+\end_layout
 
 \end_inset
 
 .
- Alternatively the ActiveState Perl interpreter in version then only the
+\end_layout
+
+\begin_layout Standard
+Alternatively the ActiveState Perl interpreter in version then only the
  perl script of cloc is needed.
- The script can be found at 
-\begin_inset CommandInset href
-LatexCommand href
-target "http://sourceforge.net/projects/cloc/files/cloc/v1.58/cloc-1.58.pl/download"
+ The script can be found at
+\end_layout
+
+\begin_layout Standard
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://sourceforge.net/projects/cloc/files/cloc/v1.58/cloc-1.58.pl/download
+\end_layout
 
 \end_inset
 
@@ -301,7 +377,7 @@ Path to git executable.
 
 \begin_layout Enumerate
 Path to Perl interpreter and cloc.pl OR path to cloc-executable.
- Required for loc metrics.
+ Required for lines of code metrics.
 \end_layout
 
 \begin_layout Section
