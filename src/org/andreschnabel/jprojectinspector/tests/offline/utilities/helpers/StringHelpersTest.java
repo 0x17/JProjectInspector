@@ -13,7 +13,19 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 public class StringHelpersTest {
-	
+
+	@Test
+	public void testFirstLine() throws Exception {
+		String fline = StringHelpers.firstLine("This is the first line.\nThis is the second line.\nCorrect guess: This is the third.");
+		Assert.assertEquals("This is the first line.", fline);
+	}
+
+	@Test
+	public void testLastLine() throws Exception {
+		String lline = StringHelpers.lastLine("This is the first line.\nThis is the second line.\nThis is the last line.");
+		Assert.assertEquals("This is the last line.", lline);
+	}
+
 	@Test
 	public void testStrContainsOneOf() {
 		Assert.assertTrue(StringHelpers.containsOneOf("dies ist ein test", "ein"));

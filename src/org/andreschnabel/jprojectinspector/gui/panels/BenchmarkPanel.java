@@ -95,6 +95,8 @@ public class BenchmarkPanel extends PanelWithParent {
 		variablesArea = new JTextArea(1, 30);
 		variablesArea.setEditable(false);
 		variablesArea.setLineWrap(true);
+		Font fnt = new Font("Monospaced", Font.PLAIN, 11);
+		variablesArea.setFont(fnt);
 		topPane.add(new JScrollPane(variablesArea));
 
 		topPane.add(new JLabel("Mode: "));
@@ -153,11 +155,11 @@ public class BenchmarkPanel extends PanelWithParent {
 
 		topPane.add(equationPanel);
 
-		topPane.add(new JLabel("# Correct predictions:"));
+		topPane.add(new JLabel("# Correct order predictions:"));
 		numCorrLbl = new JLabel("0");
 		topPane.add(numCorrLbl);
 
-		topPane.add(new JLabel("Total number of estimations:"));
+		topPane.add(new JLabel("Total number of valid order estimations:"));
 		numEstimationsLbl = new JLabel("0");
 		topPane.add(numEstimationsLbl);
 
@@ -165,11 +167,11 @@ public class BenchmarkPanel extends PanelWithParent {
 		percCorrLbl = new JLabel("0%");
 		topPane.add(percCorrLbl);
 
-		topPane.add(new JLabel("# Correct weighted:"));
+		topPane.add(new JLabel("# Correct order predictions weighted:"));
 		weightedNumCorrLbl = new JLabel("0");
 		topPane.add(weightedNumCorrLbl);
 
-		topPane.add(new JLabel("Total weight sum:"));
+		topPane.add(new JLabel("Total weight sum of valid estimators:"));
 		weightSumLbl = new JLabel("0");
 		topPane.add(weightSumLbl);
 

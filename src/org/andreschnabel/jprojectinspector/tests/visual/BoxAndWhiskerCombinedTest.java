@@ -6,34 +6,35 @@ import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
 import org.andreschnabel.jprojectinspector.tests.VisualTestCallback;
+import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
 import org.jfree.chart.JFreeChart;
 
 import java.awt.*;
 import java.io.File;
-import java.util.*;
 import java.util.List;
+import java.util.Map;
 
-public class BoxAndWhiskerTest extends VisualTest {
+public class BoxAndWhiskerCombinedTest extends VisualTest {
 	@Override
 	protected VisualTestCallback[] getTests() {
 		return new VisualTestCallback[] {
 				new VisualTestCallback() {
 					@Override
 					public String getDescription() {
-						return "box and whisker test";
+						return "box and whisker combined test";
 					}
 
 					@Override
 					public void invoke() throws Exception {
-						Map<Project, Double> projToResults = new HashMap<Project, Double>();
-						projToResults.put(new Project("owner1", "repo1"), 4.0);
-						projToResults.put(new Project("owner2", "repo2"), 2.0);
-						JFreeChart chart = new BoxAndWhisker().visualize("loc", projToResults);
+						CsvData csvData = CsvHelpers.parseCsv(new File("data/benchmark/MetricResultsUmfragenCombined.csv"));
+						List<ProjectWithResults> pwr = ProjectWithResults.fromCsv(csvData);
+						Map<Project, Double[]> results = ProjectWithResults.toMap(pwr);
+						JFreeChart chart = new BoxAndWhisker().visualizeCombined(pwr.get(0).getResultHeaders(), results);
 						frm.add(new FreeChartPanel(chart, new Dimension(640, 480)));
 						frm.pack();
 					}
-				},
+				}
 		};
 	}
 }

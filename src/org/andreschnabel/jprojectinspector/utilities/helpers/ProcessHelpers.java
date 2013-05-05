@@ -1,9 +1,9 @@
 package org.andreschnabel.jprojectinspector.utilities.helpers;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.andreschnabel.jprojectinspector.utilities.functional.Func;
+import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
+
+import java.io.*;
 
 /**
  * Hilfsfunktionen für den Umgang mit Prozessen.
@@ -116,10 +116,20 @@ public class ProcessHelpers {
 
 			pb.redirectErrorStream(true);
 			Process p = pb.start();
-			StreamTapper st = new StreamTapper(p.getInputStream(), true);
-			st.run();
+
+			// Horrible workaround since 'git clone' seems to hang when 'Cloning into..." from time to time w/out
+			// valid reason.
+			boolean gitCloneHangingWorkaround = isGitClone(command);
+			StreamTapper st = new StreamTapper(p.getInputStream(), true, gitCloneHangingWorkaround, gitCloneHangingWorkaround ? p : null);
+
+			st.start();
 
 			p.waitFor();
+
+			if(gitCloneHangingWorkaround && st.getTimeout()) {
+				Helpers.log("Git clone command was killed due to hanging 1 minute in 'Cloning into' state.");
+			}
+
 		} catch(Exception e) {
 			if(Helpers.runningOnUnix() || command[0].equals("cmd")) {
 				throw e;
@@ -133,6 +143,18 @@ public class ProcessHelpers {
 		}
 	}
 
+	private static boolean isGitClone(String[] cmds) {
+		boolean foundClone = false;
+		boolean foundGit = false;
+		for(String cmd : cmds) {
+			if(cmd.equals("clone"))
+				foundClone = true;
+			else if(cmd.endsWith("git") || cmd.endsWith("git.exe"))
+				foundGit = true;
+		}
+		return foundGit && foundClone;
+	}
+
 	private static void trySystemWithCmdPrefix(File workDir, String[] command) throws Exception {
 		String[] cmds = new String[command.length+2];
 		cmds[0] = "cmd";
@@ -143,19 +165,67 @@ public class ProcessHelpers {
 		system(workDir, cmds);
 	}
 
+	private static class CloneKillThread extends Thread {
+		// Kill cloning after one minute of blocking "Cloning into".
+		private static final long CLONE_MAX_MS = 60 * 1000;
+
+		private final long cloneStartTime;
+		private final Process cloneProcess;
+		private volatile boolean done;
+		private volatile boolean timeout;
+
+		public CloneKillThread(Process cloneProcess) {
+			this.cloneProcess = cloneProcess;
+			this.cloneStartTime = System.currentTimeMillis();
+		}
+
+		@Override
+		public void run() {
+			super.run();
+			while(!done) {
+				if(System.currentTimeMillis() - cloneStartTime > CLONE_MAX_MS) {
+					cloneProcess.destroy();
+					timeout = true;
+				} else {
+					try {
+						sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		public synchronized boolean done() {
+			done = true;
+			return timeout;
+		}
+	}
+
 	private static class StreamTapper extends Thread {
 		private InputStream is;
 		private boolean forwardToStdOut;
 		private String output;
-		private boolean done;
+		private volatile boolean done;
+		private volatile boolean timeout;
+
+		private final boolean gitCloneHangingWorkaround;
+		private CloneKillThread cloneKillThread;
+		private final Process cloneProcess;
 
 		private StreamTapper(InputStream is) {
 			this(is, false);
 		}
 
 		private StreamTapper(InputStream is, boolean forwardToStdOut) {
+			this(is, forwardToStdOut, false, null);
+		}
+
+		public StreamTapper(InputStream is, boolean forwardToStdOut, boolean gitCloneHangingWorkaround, Process cloneProcess) {
 			this.is = is;
 			this.forwardToStdOut = forwardToStdOut;
+			this.gitCloneHangingWorkaround = gitCloneHangingWorkaround;
+			this.cloneProcess = cloneProcess;
 		}
 
 		@Override
@@ -170,12 +240,39 @@ public class ProcessHelpers {
 					if(forwardToStdOut) {
 						Helpers.log(c);
 					}
+
+					// Horrible workaround. We need to kill git-clone if it stays in "Cloning into" output too long.
+					// POST git-upload-pack is sign things went fine.
+					if(gitCloneHangingWorkaround) {
+						String o = outputBuilder.toString();
+						String lline = StringHelpers.lastLine(o);
+						if(lline.startsWith("Cloning into") && cloneKillThread == null) {
+							cloneKillThread = new CloneKillThread(cloneProcess);
+							cloneKillThread.start();
+						} else if(lline.startsWith("POST git-upload-pack") && cloneKillThread != null) {
+							if(cloneKillThread.done()) {
+								timeout = true;
+							}
+							cloneKillThread = null;
+						}
+					}
+				}
+
+				if(cloneKillThread != null) {
+					if(cloneKillThread.done()) {
+						timeout = true;
+					}
+					cloneKillThread = null;
 				}
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
 
 			output = outputBuilder.toString();
+		}
+
+		public synchronized boolean getTimeout() {
+			return timeout;
 		}
 
 		public synchronized String getOutput() {

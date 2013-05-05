@@ -26,6 +26,8 @@ public class Cpd implements IOfflineMetric {
 
 		if(Helpers.runningOnUnix()) {
 			out = ProcessHelpers.monitorProcess(new File(Pmd.pmdPath), "bin/run.sh","cpd","--minimum-tokens","100","--files",repoRoot.getAbsolutePath(),"--format csv");
+		} else {
+			// TODO: Windows call!
 		}
 
 		if(out == null) {

@@ -94,6 +94,10 @@ public final class StringHelpers {
 		return str.substring(0, str.indexOf('\n'));
 	}
 
+	public static String lastLine(String str) {
+		return str.substring(str.lastIndexOf('\n')+1, str.length());
+	}
+
 	public static String capitalizeFirstLetter(String s) {
 		if(s == null) return null;
 		else if(s.isEmpty()) return s;

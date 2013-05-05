@@ -7,7 +7,6 @@ import org.andreschnabel.jprojectinspector.metrics.code.AvgLocPerTestFile;
 import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.*;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage.SimpleJavaTestCoverage;
-import org.andreschnabel.jprojectinspector.metrics.javaspecific.smells.JavaTestSmellDetector;
 import org.andreschnabel.jprojectinspector.metrics.plugins.MetricPlugins;
 import org.andreschnabel.jprojectinspector.metrics.project.BugFixCommitMessages;
 import org.andreschnabel.jprojectinspector.metrics.project.ProjectAge;
@@ -67,6 +66,5 @@ public class OfflineMetrics {
 		ms.add(new JavaTestFrameworkDetector());
 		ms.add(new JavaTestLinesOfCode());
 		ms.add(new SimpleJavaTestCoverage());
-		ms.add(new JavaTestSmellDetector());
 	}
 }

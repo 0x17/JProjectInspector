@@ -69,7 +69,8 @@ public class VisualizationPanel extends JPanel {
 
 	private void showCombined(String visName) {
 		BoxAndWhisker bwvis = (BoxAndWhisker) VisualizationsRegistry.visualizations.get(visName);
-		JFreeChart chart = bwvis.visualizeCombined(results);
+		String[] metricNamesArray = metricNames.toArray(new String[metricNames.size()]);
+		JFreeChart chart = bwvis.visualizeCombined(metricNamesArray, results);
 		FreeChartWindow fcw = new FreeChartWindow(chart, dim);
 		fcw.setVisible(true);
 	}

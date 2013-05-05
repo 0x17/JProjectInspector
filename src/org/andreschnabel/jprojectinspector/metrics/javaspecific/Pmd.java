@@ -30,6 +30,8 @@ public class Pmd implements IOfflineMetric {
 		
 		if(Helpers.runningOnUnix()) {
 			out = ProcessHelpers.monitorProcess(new File(pmdPath), "bin/run.sh", "pmd", "-d", repoRoot.getAbsolutePath(), "-f","text","-R","java-basic,java-design");
+		} else {
+			// TODO: Windows call!
 		}
 
 		if(out == null) {

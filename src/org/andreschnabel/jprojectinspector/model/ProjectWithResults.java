@@ -3,7 +3,9 @@ package org.andreschnabel.jprojectinspector.model;
 import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
 import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Ein Projekt mit Messergebnissen.
@@ -111,5 +113,13 @@ public class ProjectWithResults {
 			}
 		};
 		return CsvData.fromList(headers, projWithResultToRow, pwrs);
+	}
+
+	public static Map<Project, Double[]> toMap(List<ProjectWithResults> pwrs) {
+		Map<Project, Double[]> m = new HashMap<Project, Double[]>();
+		for (ProjectWithResults pwr : pwrs) {
+			m.put(pwr.project, pwr.results);
+		}
+		return m;
 	}
 }
