@@ -3,6 +3,7 @@ package org.andreschnabel.jprojectinspector.gui.visualizations;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -35,6 +36,7 @@ public class BarChart implements IVisualization {
 
 		JFreeChart chart = ChartFactory.createBarChart(metricName, "Projects", metricName+" values", dataset, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot plot = (CategoryPlot) chart.getPlot();
+		plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.UP_45);
 		plot.setForegroundAlpha(0.5f);
 		return chart;
 	}
