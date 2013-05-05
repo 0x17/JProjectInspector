@@ -9,6 +9,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,9 +23,10 @@ public class ScatterPlot implements IVisualization {
 
 	@Override
 	public JFreeChart visualize(String metricName, Map<Project, Double> results) {
+		List<Project> projsSortedByValsAsc = VisualizationHelpers.sortProjectKeysByValAsc(results);
 		XYSeries xySeries = new XYSeries("Scatter");
 		int i=0;
-		for(Project p : results.keySet()) {
+		for(Project p : projsSortedByValsAsc) {
 			xySeries.add(i++, results.get(p));
 		}
 		XYDataset xyDataset = new XYSeriesCollection(xySeries);

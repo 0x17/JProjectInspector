@@ -7,7 +7,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import java.util.Map;
+import java.util.*;
 
 /**
  * Balkendiagramm.
@@ -24,14 +24,18 @@ public class BarChart implements IVisualization {
 	}
 
 	@Override
-	public JFreeChart visualize(String metricName, Map<Project, Double> results) {
+	public JFreeChart visualize(String metricName, final Map<Project, Double> results) {
+		List<Project> projectsSortedByValAsc = VisualizationHelpers.sortProjectKeysByValAsc(results);
+
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		for(Project p : results.keySet()) {
+		for(Project p : projectsSortedByValAsc) {
 			dataset.setValue(results.get(p), metricName, p.toString());
 		}
+
 		JFreeChart chart = ChartFactory.createBarChart(metricName, "Projects", metricName+" values", dataset, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot plot = (CategoryPlot) chart.getPlot();
 		plot.setForegroundAlpha(0.5f);
 		return chart;
 	}
+
 }

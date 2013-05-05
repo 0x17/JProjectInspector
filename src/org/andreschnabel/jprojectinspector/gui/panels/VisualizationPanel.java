@@ -11,9 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Visualisierungspanel.
@@ -77,12 +76,13 @@ public class VisualizationPanel extends JPanel {
 
 	private void showVis(String visName) {
 		final String metricName = (String) metricNameComboBox.getSelectedItem();
-		int i = metricNames.indexOf(metricName);
+		final int i = metricNames.indexOf(metricName);
 
 		Map<Project, Double> mresults = new HashMap<Project, Double>();
 		for(Project p : results.keySet()) {
 			mresults.put(p, results.get(p)[i]);
 		}
+
 		JFreeChart chart = VisualizationsRegistry.visualizations.get(visName).visualize(metricName, mresults);
 		FreeChartWindow fcw = new FreeChartWindow(chart, dim);
 		fcw.setVisible(true);
