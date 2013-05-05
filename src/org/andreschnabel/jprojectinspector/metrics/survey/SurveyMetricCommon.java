@@ -11,7 +11,7 @@ import java.io.File;
  */
 public class SurveyMetricCommon {
 
-	public final static File ESTIMATIONS_FILE = new File("data/benchmark/WeightedEstimates.csv");
+	public final static File ESTIMATIONS_FILE = new File("data/benchmark/WeightedEstimatesUmfragenCombined.csv");
 
 	public static Estimation measureCommon(Project p, String minHeader, String maxHeader) {
 		try {

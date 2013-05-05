@@ -12,11 +12,11 @@ import java.util.List;
  */
 public class CodeFrequency implements IOnlineMetric {
 
-	public static int countCodeFrequencyForProj(Project project) throws Exception {
+	public static double countCodeFrequencyForProj(Project project) throws Exception {
 		String cfdStr = Helpers.loadUrlIntoStr("https://github.com/" + project.owner + "/" + project.repoName + "/graphs/code-frequency-data");
 		List<String[]> triples = RegexHelpers.batchMatch("\\[([0-9]*),([0-9]*),(-[0-9]*)\\]", cfdStr);
 
-		if(triples.size() == 0) return 0;
+		if(triples.size() == 0) return Double.NaN;
 
 		String[] last = triples.get(triples.size() - 1);
 

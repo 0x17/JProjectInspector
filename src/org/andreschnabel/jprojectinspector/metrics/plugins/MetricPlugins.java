@@ -17,7 +17,7 @@ import java.util.List;
 public class MetricPlugins {
 
 	public static List<IOfflineMetric> loadOfflineMetricPlugins(File dir) throws Exception {
-		List<File> classFiles = AsmHelpers.findClassFilesImplementingInterfaceInDir(dir, "OfflineMetric");
+		List<File> classFiles = AsmHelpers.findClassFilesImplementingInterfaceInDir(dir, "IOfflineMetric");
 		final URLClassLoader classLoader = initLoader(dir);
 
 		ITransform<File, IOfflineMetric> classFileToOfflineMetric = new ITransform<File, IOfflineMetric>() {
@@ -33,7 +33,7 @@ public class MetricPlugins {
 	}
 	
 	public static List<IOnlineMetric> loadOnlineMetricPlugins(File dir) throws Exception {
-		List<File> classFiles = AsmHelpers.findClassFilesImplementingInterfaceInDir(dir, "OnlineMetric");
+		List<File> classFiles = AsmHelpers.findClassFilesImplementingInterfaceInDir(dir, "IOnlineMetric");
 		final URLClassLoader classLoader = initLoader(dir);
 
 		ITransform<File, IOnlineMetric> classFileToOnlineMetric = new ITransform<File, IOnlineMetric>() {

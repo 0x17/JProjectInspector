@@ -9,7 +9,7 @@ import java.io.File;
 public class AverageChurnPerRevisionTest {
 	@Test
 	public void testMeasure() throws Exception {
-		double avgChurn = new AverageChurnPerRevision().measure(new File("."));
+		double avgChurn = new AverageChurnPerRevision().measure(new File("dummydata"));
 		Assert.assertTrue(avgChurn > 0.0);
 	}
 }

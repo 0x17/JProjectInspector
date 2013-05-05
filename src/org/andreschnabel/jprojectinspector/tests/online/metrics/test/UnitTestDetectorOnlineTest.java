@@ -64,7 +64,8 @@ public class UnitTestDetectorOnlineTest {
 		loadKcImageCollector();
 		List<File> testFiles = UnitTestDetector.getTestFiles(kcImgCollectorPath);
 		File[] expectedTestFiles = new File[] {
-				new File(kcImgCollectorPath.getPath()+"/src/org/ox17/kcimagecollector/tests/KCImageCollectorTest.java")
+				new File(kcImgCollectorPath.getPath()+"/src/org/ox17/kcimagecollector/tests/KCImageCollectorTest.java"),
+				new File(kcImgCollectorPath.getPath()+"/src/org/ox17/kcimagecollector/tests/TestFrame.java")
 		};
 		AssertHelpers.arrayEqualsLstOrderInsensitive(expectedTestFiles, testFiles);
 		deleteKcImageCollector();

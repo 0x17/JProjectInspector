@@ -12,6 +12,12 @@ import java.util.List;
  */
 public final class StringHelpers {
 
+	/**
+	 * Zähle wie oft ein Teilstring word in der Zeichenkette str vorkommt.
+	 * @param str Zeichenkette, weilche Teilstring enthält.
+	 * @param word Teilstring dessen Häufigkeit in Zeichenkette gezählt werden soll.
+	 * @return Anzahl der Vorkommen von word als Teilstring in str.
+	 */
 	public static int countOccurencesOfWord(String str, String word) {
 		int ctr = 0;
 		int j = 0;

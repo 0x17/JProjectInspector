@@ -10,9 +10,7 @@ import org.junit.Test;
 public class PmdTest {
 	@Test
 	public void testMeasure() throws Exception {
-		double violationCount = new Pmd().measure(new File("."));
-		Assert.assertTrue(violationCount > 0.0);
-		Assert.assertTrue(violationCount > 200.0);
-		Assert.assertTrue(violationCount < 300.0);
+		double violationCount = new Pmd().measure(new File("src/org/andreschnabel/jprojectinspector/scrapers/"));
+		Assert.assertEquals(6, (int)violationCount);
 	}
 }

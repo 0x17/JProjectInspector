@@ -12,6 +12,6 @@ public class TestCommitCommentsTest {
 	public void testCountNumTestCommitComments() throws Exception {
 		int numTestCommitComments = TestCommitMessages.countNumTestCommitMessages(new File("."));
 		Assert.assertTrue(numTestCommitComments > 0);
-		Assert.assertTrue(numTestCommitComments < GitRevisionHelpers.numRevisions(new File(".")));
+		Assert.assertTrue(numTestCommitComments <= GitRevisionHelpers.numRevisions(new File(".")));
 	}
 }

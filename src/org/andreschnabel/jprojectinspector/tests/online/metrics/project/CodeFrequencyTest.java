@@ -10,8 +10,8 @@ public class CodeFrequencyTest {
 
 	@Test
 	public void testCountCodeFrequencyForProj() throws Exception {
-		int cfVal = CodeFrequency.countCodeFrequencyForProj(TestCommon.THIS_PROJECT);
-		assertFalse(0 == cfVal);
+		double cfVal = CodeFrequency.countCodeFrequencyForProj(TestCommon.THIS_PROJECT);
+		assertFalse(Double.isNaN(cfVal));
 	}
 
 }

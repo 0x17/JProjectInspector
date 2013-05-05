@@ -23,7 +23,7 @@ public class AvgLocPerSourceFile implements IOfflineMetric {
 
 	@Override
 	public String getDescription() {
-		return "Total number of lines of code of all source files divided by number of those source files.";
+		return "Total number of lines of code of all source files divided by number of those source files. Also includes test files.";
 	}
 
 	@Override

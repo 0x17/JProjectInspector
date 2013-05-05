@@ -15,8 +15,4 @@ public class ContributorsOnlineTest {
 		assertEquals(1, ContributorsOnline.countNumContributors(TestCommon.THIS_PROJECT));
 	}
 
-	@Test
-	public void testCountNumTestContributors() {
-	}
-
 }

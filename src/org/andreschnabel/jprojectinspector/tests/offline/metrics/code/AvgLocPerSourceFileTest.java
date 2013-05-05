@@ -9,7 +9,7 @@ import java.io.File;
 public class AvgLocPerSourceFileTest {
 	@Test
 	public void testMeasure() throws Exception {
-		double avgLocPerSource = new AvgLocPerSourceFile().measure(new File("."));
-		Assert.assertTrue(avgLocPerSource > 0.0);
+		double avgLocPerSource = new AvgLocPerSourceFile().measure(new File("dummydata"));
+		Assert.assertEquals(27, (int)avgLocPerSource);
 	}
 }
