@@ -14,10 +14,10 @@ import java.util.Map;
  */
 public class EquationHelpers {
 
-	public static Object parseEquation(Map<String, Double> varBindings, String equation) {		
+	public static Object parseEquation(Map<String, Double> varBindings, String equation) {
 		ExpressionBuilder builder = new ExpressionBuilder(equation);
 		builder.withVariables(varBindings);
-      try {
+      	try {
 			return builder.build().calculate();
 		} catch (Exception e) {
 			return null;

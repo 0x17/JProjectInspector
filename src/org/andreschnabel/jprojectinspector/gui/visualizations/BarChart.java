@@ -38,6 +38,7 @@ public class BarChart implements IVisualization {
 		CategoryPlot plot = (CategoryPlot) chart.getPlot();
 		plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.UP_45);
 		plot.setForegroundAlpha(0.5f);
+		plot.setBackgroundAlpha(0.0f);
 		return chart;
 	}
 

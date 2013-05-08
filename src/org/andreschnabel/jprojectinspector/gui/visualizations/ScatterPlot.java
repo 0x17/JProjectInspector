@@ -9,6 +9,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ public class ScatterPlot implements IVisualization {
 		JFreeChart chart = ChartFactory.createScatterPlot(metricName, "Projects", metricName + " values", xyDataset, PlotOrientation.VERTICAL, true, true, true);
 		Plot plot = chart.getPlot();
 		plot.setForegroundAlpha(0.5f);
+		plot.setBackgroundAlpha(0.0f);
 		return chart;
 	}
 }
