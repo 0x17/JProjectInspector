@@ -5,11 +5,11 @@ import org.andreschnabel.jprojectinspector.gui.windows.UserStatsWindow;
 import org.andreschnabel.jprojectinspector.metrics.project.FrontStats;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
-import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
-import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
-import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTaskBatch;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.FuncInPlace;
+import org.andreschnabel.pecker.functional.IPredicate;
+import org.andreschnabel.pecker.threading.AsyncTask;
+import org.andreschnabel.pecker.threading.AsyncTaskBatch;
 
 import javax.swing.*;
 import java.awt.*;

@@ -4,11 +4,11 @@ import org.andreschnabel.jprojectinspector.evaluation.MetricsCollector;
 import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
-import org.andreschnabel.jprojectinspector.utilities.helpers.EquationHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
+import org.andreschnabel.jprojectinspector.utilities.EquationHelpers;
+import org.andreschnabel.pecker.helpers.Helpers;
+import org.andreschnabel.pecker.helpers.RegexHelpers;
+import org.andreschnabel.pecker.serialization.CsvData;
+import org.andreschnabel.pecker.serialization.CsvHelpers;
 
 import java.io.File;
 import java.util.*;

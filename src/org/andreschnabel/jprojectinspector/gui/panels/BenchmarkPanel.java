@@ -11,9 +11,9 @@ import org.andreschnabel.jprojectinspector.gui.windows.UserStatsWindow;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.utilities.helpers.EquationHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.jprojectinspector.utilities.EquationHelpers;
+import org.andreschnabel.pecker.helpers.GuiHelpers;
+import org.andreschnabel.pecker.serialization.CsvData;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

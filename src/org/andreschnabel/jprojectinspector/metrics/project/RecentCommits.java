@@ -2,8 +2,8 @@ package org.andreschnabel.jprojectinspector.metrics.project;
 
 import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
+import org.andreschnabel.pecker.helpers.Helpers;
+import org.andreschnabel.pecker.helpers.RegexHelpers;
 
 import java.util.List;
 

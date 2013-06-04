@@ -1,9 +1,9 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
 import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.JavaSourceHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
+import org.andreschnabel.jprojectinspector.utilities.JavaSourceHelpers;
+import org.andreschnabel.pecker.helpers.FileHelpers;
+import org.andreschnabel.pecker.helpers.RegexHelpers;
 
 import java.io.File;
 import java.util.HashMap;

@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.tests.offline.metrics.javaspecific.s
 
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage.TestMethodReferenceCounter;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.pecker.helpers.FileHelpers;
 import org.junit.Test;
 
 import java.io.File;

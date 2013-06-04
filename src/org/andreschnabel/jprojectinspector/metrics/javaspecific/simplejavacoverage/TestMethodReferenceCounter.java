@@ -1,9 +1,9 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific.simplejavacoverage;
 
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
-import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
+import org.andreschnabel.pecker.functional.FuncInPlace;
+import org.andreschnabel.pecker.helpers.FileHelpers;
+import org.andreschnabel.pecker.helpers.RegexHelpers;
 
 import java.io.File;
 import java.util.List;

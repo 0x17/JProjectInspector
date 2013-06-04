@@ -4,8 +4,8 @@ import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 import org.andreschnabel.jprojectinspector.metrics.churn.CodeFrequency;
 import org.andreschnabel.jprojectinspector.metrics.plugins.MetricPlugins;
 import org.andreschnabel.jprojectinspector.metrics.project.*;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.ITransform;
 
 import java.io.File;
 import java.util.LinkedList;

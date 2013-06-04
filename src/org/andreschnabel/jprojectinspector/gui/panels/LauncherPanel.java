@@ -4,8 +4,8 @@ import org.andreschnabel.jprojectinspector.gui.windows.BenchmarkWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.InputWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.MetricResultsWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.SettingsWindow;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.pecker.helpers.GuiHelpers;
+import org.andreschnabel.pecker.serialization.CsvData;
 
 import javax.swing.*;
 import java.awt.*;

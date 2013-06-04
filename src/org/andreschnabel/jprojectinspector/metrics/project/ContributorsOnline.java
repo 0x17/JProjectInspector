@@ -2,8 +2,8 @@ package org.andreschnabel.jprojectinspector.metrics.project;
 
 import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
+import org.andreschnabel.pecker.helpers.Helpers;
+import org.andreschnabel.pecker.helpers.StringHelpers;
 
 /**
  * Bestimmt Anzahl der Beitragenden zu einem Repository über Scraping von GitHub.

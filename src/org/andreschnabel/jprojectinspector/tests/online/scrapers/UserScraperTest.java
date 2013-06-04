@@ -3,7 +3,7 @@ package org.andreschnabel.jprojectinspector.tests.online.scrapers;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.UserData;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
-import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
+import org.andreschnabel.pecker.helpers.AssertHelpers;
 import org.junit.Assert;
 import org.junit.Test;
 

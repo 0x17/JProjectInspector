@@ -2,10 +2,10 @@ package org.andreschnabel.jprojectinspector.tests.offline.metrics.javaspecific;
 
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaClassCoupling;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
-import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.JavaSourceHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
+import org.andreschnabel.jprojectinspector.utilities.JavaSourceHelpers;
+import org.andreschnabel.pecker.helpers.AssertHelpers;
+import org.andreschnabel.pecker.helpers.FileHelpers;
+import org.andreschnabel.pecker.helpers.StringHelpers;
 import org.junit.Test;
 
 import java.io.File;

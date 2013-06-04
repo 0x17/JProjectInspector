@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.evaluation;
 
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
-import org.andreschnabel.jprojectinspector.utilities.helpers.EquationHelpers;
+import org.andreschnabel.jprojectinspector.utilities.EquationHelpers;
 
 /**
  * Implementiere PredictionMethods-Schnittstelle für Benchmark mithilfe von Formel,

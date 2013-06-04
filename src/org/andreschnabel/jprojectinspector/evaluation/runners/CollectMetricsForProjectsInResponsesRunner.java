@@ -3,10 +3,10 @@ package org.andreschnabel.jprojectinspector.evaluation.runners;
 import org.andreschnabel.jprojectinspector.evaluation.MetricsCollector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.IIndexedTransform;
-import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.IIndexedTransform;
+import org.andreschnabel.pecker.functional.ITransform;
+import org.andreschnabel.pecker.serialization.CsvHelpers;
 
 import java.io.File;
 import java.util.Arrays;

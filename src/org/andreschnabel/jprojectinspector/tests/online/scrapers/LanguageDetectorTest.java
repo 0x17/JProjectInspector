@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.andreschnabel.jprojectinspector.scrapers.LanguageDetector;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
+import org.andreschnabel.pecker.helpers.AssertHelpers;
 import org.junit.Test;
 
 public class LanguageDetectorTest {

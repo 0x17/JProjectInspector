@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
 import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.pecker.helpers.FileHelpers;
 
 import java.io.File;
 

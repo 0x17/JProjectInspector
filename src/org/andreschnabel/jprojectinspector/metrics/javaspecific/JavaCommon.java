@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.IPredicate;
+import org.andreschnabel.pecker.helpers.FileHelpers;
 
 import java.io.File;
 

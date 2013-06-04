@@ -2,8 +2,8 @@ package org.andreschnabel.jprojectinspector.evaluation;
 
 import org.andreschnabel.jprojectinspector.model.survey.Candidate;
 import org.andreschnabel.jprojectinspector.model.survey.CandidateLst;
-import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.pecker.functional.FuncInPlace;
+import org.andreschnabel.pecker.helpers.Helpers;
 
 import java.io.File;
 import java.util.List;

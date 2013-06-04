@@ -4,9 +4,9 @@ import org.andreschnabel.jprojectinspector.metrics.MetricType;
 import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.IPredicate;
+import org.andreschnabel.pecker.helpers.Helpers;
 
 import java.io.File;
 import java.util.List;

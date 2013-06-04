@@ -2,11 +2,11 @@ package org.andreschnabel.jprojectinspector.model.survey;
 
 import org.andreschnabel.jprojectinspector.evaluation.SurveyFormat;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
-import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
+import org.andreschnabel.pecker.functional.FuncInPlace;
+import org.andreschnabel.pecker.functional.ITransform;
+import org.andreschnabel.pecker.helpers.StringHelpers;
+import org.andreschnabel.pecker.serialization.CsvData;
+import org.andreschnabel.pecker.serialization.CsvHelpers;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;

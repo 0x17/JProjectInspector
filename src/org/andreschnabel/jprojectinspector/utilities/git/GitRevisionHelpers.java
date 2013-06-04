@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.utilities.git;
 
 import org.andreschnabel.jprojectinspector.Config;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
+import org.andreschnabel.pecker.helpers.ProcessHelpers;
 
 import java.io.File;
 

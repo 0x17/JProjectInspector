@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.githubapi;
 
 
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.pecker.helpers.Helpers;
 
 import com.google.gson.Gson;
 

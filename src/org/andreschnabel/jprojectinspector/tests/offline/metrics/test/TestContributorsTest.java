@@ -4,7 +4,7 @@ import junit.framework.Assert;
 import org.andreschnabel.jprojectinspector.metrics.test.TestContributors;
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.utilities.git.GitContributorHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
+import org.andreschnabel.pecker.helpers.AssertHelpers;
 import org.junit.Test;
 
 import java.io.File;

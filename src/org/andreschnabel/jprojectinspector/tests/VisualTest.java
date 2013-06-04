@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.tests;
 
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.pecker.helpers.Helpers;
 import org.junit.Assert;
 import org.junit.Test;
 

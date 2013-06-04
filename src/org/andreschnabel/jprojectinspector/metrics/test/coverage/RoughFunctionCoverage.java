@@ -5,10 +5,10 @@ import org.andreschnabel.jprojectinspector.metrics.code.Cloc;
 import org.andreschnabel.jprojectinspector.metrics.code.ClocResult;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers.IndexerRegistry;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
-import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.IPredicate;
+import org.andreschnabel.pecker.functional.ITransform;
+import org.andreschnabel.pecker.helpers.FileHelpers;
 
 import java.io.File;
 import java.util.HashMap;

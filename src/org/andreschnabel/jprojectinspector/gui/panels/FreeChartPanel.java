@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.gui.freechart.FreeChartExporter;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
+import org.andreschnabel.pecker.helpers.FileHelpers;
+import org.andreschnabel.pecker.helpers.GuiHelpers;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 

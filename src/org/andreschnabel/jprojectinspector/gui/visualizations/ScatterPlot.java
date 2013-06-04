@@ -33,7 +33,7 @@ public class ScatterPlot implements IVisualization {
 		XYDataset xyDataset = new XYSeriesCollection(xySeries);
 		JFreeChart chart = ChartFactory.createScatterPlot(metricName, "Projects", metricName + " values", xyDataset, PlotOrientation.VERTICAL, true, true, true);
 		Plot plot = chart.getPlot();
-		plot.setForegroundAlpha(0.5f);
+		plot.setForegroundAlpha(0.8f);
 		plot.setBackgroundAlpha(0.0f);
 		return chart;
 	}

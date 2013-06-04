@@ -17,8 +17,8 @@ import org.andreschnabel.jprojectinspector.metrics.test.TestContributors;
 import org.andreschnabel.jprojectinspector.metrics.test.TestLinesOfCode;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.RoughFunctionCoverage;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.ITransform;
 
 import java.io.File;
 import java.util.LinkedList;

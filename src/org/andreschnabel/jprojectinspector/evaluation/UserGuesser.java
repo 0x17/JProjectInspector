@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.evaluation;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
+import org.andreschnabel.pecker.functional.FuncInPlace;
 
 import java.util.ArrayList;
 import java.util.HashMap;

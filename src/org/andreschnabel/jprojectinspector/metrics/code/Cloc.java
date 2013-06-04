@@ -2,10 +2,10 @@ package org.andreschnabel.jprojectinspector.metrics.code;
 
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
-import org.andreschnabel.jprojectinspector.utilities.functional.IBinaryOperator;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.IBinaryOperator;
+import org.andreschnabel.pecker.helpers.Helpers;
+import org.andreschnabel.pecker.helpers.ProcessHelpers;
 
 import java.io.File;
 import java.util.LinkedList;

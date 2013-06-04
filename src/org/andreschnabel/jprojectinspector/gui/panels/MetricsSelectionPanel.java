@@ -4,7 +4,7 @@ import org.andreschnabel.jprojectinspector.gui.lists.MetricListModel;
 import org.andreschnabel.jprojectinspector.gui.windows.MetricResultsWindow;
 import org.andreschnabel.jprojectinspector.metrics.MetricType;
 import org.andreschnabel.jprojectinspector.metrics.registry.MetricsRegistry;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
+import org.andreschnabel.pecker.helpers.GuiHelpers;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector;
 
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.pecker.helpers.FileHelpers;
+import org.andreschnabel.pecker.helpers.Helpers;
 
 import java.io.File;
 import java.util.Map;

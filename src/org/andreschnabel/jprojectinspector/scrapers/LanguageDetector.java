@@ -2,10 +2,10 @@ package org.andreschnabel.jprojectinspector.scrapers;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.FuncInPlace;
-import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.FuncInPlace;
+import org.andreschnabel.pecker.functional.IPredicate;
+import org.andreschnabel.pecker.helpers.Helpers;
 
 import java.io.File;
 import java.util.LinkedList;

@@ -1,9 +1,9 @@
 package org.andreschnabel.jprojectinspector.utilities.git;
 
 import org.andreschnabel.jprojectinspector.Config;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.ITransform;
+import org.andreschnabel.pecker.helpers.ProcessHelpers;
 
 import java.io.File;
 import java.util.List;

@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.scrapers;
 
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.pecker.helpers.Helpers;
 
 import java.util.LinkedList;
 import java.util.List;

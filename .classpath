@@ -18,5 +18,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/JProjectInspector/libs/org.eclipse.egit.github.core-2.1.2-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/Pecker"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

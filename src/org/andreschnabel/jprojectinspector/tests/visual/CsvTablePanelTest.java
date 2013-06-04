@@ -3,7 +3,7 @@ package org.andreschnabel.jprojectinspector.tests.visual;
 import org.andreschnabel.jprojectinspector.gui.panels.CsvTablePanel;
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
 import org.andreschnabel.jprojectinspector.tests.VisualTestCallback;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.pecker.serialization.CsvData;
 
 import java.util.LinkedList;
 import java.util.List;

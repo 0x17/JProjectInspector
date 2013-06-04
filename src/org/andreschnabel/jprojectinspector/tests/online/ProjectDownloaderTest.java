@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.tests.online;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.pecker.helpers.FileHelpers;
 import org.junit.Assert;
 import org.junit.Test;
 

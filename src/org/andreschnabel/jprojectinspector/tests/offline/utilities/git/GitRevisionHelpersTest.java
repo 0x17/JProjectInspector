@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.tests.offline.utilities.git;
 
 import org.andreschnabel.jprojectinspector.utilities.git.GitRevisionHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
+import org.andreschnabel.pecker.helpers.AssertHelpers;
 import org.junit.Assert;
 import org.junit.Test;
 

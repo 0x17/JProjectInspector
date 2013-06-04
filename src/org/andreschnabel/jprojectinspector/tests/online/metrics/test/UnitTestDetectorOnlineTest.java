@@ -3,7 +3,7 @@ package org.andreschnabel.jprojectinspector.tests.online.metrics.test;
 import org.andreschnabel.jprojectinspector.metrics.test.UnitTestDetector;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
+import org.andreschnabel.pecker.helpers.AssertHelpers;
 import org.junit.Assert;
 import org.junit.Test;
 

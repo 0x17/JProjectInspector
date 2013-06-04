@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
+import org.andreschnabel.pecker.helpers.GuiHelpers;
 
 import javax.swing.*;
 import java.awt.*;

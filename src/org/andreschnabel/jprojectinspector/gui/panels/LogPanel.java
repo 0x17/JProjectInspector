@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
-import org.andreschnabel.jprojectinspector.utilities.helpers.IObserver;
+import org.andreschnabel.pecker.helpers.IObserver;
 
 import javax.swing.*;
 import java.awt.*;

@@ -9,12 +9,12 @@ import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.scrapers.TimelineTapper;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
-import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
-import org.andreschnabel.jprojectinspector.utilities.threading.ContinuousTask;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.ITransform;
+import org.andreschnabel.pecker.helpers.GuiHelpers;
+import org.andreschnabel.pecker.serialization.CsvData;
+import org.andreschnabel.pecker.threading.AsyncTask;
+import org.andreschnabel.pecker.threading.ContinuousTask;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

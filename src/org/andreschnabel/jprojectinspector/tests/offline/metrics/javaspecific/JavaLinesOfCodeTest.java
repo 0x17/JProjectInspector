@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.tests.offline.metrics.javaspecific;
 
 import org.andreschnabel.jprojectinspector.tests.TestCommon;
 import org.andreschnabel.jprojectinspector.metrics.javaspecific.JavaLinesOfCode;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+import org.andreschnabel.pecker.helpers.FileHelpers;
 import org.junit.Test;
 
 import java.io.File;

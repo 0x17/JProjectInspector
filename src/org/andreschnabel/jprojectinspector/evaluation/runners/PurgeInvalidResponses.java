@@ -3,8 +3,8 @@ package org.andreschnabel.jprojectinspector.evaluation.runners;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.utilities.ProjectDownloader;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.IPredicate;
 
 import java.io.File;
 import java.util.List;

@@ -7,10 +7,10 @@ import org.andreschnabel.jprojectinspector.gui.windows.UserStatsWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.VisualizationWindow;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
-import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
-import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTaskBatch;
+import org.andreschnabel.pecker.helpers.GuiHelpers;
+import org.andreschnabel.pecker.serialization.CsvData;
+import org.andreschnabel.pecker.threading.AsyncTask;
+import org.andreschnabel.pecker.threading.AsyncTaskBatch;
 
 import javax.swing.*;
 import java.awt.*;

@@ -3,7 +3,7 @@ package org.andreschnabel.jprojectinspector.evaluation.runners;
 import org.andreschnabel.jprojectinspector.evaluation.CandidateTapper;
 import org.andreschnabel.jprojectinspector.model.survey.Candidate;
 import org.andreschnabel.jprojectinspector.model.survey.CandidateLst;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.pecker.serialization.CsvData;
 
 import java.io.File;
 import java.util.LinkedList;

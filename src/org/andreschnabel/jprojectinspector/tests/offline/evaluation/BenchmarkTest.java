@@ -5,8 +5,8 @@ import org.andreschnabel.jprojectinspector.evaluation.Benchmark;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.ITransform;
 import org.junit.Test;
 
 import java.util.HashMap;

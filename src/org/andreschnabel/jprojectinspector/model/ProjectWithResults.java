@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.model;
 
-import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.pecker.functional.ITransform;
+import org.andreschnabel.pecker.serialization.CsvData;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.gui.tables;
 
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.pecker.serialization.CsvData;
 
 import javax.swing.table.AbstractTableModel;
 

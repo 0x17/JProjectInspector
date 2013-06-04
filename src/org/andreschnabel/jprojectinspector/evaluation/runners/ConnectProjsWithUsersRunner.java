@@ -4,12 +4,12 @@ import org.andreschnabel.jprojectinspector.evaluation.UserGuesser;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.XmlHelpers;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.IPredicate;
+import org.andreschnabel.pecker.helpers.Helpers;
+import org.andreschnabel.pecker.serialization.CsvData;
+import org.andreschnabel.pecker.serialization.CsvHelpers;
+import org.andreschnabel.pecker.serialization.XmlHelpers;
 
 import java.io.File;
 import java.util.List;

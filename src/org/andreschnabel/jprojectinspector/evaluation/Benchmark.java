@@ -3,12 +3,12 @@ package org.andreschnabel.jprojectinspector.evaluation;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjects;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
-import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
-import org.andreschnabel.jprojectinspector.utilities.functional.IVarIndexedAction;
-import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.IPredicate;
+import org.andreschnabel.pecker.functional.ITransform;
+import org.andreschnabel.pecker.functional.IVarIndexedAction;
+import org.andreschnabel.pecker.helpers.RegexHelpers;
+import org.andreschnabel.pecker.helpers.StringHelpers;
 
 import java.util.Collection;
 import java.util.LinkedList;

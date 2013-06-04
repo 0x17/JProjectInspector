@@ -1,6 +1,6 @@
 package org.andreschnabel.jprojectinspector.githubapi;
 
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.pecker.helpers.Helpers;
 import org.eclipse.egit.github.core.client.GitHubClient;
 
 /**

@@ -4,9 +4,9 @@ import junit.framework.Assert;
 import org.andreschnabel.jprojectinspector.gui.panels.CsvTablePanel;
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
 import org.andreschnabel.jprojectinspector.tests.VisualTestCallback;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.pecker.helpers.FileHelpers;
+import org.andreschnabel.pecker.helpers.GuiHelpers;
+import org.andreschnabel.pecker.serialization.CsvData;
 
 import javax.swing.*;
 import java.io.File;

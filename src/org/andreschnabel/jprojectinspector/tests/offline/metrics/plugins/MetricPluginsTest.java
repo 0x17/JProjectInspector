@@ -3,7 +3,7 @@ package org.andreschnabel.jprojectinspector.tests.offline.metrics.plugins;
 import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
 import org.andreschnabel.jprojectinspector.metrics.IOnlineMetric;
 import org.andreschnabel.jprojectinspector.metrics.plugins.MetricPlugins;
-import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
+import org.andreschnabel.pecker.helpers.AssertHelpers;
 import org.junit.Test;
 
 import java.io.File;

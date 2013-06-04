@@ -1,12 +1,12 @@
 package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.gui.tables.CsvTableModel;
-import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
-import org.andreschnabel.jprojectinspector.utilities.functional.Tautology;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
-import org.andreschnabel.jprojectinspector.utilities.serialization.FilteredCsvData;
+import org.andreschnabel.pecker.functional.IPredicate;
+import org.andreschnabel.pecker.functional.Tautology;
+import org.andreschnabel.pecker.helpers.GuiHelpers;
+import org.andreschnabel.pecker.helpers.StringHelpers;
+import org.andreschnabel.pecker.serialization.CsvData;
+import org.andreschnabel.pecker.serialization.FilteredCsvData;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

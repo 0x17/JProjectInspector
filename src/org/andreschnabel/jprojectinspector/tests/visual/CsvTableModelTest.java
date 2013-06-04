@@ -2,9 +2,9 @@ package org.andreschnabel.jprojectinspector.tests.visual;
 
 import org.andreschnabel.jprojectinspector.gui.tables.CsvTableModel;
 import org.andreschnabel.jprojectinspector.tests.VisualTestCallback;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
+import org.andreschnabel.pecker.serialization.CsvData;
+import org.andreschnabel.pecker.serialization.CsvHelpers;
 
 import javax.swing.*;
 import java.awt.*;

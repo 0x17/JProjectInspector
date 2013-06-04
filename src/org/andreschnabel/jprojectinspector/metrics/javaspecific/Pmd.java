@@ -1,9 +1,9 @@
 package org.andreschnabel.jprojectinspector.metrics.javaspecific;
 
 import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
+import org.andreschnabel.pecker.helpers.Helpers;
+import org.andreschnabel.pecker.helpers.ProcessHelpers;
+import org.andreschnabel.pecker.helpers.StringHelpers;
 
 import java.io.File;
 

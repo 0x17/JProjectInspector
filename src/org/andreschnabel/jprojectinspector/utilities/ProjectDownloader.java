@@ -2,9 +2,9 @@ package org.andreschnabel.jprojectinspector.utilities;
 
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.ProcessHelpers;
+import org.andreschnabel.pecker.helpers.FileHelpers;
+import org.andreschnabel.pecker.helpers.Helpers;
+import org.andreschnabel.pecker.helpers.ProcessHelpers;
 
 import java.io.File;
 
@@ -79,6 +79,6 @@ public final class ProjectDownloader {
 	public static void deleteProject(Project p) throws Exception {
 		String destPath = Config.DEST_BASE + p.repoName;
 		//Helpers.deleteDir(new File(destPath));
-		FileHelpers.rmDir(destPath);
+		FileHelpersSpecial.rmDir(destPath);
 	}
 }

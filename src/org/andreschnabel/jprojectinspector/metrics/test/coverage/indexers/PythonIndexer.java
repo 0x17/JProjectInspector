@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers;
 
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.IFunctionIndexer;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.helpers.RegexHelpers;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.helpers.RegexHelpers;
 
 import java.util.List;
 

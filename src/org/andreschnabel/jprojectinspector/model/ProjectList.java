@@ -1,7 +1,8 @@
 package org.andreschnabel.jprojectinspector.model;
 
 import com.google.gson.Gson;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
+
+import org.andreschnabel.pecker.helpers.FileHelpers;
 
 import java.io.File;
 import java.util.LinkedList;

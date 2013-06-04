@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.gui.windows;
 
 import org.andreschnabel.jprojectinspector.gui.panels.MetricResultsPanel;
 import org.andreschnabel.jprojectinspector.model.Project;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.pecker.serialization.CsvData;
 
 import javax.swing.*;
 import java.util.List;

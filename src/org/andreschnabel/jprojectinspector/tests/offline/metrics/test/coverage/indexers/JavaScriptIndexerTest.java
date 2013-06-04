@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.tests.offline.metrics.test.coverage.indexers;
 
 import org.andreschnabel.jprojectinspector.metrics.test.coverage.indexers.JavaScriptIndexer;
-import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
+import org.andreschnabel.pecker.helpers.AssertHelpers;
 import org.junit.Before;
 import org.junit.Test;
 

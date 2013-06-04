@@ -1,7 +1,7 @@
 package org.andreschnabel.jprojectinspector.gui.visualizations;
 
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.ITransform;
 
 import java.util.LinkedList;
 import java.util.List;

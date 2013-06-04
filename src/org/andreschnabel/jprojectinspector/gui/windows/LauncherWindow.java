@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector.gui.windows;
 
 import org.andreschnabel.jprojectinspector.Config;
 import org.andreschnabel.jprojectinspector.gui.panels.LauncherPanel;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
+import org.andreschnabel.pecker.helpers.GuiHelpers;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;

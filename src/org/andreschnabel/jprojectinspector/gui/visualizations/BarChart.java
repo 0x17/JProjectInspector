@@ -37,7 +37,7 @@ public class BarChart implements IVisualization {
 		JFreeChart chart = ChartFactory.createBarChart(metricName, "Projects", metricName+" values", dataset, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot plot = (CategoryPlot) chart.getPlot();
 		plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.UP_45);
-		plot.setForegroundAlpha(0.5f);
+		plot.setForegroundAlpha(1.0f);
 		plot.setBackgroundAlpha(0.0f);
 		return chart;
 	}

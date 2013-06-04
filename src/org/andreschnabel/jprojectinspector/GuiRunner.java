@@ -2,7 +2,7 @@ package org.andreschnabel.jprojectinspector;
 
 import org.andreschnabel.jprojectinspector.gui.windows.LauncherWindow;
 import org.andreschnabel.jprojectinspector.gui.windows.LogWindow;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
+import org.andreschnabel.pecker.helpers.Helpers;
 
 /**
  * Starter für Oberfläche.

@@ -5,11 +5,11 @@ import org.andreschnabel.jprojectinspector.evaluation.PredictionCandidates;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectWithResults;
 import org.andreschnabel.jprojectinspector.model.survey.ResponseProjectsLst;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.ITransform;
-import org.andreschnabel.jprojectinspector.utilities.helpers.Helpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvHelpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.XmlHelpers;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.ITransform;
+import org.andreschnabel.pecker.helpers.Helpers;
+import org.andreschnabel.pecker.serialization.CsvHelpers;
+import org.andreschnabel.pecker.serialization.XmlHelpers;
 
 import java.io.File;
 import java.util.HashMap;

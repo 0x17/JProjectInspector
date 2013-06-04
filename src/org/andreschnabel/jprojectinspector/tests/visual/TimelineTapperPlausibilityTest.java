@@ -5,7 +5,7 @@ import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.scrapers.TimelineTapper;
 import org.andreschnabel.jprojectinspector.tests.VisualTest;
 import org.andreschnabel.jprojectinspector.tests.VisualTestCallback;
-import org.andreschnabel.jprojectinspector.utilities.serialization.CsvData;
+import org.andreschnabel.pecker.serialization.CsvData;
 
 import javax.swing.*;
 import java.awt.*;

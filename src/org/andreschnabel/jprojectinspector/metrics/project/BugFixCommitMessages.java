@@ -1,10 +1,10 @@
 package org.andreschnabel.jprojectinspector.metrics.project;
 
 import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
-import org.andreschnabel.jprojectinspector.utilities.functional.IPredicate;
 import org.andreschnabel.jprojectinspector.utilities.git.GitHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.StringHelpers;
+import org.andreschnabel.pecker.functional.Func;
+import org.andreschnabel.pecker.functional.IPredicate;
+import org.andreschnabel.pecker.helpers.StringHelpers;
 
 import java.io.File;
 

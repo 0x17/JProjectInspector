@@ -2,8 +2,8 @@ package org.andreschnabel.jprojectinspector.gui.panels;
 
 import org.andreschnabel.jprojectinspector.model.UserData;
 import org.andreschnabel.jprojectinspector.scrapers.UserScraper;
-import org.andreschnabel.jprojectinspector.utilities.helpers.GuiHelpers;
-import org.andreschnabel.jprojectinspector.utilities.threading.AsyncTask;
+import org.andreschnabel.pecker.helpers.GuiHelpers;
+import org.andreschnabel.pecker.threading.AsyncTask;
 
 import javax.swing.*;
 import java.awt.*;

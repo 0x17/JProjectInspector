@@ -1,8 +1,8 @@
 package org.andreschnabel.jprojectinspector.metrics.test;
 
 import org.andreschnabel.jprojectinspector.metrics.IOfflineMetric;
-import org.andreschnabel.jprojectinspector.utilities.functional.Func;
 import org.andreschnabel.jprojectinspector.utilities.git.GitContributorHelpers;
+import org.andreschnabel.pecker.functional.Func;
 
 import java.io.File;
 import java.util.LinkedList;

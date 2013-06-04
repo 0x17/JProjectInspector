@@ -5,9 +5,9 @@ import junit.framework.Assert;
 import org.andreschnabel.jprojectinspector.model.Project;
 import org.andreschnabel.jprojectinspector.model.ProjectList;
 import org.andreschnabel.jprojectinspector.scrapers.OfflineProjectStripper;
-import org.andreschnabel.jprojectinspector.utilities.helpers.AssertHelpers;
-import org.andreschnabel.jprojectinspector.utilities.helpers.FileHelpers;
-import org.andreschnabel.jprojectinspector.utilities.serialization.JsonHelpers;
+import org.andreschnabel.jprojectinspector.utilities.JsonHelpers;
+import org.andreschnabel.pecker.helpers.AssertHelpers;
+import org.andreschnabel.pecker.helpers.FileHelpers;
 import org.junit.Test;
 
 public class OfflineProjectStripperTest {
